@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Stories - Islamic Kids</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stories.css">
+</head>
+<body>
+    <!-- Floating Decorations -->
+    <div class="floating-decorations">
+        <span class="floating-star" style="top: 10%; left: 5%;">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;">⭐</span>
+        <span class="floating-cloud" style="top: 15%; right: 20%;">☁️</span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <span class="crescent">☪</span>
+                <h1>Islamic Kids</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="stories.html" class="active">Stories</a></li>
+                <li><a href="#learn">Learn</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Stories Hero -->
+    <section class="stories-hero">
+        <h1>📚 Interactive Stories</h1>
+        <p>Choose a story to begin your adventure!</p>
+    </section>
+
+    <!-- Stories Grid -->
+    <section class="stories-grid-section">
+        <div class="stories-container">
+
+            <!-- Story Card 1 -->
+            <div class="story-select-card" onclick="window.location.href='story-prophet-nuh.html'">
+                <div class="story-thumbnail">🌊</div>
+                <div class="story-info">
+                    <h3>Prophet Nuh and the Great Ark</h3>
+                    <p>Learn about patience and trust in Allah through the story of Prophet Nuh (AS).</p>
+                    <div class="story-meta">
+                        <span>📖 10 min read</span>
+                        <span>🎯 Quiz included</span>
+                        <span>🎬 Bonus video</span>
+                    </div>
+                    <button class="start-story-btn">Start Story →</button>
+                </div>
+            </div>
+
+            <!-- Story Card 2 -->
+            <div class="story-select-card" onclick="window.location.href='story-prophet-yusuf.html'">
+                <div class="story-thumbnail">⭐</div>
+                <div class="story-info">
+                    <h3>Prophet Yusuf and the Beautiful Dream</h3>
+                    <p>Discover the amazing journey of Prophet Yusuf (AS) and his incredible dreams.</p>
+                    <div class="story-meta">
+                        <span>📖 12 min read</span>
+                        <span>🎯 Quiz included</span>
+                        <span>🎬 Bonus video</span>
+                    </div>
+                    <button class="start-story-btn">Start Story →</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>🌙 Islamic Kids Stories - Teaching faith through storytelling ✨</p>
+            <p class="footer-subtitle">Made with love for young Muslims everywhere</p>
+        </div>
+    </footer>
+
+</body>
+</html>

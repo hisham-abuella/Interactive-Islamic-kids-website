@@ -16,8 +16,8 @@
                 <h1>Islamic Kids</h1>
             </div>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#stories">Stories</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="stories.html">Stories</a></li>
                 <li><a href="#learn">Learn</a></li>
                 <li><a href="#activities">Activities</a></li>
             </ul>
@@ -29,7 +29,7 @@
         <div class="hero-content">
             <h1 class="hero-title">✨ Discover Beautiful Islamic Stories ✨</h1>
             <p class="hero-subtitle">Learn about prophets, values, and faith through fun stories!</p>
-            <button class="cta-button">Start Reading</button>
+            <a href="stories.html"><button class="cta-button">Start Reading</button></a>
         </div>
         <div class="hero-illustration">
             <div class="mosque">
@@ -52,29 +52,37 @@
     <section class="featured-stories">
         <h2 class="section-title">📚 Featured Stories</h2>
         <div class="story-grid">
-            <div class="story-card">
+            <div class="story-card" onclick="window.location.href='story-prophet-nuh.html'">
+                <div class="story-icon">🌊</div>
+                <h3>Prophet Nuh and the Great Ark</h3>
+                <p>Learn about patience and trust in Allah through the story of Prophet Nuh (AS).</p>
+                <div class="story-badges">
+                    <span class="badge">🎯 Quiz</span>
+                    <span class="badge">🎬 Video</span>
+                </div>
+                <a href="story-prophet-nuh.html"><button class="read-button">Read Story</button></a>
+            </div>
+            <div class="story-card" onclick="window.location.href='story-prophet-yusuf.html'">
+                <div class="story-icon">⭐</div>
+                <h3>Prophet Yusuf's Beautiful Dream</h3>
+                <p>Discover the amazing journey of Prophet Yusuf (AS) and his incredible dreams.</p>
+                <div class="story-badges">
+                    <span class="badge">🎯 Quiz</span>
+                    <span class="badge">🎬 Video</span>
+                </div>
+                <a href="story-prophet-yusuf.html"><button class="read-button">Read Story</button></a>
+            </div>
+            <div class="story-card" onclick="window.location.href='story-page.html'">
                 <div class="story-icon">🕌</div>
                 <h3>Prophet Ibrahim's Trust</h3>
                 <p>Learn about faith and trust in Allah through Prophet Ibrahim's amazing journey.</p>
-                <button class="read-button">Read Story</button>
+                <a href="story-page.html"><button class="read-button">Read Story</button></a>
             </div>
-            <div class="story-card">
-                <div class="story-icon">🐪</div>
-                <h3>The Kind Camel</h3>
-                <p>A heartwarming story about kindness and helping others in need.</p>
-                <button class="read-button">Read Story</button>
-            </div>
-            <div class="story-card">
-                <div class="story-icon">📖</div>
-                <h3>The First Revelation</h3>
-                <p>Discover how Prophet Muhammad ﷺ received the first words of the Quran.</p>
-                <button class="read-button">Read Story</button>
-            </div>
-            <div class="story-card">
-                <div class="story-icon">🌟</div>
-                <h3>The Honest Boy</h3>
-                <p>A beautiful story teaching the importance of honesty and truthfulness.</p>
-                <button class="read-button">Read Story</button>
+            <div class="story-card" onclick="window.location.href='stories.html'">
+                <div class="story-icon">📚</div>
+                <h3>More Stories Coming!</h3>
+                <p>Explore all our interactive Islamic stories for kids.</p>
+                <a href="stories.html"><button class="read-button">View All Stories</button></a>
             </div>
         </div>
     </section>
