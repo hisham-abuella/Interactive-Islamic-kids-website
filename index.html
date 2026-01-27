@@ -18,8 +18,8 @@
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="UI/stories.html">Stories</a></li>
+                <li><a href="UI/surah-fatiha.html">Quran</a></li>
                 <li><a href="#learn">Learn</a></li>
-                <li><a href="#activities">Activities</a></li>
             </ul>
         </nav>
     </header>
@@ -87,11 +87,35 @@
         </div>
     </section>
 
+    <!-- Learn Quran Section -->
+    <section class="featured-stories" id="learn">
+        <h2 class="section-title">📖 Learn Quran</h2>
+        <div class="story-grid">
+            <div class="story-card highlight-card" onclick="window.location.href='UI/surah-fatiha.html'">
+                <div class="story-icon">📿</div>
+                <h3>Surah Al-Fatiha</h3>
+                <p>Learn the opening chapter of the Quran - recited in every prayer!</p>
+                <div class="story-badges">
+                    <span class="badge">🎯 Quiz</span>
+                    <span class="badge">🎬 Video</span>
+                    <span class="badge">📜 7 Verses</span>
+                </div>
+                <a href="UI/surah-fatiha.html"><button class="read-button">Learn Now</button></a>
+            </div>
+            <div class="story-card coming-soon">
+                <div class="story-icon">🌟</div>
+                <h3>More Surahs Coming!</h3>
+                <p>We're adding more surahs for you to learn. Stay tuned!</p>
+                <button class="read-button" disabled>Coming Soon</button>
+            </div>
+        </div>
+    </section>
+
     <!-- Learn About Section -->
     <section class="learn-section">
         <h2 class="section-title">🌙 Learn About Islam</h2>
         <div class="learn-grid">
-            <div class="learn-card">
+            <div class="learn-card" onclick="window.location.href='UI/stories.html'">
                 <div class="learn-icon">👨‍👩‍👧‍👦</div>
                 <h3>Prophets</h3>
                 <p>Meet the prophets and their inspiring stories</p>
@@ -106,7 +130,7 @@
                 <h3>Five Pillars</h3>
                 <p>Understand the foundation of Islam</p>
             </div>
-            <div class="learn-card">
+            <div class="learn-card" onclick="window.location.href='UI/surah-fatiha.html'">
                 <div class="learn-icon">🤲</div>
                 <h3>Prayers</h3>
                 <p>Learn how to pray and make dua</p>
