@@ -509,11 +509,15 @@ function initializeSlideMode() {
             card.classList.remove('hidden');
             allSlideContent.push(card);
         });
-        if (quizResults) allSlideContent.push(quizResults);
+        if (quizResults) {
+            quizResults.classList.remove('hidden');
+            allSlideContent.push(quizResults);
+        }
     }
 
     // Add video section as final slide
     if (videoSection) {
+        videoSection.classList.remove('hidden');
         allSlideContent.push(videoSection);
     }
 
