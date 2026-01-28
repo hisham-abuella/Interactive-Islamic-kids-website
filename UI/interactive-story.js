@@ -4,10 +4,7 @@ var totalStars = 0;
 var soundEnabled = true;
 var lessonsChecked = 0;
 var brickCount = 0;
-// Use existing childName from stories.js if available
-if (typeof childName === 'undefined') {
-    var childName = '';
-}
+// childName is declared in stories.js
 
 document.addEventListener('DOMContentLoaded', function() {
     // Get saved name or show modal

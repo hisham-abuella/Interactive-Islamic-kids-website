@@ -1,6 +1,6 @@
 // Stories Interactive JavaScript
 
-let childName = '';
+var childName = '';
 
 document.addEventListener('DOMContentLoaded', function() {
     // Check if we have a saved name
