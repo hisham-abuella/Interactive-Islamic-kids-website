@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prophet Ibrahim's Trust in Allah - Islamic Kids</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stories.css">
+    <link rel="stylesheet" href="interactive-story.css">
+</head>
+<body>
+    <!-- Floating Decorations -->
+    <div class="floating-decorations">
+        <span class="floating-star" style="top: 10%; left: 5%;">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;">⭐</span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <span class="crescent">☪</span>
+                <h1>Islamic Kids</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="stories.html" class="active">Stories</a></li>
+                <li><a href="#learn">Learn</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Stars Counter -->
+    <div class="stars-counter" id="starsCounter">
+        <span class="star-icon">⭐</span>
+        <span class="star-count" id="starCount">0</span>
+    </div>
+
+    <!-- Sound Toggle -->
+    <button class="sound-toggle" id="soundToggle" title="Toggle Sound">
+        🔊
+    </button>
+
+    <!-- Story Container -->
+    <main class="story-main">
+        <div class="story-container interactive-story">
+
+            <!-- Story Header -->
+            <div class="story-header">
+                <div class="story-icon animated-icon">🕋</div>
+                <h1 class="story-title">Prophet Ibrahim's Trust in Allah</h1>
+                <p class="story-subtitle">An Interactive Adventure</p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+                <span class="progress-text">0% Complete</span>
+            </div>
+
+            <!-- Story Content -->
+            <div class="story-content" id="storyContent">
+
+                <!-- Scene 1: Introduction -->
+                <div class="story-scene interactive-scene" data-scene="1">
+                    <div class="scene-illustration">
+                        <span class="main-emoji animated-bounce">👶</span>
+                    </div>
+                    <div class="scene-text">
+                        <h2>A Special Baby</h2>
+                        <p>Long ago, a special baby was born. His name was Ibrahim. Even as a child, Ibrahim was very smart and always wondered about the world around him.</p>
+
+                        <!-- Tap to Reveal -->
+                        <div class="tap-to-reveal" data-reveal="fact1">
+                            <div class="tap-prompt">
+                                <span class="tap-icon">👆</span>
+                                <span>Tap to learn a fun fact!</span>
+                            </div>
+                            <div class="revealed-content hidden">
+                                <div class="fun-fact">
+                                    <span class="fact-icon">💡</span>
+                                    <p>Ibrahim is known as "Khalilullah" - the Friend of Allah! He is one of the greatest prophets.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scene-reward" data-stars="1">+1 ⭐</div>
+                </div>
+
+                <!-- Scene 2: The Stars -->
+                <div class="story-scene interactive-scene" data-scene="2">
+                    <div class="scene-illustration">
+                        <div class="night-sky">
+                            <span class="twinkle-star" style="top: 10%; left: 20%;">⭐</span>
+                            <span class="twinkle-star" style="top: 30%; left: 60%;">⭐</span>
+                            <span class="twinkle-star" style="top: 20%; left: 80%;">⭐</span>
+                            <span class="moon-icon">🌙</span>
+                        </div>
+                    </div>
+                    <div class="scene-text">
+                        <h2>Looking at the Sky</h2>
+                        <p>One night, young Ibrahim looked up at the beautiful stars. "Are these my lord?" he wondered. But when the stars disappeared at dawn, he knew they couldn't be.</p>
+
+                        <!-- Interactive Choice -->
+                        <div class="interactive-choice" data-choice="sky">
+                            <p class="choice-question">What did Ibrahim see next?</p>
+                            <div class="choice-options">
+                                <button class="choice-btn" data-answer="moon" data-correct="true">
+                                    <span class="choice-emoji">🌙</span>
+                                    <span>The Moon</span>
+                                </button>
+                                <button class="choice-btn" data-answer="clouds" data-correct="false">
+                                    <span class="choice-emoji">☁️</span>
+                                    <span>Clouds</span>
+                                </button>
+                            </div>
+                            <div class="choice-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="scene-reward" data-stars="1">+1 ⭐</div>
+                </div>
+
+                <!-- Scene 3: The Moon -->
+                <div class="story-scene interactive-scene" data-scene="3">
+                    <div class="scene-illustration">
+                        <span class="main-emoji moon-glow">🌕</span>
+                    </div>
+                    <div class="scene-text">
+                        <h2>The Beautiful Moon</h2>
+                        <p>Then Ibrahim saw the moon, big and bright! "This is my lord!" he said. But when morning came, the moon also disappeared. Ibrahim was still searching for the truth.</p>
+
+                        <!-- Shake/Tap Animation -->
+                        <div class="shake-to-animate" id="moonShake">
+                            <p class="shake-prompt">📱 Tap the moon to see what happens!</p>
+                            <div class="shakeable-element" id="shakeableMoon">
+                                🌕
+                            </div>
+                            <div class="shake-result hidden" id="moonResult">
+                                <p>The moon set and disappeared! 🌑</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scene-reward" data-stars="1">+1 ⭐</div>
+                </div>
+
+                <!-- Scene 4: The Sun -->
+                <div class="story-scene interactive-scene" data-scene="4">
+                    <div class="scene-illustration">
+                        <span class="main-emoji sun-rays">☀️</span>
+                    </div>
+                    <div class="scene-text">
+                        <h2>The Mighty Sun</h2>
+                        <p>When the sun rose, Ibrahim thought, "This must be my lord - it's the biggest!" But when evening came, even the powerful sun went away.</p>
+                        <p class="highlight-text">"I turn my face to the One who created the heavens and the earth!"</p>
+
+                        <div class="tap-to-reveal" data-reveal="lesson1">
+                            <div class="tap-prompt">
+                                <span class="tap-icon">💡</span>
+                                <span>What did Ibrahim learn?</span>
+                            </div>
+                            <div class="revealed-content hidden">
+                                <div class="lesson-reveal">
+                                    <p>Ibrahim understood that only <strong>Allah</strong> - who created the stars, moon, and sun - deserves to be worshipped!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scene-reward" data-stars="2">+2 ⭐</div>
+                </div>
+
+                <!-- Scene 5: The Idols -->
+                <div class="story-scene interactive-scene" data-scene="5">
+                    <div class="scene-illustration">
+                        <span class="main-emoji">🗿</span>
+                    </div>
+                    <div class="scene-text">
+                        <h2>The Stone Statues</h2>
+                        <p>Ibrahim's people worshipped statues made of stone. Ibrahim knew this was wrong. "How can you worship things that can't hear, see, or help you?" he asked them.</p>
+
+                        <!-- Drag and Drop Activity -->
+                        <div class="drag-drop-activity" id="idolActivity">
+                            <p class="activity-title">🎯 Who should we worship? Drag to the correct box!</p>
+                            <div class="drag-items">
+                                <div class="drag-item" draggable="true" data-item="allah">Allah ☪️</div>
+                                <div class="drag-item" draggable="true" data-item="stone">Stone 🗿</div>
+                                <div class="drag-item" draggable="true" data-item="sun">Sun ☀️</div>
+                            </div>
+                            <div class="drop-zones">
+                                <div class="drop-zone correct-zone" data-accepts="allah">
+                                    <p>✅ Worship</p>
+                                </div>
+                                <div class="drop-zone wrong-zone" data-accepts="stone,sun">
+                                    <p>❌ Don't Worship</p>
+                                </div>
+                            </div>
+                            <div class="activity-feedback" id="dragFeedback"></div>
+                        </div>
+                    </div>
+                    <div class="scene-reward" data-stars="3">+3 ⭐</div>
+                </div>
+
+                <!-- Scene 6: The Fire -->
+                <div class="story-scene interactive-scene" data-scene="6">
+                    <div class="scene-illustration fire-scene">
+                        <span class="main-emoji fire-animation">🔥</span>
+                    </div>
+                    <div class="scene-text">
+                        <h2>The Great Fire</h2>
+                        <p>The angry people built a huge fire and threw Ibrahim into it! But Ibrahim stayed calm. He trusted Allah completely.</p>
+
+                        <div class="emotion-check">
+                            <p>How do you think Ibrahim felt?</p>
+                            <div class="emotion-options">
+                                <button class="emotion-btn" data-emotion="scared">😰 Scared</button>
+                                <button class="emotion-btn correct" data-emotion="peaceful">😌 Peaceful</button>
+                                <button class="emotion-btn" data-emotion="angry">😠 Angry</button>
+                            </div>
+                            <div class="emotion-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="scene-reward" data-stars="2">+2 ⭐</div>
+                </div>
+
+                <!-- Scene 7: The Miracle -->
+                <div class="story-scene interactive-scene" data-scene="7">
+                    <div class="scene-illustration">
+                        <span class="main-emoji miracle-glow">🌸</span>
+                    </div>
+                    <div class="scene-text">
+                        <h2>Allah's Amazing Miracle!</h2>
+                        <p>Allah commanded: <span class="quran-text">"O fire, be cool and safe for Ibrahim!"</span></p>
+                        <p>The fire became cool like a garden! Ibrahim walked out completely safe. SubhanAllah!</p>
+
+                        <!-- Celebration Animation -->
+                        <div class="celebration-trigger" id="miracleCelebration">
+                            <button class="celebrate-btn">🎉 Celebrate the Miracle!</button>
+                        </div>
+                    </div>
+                    <div class="scene-reward" data-stars="2">+2 ⭐</div>
+                </div>
+
+                <!-- Scene 8: Building the Kaaba -->
+                <div class="story-scene interactive-scene" data-scene="8">
+                    <div class="scene-illustration">
+                        <span class="main-emoji kaaba-icon">🕋</span>
+                    </div>
+                    <div class="scene-text">
+                        <h2>Building Allah's House</h2>
+                        <p>Years later, Allah told Ibrahim and his son Ismail to build the Kaaba - the first house of worship for Allah. They worked together, brick by brick.</p>
+
+                        <!-- Building Mini-Game -->
+                        <div class="building-game" id="kaabaGame">
+                            <p>🧱 Tap to help build the Kaaba!</p>
+                            <div class="building-progress">
+                                <div class="building-structure" id="buildingStructure">
+                                    <div class="brick-row"></div>
+                                    <div class="brick-row"></div>
+                                    <div class="brick-row"></div>
+                                </div>
+                                <div class="build-counter">Bricks: <span id="brickCount">0</span>/9</div>
+                            </div>
+                            <button class="build-btn" id="addBrickBtn">🧱 Add Brick</button>
+                        </div>
+                    </div>
+                    <div class="scene-reward" data-stars="3">+3 ⭐</div>
+                </div>
+
+                <!-- Lesson Box -->
+                <div class="lesson-box interactive-lesson">
+                    <h3>🌟 What We Learn from Prophet Ibrahim</h3>
+                    <div class="lesson-items">
+                        <div class="lesson-item" data-lesson="1">
+                            <span class="lesson-check">☐</span>
+                            <span class="lesson-text">Always search for the truth</span>
+                        </div>
+                        <div class="lesson-item" data-lesson="2">
+                            <span class="lesson-check">☐</span>
+                            <span class="lesson-text">Trust Allah even when things are hard</span>
+                        </div>
+                        <div class="lesson-item" data-lesson="3">
+                            <span class="lesson-check">☐</span>
+                            <span class="lesson-text">Be brave and stand up for what's right</span>
+                        </div>
+                        <div class="lesson-item" data-lesson="4">
+                            <span class="lesson-check">☐</span>
+                            <span class="lesson-text">Only worship Allah alone</span>
+                        </div>
+                    </div>
+                    <p class="lesson-instruction">👆 Tap each lesson to mark it as learned!</p>
+                </div>
+
+                <!-- Dua Box -->
+                <div class="dua-box">
+                    <h3>🤲 Ibrahim's Dua</h3>
+                    <p class="arabic-text">رَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ</p>
+                    <p class="dua-translation">"Our Lord, accept from us. Indeed You are the Hearing, the Knowing."</p>
+                    <p class="dua-note">This is the dua Ibrahim and Ismail made while building the Kaaba!</p>
+
+                    <button class="memorize-btn" id="memorizeBtn">
+                        <span>📝 I want to memorize this!</span>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Final Quiz Section -->
+            <div class="final-quiz-section" id="finalQuiz">
+                <div class="quiz-intro">
+                    <div class="quiz-lantern">🏮</div>
+                    <h2>Story Complete! Final Challenge!</h2>
+                    <p>Answer these questions to earn bonus stars!</p>
+                </div>
+
+                <div class="quiz-card" data-question="1">
+                    <div class="question-number">Question 1 of 3</div>
+                    <p class="quiz-question">What did Ibrahim realize about the stars, moon, and sun?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-correct="false">They are very beautiful</button>
+                        <button class="quiz-option" data-correct="true">They are created by Allah and disappear</button>
+                        <button class="quiz-option" data-correct="false">They give us light</button>
+                        <button class="quiz-option" data-correct="false">They are very far away</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-card hidden" data-question="2">
+                    <div class="question-number">Question 2 of 3</div>
+                    <p class="quiz-question">What happened when Ibrahim was thrown into the fire?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-correct="false">He got burned</button>
+                        <button class="quiz-option" data-correct="false">He ran away</button>
+                        <button class="quiz-option" data-correct="true">Allah made the fire cool and safe</button>
+                        <button class="quiz-option" data-correct="false">It started raining</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-card hidden" data-question="3">
+                    <div class="question-number">Question 3 of 3</div>
+                    <p class="quiz-question">What did Ibrahim and Ismail build together?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-correct="false">A house</button>
+                        <button class="quiz-option" data-correct="true">The Kaaba</button>
+                        <button class="quiz-option" data-correct="false">A boat</button>
+                        <button class="quiz-option" data-correct="false">A well</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-results hidden" id="quizResults">
+                    <div class="results-content">
+                        <div class="results-icon">🎉</div>
+                        <h2>Amazing Job!</h2>
+                        <p class="results-score">You got <span id="scoreDisplay">0</span> out of 3 correct!</p>
+                        <div class="final-stars">
+                            <p>Total Stars Earned: <span id="totalStars">0</span> ⭐</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Unlock Section -->
+            <div class="video-section hidden" id="videoSection">
+                <div class="video-unlock">
+                    <div class="unlock-animation">
+                        <span class="unlock-lantern">🏮</span>
+                        <span class="unlock-stars">✨</span>
+                    </div>
+                    <h2>🎬 Bonus Video Unlocked!</h2>
+                    <p>Watch this beautiful story about Prophet Ibrahim!</p>
+                </div>
+                <div class="video-container">
+                    <div class="video-frame">
+                        <iframe
+                            width="100%"
+                            height="400"
+                            src="https://www.youtube.com/embed/0O3VoWx7kKg"
+                            title="Prophet Ibrahim Story Animation"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story Navigation -->
+            <div class="story-navigation">
+                <a href="stories.html" class="nav-btn">← Back to Stories</a>
+                <a href="story-prophet-nuh.html" class="nav-btn next">Next Story: Prophet Nuh →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="moral-takeaway">
+                <h4>💎 Today's Moral</h4>
+                <p>"Trust in Allah, and He will never let you down!"</p>
+            </div>
+            <p class="footer-subtitle">🌙 Islamic Kids Stories ✨</p>
+        </div>
+    </footer>
+
+    <script src="stories.js"></script>
+    <script src="interactive-story.js"></script>
+</body>
+</html>

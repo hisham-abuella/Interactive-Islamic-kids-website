@@ -1,0 +1,758 @@
+/* Interactive Story Styles */
+
+/* Stars Counter */
+.stars-counter {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 5px 20px rgba(245, 158, 11, 0.3);
+    z-index: 100;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #92400e;
+    border: 3px solid #f59e0b;
+    animation: starPulse 2s ease-in-out infinite;
+}
+
+@keyframes starPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.star-icon {
+    font-size: 1.5rem;
+}
+
+/* Sound Toggle */
+.sound-toggle {
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    background: white;
+    border: 3px solid #10b981;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 100;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.sound-toggle:hover {
+    transform: scale(1.1);
+}
+
+.sound-toggle.muted {
+    opacity: 0.5;
+}
+
+/* Animated Icon */
+.animated-icon {
+    animation: iconBounce 2s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.story-subtitle {
+    color: #64748b;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+/* Interactive Scene */
+.interactive-scene {
+    position: relative;
+}
+
+.scene-reward {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    color: #92400e;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+/* Animated Elements */
+.animated-bounce {
+    animation: bounce 1s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* Night Sky Scene */
+.night-sky {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.twinkle-star {
+    position: absolute;
+    font-size: 0.8rem;
+    animation: twinkle 1.5s ease-in-out infinite;
+}
+
+.twinkle-star:nth-child(2) { animation-delay: 0.3s; }
+.twinkle-star:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.8); }
+}
+
+.moon-icon {
+    font-size: 2rem;
+}
+
+/* Moon Glow */
+.moon-glow {
+    animation: moonGlow 3s ease-in-out infinite;
+}
+
+@keyframes moonGlow {
+    0%, 100% { filter: brightness(1); text-shadow: 0 0 20px rgba(255, 255, 200, 0.5); }
+    50% { filter: brightness(1.2); text-shadow: 0 0 40px rgba(255, 255, 200, 0.8); }
+}
+
+/* Sun Rays */
+.sun-rays {
+    animation: sunRays 2s ease-in-out infinite;
+}
+
+@keyframes sunRays {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.1) rotate(10deg); }
+}
+
+/* Fire Animation */
+.fire-scene .main-emoji {
+    font-size: 4rem;
+}
+
+.fire-animation {
+    animation: fireFlicker 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes fireFlicker {
+    0% { transform: scale(1) translateY(0); filter: brightness(1); }
+    100% { transform: scale(1.1) translateY(-5px); filter: brightness(1.2); }
+}
+
+/* Miracle Glow */
+.miracle-glow {
+    animation: miracleGlow 2s ease-in-out infinite;
+}
+
+@keyframes miracleGlow {
+    0%, 100% {
+        transform: scale(1);
+        filter: brightness(1) drop-shadow(0 0 10px rgba(16, 185, 129, 0.5));
+    }
+    50% {
+        transform: scale(1.2);
+        filter: brightness(1.3) drop-shadow(0 0 30px rgba(16, 185, 129, 0.8));
+    }
+}
+
+/* Tap to Reveal */
+.tap-to-reveal {
+    margin-top: 1.5rem;
+    cursor: pointer;
+}
+
+.tap-prompt {
+    background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+    padding: 1rem 1.5rem;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #0369a1;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px dashed #0ea5e9;
+}
+
+.tap-prompt:hover {
+    transform: scale(1.02);
+    background: linear-gradient(135deg, #bae6fd 0%, #7dd3fc 100%);
+}
+
+.tap-icon {
+    font-size: 1.3rem;
+    animation: tapHint 1s ease-in-out infinite;
+}
+
+@keyframes tapHint {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.revealed-content {
+    margin-top: 1rem;
+    animation: revealSlide 0.5s ease;
+}
+
+@keyframes revealSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fun-fact, .lesson-reveal {
+    background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+    padding: 1rem 1.5rem;
+    border-radius: 15px;
+    border-left: 4px solid #10b981;
+}
+
+.fact-icon {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+.fun-fact p, .lesson-reveal p {
+    color: #065f46;
+    margin: 0;
+}
+
+/* Interactive Choice */
+.interactive-choice {
+    margin-top: 1.5rem;
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+
+.choice-question {
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 1rem;
+}
+
+.choice-options {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.choice-btn {
+    background: white;
+    border: 3px solid #e2e8f0;
+    border-radius: 15px;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 100px;
+}
+
+.choice-btn:hover {
+    border-color: #10b981;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.choice-btn.selected-correct {
+    background: #dcfce7;
+    border-color: #10b981;
+}
+
+.choice-btn.selected-wrong {
+    background: #fee2e2;
+    border-color: #ef4444;
+}
+
+.choice-emoji {
+    font-size: 2rem;
+}
+
+.choice-feedback {
+    margin-top: 1rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Shake to Animate */
+.shake-to-animate {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.shake-prompt {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.shakeable-element {
+    font-size: 4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.shakeable-element:hover {
+    transform: scale(1.2);
+}
+
+.shakeable-element.shaking {
+    animation: shakeAnim 0.5s ease;
+}
+
+@keyframes shakeAnim {
+    0%, 100% { transform: translateX(0) rotate(0); }
+    25% { transform: translateX(-10px) rotate(-10deg); }
+    75% { transform: translateX(10px) rotate(10deg); }
+}
+
+.shake-result {
+    margin-top: 1rem;
+    background: #f1f5f9;
+    padding: 1rem;
+    border-radius: 10px;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Drag and Drop */
+.drag-drop-activity {
+    margin-top: 1.5rem;
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+
+.activity-title {
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.drag-items {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.drag-item {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.8rem 1.2rem;
+    cursor: grab;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.drag-item:hover {
+    border-color: #10b981;
+    transform: scale(1.05);
+}
+
+.drag-item.dragging {
+    opacity: 0.5;
+    cursor: grabbing;
+}
+
+.drag-item.placed {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.drop-zones {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.drop-zone {
+    min-width: 120px;
+    min-height: 80px;
+    border: 3px dashed #cbd5e1;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    transition: all 0.3s ease;
+}
+
+.drop-zone.drag-over {
+    border-color: #10b981;
+    background: #f0fdf4;
+}
+
+.correct-zone {
+    border-color: #86efac;
+    background: #f0fdf4;
+}
+
+.wrong-zone {
+    border-color: #fca5a5;
+    background: #fef2f2;
+}
+
+.drop-zone p {
+    margin: 0;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.dropped-item {
+    background: #10b981;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.activity-feedback {
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Emotion Check */
+.emotion-check {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.emotion-check p {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.emotion-options {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.emotion-btn {
+    background: white;
+    border: 3px solid #e2e8f0;
+    border-radius: 15px;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.emotion-btn:hover {
+    border-color: #10b981;
+    transform: scale(1.05);
+}
+
+.emotion-btn.selected {
+    border-color: #10b981;
+    background: #dcfce7;
+}
+
+.emotion-btn.selected.wrong {
+    border-color: #ef4444;
+    background: #fee2e2;
+}
+
+.emotion-feedback {
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+/* Celebration Trigger */
+.celebration-trigger {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.celebrate-btn {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: celebratePulse 2s ease-in-out infinite;
+}
+
+@keyframes celebratePulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3); }
+    50% { transform: scale(1.05); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5); }
+}
+
+.celebrate-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Building Game */
+.building-game {
+    margin-top: 1.5rem;
+    text-align: center;
+    background: #f8fafc;
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+
+.building-progress {
+    margin: 1rem 0;
+}
+
+.building-structure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 100px;
+}
+
+.brick-row {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.brick {
+    width: 40px;
+    height: 25px;
+    background: linear-gradient(135deg, #78716c 0%, #57534e 100%);
+    border-radius: 3px;
+    animation: brickPlace 0.3s ease;
+}
+
+@keyframes brickPlace {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.build-counter {
+    font-weight: 600;
+    color: #64748b;
+    margin-top: 1rem;
+}
+
+.build-btn {
+    background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+.build-btn:hover:not(:disabled) {
+    transform: scale(1.05);
+}
+
+.build-btn:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* Interactive Lesson */
+.interactive-lesson .lesson-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.lesson-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lesson-item:hover {
+    transform: translateX(5px);
+}
+
+.lesson-item.checked {
+    background: #f0fdf4;
+}
+
+.lesson-item.checked .lesson-check {
+    color: #10b981;
+}
+
+.lesson-check {
+    font-size: 1.5rem;
+}
+
+.lesson-instruction {
+    text-align: center;
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+/* Memorize Button */
+.memorize-btn {
+    background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.3s ease;
+}
+
+.memorize-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(99, 102, 241, 0.4);
+}
+
+.memorize-btn.saved {
+    background: #10b981;
+}
+
+/* Highlight Text */
+.highlight-text {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    padding: 1rem;
+    border-radius: 10px;
+    font-style: italic;
+    color: #92400e;
+    text-align: center;
+    margin: 1rem 0;
+    border-left: 4px solid #f59e0b;
+}
+
+.quran-text {
+    font-weight: 600;
+    color: #065f46;
+}
+
+/* Final Stars */
+.final-stars {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: #92400e;
+}
+
+/* Kaaba Icon */
+.kaaba-icon {
+    animation: kaabaGlow 3s ease-in-out infinite;
+}
+
+@keyframes kaabaGlow {
+    0%, 100% { filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.3)); }
+    50% { filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.5)); }
+}
+
+/* Hidden class */
+.hidden {
+    display: none !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .stars-counter {
+        top: 80px;
+        right: 10px;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
+
+    .sound-toggle {
+        top: 80px;
+        left: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+
+    .choice-options {
+        flex-direction: column;
+    }
+
+    .choice-btn {
+        width: 100%;
+    }
+
+    .drag-items {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .drop-zones {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .emotion-options {
+        flex-direction: column;
+    }
+
+    .emotion-btn {
+        width: 100%;
+    }
+
+    .brick {
+        width: 30px;
+        height: 20px;
+    }
+}
