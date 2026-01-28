@@ -472,24 +472,23 @@
     <script src="interactive-story.js"></script>
     <script>
         // Override for Adam story - different localStorage keys
-        document.addEventListener('DOMContentLoaded', function() {
+        window.addEventListener('load', function() {
             // Use Adam-specific star count
             var adamStars = localStorage.getItem('adamStoryStars');
             if (adamStars) {
                 totalStars = parseInt(adamStars);
                 updateStarsDisplay();
             }
-        });
 
-        // Override addStars for Adam story
-        var originalAddStars = addStars;
-        addStars = function(amount) {
-            totalStars += amount;
-            localStorage.setItem('adamStoryStars', totalStars);
-            updateStarsDisplay();
-            playSound('star');
-            showStarAnimation();
-        };
+            // Override addStars for Adam story
+            window.addStars = function(amount) {
+                totalStars += amount;
+                localStorage.setItem('adamStoryStars', totalStars);
+                updateStarsDisplay();
+                playSound('star');
+                showStarAnimation();
+            };
+        });
     </script>
 </body>
 </html>

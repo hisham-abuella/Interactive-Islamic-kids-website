@@ -1,10 +1,13 @@
 // Interactive Story JavaScript
 
-let totalStars = 0;
-let soundEnabled = true;
-let lessonsChecked = 0;
-let brickCount = 0;
-let childName = '';
+var totalStars = 0;
+var soundEnabled = true;
+var lessonsChecked = 0;
+var brickCount = 0;
+// Use existing childName from stories.js if available
+if (typeof childName === 'undefined') {
+    var childName = '';
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     // Get saved name or show modal
