@@ -78,6 +78,24 @@
     border-color: #10b981;
 }
 
+/* Story Card Link Wrapper */
+.story-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.story-card-link:hover .story-select-card {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+    border-color: #10b981;
+}
+
+.story-card-link:hover .story-select-card.featured {
+    box-shadow: 0 20px 40px rgba(245, 158, 11, 0.3);
+    border-color: #d97706;
+}
+
 .story-select-card.featured {
     border: 3px solid #f59e0b;
     background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
