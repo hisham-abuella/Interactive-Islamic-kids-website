@@ -822,18 +822,142 @@
 .story-slides-container {
     position: relative;
     overflow: hidden;
-    touch-action: pan-y pinch-zoom;
+    touch-action: pan-x;
+    min-height: 350px;
+    max-height: 60vh;
+    background: #f8fafc;
+    border-radius: 15px;
+    border: 2px solid #e2e8f0;
 }
 
 .story-slides {
     display: flex;
-    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.4s ease-out;
+    width: 100%;
+    height: 100%;
 }
 
 .story-slide {
     min-width: 100%;
-    padding: 2rem;
+    width: 100%;
+    flex-shrink: 0;
+    padding: 1.5rem;
     box-sizing: border-box;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+.story-slide .story-scene,
+.story-slide .mini-quiz,
+.story-slide .lesson-box,
+.story-slide .dua-box {
+    margin: 0;
+    opacity: 1;
+    transform: none;
+    animation: none;
+}
+
+/* Ensure content fits nicely in slides */
+.story-slide .story-scene {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.story-slide .scene-illustration {
+    margin: 0 auto 1rem auto;
+    width: 80px;
+    height: 80px;
+    font-size: 3rem;
+}
+
+.story-slide .scene-text h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+}
+
+.story-slide .scene-text p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.story-slide .mini-quiz {
+    padding: 1.5rem;
+}
+
+.story-slide .quiz-options {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+}
+
+.story-slide .quiz-option {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+}
+
+/* Quiz and Video in Slide Mode */
+.story-slide .quiz-intro {
+    padding: 1rem;
+    text-align: center;
+}
+
+.story-slide .quiz-intro .quiz-lantern {
+    font-size: 3rem;
+}
+
+.story-slide .quiz-intro h2 {
+    font-size: 1.4rem;
+    margin: 0.5rem 0;
+}
+
+.story-slide .quiz-intro p {
+    font-size: 1rem;
+}
+
+.story-slide .quiz-card {
+    margin: 0;
+    padding: 1.5rem;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+}
+
+.story-slide .quiz-results {
+    margin: 0;
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+
+.story-slide .quiz-results .results-icon {
+    font-size: 3.5rem;
+}
+
+.story-slide .quiz-results h2 {
+    font-size: 1.4rem;
+}
+
+.story-slide .video-section {
+    display: block !important;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.story-slide .video-unlock {
+    margin-bottom: 1rem;
+}
+
+.story-slide .video-unlock h2 {
+    font-size: 1.3rem;
+}
+
+.story-slide .video-container {
+    border-radius: 15px;
+    padding: 1rem;
+}
+
+.story-slide .video-frame iframe {
+    height: 250px;
 }
 
 /* Slide Progress Indicator */
@@ -965,23 +1089,63 @@
     }
 
     /* Mobile Slide Navigation */
-    .slide-nav-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
-
-    .slide-progress {
-        gap: 0.4rem;
-    }
-
-    .slide-dot {
-        width: 10px;
-        height: 10px;
+    .story-slides-container {
+        min-height: 280px;
+        max-height: 55vh;
     }
 
     .story-slide {
         padding: 1rem;
+        max-height: 55vh;
+    }
+
+    .slide-nav-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+
+    .slide-progress {
+        gap: 0.3rem;
+        margin: 1rem 0;
+    }
+
+    .slide-dot {
+        width: 8px;
+        height: 8px;
+    }
+
+    .slide-navigation {
+        margin-top: 1rem;
+        padding: 0 0.5rem;
+    }
+
+    .slide-counter {
+        font-size: 0.9rem;
+    }
+
+    .story-slide .scene-illustration {
+        width: 60px;
+        height: 60px;
+        font-size: 2.5rem;
+    }
+
+    .story-slide .scene-text h2 {
+        font-size: 1.1rem;
+    }
+
+    .story-slide .scene-text p {
+        font-size: 0.95rem;
+    }
+
+    .story-slide .quiz-options {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+    }
+
+    .story-slide .quiz-option {
+        padding: 0.7rem;
+        font-size: 0.85rem;
     }
 
     .name-modal-content {
@@ -995,17 +1159,75 @@
     .modal-icon {
         font-size: 3rem;
     }
+
+    /* Quiz and Video in Slide Mode - Mobile */
+    .story-slide .quiz-intro .quiz-lantern {
+        font-size: 2.5rem;
+    }
+
+    .story-slide .quiz-intro h2 {
+        font-size: 1.2rem;
+    }
+
+    .story-slide .quiz-card {
+        padding: 1rem;
+    }
+
+    .story-slide .quiz-results {
+        padding: 1rem;
+    }
+
+    .story-slide .quiz-results .results-icon {
+        font-size: 2.5rem;
+    }
+
+    .story-slide .video-frame iframe {
+        height: 200px;
+    }
+
+    .story-slide .video-unlock h2 {
+        font-size: 1.1rem;
+    }
+}
+
+/* Small phones */
+@media (max-width: 400px) {
+    .story-slides-container {
+        min-height: 250px;
+        max-height: 50vh;
+    }
+
+    .story-slide {
+        padding: 0.8rem;
+        max-height: 50vh;
+    }
+
+    .story-slide .story-scene {
+        padding: 1rem;
+    }
+
+    .slide-nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 0.9rem;
+    }
 }
 
 /* Touch-friendly adjustments */
 @media (hover: none) and (pointer: coarse) {
     .quiz-option {
-        padding: 1.2rem;
+        padding: 1rem;
         font-size: 1rem;
+        min-height: 48px;
     }
 
     .slide-nav-btn {
-        width: 55px;
-        height: 55px;
+        min-width: 48px;
+        min-height: 48px;
+    }
+
+    .slide-dot {
+        min-width: 12px;
+        min-height: 12px;
     }
 }

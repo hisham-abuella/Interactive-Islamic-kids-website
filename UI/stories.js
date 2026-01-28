@@ -113,7 +113,7 @@ function personalizeStory() {
     }
 }
 
-// Progress Bar
+// Progress Bar (only for classic scroll mode)
 function initializeProgress() {
     const storyContent = document.getElementById('storyContent');
     const progressBar = document.getElementById('progressBar');
@@ -121,10 +121,16 @@ function initializeProgress() {
 
     if (!storyContent || !progressBar) return;
 
+    // Skip scroll-based progress if using slide mode
+    if (!storyContent.classList.contains('classic-scroll')) {
+        return;
+    }
+
     window.addEventListener('scroll', function() {
         const scrollTop = window.scrollY;
         const docHeight = storyContent.offsetHeight - window.innerHeight;
-        const scrollPercent = Math.min((scrollTop / docHeight) * 100, 100);
+        if (docHeight <= 0) return;
+        const scrollPercent = Math.max(0, Math.min((scrollTop / docHeight) * 100, 100));
 
         progressBar.style.width = scrollPercent + '%';
         if (progressText) {
@@ -290,34 +296,56 @@ function resetFinalQuizCard(card) {
 }
 
 function showNextQuestion(currentIndex) {
-    const quizCards = document.querySelectorAll('.final-quiz-section .quiz-card');
-    const quizResults = document.getElementById('quizResults');
-    const videoSection = document.getElementById('videoSection');
-    const scoreDisplay = document.getElementById('scoreDisplay');
+    const storyContent = document.getElementById('storyContent');
+    const isSlideMode = storyContent && !storyContent.classList.contains('classic-scroll') && document.getElementById('storySlides');
 
-    if (currentIndex < quizCards.length - 1) {
-        // Show next question
-        quizCards[currentIndex + 1].classList.remove('hidden');
-        quizCards[currentIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
-    } else {
-        // Show results
-        if (quizResults) {
-            quizResults.classList.remove('hidden');
-            if (scoreDisplay) {
-                scoreDisplay.textContent = score;
+    if (isSlideMode) {
+        // In slide mode, just go to next slide
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        if (scoreDisplay) {
+            scoreDisplay.textContent = score;
+        }
+
+        setTimeout(() => {
+            nextSlide();
+            // Check if we're now on results slide
+            const currentSlideElement = document.querySelector('.story-slide[data-slide-index="' + currentSlide + '"]');
+            if (currentSlideElement && currentSlideElement.querySelector('.quiz-results')) {
+                createConfetti(currentSlideElement);
+                playSound('success');
             }
+        }, 1000);
+    } else {
+        // Classic scroll mode
+        const quizCards = document.querySelectorAll('.final-quiz-section .quiz-card');
+        const quizResults = document.getElementById('quizResults');
+        const videoSection = document.getElementById('videoSection');
+        const scoreDisplay = document.getElementById('scoreDisplay');
 
-            // Create celebration effect
-            createConfetti(quizResults);
-            playSound('success');
-
-            // Show video section after delay
-            setTimeout(() => {
-                if (videoSection) {
-                    videoSection.classList.remove('hidden');
-                    videoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (currentIndex < quizCards.length - 1) {
+            // Show next question
+            quizCards[currentIndex + 1].classList.remove('hidden');
+            quizCards[currentIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            // Show results
+            if (quizResults) {
+                quizResults.classList.remove('hidden');
+                if (scoreDisplay) {
+                    scoreDisplay.textContent = score;
                 }
-            }, 2000);
+
+                // Create celebration effect
+                createConfetti(quizResults);
+                playSound('success');
+
+                // Show video section after delay
+                setTimeout(() => {
+                    if (videoSection) {
+                        videoSection.classList.remove('hidden');
+                        videoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 2000);
+            }
         }
     }
 }
@@ -460,12 +488,39 @@ function initializeSlideMode() {
         return;
     }
 
-    const scenes = storyContent.querySelectorAll('.story-scene, .mini-quiz, .lesson-box, .dua-box');
-    if (scenes.length === 0) return;
+    // Get all content elements including final quiz and video
+    const storyScenes = storyContent.querySelectorAll('.story-scene, .mini-quiz, .lesson-box, .dua-box');
+    const finalQuizSection = document.getElementById('finalQuiz');
+    const videoSection = document.getElementById('videoSection');
 
-    totalSlides = scenes.length;
+    if (storyScenes.length === 0) return;
 
-    // Wrap scenes in slide container
+    // Collect all slide content
+    const allSlideContent = Array.from(storyScenes);
+
+    // Add final quiz intro and cards as slides
+    if (finalQuizSection) {
+        const quizIntro = finalQuizSection.querySelector('.quiz-intro');
+        const quizCards = finalQuizSection.querySelectorAll('.quiz-card');
+        const quizResults = finalQuizSection.querySelector('.quiz-results');
+
+        if (quizIntro) allSlideContent.push(quizIntro);
+        quizCards.forEach(card => {
+            card.classList.remove('hidden');
+            allSlideContent.push(card);
+        });
+        if (quizResults) allSlideContent.push(quizResults);
+    }
+
+    // Add video section as final slide
+    if (videoSection) {
+        allSlideContent.push(videoSection);
+    }
+
+    totalSlides = allSlideContent.length;
+    console.log('📖 Initializing slide mode with ' + totalSlides + ' slides');
+
+    // Create slides container
     const slidesContainer = document.createElement('div');
     slidesContainer.className = 'story-slides-container';
 
@@ -473,20 +528,23 @@ function initializeSlideMode() {
     slidesWrapper.className = 'story-slides';
     slidesWrapper.id = 'storySlides';
 
-    scenes.forEach((scene, index) => {
+    // Move all content into slides (not clone, to preserve event listeners)
+    allSlideContent.forEach((content, index) => {
         const slide = document.createElement('div');
         slide.className = 'story-slide';
         slide.dataset.slideIndex = index;
-        slide.appendChild(scene.cloneNode(true));
+        // Move the actual element, not a clone
+        slide.appendChild(content);
         slidesWrapper.appendChild(slide);
     });
 
+    // Hide original quiz and video sections since content moved to slides
+    if (finalQuizSection) finalQuizSection.style.display = 'none';
+    if (videoSection) videoSection.style.display = 'none';
+
     slidesContainer.appendChild(slidesWrapper);
 
-    // Remove original scenes
-    scenes.forEach(scene => scene.remove());
-
-    // Add slides container
+    // Insert at the beginning of story content
     storyContent.insertBefore(slidesContainer, storyContent.firstChild);
 
     // Add progress dots
@@ -509,15 +567,26 @@ function initializeSlideMode() {
     // Add navigation arrows
     const slideNav = document.createElement('div');
     slideNav.className = 'slide-navigation';
-    slideNav.innerHTML = [
-        '<button class="slide-nav-btn prev-btn" id="prevSlide" disabled>',
-        '    <span>◀</span>',
-        '</button>',
-        '<span class="slide-counter"><span id="currentSlideNum">1</span> / ' + totalSlides + '</span>',
-        '<button class="slide-nav-btn next-btn" id="nextSlide">',
-        '    <span>▶</span>',
-        '</button>'
-    ].join('');
+    slideNav.id = 'slideNavigation';
+
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'slide-nav-btn prev-btn';
+    prevBtn.id = 'prevSlide';
+    prevBtn.disabled = true;
+    prevBtn.textContent = '◀';
+
+    const counter = document.createElement('span');
+    counter.className = 'slide-counter';
+    counter.innerHTML = '<span id="currentSlideNum">1</span> / ' + totalSlides;
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'slide-nav-btn next-btn';
+    nextBtn.id = 'nextSlide';
+    nextBtn.textContent = '▶';
+
+    slideNav.appendChild(prevBtn);
+    slideNav.appendChild(counter);
+    slideNav.appendChild(nextBtn);
 
     progressDots.after(slideNav);
 
@@ -533,8 +602,8 @@ function initializeSlideMode() {
     }
 
     // Event listeners for navigation
-    document.getElementById('prevSlide').addEventListener('click', prevSlide);
-    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
 
     // Touch/swipe support
     slidesContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
@@ -547,6 +616,7 @@ function initializeSlideMode() {
     const slideQuizzes = slidesWrapper.querySelectorAll('.mini-quiz');
     slideQuizzes.forEach(quiz => setupMiniQuiz(quiz));
 
+    // Set initial progress
     updateSlideView();
 }
 
