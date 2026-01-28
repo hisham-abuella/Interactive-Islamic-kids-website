@@ -454,6 +454,12 @@ function initializeSlideMode() {
     const storyContent = document.getElementById('storyContent');
     if (!storyContent) return;
 
+    // Skip slide mode if story uses classic scroll format
+    if (storyContent.classList.contains('classic-scroll')) {
+        console.log('📜 Using classic scroll mode for this story');
+        return;
+    }
+
     const scenes = storyContent.querySelectorAll('.story-scene, .mini-quiz, .lesson-box, .dua-box');
     if (scenes.length === 0) return;
 
