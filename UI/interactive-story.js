@@ -4,8 +4,18 @@ let totalStars = 0;
 let soundEnabled = true;
 let lessonsChecked = 0;
 let brickCount = 0;
+let childName = '';
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Get saved name or show modal
+    childName = localStorage.getItem('islamicKidsName') || '';
+
+    if (!childName) {
+        showNameModal();
+    } else {
+        personalizeStory();
+    }
+
     initializeStarsCounter();
     initializeSoundToggle();
     initializeTapToReveal();
@@ -21,6 +31,102 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('🎮 Interactive Story features loaded!');
 });
+
+// Get personalized name for messages
+function getName() {
+    return childName ? childName : 'friend';
+}
+
+// Get personalized greeting
+function getGreeting() {
+    return childName ? (childName + ', ') : '';
+}
+
+// Name Modal
+function showNameModal() {
+    var modal = document.createElement('div');
+    modal.className = 'name-modal';
+    modal.id = 'nameModal';
+
+    var modalContent = document.createElement('div');
+    modalContent.className = 'name-modal-content';
+
+    var icon = document.createElement('div');
+    icon.className = 'modal-icon';
+    icon.textContent = '🌟';
+
+    var title = document.createElement('h2');
+    title.textContent = 'Assalamu Alaikum!';
+
+    var subtitle = document.createElement('p');
+    subtitle.textContent = "What's your name, little one?";
+
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'name-input';
+    input.placeholder = 'Enter your name...';
+    input.maxLength = 20;
+
+    var button = document.createElement('button');
+    button.className = 'name-submit-btn';
+    button.textContent = "Let's Begin! ✨";
+    button.addEventListener('click', function() {
+        submitName(input.value);
+    });
+
+    input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            submitName(input.value);
+        }
+    });
+
+    modalContent.appendChild(icon);
+    modalContent.appendChild(title);
+    modalContent.appendChild(subtitle);
+    modalContent.appendChild(input);
+    modalContent.appendChild(button);
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+
+    setTimeout(function() {
+        input.focus();
+    }, 100);
+}
+
+function submitName(name) {
+    name = name.trim();
+    if (name.length > 0) {
+        childName = name;
+        localStorage.setItem('islamicKidsName', name);
+    }
+
+    var modal = document.getElementById('nameModal');
+    if (modal) {
+        modal.classList.add('fade-out');
+        setTimeout(function() {
+            modal.remove();
+        }, 300);
+    }
+
+    personalizeStory();
+}
+
+function personalizeStory() {
+    // Add greeting to story header
+    var storyHeader = document.querySelector('.story-header');
+    if (storyHeader && !document.querySelector('.personal-greeting') && childName) {
+        var greeting = document.createElement('div');
+        greeting.className = 'personal-greeting';
+        greeting.textContent = '👋 Welcome, ' + childName + '! Ready for an adventure?';
+        storyHeader.insertBefore(greeting, storyHeader.firstChild);
+    }
+
+    // Update quiz results
+    var resultsH2 = document.querySelector('.results-content h2');
+    if (resultsH2 && childName) {
+        resultsH2.textContent = 'Amazing Job, ' + childName + '!';
+    }
+}
 
 // Stars Counter
 function initializeStarsCounter() {
@@ -130,14 +236,14 @@ function initializeInteractiveChoices() {
 
                 if (isCorrect) {
                     this.classList.add('selected-correct');
-                    feedback.textContent = '🎉 Correct! Great job!';
+                    feedback.textContent = '🎉 ' + getGreeting() + 'Correct! Great job!';
                     feedback.style.color = '#059669';
                     container.classList.add('answered');
                     addStars(2);
                     playSound('correct');
                 } else {
                     this.classList.add('selected-wrong');
-                    feedback.textContent = '🤔 Try again!';
+                    feedback.textContent = '🤔 ' + getGreeting() + 'Try again!';
                     feedback.style.color = '#dc2626';
                     playSound('wrong');
 
@@ -264,13 +370,13 @@ function initializeDragAndDrop() {
             correctPlacements++;
 
             if (correctPlacements === 3) {
-                feedback.textContent = '🎉 Perfect! You got them all right!';
+                feedback.textContent = '🎉 ' + getGreeting() + 'Perfect! You got them all right!';
                 feedback.style.color = '#059669';
                 addStars(3);
                 playSound('correct');
             }
         } else {
-            feedback.textContent = '🤔 Hmm, try putting that somewhere else!';
+            feedback.textContent = '🤔 ' + getGreeting() + 'Hmm, try putting that somewhere else!';
             feedback.style.color = '#dc2626';
             playSound('wrong');
 
@@ -314,14 +420,14 @@ function initializeEmotionCheck() {
             this.classList.add('selected');
 
             if (isCorrect) {
-                emotionFeedback.textContent = '🎉 Yes! Ibrahim felt peaceful because he trusted Allah completely!';
+                emotionFeedback.textContent = '🎉 ' + getGreeting() + 'Yes! Ibrahim felt peaceful because he trusted Allah completely!';
                 emotionFeedback.style.color = '#059669';
                 this.parentElement.classList.add('answered');
                 addStars(2);
                 playSound('correct');
             } else {
                 this.classList.add('wrong');
-                emotionFeedback.textContent = '🤔 Think about it... Ibrahim trusted Allah!';
+                emotionFeedback.textContent = '🤔 ' + getGreeting() + 'Think about it... Ibrahim trusted Allah!';
                 emotionFeedback.style.color = '#dc2626';
                 playSound('wrong');
             }
@@ -439,7 +545,7 @@ function initializeInteractiveLessons() {
             if (lessonsChecked === 4) {
                 var instruction = document.querySelector('.lesson-instruction');
                 if (instruction) {
-                    instruction.textContent = '🎉 Amazing! You learned all the lessons!';
+                    instruction.textContent = '🎉 ' + getGreeting() + 'Amazing! You learned all the lessons!';
                     instruction.style.color = '#059669';
                 }
             }
@@ -460,7 +566,7 @@ function initializeMemorizeButton() {
             // Clear and add new content safely
             this.textContent = '';
             var checkSpan = document.createElement('span');
-            checkSpan.textContent = '✅ Added to your duas!';
+            checkSpan.textContent = '✅ ' + getGreeting() + 'Added to your duas!';
             this.appendChild(checkSpan);
 
             // Save to localStorage
