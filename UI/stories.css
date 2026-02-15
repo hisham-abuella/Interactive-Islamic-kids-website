@@ -1280,3 +1280,180 @@
         min-height: 12px;
     }
 }
+
+/* =====================================================
+   RTL (Right-to-Left) Support for Arabic
+   ===================================================== */
+
+/* Base RTL Direction */
+html[lang="ar"] {
+    direction: rtl;
+}
+
+html[lang="ar"] body {
+    text-align: right;
+}
+
+/* Navbar RTL */
+html[lang="ar"] .navbar {
+    flex-direction: row-reverse;
+}
+
+html[lang="ar"] .nav-links {
+    flex-direction: row-reverse;
+}
+
+html[lang="ar"] .logo {
+    flex-direction: row-reverse;
+}
+
+/* Story Scene RTL */
+html[lang="ar"] .story-scene {
+    border-left: none;
+    border-right: 5px solid #10b981;
+    text-align: right;
+}
+
+/* Progress Bar RTL */
+html[lang="ar"] .progress-text {
+    right: auto;
+    left: 10px;
+}
+
+html[lang="ar"] .progress-bar {
+    background: linear-gradient(135deg, #f59e0b 0%, #10b981 100%);
+}
+
+/* Story Navigation RTL */
+html[lang="ar"] .story-navigation {
+    flex-direction: row-reverse;
+}
+
+html[lang="ar"] .nav-btn {
+    direction: rtl;
+}
+
+/* Lesson Box RTL */
+html[lang="ar"] .lesson-box {
+    border-left: none;
+    border-right: 5px solid #10b981;
+}
+
+/* Fun Fact RTL */
+html[lang="ar"] .fun-fact,
+html[lang="ar"] .lesson-reveal {
+    border-left: none;
+    border-right: 4px solid #10b981;
+}
+
+/* Highlight Text RTL */
+html[lang="ar"] .highlight-text {
+    border-left: none;
+    border-right: 4px solid #f59e0b;
+}
+
+/* Modal RTL */
+html[lang="ar"] .name-modal-content {
+    text-align: right;
+}
+
+/* Personal Greeting RTL */
+html[lang="ar"] .personal-greeting {
+    direction: rtl;
+}
+
+/* Quiz Options RTL */
+html[lang="ar"] .quiz-options {
+    direction: rtl;
+}
+
+/* Video Container RTL */
+html[lang="ar"] .video-container::before {
+    right: auto;
+    left: 20px;
+}
+
+/* Moral Takeaway RTL */
+html[lang="ar"] .moral-takeaway {
+    text-align: right;
+}
+
+/* Footer RTL */
+html[lang="ar"] .footer-content {
+    direction: rtl;
+}
+
+/* Floating Decorations - swap positions for RTL */
+html[lang="ar"] .floating-star,
+html[lang="ar"] .floating-lantern {
+    /* Keep decorations as is since they're visual */
+}
+
+/* Language Toggle Button */
+.lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.lang-toggle-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.lang-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* Mobile RTL adjustments */
+@media (max-width: 768px) {
+    html[lang="ar"] .story-scene {
+        text-align: center;
+    }
+
+    html[lang="ar"] .story-navigation {
+        flex-direction: column;
+    }
+
+    html[lang="ar"] .navbar {
+        flex-wrap: wrap;
+    }
+}
+
+/* Slide Navigation RTL */
+html[lang="ar"] .slide-navigation {
+    flex-direction: row-reverse;
+}
+
+/* CRITICAL: Force slides container to LTR to prevent positioning issues */
+html[lang="ar"] .story-slides-container {
+    direction: ltr;
+}
+
+html[lang="ar"] .story-slides {
+    direction: ltr;
+}
+
+/* But keep the slide content RTL for proper Arabic text display */
+html[lang="ar"] .story-slide {
+    direction: rtl;
+    text-align: right;
+}
+
+/* Progress dots stay LTR for proper visual order */
+html[lang="ar"] .slide-progress {
+    direction: ltr;
+}
+
+/* Featured Card RTL */
+html[lang="ar"] .story-select-card.featured::before {
+    direction: rtl;
+}

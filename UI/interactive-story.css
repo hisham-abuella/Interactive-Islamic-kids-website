@@ -756,3 +756,120 @@
         height: 20px;
     }
 }
+
+/* =====================================================
+   RTL (Right-to-Left) Support for Arabic - Interactive Elements
+   ===================================================== */
+
+/* Stars Counter RTL - move to left side */
+html[lang="ar"] .stars-counter {
+    right: auto;
+    left: 20px;
+}
+
+/* Sound Toggle RTL - move to right side */
+html[lang="ar"] .sound-toggle {
+    left: auto;
+    right: 20px;
+}
+
+/* Scene Reward RTL */
+html[lang="ar"] .scene-reward {
+    right: auto;
+    left: 10px;
+}
+
+/* Tap to Reveal RTL */
+html[lang="ar"] .tap-prompt {
+    flex-direction: row-reverse;
+}
+
+/* Interactive Choice RTL */
+html[lang="ar"] .interactive-choice {
+    text-align: right;
+}
+
+html[lang="ar"] .choice-options {
+    flex-direction: row-reverse;
+}
+
+/* Drag and Drop RTL */
+html[lang="ar"] .drag-drop-activity {
+    text-align: right;
+}
+
+html[lang="ar"] .drag-items {
+    flex-direction: row-reverse;
+}
+
+html[lang="ar"] .drop-zones {
+    flex-direction: row-reverse;
+}
+
+/* Emotion Check RTL */
+html[lang="ar"] .emotion-check {
+    text-align: right;
+}
+
+html[lang="ar"] .emotion-options {
+    flex-direction: row-reverse;
+}
+
+/* Lesson Items RTL */
+html[lang="ar"] .lesson-item {
+    flex-direction: row-reverse;
+    text-align: right;
+}
+
+html[lang="ar"] .lesson-item:hover {
+    transform: translateX(-5px);
+}
+
+/* Choice Feedback RTL */
+html[lang="ar"] .choice-feedback {
+    text-align: right;
+}
+
+/* Activity Feedback RTL */
+html[lang="ar"] .activity-feedback {
+    text-align: right;
+}
+
+/* Emotion Feedback RTL */
+html[lang="ar"] .emotion-feedback {
+    text-align: right;
+}
+
+/* Building Game RTL */
+html[lang="ar"] .building-game {
+    text-align: right;
+}
+
+/* Mobile RTL Adjustments */
+@media (max-width: 768px) {
+    html[lang="ar"] .stars-counter {
+        left: 10px;
+        right: auto;
+    }
+
+    html[lang="ar"] .sound-toggle {
+        right: 10px;
+        left: auto;
+    }
+
+    html[lang="ar"] .choice-options {
+        flex-direction: column;
+    }
+
+    html[lang="ar"] .drag-items {
+        flex-direction: column;
+    }
+
+    html[lang="ar"] .drop-zones {
+        flex-direction: column;
+    }
+
+    html[lang="ar"] .emotion-options {
+        flex-direction: column;
+    }
+}

@@ -28,9 +28,48 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeInteractiveLessons();
     initializeMemorizeButton();
     initializeSceneRewards();
+    initializeLanguageSupport();
 
     console.log('🎮 Interactive Story features loaded!');
 });
+
+// Language Support
+function initializeLanguageSupport() {
+    // Listen for language change events
+    document.addEventListener('languageChanged', function(e) {
+        updateDynamicText(e.detail.lang);
+    });
+}
+
+// Update dynamic text when language changes
+function updateDynamicText(lang) {
+    // Update question number templates
+    document.querySelectorAll('[data-i18n-template="questionOf"]').forEach(function(el) {
+        var num = el.dataset.num;
+        var total = el.dataset.total;
+        el.textContent = window.i18n.getText('questionOf', { num: num, total: total });
+    });
+
+    // Update personalized greeting if exists
+    var greeting = document.querySelector('.personal-greeting');
+    if (greeting && childName) {
+        greeting.textContent = '👋 ' + window.i18n.getText('welcomeMessage', { name: childName });
+    }
+
+    // Update results title if name exists
+    var resultsH2 = document.querySelector('.results-content h2');
+    if (resultsH2 && childName) {
+        resultsH2.textContent = window.i18n.getText('resultsTitleWithName', { name: childName });
+    }
+}
+
+// Helper to get translated text (with fallback)
+function getTranslatedText(key, replacements) {
+    if (window.i18n && window.i18n.getText) {
+        return window.i18n.getText(key, replacements);
+    }
+    return key;
+}
 
 // Get personalized name for messages
 function getName() {
@@ -56,20 +95,23 @@ function showNameModal() {
     icon.textContent = '🌟';
 
     var title = document.createElement('h2');
-    title.textContent = 'Assalamu Alaikum!';
+    title.textContent = getTranslatedText('modalGreeting');
+    title.setAttribute('data-i18n', 'modalGreeting');
 
     var subtitle = document.createElement('p');
-    subtitle.textContent = "What's your name, little one?";
+    subtitle.textContent = getTranslatedText('modalQuestion');
+    subtitle.setAttribute('data-i18n', 'modalQuestion');
 
     var input = document.createElement('input');
     input.type = 'text';
     input.className = 'name-input';
-    input.placeholder = 'Enter your name...';
+    input.placeholder = getTranslatedText('modalPlaceholder');
+    input.setAttribute('data-i18n-placeholder', 'modalPlaceholder');
     input.maxLength = 20;
 
     var button = document.createElement('button');
     button.className = 'name-submit-btn';
-    button.textContent = "Let's Begin! ✨";
+    button.textContent = getTranslatedText('modalButton') + ' ✨';
     button.addEventListener('click', function() {
         submitName(input.value);
     });
@@ -117,14 +159,14 @@ function personalizeStory() {
     if (storyHeader && !document.querySelector('.personal-greeting') && childName) {
         var greeting = document.createElement('div');
         greeting.className = 'personal-greeting';
-        greeting.textContent = '👋 Welcome, ' + childName + '! Ready for an adventure?';
+        greeting.textContent = '👋 ' + getTranslatedText('welcomeMessage', { name: childName });
         storyHeader.insertBefore(greeting, storyHeader.firstChild);
     }
 
     // Update quiz results
     var resultsH2 = document.querySelector('.results-content h2');
     if (resultsH2 && childName) {
-        resultsH2.textContent = 'Amazing Job, ' + childName + '!';
+        resultsH2.textContent = getTranslatedText('resultsTitleWithName', { name: childName });
     }
 }
 
@@ -236,14 +278,14 @@ function initializeInteractiveChoices() {
 
                 if (isCorrect) {
                     this.classList.add('selected-correct');
-                    feedback.textContent = '🎉 ' + getGreeting() + 'Correct! Great job!';
+                    feedback.textContent = '🎉 ' + getGreeting() + getTranslatedText('feedbackCorrect');
                     feedback.style.color = '#059669';
                     container.classList.add('answered');
                     addStars(2);
                     playSound('correct');
                 } else {
                     this.classList.add('selected-wrong');
-                    feedback.textContent = '🤔 ' + getGreeting() + 'Try again!';
+                    feedback.textContent = '🤔 ' + getGreeting() + getTranslatedText('feedbackTryAgain');
                     feedback.style.color = '#dc2626';
                     playSound('wrong');
 
@@ -370,13 +412,13 @@ function initializeDragAndDrop() {
             correctPlacements++;
 
             if (correctPlacements === 3) {
-                feedback.textContent = '🎉 ' + getGreeting() + 'Perfect! You got them all right!';
+                feedback.textContent = '🎉 ' + getGreeting() + getTranslatedText('feedbackPerfect');
                 feedback.style.color = '#059669';
                 addStars(3);
                 playSound('correct');
             }
         } else {
-            feedback.textContent = '🤔 ' + getGreeting() + 'Hmm, try putting that somewhere else!';
+            feedback.textContent = '🤔 ' + getGreeting() + getTranslatedText('feedbackTryElsewhere');
             feedback.style.color = '#dc2626';
             playSound('wrong');
 
@@ -420,14 +462,14 @@ function initializeEmotionCheck() {
             this.classList.add('selected');
 
             if (isCorrect) {
-                emotionFeedback.textContent = '🎉 ' + getGreeting() + 'Yes! Ibrahim felt peaceful because he trusted Allah completely!';
+                emotionFeedback.textContent = '🎉 ' + getGreeting() + getTranslatedText('feedbackCorrect');
                 emotionFeedback.style.color = '#059669';
                 this.parentElement.classList.add('answered');
                 addStars(2);
                 playSound('correct');
             } else {
                 this.classList.add('wrong');
-                emotionFeedback.textContent = '🤔 ' + getGreeting() + 'Think about it... Ibrahim trusted Allah!';
+                emotionFeedback.textContent = '🤔 ' + getGreeting() + getTranslatedText('feedbackThinkAgain');
                 emotionFeedback.style.color = '#dc2626';
                 playSound('wrong');
             }
@@ -444,7 +486,7 @@ function initializeCelebration() {
             if (this.classList.contains('celebrated')) return;
 
             this.classList.add('celebrated');
-            this.textContent = '🎊 SubhanAllah! 🎊';
+            this.textContent = '🎊 ' + getTranslatedText('feedbackSubhanAllah') + ' 🎊';
 
             playSound('celebrate');
             createMassiveConfetti();
@@ -545,7 +587,7 @@ function initializeInteractiveLessons() {
             if (lessonsChecked === 4) {
                 var instruction = document.querySelector('.lesson-instruction');
                 if (instruction) {
-                    instruction.textContent = '🎉 ' + getGreeting() + 'Amazing! You learned all the lessons!';
+                    instruction.textContent = '🎉 ' + getGreeting() + getTranslatedText('feedbackAllLessons');
                     instruction.style.color = '#059669';
                 }
             }
@@ -566,15 +608,15 @@ function initializeMemorizeButton() {
             // Clear and add new content safely
             this.textContent = '';
             var checkSpan = document.createElement('span');
-            checkSpan.textContent = '✅ ' + getGreeting() + 'Added to your duas!';
+            checkSpan.textContent = '✅ ' + getGreeting() + getTranslatedText('memorizeSaved');
             this.appendChild(checkSpan);
 
             // Save to localStorage
             var savedDuas = JSON.parse(localStorage.getItem('savedDuas') || '[]');
             savedDuas.push({
-                arabic: 'رَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنتَ السَّمِيعُ الْعَلِيمُ',
-                translation: 'Our Lord, accept from us. Indeed You are the Hearing, the Knowing.',
-                source: 'Prophet Ibrahim'
+                arabic: 'رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ',
+                translation: 'Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers.',
+                source: 'Prophet Adam'
             });
             localStorage.setItem('savedDuas', JSON.stringify(savedDuas));
 

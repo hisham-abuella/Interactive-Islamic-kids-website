@@ -5,9 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prophet Adam - The First Human - Islamic Kids</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Arabic font for RTL support -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="stories.css">
     <link rel="stylesheet" href="interactive-story.css">
+    <style>
+        /* Arabic font family */
+        html[lang="ar"] body {
+            font-family: 'Noto Sans Arabic', 'Poppins', sans-serif;
+        }
+    </style>
 </head>
 <body>
     <!-- Floating Decorations -->
@@ -26,11 +34,15 @@
                 <h1>Islamic Kids</h1>
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="stories.html" class="active">Stories</a></li>
-                <li><a href="#learn">Learn</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="index.html" data-i18n="navHome">Home</a></li>
+                <li><a href="stories.html" class="active" data-i18n="navStories">Stories</a></li>
+                <li><a href="#learn" data-i18n="navLearn">Learn</a></li>
+                <li><a href="#about" data-i18n="navAbout">About</a></li>
             </ul>
+            <!-- Language Toggle -->
+            <div class="lang-toggle">
+                <button class="lang-toggle-btn" onclick="window.i18n.toggleLanguage()" title="Switch Language">AR</button>
+            </div>
         </nav>
     </header>
 
@@ -52,8 +64,8 @@
             <!-- Story Header -->
             <div class="story-header">
                 <div class="story-icon animated-icon">🌍</div>
-                <h1 class="story-title">Prophet Adam - The First Human</h1>
-                <p class="story-subtitle">An Interactive Adventure</p>
+                <h1 class="story-title" data-i18n="storyTitle">Prophet Adam - The First Human</h1>
+                <p class="story-subtitle" data-i18n="storySubtitle">An Interactive Adventure</p>
             </div>
 
             <!-- Progress Bar -->
@@ -71,19 +83,19 @@
                         <span class="main-emoji animated-bounce">🏺</span>
                     </div>
                     <div class="scene-text">
-                        <h2>A Special Creation</h2>
-                        <p>Before there were any people on Earth, Allah decided to create something very special. Allah told the angels: "I am going to create a human being from clay."</p>
+                        <h2 data-i18n="scene1Title">A Special Creation</h2>
+                        <p data-i18n="scene1Text">Before there were any people on Earth, Allah decided to create something very special. Allah told the angels: "I am going to create a human being from clay."</p>
 
                         <!-- Tap to Reveal -->
                         <div class="tap-to-reveal" data-reveal="fact1">
                             <div class="tap-prompt">
                                 <span class="tap-icon">👆</span>
-                                <span>Tap to learn how Adam was made!</span>
+                                <span data-i18n="scene1TapPrompt">Tap to learn how Adam was made!</span>
                             </div>
                             <div class="revealed-content hidden">
                                 <div class="fun-fact">
                                     <span class="fact-icon">💡</span>
-                                    <p>Allah created Adam from different types of clay from all over the Earth. That's why people today have different skin colors - beautiful shades of brown, tan, and more!</p>
+                                    <p data-i18n="scene1Fact">Allah created Adam from different types of clay from all over the Earth. That's why people today have different skin colors - beautiful shades of brown, tan, and more!</p>
                                 </div>
                             </div>
                         </div>
@@ -100,20 +112,20 @@
                         </div>
                     </div>
                     <div class="scene-text">
-                        <h2>The Gift of Life</h2>
-                        <p>After shaping Adam's body from clay, Allah blew the soul into him. Suddenly, Adam opened his eyes! He could see, hear, think, and feel. SubhanAllah!</p>
+                        <h2 data-i18n="scene2Title">The Gift of Life</h2>
+                        <p data-i18n="scene2Text">After shaping Adam's body from clay, Allah blew the soul into him. Suddenly, Adam opened his eyes! He could see, hear, think, and feel. SubhanAllah!</p>
 
                         <!-- Interactive Choice -->
                         <div class="interactive-choice" data-choice="first">
-                            <p class="choice-question">What was the first thing Adam said?</p>
+                            <p class="choice-question" data-i18n="scene2Question">What was the first thing Adam said?</p>
                             <div class="choice-options">
                                 <button class="choice-btn" data-answer="alhamdulillah" data-correct="true">
                                     <span class="choice-emoji">🤲</span>
-                                    <span>Alhamdulillah</span>
+                                    <span data-i18n="scene2AnswerCorrect">Alhamdulillah</span>
                                 </button>
                                 <button class="choice-btn" data-answer="hello" data-correct="false">
                                     <span class="choice-emoji">👋</span>
-                                    <span>Hello</span>
+                                    <span data-i18n="scene2AnswerWrong">Hello</span>
                                 </button>
                             </div>
                             <div class="choice-feedback"></div>
@@ -128,17 +140,17 @@
                         <span class="main-emoji angel-glow">👼</span>
                     </div>
                     <div class="scene-text">
-                        <h2>The Angels Bow Down</h2>
-                        <p>Allah commanded all the angels to bow down to Adam as a sign of respect. All the angels obeyed Allah and prostrated to Adam right away!</p>
+                        <h2 data-i18n="scene3Title">The Angels Bow Down</h2>
+                        <p data-i18n="scene3Text">Allah commanded all the angels to bow down to Adam as a sign of respect. All the angels obeyed Allah and prostrated to Adam right away!</p>
 
                         <!-- Shake/Tap Animation -->
                         <div class="shake-to-animate" id="angelBow">
-                            <p class="shake-prompt">👆 Tap to see the angels bow!</p>
+                            <p class="shake-prompt"><span>👆</span> <span data-i18n="scene3TapPrompt">Tap to see the angels bow!</span></p>
                             <div class="shakeable-element angel-element" id="shakeableAngel">
                                 👼
                             </div>
                             <div class="shake-result hidden" id="angelResult">
-                                <p>The angels all bowed down to Adam! 🙇‍♂️✨</p>
+                                <p><span data-i18n="scene3Result">The angels all bowed down to Adam!</span> 🙇‍♂️✨</p>
                             </div>
                         </div>
                     </div>
@@ -151,16 +163,16 @@
                         <span class="main-emoji">😠</span>
                     </div>
                     <div class="scene-text">
-                        <h2>One Who Refused</h2>
-                        <p>But there was one who did not bow - Iblis (Shaytan). He was proud and arrogant. "I am better than him!" he said. "You made me from fire and him from clay!"</p>
-                        <p class="highlight-text">Pride and arrogance are very bad! We should always be humble.</p>
+                        <h2 data-i18n="scene4Title">One Who Refused</h2>
+                        <p data-i18n="scene4Text">But there was one who did not bow - Iblis (Shaytan). He was proud and arrogant. "I am better than him!" he said. "You made me from fire and him from clay!"</p>
+                        <p class="highlight-text" data-i18n="scene4Highlight">Pride and arrogance are very bad! We should always be humble.</p>
 
                         <div class="emotion-check">
-                            <p>How do you think Allah felt about Iblis refusing?</p>
+                            <p data-i18n="scene4Question">How do you think Allah felt about Iblis refusing?</p>
                             <div class="emotion-options">
-                                <button class="emotion-btn" data-emotion="happy">😊 Happy</button>
-                                <button class="emotion-btn correct" data-emotion="displeased">😔 Displeased</button>
-                                <button class="emotion-btn" data-emotion="surprised">😮 Surprised</button>
+                                <button class="emotion-btn" data-emotion="happy">😊 <span data-i18n="scene4Happy">Happy</span></button>
+                                <button class="emotion-btn correct" data-emotion="displeased">😔 <span data-i18n="scene4Displeased">Displeased</span></button>
+                                <button class="emotion-btn" data-emotion="surprised">😮 <span data-i18n="scene4Surprised">Surprised</span></button>
                             </div>
                             <div class="emotion-feedback"></div>
                         </div>
@@ -174,12 +186,12 @@
                         <span class="main-emoji book-glow">📚</span>
                     </div>
                     <div class="scene-text">
-                        <h2>Adam Learns Names</h2>
-                        <p>Allah taught Adam the names of everything - animals, plants, objects, and more! When Allah asked the angels about these names, they didn't know. But Adam knew them all!</p>
+                        <h2 data-i18n="scene5Title">Adam Learns Names</h2>
+                        <p data-i18n="scene5Text">Allah taught Adam the names of everything - animals, plants, objects, and more! When Allah asked the angels about these names, they didn't know. But Adam knew them all!</p>
 
                         <!-- Drag and Drop Activity -->
                         <div class="drag-drop-activity" id="namesActivity">
-                            <p class="activity-title">🎯 Match the names! Drag each item to its name!</p>
+                            <p class="activity-title">🎯 <span data-i18n="scene5Activity">Match the names! Drag each item to its name!</span></p>
                             <div class="drag-items">
                                 <div class="drag-item" draggable="true" data-item="sun">☀️</div>
                                 <div class="drag-item" draggable="true" data-item="tree">🌳</div>
@@ -187,13 +199,13 @@
                             </div>
                             <div class="drop-zones">
                                 <div class="drop-zone" data-accepts="sun">
-                                    <p>Sun</p>
+                                    <p data-i18n="scene5Sun">Sun</p>
                                 </div>
                                 <div class="drop-zone" data-accepts="tree">
-                                    <p>Tree</p>
+                                    <p data-i18n="scene5Tree">Tree</p>
                                 </div>
                                 <div class="drop-zone" data-accepts="bird">
-                                    <p>Bird</p>
+                                    <p data-i18n="scene5Bird">Bird</p>
                                 </div>
                             </div>
                             <div class="activity-feedback" id="dragFeedback"></div>
@@ -208,21 +220,21 @@
                         <span class="main-emoji love-glow">👫</span>
                     </div>
                     <div class="scene-text">
-                        <h2>A Companion for Adam</h2>
-                        <p>Allah created Hawa (Eve) as a companion for Adam. They lived happily together in Jannah (Paradise), a beautiful garden with everything they could ever want!</p>
+                        <h2 data-i18n="scene6Title">A Companion for Adam</h2>
+                        <p data-i18n="scene6Text">Allah created Hawa (Eve) as a companion for Adam. They lived happily together in Jannah (Paradise), a beautiful garden with everything they could ever want!</p>
 
                         <div class="tap-to-reveal" data-reveal="jannah">
                             <div class="tap-prompt">
                                 <span class="tap-icon">🌸</span>
-                                <span>Tap to see what Jannah was like!</span>
+                                <span data-i18n="scene6TapPrompt">Tap to see what Jannah was like!</span>
                             </div>
                             <div class="revealed-content hidden">
                                 <div class="fun-fact jannah-description">
-                                    <p>🌺 Beautiful flowers everywhere</p>
-                                    <p>🍎 Delicious fruits to eat</p>
-                                    <p>💧 Rivers of pure water</p>
-                                    <p>🦋 Friendly animals all around</p>
-                                    <p>☀️ Perfect weather always</p>
+                                    <p>🌺 <span data-i18n="scene6Jannah1">Beautiful flowers everywhere</span></p>
+                                    <p>🍎 <span data-i18n="scene6Jannah2">Delicious fruits to eat</span></p>
+                                    <p>💧 <span data-i18n="scene6Jannah3">Rivers of pure water</span></p>
+                                    <p>🦋 <span data-i18n="scene6Jannah4">Friendly animals all around</span></p>
+                                    <p>☀️ <span data-i18n="scene6Jannah5">Perfect weather always</span></p>
                                 </div>
                             </div>
                         </div>
@@ -236,19 +248,19 @@
                         <span class="main-emoji tree-forbidden">🌲</span>
                     </div>
                     <div class="scene-text">
-                        <h2>One Rule</h2>
-                        <p>Allah told Adam and Hawa they could enjoy everything in Jannah, but there was ONE tree they should not go near. "Do not approach this tree," Allah said.</p>
+                        <h2 data-i18n="scene7Title">One Rule</h2>
+                        <p data-i18n="scene7Text">Allah told Adam and Hawa they could enjoy everything in Jannah, but there was ONE tree they should not go near. "Do not approach this tree," Allah said.</p>
 
                         <div class="interactive-choice" data-choice="tree">
-                            <p class="choice-question">Why do you think Allah gave them this rule?</p>
+                            <p class="choice-question" data-i18n="scene7Question">Why do you think Allah gave them this rule?</p>
                             <div class="choice-options">
                                 <button class="choice-btn" data-answer="test" data-correct="true">
                                     <span class="choice-emoji">📝</span>
-                                    <span>To test their obedience</span>
+                                    <span data-i18n="scene7AnswerCorrect">To test their obedience</span>
                                 </button>
                                 <button class="choice-btn" data-answer="mean" data-correct="false">
                                     <span class="choice-emoji">😢</span>
-                                    <span>To be mean</span>
+                                    <span data-i18n="scene7AnswerWrong">To be mean</span>
                                 </button>
                             </div>
                             <div class="choice-feedback"></div>
@@ -263,20 +275,20 @@
                         <span class="main-emoji sad-emoji">😢</span>
                     </div>
                     <div class="scene-text">
-                        <h2>A Mistake</h2>
-                        <p>Shaytan whispered to Adam and Hawa and tricked them. They ate from the forbidden tree. As soon as they did, they realized they had made a big mistake!</p>
-                        <p class="highlight-text">Shaytan is always trying to trick us. We must be careful!</p>
+                        <h2 data-i18n="scene8Title">A Mistake</h2>
+                        <p data-i18n="scene8Text">Shaytan whispered to Adam and Hawa and tricked them. They ate from the forbidden tree. As soon as they did, they realized they had made a big mistake!</p>
+                        <p class="highlight-text" data-i18n="scene8Highlight">Shaytan is always trying to trick us. We must be careful!</p>
 
                         <div class="tap-to-reveal" data-reveal="lesson1">
                             <div class="tap-prompt">
                                 <span class="tap-icon">⚠️</span>
-                                <span>What can we learn from this?</span>
+                                <span data-i18n="scene8TapPrompt">What can we learn from this?</span>
                             </div>
                             <div class="revealed-content hidden">
                                 <div class="lesson-reveal">
-                                    <p>🛡️ Always listen to Allah's commands</p>
-                                    <p>🚫 Don't listen to Shaytan's whispers</p>
-                                    <p>💪 Say "A'udhu billahi min ash-shaytan ir-rajim" to seek protection</p>
+                                    <p>🛡️ <span data-i18n="scene8Lesson1">Always listen to Allah's commands</span></p>
+                                    <p>🚫 <span data-i18n="scene8Lesson2">Don't listen to Shaytan's whispers</span></p>
+                                    <p>💪 <span data-i18n="scene8Lesson3">Say "A'udhu billahi min ash-shaytan ir-rajim" to seek protection</span></p>
                                 </div>
                             </div>
                         </div>
@@ -290,14 +302,14 @@
                         <span class="main-emoji prayer-glow">🤲</span>
                     </div>
                     <div class="scene-text">
-                        <h2>Asking for Forgiveness</h2>
-                        <p>Adam and Hawa felt very sorry. They turned to Allah and said:</p>
-                        <p class="quran-text">"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy on us, we will surely be among the losers."</p>
-                        <p>And SubhanAllah - Allah forgave them! Allah is the Most Merciful!</p>
+                        <h2 data-i18n="scene9Title">Asking for Forgiveness</h2>
+                        <p data-i18n="scene9Text1">Adam and Hawa felt very sorry. They turned to Allah and said:</p>
+                        <p class="quran-text" data-i18n="scene9Quran">"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy on us, we will surely be among the losers."</p>
+                        <p data-i18n="scene9Text2">And SubhanAllah - Allah forgave them! Allah is the Most Merciful!</p>
 
                         <!-- Celebration Animation -->
                         <div class="celebration-trigger" id="forgivenessCelebration">
-                            <button class="celebrate-btn">🎉 Allah Forgave Them!</button>
+                            <button class="celebrate-btn">🎉 <span data-i18n="scene9Celebrate">Allah Forgave Them!</span></button>
                         </div>
                     </div>
                     <div class="scene-reward" data-stars="2">+2 ⭐</div>
@@ -309,21 +321,21 @@
                         <span class="main-emoji earth-spin">🌍</span>
                     </div>
                     <div class="scene-text">
-                        <h2>A New Home on Earth</h2>
-                        <p>Adam and Hawa were sent to live on Earth. Allah told them that Earth would be their home, and from them would come all the people of the world - including you!</p>
+                        <h2 data-i18n="scene10Title">A New Home on Earth</h2>
+                        <p data-i18n="scene10Text">Adam and Hawa were sent to live on Earth. Allah told them that Earth would be their home, and from them would come all the people of the world - including you!</p>
 
                         <!-- Family Tree Mini-Game -->
                         <div class="building-game" id="familyGame">
-                            <p>👨‍👩‍👧‍👦 Tap to see how all humans are connected!</p>
+                            <p>👨‍👩‍👧‍👦 <span data-i18n="scene10Activity">Tap to see how all humans are connected!</span></p>
                             <div class="building-progress">
                                 <div class="family-tree" id="familyTree">
                                     <div class="family-row top-row"></div>
                                     <div class="family-row middle-row"></div>
                                     <div class="family-row bottom-row"></div>
                                 </div>
-                                <div class="build-counter">People: <span id="brickCount">0</span>/7</div>
+                                <div class="build-counter"><span data-i18n="scene10Counter">People:</span> <span id="brickCount">0</span>/7</div>
                             </div>
-                            <button class="build-btn" id="addBrickBtn">👤 Add Person</button>
+                            <button class="build-btn" id="addBrickBtn">👤 <span data-i18n="scene10AddBtn">Add Person</span></button>
                         </div>
                     </div>
                     <div class="scene-reward" data-stars="3">+3 ⭐</div>
@@ -331,37 +343,37 @@
 
                 <!-- Lesson Box -->
                 <div class="lesson-box interactive-lesson">
-                    <h3>🌟 What We Learn from Prophet Adam</h3>
+                    <h3>🌟 <span data-i18n="lessonTitle">What We Learn from Prophet Adam</span></h3>
                     <div class="lesson-items">
                         <div class="lesson-item" data-lesson="1">
                             <span class="lesson-check">☐</span>
-                            <span class="lesson-text">Allah created all humans - we are all one family!</span>
+                            <span class="lesson-text" data-i18n="lesson1">Allah created all humans - we are all one family!</span>
                         </div>
                         <div class="lesson-item" data-lesson="2">
                             <span class="lesson-check">☐</span>
-                            <span class="lesson-text">Don't be proud like Iblis - always be humble</span>
+                            <span class="lesson-text" data-i18n="lesson2">Don't be proud like Iblis - always be humble</span>
                         </div>
                         <div class="lesson-item" data-lesson="3">
                             <span class="lesson-check">☐</span>
-                            <span class="lesson-text">When we make mistakes, ask Allah for forgiveness</span>
+                            <span class="lesson-text" data-i18n="lesson3">When we make mistakes, ask Allah for forgiveness</span>
                         </div>
                         <div class="lesson-item" data-lesson="4">
                             <span class="lesson-check">☐</span>
-                            <span class="lesson-text">Allah is Most Merciful and loves to forgive</span>
+                            <span class="lesson-text" data-i18n="lesson4">Allah is Most Merciful and loves to forgive</span>
                         </div>
                     </div>
-                    <p class="lesson-instruction">👆 Tap each lesson to mark it as learned!</p>
+                    <p class="lesson-instruction">👆 <span data-i18n="lessonInstruction">Tap each lesson to mark it as learned!</span></p>
                 </div>
 
                 <!-- Dua Box -->
                 <div class="dua-box">
-                    <h3>🤲 Adam's Dua for Forgiveness</h3>
+                    <h3>🤲 <span data-i18n="duaTitle">Adam's Dua for Forgiveness</span></h3>
                     <p class="arabic-text">رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ</p>
-                    <p class="dua-translation">"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers."</p>
-                    <p class="dua-note">Say this dua when you make a mistake and want Allah's forgiveness!</p>
+                    <p class="dua-translation" data-i18n="duaTranslation">"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers."</p>
+                    <p class="dua-note" data-i18n="duaNote">Say this dua when you make a mistake and want Allah's forgiveness!</p>
 
                     <button class="memorize-btn" id="memorizeBtn">
-                        <span>📝 I want to memorize this!</span>
+                        <span>📝 <span data-i18n="memorizeBtn">I want to memorize this!</span></span>
                     </button>
                 </div>
 
@@ -371,42 +383,42 @@
             <div class="final-quiz-section" id="finalQuiz">
                 <div class="quiz-intro">
                     <div class="quiz-lantern">🏮</div>
-                    <h2>Story Complete! Final Challenge!</h2>
-                    <p>Answer these questions to earn bonus stars!</p>
+                    <h2 data-i18n="quizTitle">Story Complete! Final Challenge!</h2>
+                    <p data-i18n="quizSubtitle">Answer these questions to earn bonus stars!</p>
                 </div>
 
                 <div class="quiz-card" data-question="1">
-                    <div class="question-number">Question 1 of 3</div>
-                    <p class="quiz-question">What was Adam created from?</p>
+                    <div class="question-number" data-i18n-template="questionOf" data-num="1" data-total="3">Question 1 of 3</div>
+                    <p class="quiz-question" data-i18n="q1Question">What was Adam created from?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">Light</button>
-                        <button class="quiz-option" data-correct="true">Clay</button>
-                        <button class="quiz-option" data-correct="false">Fire</button>
-                        <button class="quiz-option" data-correct="false">Water</button>
+                        <button class="quiz-option" data-correct="false" data-i18n="q1Option1">Light</button>
+                        <button class="quiz-option" data-correct="true" data-i18n="q1Option2">Clay</button>
+                        <button class="quiz-option" data-correct="false" data-i18n="q1Option3">Fire</button>
+                        <button class="quiz-option" data-correct="false" data-i18n="q1Option4">Water</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="2">
-                    <div class="question-number">Question 2 of 3</div>
-                    <p class="quiz-question">Who refused to bow to Adam?</p>
+                    <div class="question-number" data-i18n-template="questionOf" data-num="2" data-total="3">Question 2 of 3</div>
+                    <p class="quiz-question" data-i18n="q2Question">Who refused to bow to Adam?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">The angels</button>
-                        <button class="quiz-option" data-correct="false">Hawa</button>
-                        <button class="quiz-option" data-correct="true">Iblis (Shaytan)</button>
-                        <button class="quiz-option" data-correct="false">The animals</button>
+                        <button class="quiz-option" data-correct="false" data-i18n="q2Option1">The angels</button>
+                        <button class="quiz-option" data-correct="false" data-i18n="q2Option2">Hawa</button>
+                        <button class="quiz-option" data-correct="true" data-i18n="q2Option3">Iblis (Shaytan)</button>
+                        <button class="quiz-option" data-correct="false" data-i18n="q2Option4">The animals</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="3">
-                    <div class="question-number">Question 3 of 3</div>
-                    <p class="quiz-question">What happened when Adam asked Allah for forgiveness?</p>
+                    <div class="question-number" data-i18n-template="questionOf" data-num="3" data-total="3">Question 3 of 3</div>
+                    <p class="quiz-question" data-i18n="q3Question">What happened when Adam asked Allah for forgiveness?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">Allah was angry</button>
-                        <button class="quiz-option" data-correct="true">Allah forgave him</button>
-                        <button class="quiz-option" data-correct="false">Nothing happened</button>
-                        <button class="quiz-option" data-correct="false">Adam had to wait</button>
+                        <button class="quiz-option" data-correct="false" data-i18n="q3Option1">Allah was angry</button>
+                        <button class="quiz-option" data-correct="true" data-i18n="q3Option2">Allah forgave him</button>
+                        <button class="quiz-option" data-correct="false" data-i18n="q3Option3">Nothing happened</button>
+                        <button class="quiz-option" data-correct="false" data-i18n="q3Option4">Adam had to wait</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
@@ -414,10 +426,10 @@
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
                         <div class="results-icon">🎉</div>
-                        <h2>Amazing Job!</h2>
-                        <p class="results-score">You got <span id="scoreDisplay">0</span> out of 3 correct!</p>
+                        <h2 data-i18n="resultsTitle">Amazing Job!</h2>
+                        <p class="results-score"><span data-i18n-template="resultsScore" data-score="0" data-total="3">You got <span id="scoreDisplay">0</span> out of 3 correct!</span></p>
                         <div class="final-stars">
-                            <p>Total Stars Earned: <span id="totalStars">0</span> ⭐</p>
+                            <p><span data-i18n="totalStarsEarned">Total Stars Earned:</span> <span id="totalStars">0</span> ⭐</p>
                         </div>
                     </div>
                 </div>
@@ -430,8 +442,8 @@
                         <span class="unlock-lantern">🏮</span>
                         <span class="unlock-stars">✨</span>
                     </div>
-                    <h2>🎬 Bonus Video Unlocked!</h2>
-                    <p>Watch this beautiful story about Prophet Adam!</p>
+                    <h2>🎬 <span data-i18n="videoUnlock">Bonus Video Unlocked!</span></h2>
+                    <p data-i18n="videoSubtitle">Watch this beautiful story about Prophet Adam!</p>
                 </div>
                 <div class="video-container">
                     <div class="video-frame">
@@ -450,8 +462,8 @@
 
             <!-- Story Navigation -->
             <div class="story-navigation">
-                <a href="stories.html" class="nav-btn">← Back to Stories</a>
-                <a href="story-prophet-ibrahim.html" class="nav-btn next">Next Story: Prophet Ibrahim →</a>
+                <a href="stories.html" class="nav-btn"><span class="nav-arrow-left">←</span> <span data-i18n="backToStories">Back to Stories</span></a>
+                <a href="story-prophet-ibrahim.html" class="nav-btn next"><span data-i18n="nextStory">Next Story: Prophet Ibrahim</span> <span class="nav-arrow-right">→</span></a>
             </div>
 
         </div>
@@ -461,16 +473,25 @@
     <footer>
         <div class="footer-content">
             <div class="moral-takeaway">
-                <h4>💎 Today's Moral</h4>
-                <p>"When you make a mistake, say sorry to Allah - He loves to forgive!"</p>
+                <h4>💎 <span data-i18n="moralTitle">Today's Moral</span></h4>
+                <p data-i18n="moralText">"When you make a mistake, say sorry to Allah - He loves to forgive!"</p>
             </div>
-            <p class="footer-subtitle">🌙 Islamic Kids Stories ✨</p>
+            <p class="footer-subtitle">🌙 <span data-i18n="footerSubtitle">Islamic Kids Stories</span> ✨</p>
         </div>
     </footer>
 
+    <script src="translations.js"></script>
     <script src="stories.js"></script>
     <script src="interactive-story.js"></script>
     <script>
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize language system
+            if (window.i18n) {
+                window.i18n.initializeLanguage();
+            }
+        });
+
         // Override for Adam story - different localStorage keys
         window.addEventListener('load', function() {
             // Use Adam-specific star count
