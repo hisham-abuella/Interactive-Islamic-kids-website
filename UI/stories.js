@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeModeButtons();
     initializeSoundEffects();
     initializeSlideMode();
+    initializeFullscreenMode();
+    initializeBackgroundAnimations();
 });
 
 // Name Input Modal
@@ -727,5 +729,274 @@ function handleKeyNavigation(e) {
             break;
     }
 }
+
+// =====================================================
+// FULLSCREEN MODE
+// =====================================================
+
+let isFullscreen = false;
+let controlsFadeTimeout = null;
+
+function initializeFullscreenMode() {
+    const storyContainer = document.querySelector('.story-container');
+    if (!storyContainer) return;
+
+    // Create fullscreen toggle button
+    const fullscreenBtn = document.createElement('button');
+    fullscreenBtn.className = 'fullscreen-toggle';
+    fullscreenBtn.id = 'fullscreenToggle';
+    fullscreenBtn.textContent = '⛶';
+    fullscreenBtn.title = 'Toggle Fullscreen';
+    fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+    document.body.appendChild(fullscreenBtn);
+
+    // Listen for ESC key to exit fullscreen
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && isFullscreen) {
+            exitFullscreen();
+        }
+    });
+
+    // Listen for fullscreen change events (browser fullscreen)
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+
+    console.log('🖥️ Fullscreen mode initialized');
+}
+
+function toggleFullscreen() {
+    if (isFullscreen) {
+        exitFullscreen();
+    } else {
+        enterFullscreen();
+    }
+}
+
+function enterFullscreen() {
+    const storyContainer = document.querySelector('.story-container');
+    const fullscreenBtn = document.getElementById('fullscreenToggle');
+
+    if (!storyContainer) return;
+
+    isFullscreen = true;
+
+    // Add fullscreen classes
+    storyContainer.classList.add('fullscreen-active');
+    document.body.classList.add('fullscreen-mode');
+
+    // Update button icon
+    if (fullscreenBtn) {
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.display = 'none';
+    }
+
+    // Create fullscreen controls
+    createFullscreenControls();
+
+    // Try to enter browser fullscreen
+    try {
+        if (storyContainer.requestFullscreen) {
+            storyContainer.requestFullscreen();
+        } else if (storyContainer.webkitRequestFullscreen) {
+            storyContainer.webkitRequestFullscreen();
+        }
+    } catch (e) {
+        console.log('Browser fullscreen not available, using CSS fullscreen');
+    }
+
+    // Start control fade timer
+    startControlsFadeTimer();
+
+    console.log('🖥️ Entered fullscreen mode');
+}
+
+function exitFullscreen() {
+    const storyContainer = document.querySelector('.story-container');
+    const fullscreenBtn = document.getElementById('fullscreenToggle');
+    const controls = document.getElementById('fullscreenControls');
+
+    isFullscreen = false;
+
+    // Remove fullscreen classes
+    if (storyContainer) {
+        storyContainer.classList.remove('fullscreen-active');
+    }
+    document.body.classList.remove('fullscreen-mode');
+
+    // Update button
+    if (fullscreenBtn) {
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.display = 'flex';
+    }
+
+    // Remove fullscreen controls
+    if (controls) {
+        controls.remove();
+    }
+
+    // Exit browser fullscreen
+    try {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        }
+    } catch (e) {
+        // Already not in fullscreen
+    }
+
+    // Clear fade timer
+    if (controlsFadeTimeout) {
+        clearTimeout(controlsFadeTimeout);
+    }
+
+    console.log('🖥️ Exited fullscreen mode');
+}
+
+function createFullscreenControls() {
+    // Remove existing controls
+    const existing = document.getElementById('fullscreenControls');
+    if (existing) existing.remove();
+
+    const controls = document.createElement('div');
+    controls.className = 'fullscreen-controls';
+    controls.id = 'fullscreenControls';
+
+    const exitBtn = document.createElement('button');
+    exitBtn.className = 'fullscreen-exit-btn';
+    exitBtn.textContent = '✕ Exit Fullscreen';
+    exitBtn.addEventListener('click', exitFullscreen);
+
+    controls.appendChild(exitBtn);
+    document.body.appendChild(controls);
+
+    // Add mouse move listener to show controls
+    document.addEventListener('mousemove', handleMouseMove);
+}
+
+function handleMouseMove() {
+    const controls = document.getElementById('fullscreenControls');
+    if (controls && isFullscreen) {
+        controls.classList.remove('faded');
+        startControlsFadeTimer();
+    }
+}
+
+function startControlsFadeTimer() {
+    if (controlsFadeTimeout) {
+        clearTimeout(controlsFadeTimeout);
+    }
+
+    controlsFadeTimeout = setTimeout(function() {
+        const controls = document.getElementById('fullscreenControls');
+        if (controls && isFullscreen) {
+            controls.classList.add('faded');
+        }
+    }, 3000);
+}
+
+function handleFullscreenChange() {
+    // If browser exits fullscreen (e.g., ESC key), sync our state
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && isFullscreen) {
+        exitFullscreen();
+    }
+}
+
+// =====================================================
+// ANIMATED BACKGROUNDS
+// =====================================================
+
+function initializeBackgroundAnimations() {
+    const storyContainer = document.querySelector('.story-container.interactive-story');
+    if (!storyContainer) return;
+
+    // Create background animations container
+    const bgAnimations = document.createElement('div');
+    bgAnimations.className = 'story-bg-animations';
+
+    // Add floating stars
+    const starEmojis = ['⭐', '✨', '🌟', '💫', '⭐'];
+    for (let i = 0; i < 5; i++) {
+        const star = document.createElement('span');
+        star.className = 'bg-star';
+        star.textContent = starEmojis[i];
+        bgAnimations.appendChild(star);
+    }
+
+    // Add floating clouds
+    for (let i = 0; i < 3; i++) {
+        const cloud = document.createElement('span');
+        cloud.className = 'bg-cloud';
+        cloud.textContent = '☁️';
+        bgAnimations.appendChild(cloud);
+    }
+
+    // Insert at the beginning of container
+    storyContainer.insertBefore(bgAnimations, storyContainer.firstChild);
+
+    console.log('🌟 Background animations initialized');
+}
+
+// =====================================================
+// ENHANCED SLIDE ANIMATIONS
+// =====================================================
+
+// Enhanced updateSlideView to add active class for animations
+function updateSlideViewEnhanced() {
+    const slidesWrapper = document.getElementById('storySlides');
+    if (!slidesWrapper) return;
+
+    // Move slides
+    slidesWrapper.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
+
+    // Update slide active states for animations
+    const slides = slidesWrapper.querySelectorAll('.story-slide');
+    slides.forEach(function(slide, index) {
+        slide.classList.remove('active');
+        if (index === currentSlide) {
+            slide.classList.add('active');
+        }
+    });
+
+    // Update progress dots
+    const dots = document.querySelectorAll('.slide-dot');
+    dots.forEach(function(dot, index) {
+        dot.classList.remove('active');
+        if (index === currentSlide) {
+            dot.classList.add('active');
+        }
+        if (index < currentSlide) {
+            dot.classList.add('completed');
+        }
+    });
+
+    // Update counter
+    const counter = document.getElementById('currentSlideNum');
+    if (counter) {
+        counter.textContent = currentSlide + 1;
+    }
+
+    // Update nav buttons
+    const prevBtn = document.getElementById('prevSlide');
+    const nextBtn = document.getElementById('nextSlide');
+
+    if (prevBtn) prevBtn.disabled = currentSlide === 0;
+    if (nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
+
+    // Update progress bar
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.querySelector('.progress-text');
+    if (progressBar) {
+        const percent = ((currentSlide + 1) / totalSlides) * 100;
+        progressBar.style.width = percent + '%';
+        if (progressText) {
+            progressText.textContent = Math.round(percent) + '% Complete';
+        }
+    }
+}
+
+// Replace the original updateSlideView with enhanced version
+updateSlideView = updateSlideViewEnhanced;
 
 console.log('📚 Islamic Kids Stories - Interactive features loaded!');
