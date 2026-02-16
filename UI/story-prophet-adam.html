@@ -481,6 +481,8 @@
     </footer>
 
     <script src="translations.js"></script>
+    <script src="voice-scripts.js"></script>
+    <script src="audio-narration.js"></script>
     <script src="stories.js"></script>
     <script src="interactive-story.js"></script>
     <script>
@@ -489,6 +491,11 @@
             // Initialize language system
             if (window.i18n) {
                 window.i18n.initializeLanguage();
+            }
+
+            // Initialize audio narration system
+            if (window.AudioNarration) {
+                window.AudioNarration.init('prophet-adam');
             }
         });
 

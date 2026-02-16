@@ -1,0 +1,17 @@
+# Environment variables
+.env
+scripts/.env
+
+# Generated audio files (large, should be committed separately or use Git LFS)
+# audio/
+
+# Node modules
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

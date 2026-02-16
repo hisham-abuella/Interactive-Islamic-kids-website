@@ -408,7 +408,17 @@
         </div>
     </footer>
 
+    <script src="translations.js"></script>
+    <script src="voice-scripts.js"></script>
+    <script src="audio-narration.js"></script>
     <script src="stories.js"></script>
     <script src="interactive-story.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.AudioNarration) {
+                window.AudioNarration.init('prophet-ibrahim');
+            }
+        });
+    </script>
 </body>
 </html>

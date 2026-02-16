@@ -632,6 +632,11 @@ function goToSlide(index) {
     currentSlide = index;
     updateSlideView();
     playSound('pageFlip');
+
+    // Dispatch slide changed event for audio narration
+    document.dispatchEvent(new CustomEvent('slideChanged', {
+        detail: { slideIndex: index }
+    }));
 }
 
 function nextSlide() {
