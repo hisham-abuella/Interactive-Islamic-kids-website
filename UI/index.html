@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive Islamic stories for kids. Learn about prophets, Quran, and Islamic values through fun, engaging adventures.">
+    <meta name="theme-color" content="#0d9488">
     <title>Islamic Stories for Kids</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,8 +19,11 @@
                 <span class="crescent">☪</span>
                 <h1>Islamic Kids</h1>
             </div>
+            <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+                <span></span><span></span><span></span>
+            </button>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="stories.html">Stories</a></li>
                 <li><a href="surah-fatiha.html">Quran</a></li>
                 <li><a href="#learn">Learn</a></li>
@@ -27,9 +34,9 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">✨ Discover Beautiful Islamic Stories ✨</h1>
+            <h1 class="hero-title">Discover Beautiful Islamic Stories</h1>
             <p class="hero-subtitle">Learn about prophets, values, and faith through fun stories!</p>
-            <a href="stories.html"><button class="cta-button">Start Reading</button></a>
+            <a href="stories.html" class="cta-button">Start Reading</a>
         </div>
         <div class="hero-illustration">
             <div class="mosque">
@@ -50,91 +57,91 @@
 
     <!-- Featured Stories -->
     <section class="featured-stories">
-        <h2 class="section-title">📚 Featured Stories</h2>
+        <h2 class="section-title">Featured Stories</h2>
         <div class="story-grid">
-            <div class="story-card" onclick="window.location.href='story-prophet-nuh.html'">
+            <a href="story-prophet-nuh.html" class="story-card fade-in">
                 <div class="story-icon">🌊</div>
                 <h3>Prophet Nuh and the Great Ark</h3>
                 <p>Learn about patience and trust in Allah through the story of Prophet Nuh (AS).</p>
                 <div class="story-badges">
-                    <span class="badge">🎯 Quiz</span>
-                    <span class="badge">🎬 Video</span>
+                    <span class="badge">Quiz</span>
+                    <span class="badge">Video</span>
                 </div>
-                <a href="story-prophet-nuh.html"><button class="read-button">Read Story</button></a>
-            </div>
-            <div class="story-card" onclick="window.location.href='story-prophet-yusuf.html'">
+                <span class="read-button">Read Story</span>
+            </a>
+            <a href="story-prophet-yusuf.html" class="story-card fade-in">
                 <div class="story-icon">⭐</div>
                 <h3>Prophet Yusuf's Beautiful Dream</h3>
                 <p>Discover the amazing journey of Prophet Yusuf (AS) and his incredible dreams.</p>
                 <div class="story-badges">
-                    <span class="badge">🎯 Quiz</span>
-                    <span class="badge">🎬 Video</span>
+                    <span class="badge">Quiz</span>
+                    <span class="badge">Video</span>
                 </div>
-                <a href="story-prophet-yusuf.html"><button class="read-button">Read Story</button></a>
-            </div>
-            <div class="story-card" onclick="window.location.href='story-page.html'">
+                <span class="read-button">Read Story</span>
+            </a>
+            <a href="story-page.html" class="story-card fade-in">
                 <div class="story-icon">🕌</div>
                 <h3>Prophet Ibrahim's Trust</h3>
                 <p>Learn about faith and trust in Allah through Prophet Ibrahim's amazing journey.</p>
-                <a href="story-page.html"><button class="read-button">Read Story</button></a>
-            </div>
-            <div class="story-card" onclick="window.location.href='stories.html'">
+                <span class="read-button">Read Story</span>
+            </a>
+            <a href="stories.html" class="story-card fade-in">
                 <div class="story-icon">📚</div>
                 <h3>More Stories Coming!</h3>
                 <p>Explore all our interactive Islamic stories for kids.</p>
-                <a href="stories.html"><button class="read-button">View All Stories</button></a>
-            </div>
+                <span class="read-button">View All Stories</span>
+            </a>
         </div>
     </section>
 
     <!-- Learn Quran Section -->
     <section class="featured-stories" id="learn">
-        <h2 class="section-title">📖 Learn Quran</h2>
+        <h2 class="section-title">Learn Quran</h2>
         <div class="story-grid">
-            <div class="story-card highlight-card" onclick="window.location.href='surah-fatiha.html'">
+            <a href="surah-fatiha.html" class="story-card highlight-card fade-in">
                 <div class="story-icon">📿</div>
                 <h3>Surah Al-Fatiha</h3>
                 <p>Learn the opening chapter of the Quran - recited in every prayer!</p>
                 <div class="story-badges">
-                    <span class="badge">🎯 Quiz</span>
-                    <span class="badge">🎬 Video</span>
-                    <span class="badge">📜 7 Verses</span>
+                    <span class="badge">Quiz</span>
+                    <span class="badge">Video</span>
+                    <span class="badge">7 Verses</span>
                 </div>
-                <a href="surah-fatiha.html"><button class="read-button">Learn Now</button></a>
-            </div>
-            <div class="story-card coming-soon">
+                <span class="read-button">Learn Now</span>
+            </a>
+            <div class="story-card coming-soon fade-in">
                 <div class="story-icon">🌟</div>
                 <h3>More Surahs Coming!</h3>
                 <p>We're adding more surahs for you to learn. Stay tuned!</p>
-                <button class="read-button" disabled>Coming Soon</button>
+                <span class="read-button disabled">Coming Soon</span>
             </div>
         </div>
     </section>
 
     <!-- Learn About Section -->
     <section class="learn-section">
-        <h2 class="section-title">🌙 Learn About Islam</h2>
+        <h2 class="section-title">Learn About Islam</h2>
         <div class="learn-grid">
-            <div class="learn-card" onclick="window.location.href='stories.html'">
+            <a href="stories.html" class="learn-card fade-in">
                 <div class="learn-icon">👨‍👩‍👧‍👦</div>
                 <h3>Prophets</h3>
                 <p>Meet the prophets and their inspiring stories</p>
-            </div>
-            <div class="learn-card">
+            </a>
+            <div class="learn-card fade-in">
                 <div class="learn-icon">❤️</div>
                 <h3>Values</h3>
                 <p>Learn important Islamic values and manners</p>
             </div>
-            <div class="learn-card">
+            <div class="learn-card fade-in">
                 <div class="learn-icon">🕋</div>
                 <h3>Five Pillars</h3>
                 <p>Understand the foundation of Islam</p>
             </div>
-            <div class="learn-card" onclick="window.location.href='surah-fatiha.html'">
+            <a href="surah-fatiha.html" class="learn-card fade-in">
                 <div class="learn-icon">🤲</div>
                 <h3>Prayers</h3>
                 <p>Learn how to pray and make dua</p>
-            </div>
+            </a>
         </div>
     </section>
 
@@ -159,6 +166,18 @@
             <p class="footer-subtitle">Made with love for young Muslims everywhere</p>
         </div>
     </footer>
+    <script>
+    // Scroll-triggered fade-in animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
     <script data-goatcounter="https://islamickids.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
     <noscript><img src="https://islamickids.goatcounter.com/count?p=/" style="position:absolute;left:-9999px" alt=""></noscript>

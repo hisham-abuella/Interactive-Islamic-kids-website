@@ -66,7 +66,9 @@
 }
 
 .surah-hero h1 {
+    font-family: 'Baloo 2', cursive;
     font-size: 3.5rem;
+    font-weight: 800;
     color: white;
     margin-bottom: 0.5rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);

@@ -1,64 +1,8 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+/* Story Detail Page Styles
+   (base reset, header, nav, footer loaded from styles.css) */
 
 body {
-    font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, #f0fdf4 0%, #dbeafe 100%);
-    color: #1e293b;
-    line-height: 1.8;
-}
-
-/* Header */
-header {
-    background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
-    padding: 1rem 2rem;
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
-}
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: white;
-}
-
-.crescent {
-    font-size: 2rem;
-}
-
-.logo h1 {
-    font-size: 1.8rem;
-    font-weight: 700;
-}
-
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
-}
-
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-}
-
-.nav-links a:hover {
-    background: rgba(255, 255, 255, 0.2);
 }
 
 /* Story Header */
@@ -70,8 +14,8 @@ header {
     grid-template-columns: 1.5fr 1fr;
     gap: 3rem;
     background: white;
-    border-radius: 30px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-xl, 28px);
+    box-shadow: var(--shadow-lg, 0 16px 40px rgba(0, 0, 0, 0.1));
 }
 
 .story-category {
@@ -80,13 +24,15 @@ header {
     color: #92400e;
     padding: 0.5rem 1.5rem;
     border-radius: 20px;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 1rem;
 }
 
 .story-title {
+    font-family: 'Baloo 2', cursive;
     font-size: 2.5rem;
-    color: #10b981;
+    font-weight: 800;
+    color: var(--teal-600, #0d9488);
     margin-bottom: 1.5rem;
     line-height: 1.2;
 }
@@ -95,7 +41,7 @@ header {
     display: flex;
     gap: 2rem;
     margin-bottom: 2rem;
-    color: #64748b;
+    color: var(--slate-500, #64748b);
     font-size: 1.1rem;
 }
 
@@ -105,8 +51,9 @@ header {
     padding: 1rem 2rem;
     border: none;
     border-radius: 25px;
+    font-family: 'Baloo 2', cursive;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
@@ -120,7 +67,7 @@ header {
 .illustration-frame {
     background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
     padding: 2rem;
-    border-radius: 20px;
+    border-radius: var(--radius-lg, 20px);
     height: 100%;
     display: flex;
     align-items: center;
@@ -176,8 +123,8 @@ header {
 .content-wrapper {
     background: white;
     padding: 3rem;
-    border-radius: 25px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-xl, 28px);
+    box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.08));
 }
 
 .story-paragraph {
@@ -194,7 +141,7 @@ header {
 
 .paragraph-text p {
     font-size: 1.2rem;
-    color: #334155;
+    color: var(--slate-700, #334155);
     line-height: 1.9;
 }
 
@@ -202,12 +149,13 @@ header {
 .did-you-know {
     background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
     padding: 2rem;
-    border-radius: 20px;
+    border-radius: var(--radius-lg, 20px);
     margin: 3rem 0;
     border-left: 5px solid #f59e0b;
 }
 
 .did-you-know h3 {
+    font-family: 'Baloo 2', cursive;
     color: #92400e;
     margin-bottom: 1rem;
     font-size: 1.4rem;
@@ -222,12 +170,13 @@ header {
 .lesson-box {
     background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
     padding: 2rem;
-    border-radius: 20px;
+    border-radius: var(--radius-lg, 20px);
     margin: 3rem 0;
     border-left: 5px solid #10b981;
 }
 
 .lesson-box h3 {
+    font-family: 'Baloo 2', cursive;
     color: #065f46;
     margin-bottom: 1rem;
     font-size: 1.4rem;
@@ -259,13 +208,14 @@ header {
 .prayer-box {
     background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
     padding: 2rem;
-    border-radius: 20px;
+    border-radius: var(--radius-lg, 20px);
     margin: 3rem 0;
     text-align: center;
     border: 3px solid #818cf8;
 }
 
 .prayer-box h3 {
+    font-family: 'Baloo 2', cursive;
     color: #3730a3;
     margin-bottom: 1rem;
     font-size: 1.4rem;
@@ -287,21 +237,22 @@ header {
 }
 
 .quiz-section h2 {
+    font-family: 'Baloo 2', cursive;
     font-size: 2rem;
-    color: #10b981;
+    color: var(--teal-600, #0d9488);
     margin-bottom: 2rem;
 }
 
 .quiz-card {
     background: white;
     padding: 2.5rem;
-    border-radius: 25px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius-xl, 28px);
+    box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.08));
 }
 
 .quiz-question {
     font-size: 1.3rem;
-    color: #1e293b;
+    color: var(--slate-900, #0f172a);
     margin-bottom: 2rem;
     font-weight: 600;
 }
@@ -314,7 +265,7 @@ header {
 
 .quiz-option {
     background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-    color: #334155;
+    color: var(--slate-700, #334155);
     padding: 1rem;
     border: 2px solid #cbd5e1;
     border-radius: 15px;
@@ -340,8 +291,9 @@ header {
 }
 
 .related-stories h2 {
+    font-family: 'Baloo 2', cursive;
     font-size: 2rem;
-    color: #10b981;
+    color: var(--teal-600, #0d9488);
     margin-bottom: 2rem;
 }
 
@@ -354,15 +306,15 @@ header {
 .mini-card {
     background: white;
     padding: 2rem;
-    border-radius: 20px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-lg, 20px);
+    box-shadow: var(--shadow-sm, 0 2px 8px rgba(0, 0, 0, 0.06));
     transition: all 0.3s ease;
     cursor: pointer;
 }
 
 .mini-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
+    box-shadow: var(--shadow-teal, 0 8px 24px rgba(13, 148, 136, 0.18));
 }
 
 .mini-icon {
@@ -371,31 +323,9 @@ header {
 }
 
 .mini-card h4 {
-    color: #14b8a6;
+    font-family: 'Baloo 2', cursive;
+    color: var(--teal-600, #0d9488);
     font-size: 1.2rem;
-}
-
-/* Footer */
-footer {
-    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
-    color: white;
-    padding: 2rem;
-    margin-top: 4rem;
-}
-
-.footer-content {
-    text-align: center;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.footer-content p {
-    margin: 0.5rem 0;
-}
-
-.footer-subtitle {
-    color: #94a3b8;
-    font-size: 0.9rem;
 }
 
 /* Responsive */
@@ -410,9 +340,5 @@ footer {
 
     .quiz-options {
         grid-template-columns: 1fr;
-    }
-
-    .nav-links {
-        gap: 1rem;
     }
 }
