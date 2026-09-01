@@ -6,6 +6,7 @@ const translations = {
         // Navigation & UI
         navHome: "Home",
         navStories: "Stories",
+        navQuran: "Quran",
         navLearn: "Learn",
         navAbout: "About",
         toggleLang: "AR",
@@ -170,6 +171,7 @@ const translations = {
         // Navigation & UI
         navHome: "الرئيسية",
         navStories: "القصص",
+        navQuran: "القرآن",
         navLearn: "تعلم",
         navAbout: "عنا",
         toggleLang: "EN",

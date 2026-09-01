@@ -7,16 +7,18 @@
 - [x] Prophet Ibrahim
 - [x] Prophet Nuh
 - [x] Prophet Yusuf
+- [x] Prophet Musa (scripts written; ElevenLabs audio not generated yet)
 
-### Surahs
+### Surahs / Verses
 - [x] Surah Al-Fatiha (no voice narration yet)
+- [x] Ayat al-Kursi - Al-Baqarah 255 (no voice narration yet)
+- [x] Surah Al-Ikhlas (112) (no voice narration yet)
 
 ---
 
 ## Planned Stories
 
 ### Phase 1 - Major Prophets
-- [ ] Prophet Musa (Moses) - The baby in the river, parting the sea, the Ten Commandments
 - [ ] Prophet Isa (Jesus) - Miraculous birth, speaking as a baby, healing the sick
 - [ ] Prophet Muhammad ﷺ - Birth, childhood, first revelation, Isra & Mi'raj, kindness to others
 
@@ -39,7 +41,6 @@
 ## Planned Surahs (Short Surahs - Juz Amma)
 
 ### Phase 1 - Most Common (Kids learn these first)
-- [ ] Surah Al-Ikhlas (112) - 4 verses - The Purity / Oneness of Allah
 - [ ] Surah Al-Falaq (113) - 5 verses - The Daybreak
 - [ ] Surah An-Nas (114) - 6 verses - Mankind
 - [ ] Surah Al-Kawthar (108) - 3 verses - Abundance (shortest surah)
@@ -95,6 +96,22 @@
 - Dua from the story
 - Bonus video
 - Drag-and-drop or matching activities
+
+---
+
+## Site Structure Notes
+- `quran.html` is the Quran hub page - add every new surah/verse card here
+- Root `../index.html` is only a redirect to `UI/index.html`; keep all edits in `UI/`
+- New story pages need: an entry in `voice-scripts.js` AND `scripts/voice-scripts-data.json`,
+  plus `AudioNarration.init('<story-id>')` at the bottom of the page
+- Slide indices for narration count: `.story-scene`, `.mini-quiz`, `.lesson-box`, `.dua-box`,
+  then the quiz intro, each quiz card, the results card, and the video section
+
+---
+
+## Pending Audio Generation
+- [ ] prophet-musa (EN + AR) - 20 slides each, run `generate-audio-elevenlabs.js prophet-musa en|ar`
+- [ ] surah-fatiha, ayat-al-kursi, surah-al-ikhlas - no narration system on surah pages yet
 
 ---
 

@@ -8,7 +8,7 @@
     <title>Islamic Stories for Kids</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -25,33 +25,23 @@
             <ul class="nav-links">
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="stories.html">Stories</a></li>
-                <li><a href="surah-fatiha.html">Quran</a></li>
+                <li><a href="quran.html">Quran</a></li>
                 <li><a href="#learn">Learn</a></li>
             </ul>
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">Discover Beautiful Islamic Stories</h1>
-            <p class="hero-subtitle">Learn about prophets, values, and faith through fun stories!</p>
-            <a href="stories.html" class="cta-button">Start Reading</a>
-        </div>
-        <div class="hero-illustration">
-            <div class="mosque">
-                <div class="dome"></div>
-                <div class="minaret"></div>
-                <div class="minaret right"></div>
+            <span class="hero-eyebrow" lang="ar" dir="rtl">ٱقْرَأْ</span>
+            <span class="hero-eyebrow-latin">Iqra &middot; Read</span>
+            <h1 class="hero-title">The first word ever revealed was an invitation to <em>read</em>.</h1>
+            <p class="hero-subtitle">Prophet stories and surahs for children, told slowly and beautifully &mdash; with narration in English and Arabic.</p>
+            <div class="hero-actions">
+                <a href="stories.html" class="cta-button">Start a story</a>
+                <a href="quran.html" class="cta-button secondary">Learn a surah</a>
             </div>
-            <div class="stars">
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-                <span class="star">⭐</span>
-            </div>
-            <div class="moon">🌙</div>
         </div>
     </section>
 
@@ -79,19 +69,29 @@
                 </div>
                 <span class="read-button">Read Story</span>
             </a>
-            <a href="story-page.html" class="story-card fade-in">
-                <div class="story-icon">🕌</div>
+            <a href="story-prophet-ibrahim.html" class="story-card fade-in">
+                <div class="story-icon">🕋</div>
                 <h3>Prophet Ibrahim's Trust</h3>
                 <p>Learn about faith and trust in Allah through Prophet Ibrahim's amazing journey.</p>
+                <div class="story-badges">
+                    <span class="badge">Quiz</span>
+                    <span class="badge">Video</span>
+                </div>
                 <span class="read-button">Read Story</span>
             </a>
-            <a href="stories.html" class="story-card fade-in">
-                <div class="story-icon">📚</div>
-                <h3>More Stories Coming!</h3>
-                <p>Explore all our interactive Islamic stories for kids.</p>
-                <span class="read-button">View All Stories</span>
+            <a href="story-prophet-musa.html" class="story-card fade-in">
+                <div class="story-icon">🌊</div>
+                <h3>Prophet Musa and the Sea</h3>
+                <p>From a basket on the river to a path through the sea - courage and trust in Allah.</p>
+                <div class="story-badges">
+                    <span class="badge">New</span>
+                    <span class="badge">Quiz</span>
+                    <span class="badge">Video</span>
+                </div>
+                <span class="read-button">Read Story</span>
             </a>
         </div>
+        <a href="stories.html" class="section-more">See all stories &rarr;</a>
     </section>
 
     <!-- Learn Quran Section -->
@@ -109,13 +109,30 @@
                 </div>
                 <span class="read-button">Learn Now</span>
             </a>
-            <div class="story-card coming-soon fade-in">
-                <div class="story-icon">🌟</div>
-                <h3>More Surahs Coming!</h3>
-                <p>We're adding more surahs for you to learn. Stay tuned!</p>
-                <span class="read-button disabled">Coming Soon</span>
-            </div>
+            <a href="ayat-al-kursi.html" class="story-card highlight-card fade-in">
+                <div class="story-icon">🪑</div>
+                <h3>Ayat al-Kursi</h3>
+                <p>The greatest verse in the Quran - your protection before you sleep!</p>
+                <div class="story-badges">
+                    <span class="badge">New</span>
+                    <span class="badge">Quiz</span>
+                    <span class="badge">Video</span>
+                </div>
+                <span class="read-button">Learn Now</span>
+            </a>
+            <a href="surah-al-ikhlas.html" class="story-card fade-in">
+                <div class="story-icon">💎</div>
+                <h3>Surah Al-Ikhlas</h3>
+                <p>Only 4 verses, but worth a third of the whole Quran!</p>
+                <div class="story-badges">
+                    <span class="badge">New</span>
+                    <span class="badge">Quiz</span>
+                    <span class="badge">4 Verses</span>
+                </div>
+                <span class="read-button">Learn Now</span>
+            </a>
         </div>
+        <a href="quran.html" class="section-more">See all surahs &rarr;</a>
     </section>
 
     <!-- Learn About Section -->
@@ -137,7 +154,7 @@
                 <h3>Five Pillars</h3>
                 <p>Understand the foundation of Islam</p>
             </div>
-            <a href="surah-fatiha.html" class="learn-card fade-in">
+            <a href="quran.html" class="learn-card fade-in">
                 <div class="learn-icon">🤲</div>
                 <h3>Prayers</h3>
                 <p>Learn how to pray and make dua</p>

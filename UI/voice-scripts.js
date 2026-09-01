@@ -346,6 +346,54 @@ const voiceScripts = {
             { slide: 15, title: "تهانينا", script: "تهانينا! لقد أبدعت! تذكر، المسامحة جميلة. سامح الآخرين دائماً مثل النبي يوسف!" },
             { slide: 16, title: "فيديو إضافي", script: "لقد فتحت فيديو إضافي! شاهد هذه الرسوم المتحركة الجميلة عن النبي يوسف ورحلته المذهلة!" }
         ]
+    },
+
+    // Prophet Musa Story Scripts
+    'prophet-musa': {
+        en: [
+            { slide: 0, title: "A Baby in Danger", script: "Long ago in Egypt there ruled a cruel king called Pharaoh. He thought he was a god, and he treated the Children of Israel very badly. One day he gave a terrible order: every baby boy born to them must be taken away. It was a frightening time, and one mother had just had a beautiful baby boy. His name was Musa." },
+            { slide: 1, title: "The Basket on the River", script: "Musa's mother was so worried. Then Allah put a thought into her heart: Place him in a basket and let the river carry him. Do not be afraid, I will bring him back to you. That was a very hard thing to do! But she trusted Allah completely, and she gently set the little basket onto the water of the River Nile." },
+            { slide: 2, title: "Safe in the Palace", script: "Where do you think the river took baby Musa? Straight to Pharaoh's own palace! Pharaoh's wife Asiyah found the basket and loved the baby right away. Let us keep him, she said. So the very baby Pharaoh was searching for grew up safely inside Pharaoh's house. Only Allah could plan something so amazing!" },
+            { slide: 3, title: "Quick Question", script: "Quick question! Where did the river carry baby Musa? To a forest, to Pharaoh's palace, to a mountain, or to another country? Think carefully!" },
+            { slide: 4, title: "Back to His Mother", script: "Baby Musa would not drink milk from anyone in the palace. Musa's clever big sister, who had been following the basket, said: I know a woman who can feed him! And so they brought Musa's very own mother to the palace. Allah kept His promise and gave her son back to her, exactly as He had said." },
+            { slide: 5, title: "The Light on the Mountain", script: "Musa grew into a strong, honest man. Years later, while travelling with his family at night, he saw a light glowing on a mountain called Tur. He climbed up to fetch some fire to keep his family warm, and there Allah spoke to him directly! Allah told him: O Musa, I am your Lord. What an incredible honour!" },
+            { slide: 6, title: "The Staff and the Shining Hand", script: "Allah gave Musa two miracles to show that he was truly a prophet. Throw down your staff, said Allah, and the wooden stick turned into a real, moving snake! Then Musa put his hand inside his cloak, and when he took it out, it shone with a beautiful bright light. Allah then sent him to Pharaoh with His message." },
+            { slide: 7, title: "Quick Question", script: "Quick question! What did Prophet Musa's staff turn into? A bird, a river, a snake, or a tree? Think carefully!" },
+            { slide: 8, title: "Speaking Kindly to Pharaoh", script: "Allah told Musa and his brother Harun something beautiful: Speak to him gently. Even to a cruel king like Pharaoh, they had to be polite! Musa said, Worship Allah alone, and set my people free. But Pharaoh was too proud. He called his best magicians to prove Musa wrong." },
+            { slide: 9, title: "The Day of the Magicians", script: "The magicians threw their ropes and sticks, and with their tricks they seemed to wriggle like snakes. Then Musa threw his staff, and it became a huge real snake that swallowed all their tricks! The magicians knew at once that this was no magic. They fell down and said, We believe in the Lord of Musa and Harun!" },
+            { slide: 10, title: "Trapped at the Sea", script: "Allah told Musa to lead the believers away from Egypt at night. But Pharaoh chased after them with his whole army! Soon the believers were trapped: a huge sea in front of them, and thundering chariots behind. The people cried, They have caught us! But Musa said calmly, No! My Lord is with me, and He will guide me." },
+            { slide: 11, title: "The Sea Splits Open", script: "Allah said: Strike the sea with your staff. Musa struck the water, and the whole sea split into two mighty walls with a dry path running right through the middle! The believers walked safely across. When Pharaoh's army followed, the walls of water came crashing back down. Allah had saved the believers and stopped the cruel king." },
+            { slide: 12, title: "What We Learn", script: "What do we learn from Prophet Musa? Trust Allah's plan, even when it looks scary. Allah always keeps His promises. Be gentle and polite, even to people who are unkind. Never be too proud to admit the truth. And remember, Allah is with you, so you are never really alone." },
+            { slide: 13, title: "Musa's Dua", script: "Here is a beautiful dua Prophet Musa made: Rabbi ishrah li sadri wa yassir li amri. This means: My Lord, open my chest for me, and make my task easy for me. He said it before facing Pharaoh. Say it before something hard, like a test or speaking in class!" },
+            { slide: 14, title: "Quiz Time", script: "Story complete! Time for a quiz! Answer these questions to unlock your bonus video!" },
+            { slide: 15, title: "Question One", script: "Question one: What did Musa's mother place him in? A big ship, a basket on the river, a hidden house, or a cave?" },
+            { slide: 16, title: "Question Two", script: "Question two: How did Allah save the believers at the sea? He sent boats, He made them fly, He split the sea into a dry path, or He built a bridge?" },
+            { slide: 17, title: "Question Three", script: "Question three: How did Allah tell Musa to speak to Pharaoh? Angrily, gently and kindly, not at all, or in a loud shout?" },
+            { slide: 18, title: "Congratulations", script: "Congratulations! You did amazing! Remember, when you feel trapped, Allah always makes a way!" },
+            { slide: 19, title: "Bonus Video", script: "You've unlocked a bonus video! Watch this beautiful animation about Prophet Musa and the parting of the sea!" }
+        ],
+        ar: [
+            { slide: 0, title: "طفل في خطر", script: "منذ زمن بعيد في مصر، حكم ملك قاسٍ اسمه فرعون. كان يظن أنه إله، وكان يعامل بني إسرائيل معاملة سيئة جداً. وفي يوم من الأيام أصدر أمراً فظيعاً: كل طفل ذكر يولد لهم يجب أن يؤخذ. كان وقتاً مخيفاً، وكانت إحدى الأمهات قد أنجبت للتو طفلاً جميلاً. اسمه موسى." },
+            { slide: 1, title: "السلة على النهر", script: "كانت أم موسى قلقة جداً. ثم ألهمها الله في قلبها: ضعيه في سلة ودعي النهر يحمله. لا تخافي، سأرده إليك. كان ذلك أمراً صعباً جداً! لكنها وثقت بالله تماماً، ووضعت السلة الصغيرة برفق على ماء نهر النيل." },
+            { slide: 2, title: "آمن في القصر", script: "إلى أين تظن أن النهر أخذ الطفل موسى؟ إلى قصر فرعون نفسه! وجدت آسية زوجة فرعون السلة وأحبت الطفل على الفور. قالت: دعنا نبقيه. وهكذا نشأ الطفل الذي كان فرعون يبحث عنه آمناً داخل بيت فرعون. الله وحده يستطيع أن يدبر أمراً مذهلاً كهذا!" },
+            { slide: 3, title: "سؤال سريع", script: "سؤال سريع! إلى أين حمل النهر الطفل موسى؟ إلى غابة، أو إلى قصر فرعون، أو إلى جبل، أو إلى بلد آخر؟ فكر جيداً!" },
+            { slide: 4, title: "العودة إلى أمه", script: "لم يشرب الطفل موسى الحليب من أي أحد في القصر. قالت أخت موسى الكبيرة الذكية، التي كانت تتبع السلة: أعرف امرأة تستطيع إرضاعه! وهكذا أحضروا أم موسى نفسها إلى القصر. أوفى الله بوعده ورد إليها ابنها، تماماً كما قال." },
+            { slide: 5, title: "النور على الجبل", script: "كبر موسى وأصبح رجلاً قوياً صادقاً. وبعد سنوات، بينما كان يسافر مع عائلته ليلاً، رأى نوراً يتوهج على جبل يسمى الطور. صعد ليأخذ ناراً تدفئ عائلته، وهناك كلمه الله مباشرة! قال له الله: يا موسى، إني أنا ربك. يا له من شرف عظيم!" },
+            { slide: 6, title: "العصا واليد المضيئة", script: "أعطى الله موسى معجزتين ليثبت أنه نبي حقاً. قال الله: ألق عصاك، فتحولت العصا الخشبية إلى ثعبان حقيقي يتحرك! ثم أدخل موسى يده في جيبه، وعندما أخرجها كانت تلمع بنور جميل ساطع. ثم أرسله الله إلى فرعون برسالته." },
+            { slide: 7, title: "سؤال سريع", script: "سؤال سريع! إلى ماذا تحولت عصا النبي موسى؟ إلى طائر، أو نهر، أو ثعبان، أو شجرة؟ فكر جيداً!" },
+            { slide: 8, title: "الكلام اللطيف مع فرعون", script: "قال الله لموسى وأخيه هارون شيئاً جميلاً: قولا له قولاً ليناً. حتى مع ملك قاسٍ مثل فرعون، كان عليهما أن يكونا مؤدبين! قال موسى: اعبد الله وحده، وأطلق سراح قومي. لكن فرعون كان متكبراً جداً. فاستدعى أفضل سحرته ليثبت أن موسى مخطئ." },
+            { slide: 9, title: "يوم السحرة", script: "ألقى السحرة حبالهم وعصيهم، وبحيلهم بدت وكأنها تتلوى مثل الثعابين. ثم ألقى موسى عصاه، فأصبحت ثعباناً ضخماً حقيقياً ابتلع كل حيلهم! عرف السحرة على الفور أن هذا ليس سحراً. فسجدوا وقالوا: آمنا برب موسى وهارون!" },
+            { slide: 10, title: "محاصرون عند البحر", script: "أمر الله موسى أن يقود المؤمنين خارج مصر ليلاً. لكن فرعون طاردهم بجيشه كله! وسرعان ما أصبح المؤمنون محاصرين: بحر ضخم أمامهم، وعربات مدوية خلفهم. صاح الناس: لقد أدركونا! لكن موسى قال بهدوء: كلا! إن معي ربي سيهدين." },
+            { slide: 11, title: "البحر ينشق", script: "قال الله: اضرب بعصاك البحر. ضرب موسى الماء، فانشق البحر كله إلى جدارين عظيمين وبينهما طريق يابس في المنتصف! عبر المؤمنون بأمان. وعندما تبعهم جيش فرعون، انهارت جدران الماء عليهم. أنقذ الله المؤمنين وأوقف الملك القاسي." },
+            { slide: 12, title: "ما نتعلمه", script: "ماذا نتعلم من النبي موسى؟ ثق بتدبير الله، حتى عندما يبدو مخيفاً. الله دائماً يوفي بوعوده. كن لطيفاً ومؤدباً، حتى مع من يسيء إليك. لا تتكبر أبداً عن قبول الحق. وتذكر، الله معك، فأنت لست وحدك أبداً." },
+            { slide: 13, title: "دعاء موسى", script: "هذا دعاء جميل دعا به النبي موسى: رب اشرح لي صدري ويسر لي أمري. قاله قبل أن يواجه فرعون. قله أنت أيضاً قبل أي أمر صعب، مثل الامتحان أو التحدث أمام الصف!" },
+            { slide: 14, title: "وقت الاختبار", script: "اكتملت القصة! حان وقت الاختبار! أجب على هذه الأسئلة لفتح الفيديو الإضافي!" },
+            { slide: 15, title: "السؤال الأول", script: "السؤال الأول: في ماذا وضعت أم موسى ابنها؟ في سفينة كبيرة، أو في سلة على النهر، أو في بيت مخفي، أو في كهف؟" },
+            { slide: 16, title: "السؤال الثاني", script: "السؤال الثاني: كيف أنقذ الله المؤمنين عند البحر؟ أرسل قوارب، أو جعلهم يطيرون، أو شق البحر وجعل فيه طريقاً يابساً، أو بنى جسراً؟" },
+            { slide: 17, title: "السؤال الثالث", script: "السؤال الثالث: كيف أمر الله موسى أن يتكلم مع فرعون؟ بغضب، أو بلطف ولين، أو ألا يتكلم أبداً، أو بصوت عالٍ؟" },
+            { slide: 18, title: "تهانينا", script: "تهانينا! لقد أبدعت! تذكر، عندما تشعر أنك محاصر، الله دائماً يجعل لك مخرجاً!" },
+            { slide: 19, title: "فيديو إضافي", script: "لقد فتحت فيديو إضافي! شاهد هذه الرسوم المتحركة الجميلة عن النبي موسى وانشقاق البحر!" }
+        ]
     }
 };
 

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The story of Prophet Musa (AS) for kids: the baby in the river, the talking staff, and the parting of the sea. Learn about courage and trusting Allah.">
+    <meta name="theme-color" content="#0d9488">
+    <title>Prophet Musa and the Parting of the Sea - Islamic Kids</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stories.css">
+</head>
+<body>
+    <!-- Floating Decorations -->
+    <div class="floating-decorations">
+        <span class="floating-star" style="top: 10%; left: 5%;">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;">⭐</span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <span class="crescent">☪</span>
+                <h1>Islamic Kids</h1>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="stories.html" class="active">Stories</a></li>
+                <li><a href="quran.html">Quran</a></li>
+                <li><a href="index.html#learn">Learn</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Story Container -->
+    <main class="story-main">
+        <div class="story-container">
+
+            <!-- Story Header -->
+            <div class="story-header">
+                <div class="story-icon">🌊</div>
+                <h1 class="story-title">Prophet Musa and the Parting of the Sea</h1>
+                <div class="story-controls">
+                    <button class="mode-btn active" id="readMode">📖 Read Mode</button>
+                    <button class="mode-btn" id="listenMode">🎧 Listen Mode</button>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+                <span class="progress-text">0% Complete</span>
+            </div>
+
+            <!-- Story Content -->
+            <div class="story-content" id="storyContent">
+
+                <!-- Scene 1 -->
+                <div class="story-scene" data-scene="1">
+                    <div class="scene-illustration">👶</div>
+                    <div class="scene-text">
+                        <h2>A Baby in Danger</h2>
+                        <p>Long ago in Egypt there ruled a cruel king called Pharaoh. He thought he was a god, and he treated the Children of Israel very badly. One day he gave a terrible order: every baby boy born to them must be taken away. It was a frightening time, and one mother had just had a beautiful baby boy. His name was Musa.</p>
+                    </div>
+                </div>
+
+                <!-- Scene 2 -->
+                <div class="story-scene" data-scene="2">
+                    <div class="scene-illustration">🧺</div>
+                    <div class="scene-text">
+                        <h2>The Basket on the River</h2>
+                        <p>Musa's mother was so worried. Then Allah put a thought into her heart: "Place him in a basket and let the river carry him. Do not be afraid — I will bring him back to you." That was a very hard thing to do! But she trusted Allah completely, and she gently set the little basket onto the water of the River Nile.</p>
+                    </div>
+                </div>
+
+                <!-- Scene 3 -->
+                <div class="story-scene" data-scene="3">
+                    <div class="scene-illustration">🏰</div>
+                    <div class="scene-text">
+                        <h2>Safe in the Palace</h2>
+                        <p>Where do you think the river took baby Musa? Straight to Pharaoh's own palace! Pharaoh's wife Asiyah found the basket and loved the baby right away. "Let us keep him," she said. So the very baby Pharaoh was searching for grew up safely inside Pharaoh's house. Only Allah could plan something so amazing!</p>
+                    </div>
+                </div>
+
+                <!-- Mini Quiz 1 -->
+                <div class="mini-quiz" data-quiz="1">
+                    <div class="quiz-header">
+                        <span class="quiz-icon">🌟</span>
+                        <h3>Quick Question!</h3>
+                    </div>
+                    <p class="quiz-question">Where did the river carry baby Musa?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-correct="false">To a forest</button>
+                        <button class="quiz-option" data-correct="true">To Pharaoh's palace</button>
+                        <button class="quiz-option" data-correct="false">To a mountain</button>
+                        <button class="quiz-option" data-correct="false">To another country</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Scene 4 -->
+                <div class="story-scene" data-scene="4">
+                    <div class="scene-illustration">🤱</div>
+                    <div class="scene-text">
+                        <h2>Back to His Mother</h2>
+                        <p>Baby Musa would not drink milk from anyone in the palace. Musa's clever big sister, who had been following the basket, said: "I know a woman who can feed him!" And so they brought Musa's very own mother to the palace. Allah kept His promise and gave her son back to her, exactly as He had said.</p>
+                    </div>
+                </div>
+
+                <!-- Scene 5 -->
+                <div class="story-scene" data-scene="5">
+                    <div class="scene-illustration">🔥</div>
+                    <div class="scene-text">
+                        <h2>The Light on the Mountain</h2>
+                        <p>Musa grew into a strong, honest man. Years later, while travelling with his family at night, he saw a light glowing on a mountain called Tur. He climbed up to fetch some fire to keep his family warm — and there Allah spoke to him directly! Allah told him: "O Musa, I am your Lord." What an incredible honour!</p>
+                    </div>
+                </div>
+
+                <!-- Scene 6 -->
+                <div class="story-scene" data-scene="6">
+                    <div class="scene-illustration">🪄</div>
+                    <div class="scene-text">
+                        <h2>The Staff and the Shining Hand</h2>
+                        <p>Allah gave Musa two miracles to show that he was truly a prophet. "Throw down your staff," said Allah — and the wooden stick turned into a real, moving snake! Then Musa put his hand inside his cloak, and when he took it out, it shone with a beautiful bright light. Allah then sent him to Pharaoh with His message.</p>
+                    </div>
+                </div>
+
+                <!-- Mini Quiz 2 -->
+                <div class="mini-quiz" data-quiz="2">
+                    <div class="quiz-header">
+                        <span class="quiz-icon">🌟</span>
+                        <h3>Quick Question!</h3>
+                    </div>
+                    <p class="quiz-question">What did Prophet Musa's staff turn into?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-correct="false">A bird</button>
+                        <button class="quiz-option" data-correct="false">A river</button>
+                        <button class="quiz-option" data-correct="true">A snake</button>
+                        <button class="quiz-option" data-correct="false">A tree</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <!-- Scene 7 -->
+                <div class="story-scene" data-scene="7">
+                    <div class="scene-illustration">🗣️</div>
+                    <div class="scene-text">
+                        <h2>Speaking Kindly to Pharaoh</h2>
+                        <p>Allah told Musa and his brother Harun something beautiful: "Speak to him gently." Even to a cruel king like Pharaoh, they had to be polite! Musa said, "Worship Allah alone, and set my people free." But Pharaoh was too proud. He called his best magicians to prove Musa wrong.</p>
+                    </div>
+                </div>
+
+                <!-- Scene 8 -->
+                <div class="story-scene" data-scene="8">
+                    <div class="scene-illustration">🐍</div>
+                    <div class="scene-text">
+                        <h2>The Day of the Magicians</h2>
+                        <p>The magicians threw their ropes and sticks, and with their tricks they seemed to wriggle like snakes. Then Musa threw his staff — and it became a huge real snake that swallowed all their tricks! The magicians knew at once that this was no magic. They fell down and said, "We believe in the Lord of Musa and Harun!"</p>
+                    </div>
+                </div>
+
+                <!-- Scene 9 -->
+                <div class="story-scene" data-scene="9">
+                    <div class="scene-illustration">🌊</div>
+                    <div class="scene-text">
+                        <h2>Trapped at the Sea</h2>
+                        <p>Allah told Musa to lead the believers away from Egypt at night. But Pharaoh chased after them with his whole army! Soon the believers were trapped: a huge sea in front of them, and thundering chariots behind. The people cried, "They have caught us!" But Musa said calmly, "No! My Lord is with me, and He will guide me."</p>
+                    </div>
+                </div>
+
+                <!-- Scene 10 -->
+                <div class="story-scene" data-scene="10">
+                    <div class="scene-illustration">✨</div>
+                    <div class="scene-text">
+                        <h2>The Sea Splits Open</h2>
+                        <p>Allah said: "Strike the sea with your staff." Musa struck the water — and the whole sea split into two mighty walls with a dry path running right through the middle! The believers walked safely across. When Pharaoh's army followed, the walls of water came crashing back down. Allah had saved the believers and stopped the cruel king.</p>
+                    </div>
+                </div>
+
+                <!-- Lesson Box -->
+                <div class="lesson-box">
+                    <h3>🌟 What We Learn</h3>
+                    <ul>
+                        <li>✅ Trust Allah's plan, even when it looks scary</li>
+                        <li>✅ Allah always keeps His promises</li>
+                        <li>✅ Be gentle and polite, even to people who are unkind</li>
+                        <li>✅ Never be too proud to admit the truth</li>
+                        <li>✅ Allah is with you — you are never really alone</li>
+                    </ul>
+                </div>
+
+                <!-- Prayer Box -->
+                <div class="dua-box">
+                    <h3>🤲 Let's Make Dua</h3>
+                    <p class="arabic-text">رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي</p>
+                    <p class="dua-translation">"My Lord, open my chest for me, and make my task easy for me."</p>
+                    <p class="dua-note">Prophet Musa said this dua before facing Pharaoh. Say it before something hard — like a test or speaking in class!</p>
+                </div>
+
+            </div>
+
+            <!-- Final Quiz Section -->
+            <div class="final-quiz-section" id="finalQuiz">
+                <div class="quiz-intro">
+                    <div class="quiz-lantern">🏮</div>
+                    <h2>Story Complete! Time for a Quiz!</h2>
+                    <p>Answer these questions to unlock your bonus video!</p>
+                </div>
+
+                <div class="quiz-card" data-question="1">
+                    <div class="question-number">Question 1 of 3</div>
+                    <p class="quiz-question">What did Musa's mother place him in?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-correct="false">🚢 A big ship</button>
+                        <button class="quiz-option" data-correct="true">🧺 A basket on the river</button>
+                        <button class="quiz-option" data-correct="false">🏠 A hidden house</button>
+                        <button class="quiz-option" data-correct="false">🛖 A cave</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-card hidden" data-question="2">
+                    <div class="question-number">Question 2 of 3</div>
+                    <p class="quiz-question">How did Allah save the believers at the sea?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-correct="false">He sent boats</button>
+                        <button class="quiz-option" data-correct="false">He made them fly</button>
+                        <button class="quiz-option" data-correct="true">He split the sea into a dry path</button>
+                        <button class="quiz-option" data-correct="false">He built a bridge</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-card hidden" data-question="3">
+                    <div class="question-number">Question 3 of 3</div>
+                    <p class="quiz-question">How did Allah tell Musa to speak to Pharaoh?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-correct="false">Angrily</button>
+                        <button class="quiz-option" data-correct="true">Gently and kindly</button>
+                        <button class="quiz-option" data-correct="false">Not at all</button>
+                        <button class="quiz-option" data-correct="false">In a loud shout</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-results hidden" id="quizResults">
+                    <div class="results-content">
+                        <div class="results-icon">🎉</div>
+                        <h2>Congratulations!</h2>
+                        <p class="results-score">You got <span id="scoreDisplay">0</span> out of 3 correct!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Unlock Section -->
+            <div class="video-section hidden" id="videoSection">
+                <div class="video-unlock">
+                    <div class="unlock-animation">
+                        <span class="unlock-lantern">🏮</span>
+                        <span class="unlock-stars">✨</span>
+                    </div>
+                    <h2>🎬 Bonus Video Unlocked!</h2>
+                    <p>Watch this beautiful animation about Prophet Musa!</p>
+                </div>
+                <div class="video-container">
+                    <div class="video-frame">
+                        <iframe
+                            width="100%"
+                            height="400"
+                            src="https://www.youtube.com/embed/Ck0P5LWyGyk"
+                            title="Prophet Musa Story Animation"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Story Navigation -->
+            <div class="story-navigation">
+                <a href="stories.html" class="nav-btn">← Back to Stories</a>
+                <a href="story-prophet-yusuf.html" class="nav-btn next">Another Story: Prophet Yusuf →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="moral-takeaway">
+                <h4>💎 Today's Moral</h4>
+                <p>"When you feel trapped, remember: Allah always makes a way!"</p>
+            </div>
+            <p class="footer-subtitle">🌙 Islamic Kids Stories ✨</p>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="voice-scripts.js"></script>
+    <script src="audio-narration.js"></script>
+    <script src="stories.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.AudioNarration) {
+                window.AudioNarration.init('prophet-musa');
+            }
+        });
+    </script>
+
+</body>
+</html>

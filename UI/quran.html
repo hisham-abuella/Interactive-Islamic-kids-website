@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn the Quran for kids. Surah Al-Fatiha, Surah Al-Ikhlas, and Ayat al-Kursi with Arabic, transliteration, kid-friendly meanings, and quizzes.">
+    <meta name="theme-color" content="#0d9488">
+    <title>Learn the Quran - Islamic Kids</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="stories.css">
+</head>
+<body>
+    <!-- Floating Decorations -->
+    <div class="floating-decorations">
+        <span class="floating-star" style="top: 10%; left: 5%;">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;">⭐</span>
+        <span class="floating-cloud" style="top: 15%; right: 20%;">☁️</span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <span class="crescent">☪</span>
+                <h1>Islamic Kids</h1>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+                <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="stories.html">Stories</a></li>
+                <li><a href="quran.html" class="active">Quran</a></li>
+                <li><a href="index.html#learn">Learn</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="stories-hero">
+        <h1>📖 Learn the Quran</h1>
+        <p>Beautiful surahs and verses, explained just for you!</p>
+    </section>
+
+    <!-- Grid -->
+    <section class="stories-grid-section">
+        <div class="stories-container">
+
+            <a href="surah-fatiha.html" class="story-card-link">
+                <div class="story-select-card">
+                    <div class="story-thumbnail">📖</div>
+                    <div class="story-info">
+                        <h3>Surah Al-Fatiha — The Opening</h3>
+                        <p>The very first chapter of the Quran, which we recite in every single prayer.</p>
+                        <div class="story-meta">
+                            <span>📿 7 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="ayat-al-kursi.html" class="story-card-link">
+                <div class="story-select-card featured">
+                    <div class="story-thumbnail">🪑</div>
+                    <div class="story-info">
+                        <h3>Ayat al-Kursi — The Verse of the Throne</h3>
+                        <p>The greatest verse in the whole Quran! Learn it piece by piece and say it before you sleep.</p>
+                        <div class="story-meta">
+                            <span>✨ Greatest Verse</span>
+                            <span>📿 Al-Baqarah 255</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-al-ikhlas.html" class="story-card-link">
+                <div class="story-select-card featured">
+                    <div class="story-thumbnail">💎</div>
+                    <div class="story-info">
+                        <h3>Surah Al-Ikhlas — The Oneness of Allah</h3>
+                        <p>Only 4 short verses, but the Prophet ﷺ said it is worth a third of the Quran!</p>
+                        <div class="story-meta">
+                            <span>📿 4 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <div class="story-select-card">
+                <div class="story-thumbnail">🌅</div>
+                <div class="story-info">
+                    <h3>More Surahs Coming Soon!</h3>
+                    <p>Surah Al-Falaq, An-Nas, Al-Kawthar, and Al-Asr are on their way, in shaa Allah.</p>
+                    <div class="story-meta">
+                        <span>🚧 In Progress</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>🤲 May Allah make it easy for you to learn and memorize His words!</p>
+            <p class="footer-subtitle">🌙 Islamic Kids - Learning Islam with Love ✨</p>
+        </div>
+    </footer>
+
+</body>
+</html>
