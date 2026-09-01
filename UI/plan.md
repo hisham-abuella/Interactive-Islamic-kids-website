@@ -13,6 +13,10 @@
 - [x] Surah Al-Fatiha (no voice narration yet)
 - [x] Ayat al-Kursi - Al-Baqarah 255 (no voice narration yet)
 - [x] Surah Al-Ikhlas (112) (no voice narration yet)
+- [x] Surah Al-Falaq (113) (no voice narration yet)
+- [x] Surah An-Nas (114) (no voice narration yet)
+- [x] Surah Al-Kawthar (108) (no voice narration yet)
+- [x] Surah Al-Asr (103) (no voice narration yet)
 
 ---
 
@@ -41,10 +45,10 @@
 ## Planned Surahs (Short Surahs - Juz Amma)
 
 ### Phase 1 - Most Common (Kids learn these first)
-- [ ] Surah Al-Falaq (113) - 5 verses - The Daybreak
-- [ ] Surah An-Nas (114) - 6 verses - Mankind
-- [ ] Surah Al-Kawthar (108) - 3 verses - Abundance (shortest surah)
-- [ ] Surah Al-Asr (103) - 3 verses - Time
+- [x] Surah Al-Falaq (113) - 5 verses - The Daybreak
+- [x] Surah An-Nas (114) - 6 verses - Mankind
+- [x] Surah Al-Kawthar (108) - 3 verses - Abundance (shortest surah)
+- [x] Surah Al-Asr (103) - 3 verses - Time
 
 ### Phase 2 - Short & Essential
 - [ ] Surah An-Nasr (110) - 3 verses - Divine Support
@@ -111,7 +115,8 @@
 
 ## Pending Audio Generation
 - [ ] prophet-musa (EN + AR) - 20 slides each, run `generate-audio-elevenlabs.js prophet-musa en|ar`
-- [ ] surah-fatiha, ayat-al-kursi, surah-al-ikhlas - no narration system on surah pages yet
+- [ ] surah-fatiha, ayat-al-kursi, surah-al-ikhlas, surah-al-falaq, surah-an-nas,
+      surah-al-kawthar, surah-al-asr - no narration system on surah pages yet
 
 ---
 
