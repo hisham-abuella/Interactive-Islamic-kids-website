@@ -26,17 +26,20 @@
         <nav class="navbar">
             <div class="logo">
                 <span class="crescent">☪</span>
-                <h1>Islamic Kids</h1>
+                <h1 data-ar="أطفال الإسلام">Islamic Kids</h1>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="stories.html" class="active">Stories</a></li>
-                <li><a href="quran.html">Quran</a></li>
-                <li><a href="index.html#learn">Learn</a></li>
-            </ul>
+            <div class="nav-cluster">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="stories.html" class="active" data-ar="القصص">Stories</a></li>
+                    <li><a href="quran.html" data-ar="القرآن">Quran</a></li>
+                    <li><a href="index.html#learn" data-ar="تعلّم">Learn</a></li>
+                </ul>
+                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
+            </div>
         </nav>
     </header>
 
@@ -47,7 +50,7 @@
             <!-- Story Header -->
             <div class="story-header">
                 <div class="story-icon">⭐</div>
-                <h1 class="story-title">Prophet Yusuf and the Beautiful Dream</h1>
+                <h1 class="story-title" data-ar="النبي يوسف والرؤيا الجميلة">Prophet Yusuf and the Beautiful Dream</h1>
                 <div class="story-controls">
                     <button class="mode-btn active" id="readMode">📖 Read Mode</button>
                     <button class="mode-btn" id="listenMode">🎧 Listen Mode</button>
@@ -182,7 +185,7 @@
                 </div>
 
                 <div class="quiz-card" data-question="1">
-                    <div class="question-number">Question 1 of 3</div>
+                    <div class="question-number" data-ar="السؤال ١ من ٣">Question 1 of 3</div>
                     <p class="quiz-question">Where did Yusuf's brothers leave him?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false">🏠 At home</button>
@@ -194,7 +197,7 @@
                 </div>
 
                 <div class="quiz-card hidden" data-question="2">
-                    <div class="question-number">Question 2 of 3</div>
+                    <div class="question-number" data-ar="السؤال ٢ من ٣">Question 2 of 3</div>
                     <p class="quiz-question">What special ability did Allah give Yusuf?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false">Flying</button>
@@ -206,7 +209,7 @@
                 </div>
 
                 <div class="quiz-card hidden" data-question="3">
-                    <div class="question-number">Question 3 of 3</div>
+                    <div class="question-number" data-ar="السؤال ٣ من ٣">Question 3 of 3</div>
                     <p class="quiz-question">What did Yusuf do when he met his brothers again?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false">He was angry at them</button>
@@ -221,7 +224,7 @@
                     <div class="results-content">
                         <div class="results-icon">🎉</div>
                         <h2>Congratulations!</h2>
-                        <p class="results-score">You got <span id="scoreDisplay">0</span> out of 3 correct!</p>
+                        <p class="results-score" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٣ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 3 correct!</p>
                     </div>
                 </div>
             </div>
@@ -267,7 +270,7 @@
                 <h4>💎 Today's Moral</h4>
                 <p>"Forgiveness is beautiful. Always forgive others like Prophet Yusuf did!"</p>
             </div>
-            <p class="footer-subtitle">🌙 Islamic Kids Stories ✨</p>
+            <p class="footer-subtitle" data-ar="🌙 قصص أطفال الإسلام ✨">🌙 Islamic Kids Stories ✨</p>
         </div>
     </footer>
 
@@ -283,5 +286,6 @@
         });
     </script>
 
+    <script src="bilingual.js"></script>
 </body>
 </html>

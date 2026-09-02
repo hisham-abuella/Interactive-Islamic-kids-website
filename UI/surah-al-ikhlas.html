@@ -26,17 +26,20 @@
         <nav class="navbar">
             <div class="logo">
                 <span class="crescent">☪</span>
-                <h1>Islamic Kids</h1>
+                <h1 data-ar="أطفال الإسلام">Islamic Kids</h1>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="stories.html">Stories</a></li>
-                <li><a href="quran.html" class="active">Quran</a></li>
-                <li><a href="index.html#learn">Learn</a></li>
-            </ul>
+            <div class="nav-cluster">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="stories.html" data-ar="القصص">Stories</a></li>
+                    <li><a href="quran.html" class="active" data-ar="القرآن">Quran</a></li>
+                    <li><a href="index.html#learn" data-ar="تعلّم">Learn</a></li>
+                </ul>
+                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
+            </div>
         </nav>
     </header>
 
@@ -44,8 +47,8 @@
     <section class="surah-hero">
         <div class="surah-hero-content">
             <div class="surah-icon">💎</div>
-            <h1>Surah Al-Ikhlas</h1>
-            <p class="surah-subtitle">The Sincerity / The Oneness of Allah - الإخلاص</p>
+            <h1 data-ar="سورة الإخلاص">Surah Al-Ikhlas</h1>
+            <p class="surah-subtitle" data-ar="الإخلاص">The Sincerity / The Oneness of Allah - الإخلاص</p>
             <div class="surah-info">
                 <span class="info-badge">📿 4 Verses</span>
                 <span class="info-badge">🕌 Makki Surah</span>
@@ -61,41 +64,41 @@
             <!-- Introduction -->
             <section class="intro-section">
                 <div class="intro-card">
-                    <h2>🌟 Why is Surah Al-Ikhlas Special?</h2>
-                    <p>Surah Al-Ikhlas is chapter number <strong>112</strong> of the Quran, and it is only <strong>4 short verses</strong> long — you can learn the whole thing today!</p>
-                    <p>The word <em>"Ikhlas"</em> means being <strong>pure and sincere</strong>. This surah is pure and sincere because every single word is about <strong>who Allah really is</strong>.</p>
-                    <p>Prophet Muhammad ﷺ said that reciting Surah Al-Ikhlas is <strong>equal to reciting a third of the Quran</strong>! So if you say it three times, it is as if you read the whole Quran. SubhanAllah!</p>
+                    <h2 data-ar="🌟 لماذا سورة الإخلاص مميزة؟">🌟 Why is Surah Al-Ikhlas Special?</h2>
+                    <p data-ar="سورة الإخلاص هي السورة رقم <strong>١١٢</strong> في القرآن، وطولها <strong>٤ آيات قصيرة</strong> فقط — تستطيع حفظها كلها اليوم!">Surah Al-Ikhlas is chapter number <strong>112</strong> of the Quran, and it is only <strong>4 short verses</strong> long — you can learn the whole thing today!</p>
+                    <p data-ar="كلمة <em>&quot;الإخلاص&quot;</em> تعني <strong>الصفاء والصدق</strong>. وهذه السورة خالصة صادقة لأن كل كلمة فيها تتحدث عن <strong>من هو الله حقاً</strong>.">The word <em>"Ikhlas"</em> means being <strong>pure and sincere</strong>. This surah is pure and sincere because every single word is about <strong>who Allah really is</strong>.</p>
+                    <p data-ar="قال النبي محمد ﷺ إن قراءة سورة الإخلاص <strong>تعدل ثلث القرآن</strong>! فإذا قرأتها ثلاث مرات فكأنك قرأت القرآن كله. سبحان الله!">Prophet Muhammad ﷺ said that reciting Surah Al-Ikhlas is <strong>equal to reciting a third of the Quran</strong>! So if you say it three times, it is as if you read the whole Quran. SubhanAllah!</p>
                 </div>
 
                 <div class="intro-card highlight">
-                    <h2>❓ The Question That Started It</h2>
-                    <p>Long ago, some people came to Prophet Muhammad ﷺ and asked a big question: <em>"Tell us about your Lord. What is He made of? Who is His family?"</em></p>
-                    <p>So Allah revealed this surah as the perfect answer. In just four lines it tells us:</p>
+                    <h2 data-ar="❓ السؤال الذي كان سببها">❓ The Question That Started It</h2>
+                    <p data-ar="قديماً جاء أناس إلى النبي محمد ﷺ وسألوه سؤالاً كبيراً: <em>&quot;أخبرنا عن ربك، ممّ هو؟ ومن أهله؟&quot;</em>">Long ago, some people came to Prophet Muhammad ﷺ and asked a big question: <em>"Tell us about your Lord. What is He made of? Who is His family?"</em></p>
+                    <p data-ar="فأنزل الله هذه السورة جواباً كاملاً. في أربع آيات فقط تخبرنا:">So Allah revealed this surah as the perfect answer. In just four lines it tells us:</p>
                     <ul>
-                        <li>💫 Allah is <strong>One</strong> — not two, not three</li>
-                        <li>💫 Everyone needs Allah, but Allah needs <strong>nobody</strong></li>
-                        <li>💫 Allah has <strong>no children and no parents</strong></li>
-                        <li>💫 There is <strong>nothing at all</strong> like Allah</li>
+                        <li data-ar="💫 الله <strong>واحد</strong> — لا اثنان ولا ثلاثة">💫 Allah is <strong>One</strong> — not two, not three</li>
+                        <li data-ar="💫 الجميع يحتاج إلى الله، والله <strong>لا يحتاج أحداً</strong>">💫 Everyone needs Allah, but Allah needs <strong>nobody</strong></li>
+                        <li data-ar="💫 الله <strong>لم يلد ولم يولد</strong>">💫 Allah has <strong>no children and no parents</strong></li>
+                        <li data-ar="💫 <strong>ليس كمثله شيء</strong> أبداً">💫 There is <strong>nothing at all</strong> like Allah</li>
                     </ul>
                 </div>
 
                 <div class="story-card special">
                     <h2>✨ The Companion Who Loved It</h2>
                     <div class="story-content">
-                        <p>There was a companion who led the prayer, and in every rakah he would recite Surah Al-Ikhlas before any other surah. The other companions found this a bit unusual and mentioned it to the Prophet ﷺ.</p>
-                        <p>So the Prophet ﷺ asked him why. The man said simply: <em>"Because it describes the Most Merciful, and I love to recite it."</em></p>
-                        <p>The Prophet ﷺ smiled and told him: <em>"Tell him that Allah loves him too."</em></p>
+                        <p data-ar="كان أحد الصحابة يؤمّ الناس في الصلاة، وفي كل ركعة يقرأ سورة الإخلاص قبل أي سورة أخرى. فاستغرب بقية الصحابة ذلك وذكروه للنبي ﷺ.">There was a companion who led the prayer, and in every rakah he would recite Surah Al-Ikhlas before any other surah. The other companions found this a bit unusual and mentioned it to the Prophet ﷺ.</p>
+                        <p data-ar="فسأله النبي ﷺ عن السبب. فقال الرجل ببساطة: <em>&quot;لأنها صفة الرحمن، وأنا أحب أن أقرأها&quot;</em>">So the Prophet ﷺ asked him why. The man said simply: <em>"Because it describes the Most Merciful, and I love to recite it."</em></p>
+                        <p data-ar="فابتسم النبي ﷺ وقال: <em>&quot;أخبروه أن الله يحبه&quot;</em>">The Prophet ﷺ smiled and told him: <em>"Tell him that Allah loves him too."</em></p>
                         <div class="lights-container">
-                            <div class="light-badge">💫 Love this surah</div>
-                            <div class="light-badge">💫 And Allah will love you</div>
+                            <div class="light-badge" data-ar="💫 أحبّ هذه السورة">💫 Love this surah</div>
+                            <div class="light-badge" data-ar="💫 فيحبك الله">💫 And Allah will love you</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="story-card healing">
-                    <h2>🌙 The Three Protectors</h2>
-                    <p>Every night before sleeping, the Prophet ﷺ would cup his hands, recite <strong>Surah Al-Ikhlas</strong>, <strong>Surah Al-Falaq</strong> and <strong>Surah An-Nas</strong>, blow into his hands, and wipe them over his body — three times.</p>
-                    <p>These three little surahs together are called <em>Al-Mu'awwidhat</em>, "the ones that give protection". Try it tonight!</p>
+                    <h2 data-ar="🌙 السور الثلاث الحامية">🌙 The Three Protectors</h2>
+                    <p data-ar="كل ليلة قبل النوم، كان النبي ﷺ يجمع كفّيه ويقرأ <strong>سورة الإخلاص</strong> و<strong>سورة الفلق</strong> و<strong>سورة الناس</strong>، ثم ينفث فيهما ويمسح بهما جسده — ثلاث مرات.">Every night before sleeping, the Prophet ﷺ would cup his hands, recite <strong>Surah Al-Ikhlas</strong>, <strong>Surah Al-Falaq</strong> and <strong>Surah An-Nas</strong>, blow into his hands, and wipe them over his body — three times.</p>
+                    <p data-ar="وتُسمّى هذه السور الثلاث الصغيرة معاً <em>المعوّذات</em>، أي &quot;التي تحمي&quot;. جرّبها الليلة!">These three little surahs together are called <em>Al-Mu'awwidhat</em>, "the ones that give protection". Try it tonight!</p>
                 </div>
             </section>
 
@@ -104,23 +107,23 @@
                 <div class="bismillah-card">
                     <p class="arabic-large">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
                     <p class="transliteration">Bismillah ir-Rahman ir-Raheem</p>
-                    <p class="translation">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
+                    <p class="translation" data-ar="&quot;بسم الله الرحمن الرحيم&quot;">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
                 </div>
             </section>
 
             <!-- Verses -->
             <section class="verses-section">
-                <h2 class="section-title">📜 Learn Each Verse</h2>
+                <h2 class="section-title" data-ar="📜 تعلّم كل آية">📜 Learn Each Verse</h2>
 
                 <div class="verse-card" data-verse="1">
                     <div class="verse-number">1</div>
                     <div class="verse-content">
                         <p class="arabic">قُلْ هُوَ اللَّهُ أَحَدٌ</p>
                         <p class="transliteration">Qul Huwa Allahu Ahad</p>
-                        <p class="translation">"Say: He is Allah, the One."</p>
+                        <p class="translation" data-ar="&quot;قل هو الله أحد&quot;">"Say: He is Allah, the One."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
-                            <p>Allah tells the Prophet ﷺ to <em>say it out loud</em>: Allah is <strong>One</strong>! There is only one God who made everything. He has no partner and no equal.</p>
+                            <p data-ar="يأمر الله نبيه ﷺ أن <em>يقولها بصوت واضح</em>: الله <strong>واحد</strong>! لا إله إلا هو خلق كل شيء. ليس له شريك ولا نظير.">Allah tells the Prophet ﷺ to <em>say it out loud</em>: Allah is <strong>One</strong>! There is only one God who made everything. He has no partner and no equal.</p>
                         </div>
                     </div>
                 </div>
@@ -130,10 +133,10 @@
                     <div class="verse-content">
                         <p class="arabic">اللَّهُ الصَّمَدُ</p>
                         <p class="transliteration">Allahus-Samad</p>
-                        <p class="translation">"Allah, the Eternal Refuge."</p>
+                        <p class="translation" data-ar="&quot;الله الصمد&quot;">"Allah, the Eternal Refuge."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
-                            <p><em>As-Samad</em> means the One that everybody turns to and depends on. You need food, water, and your family — but <strong>Allah needs nothing from anyone</strong>. Everyone needs Him!</p>
+                            <p data-ar="<em>الصمد</em> هو الذي يقصده الجميع ويعتمدون عليه. أنت تحتاج إلى الطعام والماء وأهلك — لكن <strong>الله لا يحتاج من أحد شيئاً</strong>. والكل يحتاج إليه!"><em>As-Samad</em> means the One that everybody turns to and depends on. You need food, water, and your family — but <strong>Allah needs nothing from anyone</strong>. Everyone needs Him!</p>
                         </div>
                     </div>
                 </div>
@@ -143,10 +146,10 @@
                     <div class="verse-content">
                         <p class="arabic">لَمْ يَلِدْ وَلَمْ يُولَدْ</p>
                         <p class="transliteration">Lam yalid wa lam yoolad</p>
-                        <p class="translation">"He does not give birth, nor was He born."</p>
+                        <p class="translation" data-ar="&quot;لم يلد ولم يولد&quot;">"He does not give birth, nor was He born."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
-                            <p>Every person has a mum and a dad. But Allah has <strong>no children and no parents</strong>. He was always here, before everything, and He will always be here.</p>
+                            <p data-ar="لكل إنسان أب وأم. أما الله فـ<strong>لا ولد له ولا والد</strong>. كان قبل كل شيء، وسيبقى إلى الأبد.">Every person has a mum and a dad. But Allah has <strong>no children and no parents</strong>. He was always here, before everything, and He will always be here.</p>
                         </div>
                     </div>
                 </div>
@@ -156,10 +159,10 @@
                     <div class="verse-content">
                         <p class="arabic">وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ</p>
                         <p class="transliteration">Wa lam yakul-lahu kufuwan ahad</p>
-                        <p class="translation">"And there is none comparable to Him."</p>
+                        <p class="translation" data-ar="&quot;ولم يكن له كفواً أحد&quot;">"And there is none comparable to Him."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
-                            <p>Nothing in the whole universe is like Allah — not the sun, not the biggest mountain, not anything you can picture in your mind. <strong>Allah is one of a kind!</strong></p>
+                            <p data-ar="لا شيء في الكون كله يشبه الله — لا الشمس، ولا أكبر جبل، ولا أي شيء يخطر ببالك. <strong>الله ليس كمثله شيء!</strong>">Nothing in the whole universe is like Allah — not the sun, not the biggest mountain, not anything you can picture in your mind. <strong>Allah is one of a kind!</strong></p>
                         </div>
                     </div>
                 </div>
@@ -167,7 +170,7 @@
 
             <!-- Full Surah -->
             <section class="full-surah-section">
-                <h2 class="section-title">📿 Complete Surah</h2>
+                <h2 class="section-title" data-ar="📿 السورة كاملة">📿 Complete Surah</h2>
                 <div class="full-surah-card">
                     <p class="arabic-full" dir="rtl">
                         بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ۝
@@ -181,8 +184,8 @@
 
             <!-- Video -->
             <section class="video-section">
-                <h2 class="section-title">🎬 Learn to Recite</h2>
-                <p class="video-intro">Watch and repeat — this one is short enough to learn in a single day!</p>
+                <h2 class="section-title" data-ar="🎬 تعلّم التلاوة">🎬 Learn to Recite</h2>
+                <p class="video-intro" data-ar="شاهد وردّد — هذه السورة قصيرة بما يكفي لحفظها في يوم واحد!">Watch and repeat — this one is short enough to learn in a single day!</p>
                 <div class="video-container">
                     <div class="video-frame">
                         <iframe
@@ -202,54 +205,54 @@
             <section class="quiz-section">
                 <div class="quiz-intro">
                     <div class="quiz-icon">🎯</div>
-                    <h2>Test Your Knowledge!</h2>
-                    <p>Answer these questions about Surah Al-Ikhlas</p>
+                    <h2 data-ar="اختبر معلوماتك!">Test Your Knowledge!</h2>
+                    <p data-ar="أجب عن هذه الأسئلة عن سورة الإخلاص">Answer these questions about Surah Al-Ikhlas</p>
                 </div>
 
                 <div class="quiz-card" data-question="1">
-                    <div class="question-number">Question 1 of 4</div>
-                    <p class="quiz-question">How many verses are in Surah Al-Ikhlas?</p>
+                    <div class="question-number" data-ar="السؤال ١ من ٤">Question 1 of 4</div>
+                    <p class="quiz-question" data-ar="كم عدد آيات سورة الإخلاص؟">How many verses are in Surah Al-Ikhlas?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">3 verses</button>
-                        <button class="quiz-option" data-correct="true">4 verses</button>
-                        <button class="quiz-option" data-correct="false">7 verses</button>
-                        <button class="quiz-option" data-correct="false">10 verses</button>
+                        <button class="quiz-option" data-correct="false" data-ar="٣ آيات">3 verses</button>
+                        <button class="quiz-option" data-correct="true" data-ar="٤ آيات">4 verses</button>
+                        <button class="quiz-option" data-correct="false" data-ar="٧ آيات">7 verses</button>
+                        <button class="quiz-option" data-correct="false" data-ar="١٠ آيات">10 verses</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="2">
-                    <div class="question-number">Question 2 of 4</div>
-                    <p class="quiz-question">The Prophet ﷺ said reciting this surah is equal to how much of the Quran?</p>
+                    <div class="question-number" data-ar="السؤال ٢ من ٤">Question 2 of 4</div>
+                    <p class="quiz-question" data-ar="قال النبي ﷺ إن قراءة هذه السورة تعدل كم من القرآن؟">The Prophet ﷺ said reciting this surah is equal to how much of the Quran?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">The whole Quran</button>
-                        <button class="quiz-option" data-correct="false">A half</button>
-                        <button class="quiz-option" data-correct="true">A third</button>
-                        <button class="quiz-option" data-correct="false">A tenth</button>
+                        <button class="quiz-option" data-correct="false" data-ar="القرآن كله">The whole Quran</button>
+                        <button class="quiz-option" data-correct="false" data-ar="النصف">A half</button>
+                        <button class="quiz-option" data-correct="true" data-ar="الثلث">A third</button>
+                        <button class="quiz-option" data-correct="false" data-ar="العُشر">A tenth</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="3">
-                    <div class="question-number">Question 3 of 4</div>
-                    <p class="quiz-question">What does the name "Al-Ikhlas" mean?</p>
+                    <div class="question-number" data-ar="السؤال ٣ من ٤">Question 3 of 4</div>
+                    <p class="quiz-question" data-ar="ماذا يعني اسم &quot;الإخلاص&quot;؟">What does the name "Al-Ikhlas" mean?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">The Opening</button>
-                        <button class="quiz-option" data-correct="true">Sincerity and purity</button>
-                        <button class="quiz-option" data-correct="false">The Daybreak</button>
-                        <button class="quiz-option" data-correct="false">The Elephant</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الفاتحة">The Opening</button>
+                        <button class="quiz-option" data-correct="true" data-ar="الصدق والصفاء">Sincerity and purity</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الفلق">The Daybreak</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الفيل">The Elephant</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="4">
-                    <div class="question-number">Question 4 of 4</div>
-                    <p class="quiz-question">What does "As-Samad" teach us about Allah?</p>
+                    <div class="question-number" data-ar="السؤال ٤ من ٤">Question 4 of 4</div>
+                    <p class="quiz-question" data-ar="ماذا يعلّمنا اسم &quot;الصمد&quot; عن الله؟">What does "As-Samad" teach us about Allah?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">Allah sleeps at night</button>
-                        <button class="quiz-option" data-correct="true">Everyone needs Allah, but Allah needs no one</button>
-                        <button class="quiz-option" data-correct="false">Allah has many helpers</button>
-                        <button class="quiz-option" data-correct="false">Allah lives in the sky</button>
+                        <button class="quiz-option" data-correct="false" data-ar="أن الله ينام ليلاً">Allah sleeps at night</button>
+                        <button class="quiz-option" data-correct="true" data-ar="أن الجميع يحتاج الله والله لا يحتاج أحداً">Everyone needs Allah, but Allah needs no one</button>
+                        <button class="quiz-option" data-correct="false" data-ar="أن لله أعواناً كثيرين">Allah has many helpers</button>
+                        <button class="quiz-option" data-correct="false" data-ar="أن الله يسكن السماء">Allah lives in the sky</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
@@ -257,84 +260,84 @@
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
                         <div class="results-icon">🎉</div>
-                        <h2>MashaAllah!</h2>
-                        <p class="results-score">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
-                        <p class="results-message">Try reciting Surah Al-Ikhlas three times before you sleep!</p>
+                        <h2 data-ar="ما شاء الله!">MashaAllah!</h2>
+                        <p class="results-score" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٤ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
+                        <p class="results-message" data-ar="جرّب قراءة سورة الإخلاص ثلاث مرات قبل نومك!">Try reciting Surah Al-Ikhlas three times before you sleep!</p>
                     </div>
                 </div>
             </section>
 
             <!-- Hadith -->
             <section class="reply-section">
-                <h2 class="section-title">💬 A Third of the Quran</h2>
+                <h2 class="section-title" data-ar="💬 ثلث القرآن">💬 A Third of the Quran</h2>
                 <div class="reply-card">
-                    <p>The Quran teaches us three big things: <strong>rules</strong>, <strong>stories</strong>, and <strong>who Allah is</strong>. Surah Al-Ikhlas covers that whole third all by itself — that is why it is worth so much!</p>
-                    <p class="hadith">Prophet Muhammad ﷺ said: <em>"Is any one of you unable to recite a third of the Quran in one night?"</em> The companions were surprised, so he said: <em>"Qul Huwa Allahu Ahad is equal to a third of the Quran."</em></p>
+                    <p data-ar="يعلّمنا القرآن ثلاثة أمور كبيرة: <strong>الأحكام</strong>، و<strong>القصص</strong>، و<strong>معرفة الله</strong>. وسورة الإخلاص تغطي ذلك الثلث كله وحدها — ولهذا كان أجرها عظيماً!">The Quran teaches us three big things: <strong>rules</strong>, <strong>stories</strong>, and <strong>who Allah is</strong>. Surah Al-Ikhlas covers that whole third all by itself — that is why it is worth so much!</p>
+                    <p class="hadith" data-ar="قال النبي محمد ﷺ: <em>&quot;أيعجز أحدكم أن يقرأ ثلث القرآن في ليلة؟&quot;</em> فاستغرب الصحابة، فقال: <em>&quot;قل هو الله أحد تعدل ثلث القرآن&quot;</em>">Prophet Muhammad ﷺ said: <em>"Is any one of you unable to recite a third of the Quran in one night?"</em> The companions were surprised, so he said: <em>"Qul Huwa Allahu Ahad is equal to a third of the Quran."</em></p>
                 </div>
             </section>
 
             <!-- Fun Facts -->
             <section class="fun-facts-section">
-                <h2 class="section-title">🌟 Amazing Fun Facts!</h2>
+                <h2 class="section-title" data-ar="🌟 معلومات ممتعة!">🌟 Amazing Fun Facts!</h2>
                 <div class="facts-grid">
                     <div class="fact-card">
                         <div class="fact-number">1</div>
-                        <p>It is surah number <strong>112</strong> in the Quran</p>
+                        <p data-ar="هي السورة رقم <strong>١١٢</strong> في القرآن">It is surah number <strong>112</strong> in the Quran</p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">2</div>
-                        <p>Reciting it equals <strong>a third of the Quran</strong></p>
+                        <p data-ar="قراءتها تعدل <strong>ثلث القرآن</strong>">Reciting it equals <strong>a third of the Quran</strong></p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">3</div>
-                        <p>It is one of the <strong>three protection surahs</strong> read before sleep</p>
+                        <p data-ar="هي إحدى <strong>سور الحماية الثلاث</strong> التي تُقرأ قبل النوم">It is one of the <strong>three protection surahs</strong> read before sleep</p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">4</div>
-                        <p>It answers the question: <strong>"Who is Allah?"</strong></p>
+                        <p data-ar="تجيب عن سؤال: <strong>&quot;من هو الله؟&quot;</strong>">It answers the question: <strong>"Who is Allah?"</strong></p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">5</div>
-                        <p>Loving this surah is a reason for <strong>Allah to love you</strong></p>
+                        <p data-ar="حبّ هذه السورة سبب لأن <strong>يحبك الله</strong>">Loving this surah is a reason for <strong>Allah to love you</strong></p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">6</div>
-                        <p>Its name means <strong>pure sincerity</strong></p>
+                        <p data-ar="اسمها يعني <strong>الإخلاص الخالص</strong>">Its name means <strong>pure sincerity</strong></p>
                     </div>
                 </div>
             </section>
 
             <!-- Tips -->
             <section class="tips-section">
-                <h2 class="section-title">💡 Tips for Memorization</h2>
+                <h2 class="section-title" data-ar="💡 نصائح للحفظ">💡 Tips for Memorization</h2>
                 <div class="tips-grid">
                     <div class="tip-card">
                         <div class="tip-icon">4️⃣</div>
-                        <h3>Only Four Lines</h3>
-                        <p>Learn one verse a day and you will know the whole surah by the end of the week!</p>
+                        <h3 data-ar="أربع آيات فقط">Only Four Lines</h3>
+                        <p data-ar="احفظ آية كل يوم وستعرف السورة كلها قبل نهاية الأسبوع!">Learn one verse a day and you will know the whole surah by the end of the week!</p>
                     </div>
                     <div class="tip-card">
                         <div class="tip-icon">🕌</div>
-                        <h3>Use It in Salah</h3>
-                        <p>Recite it in your prayers. Using a surah is the fastest way to never forget it.</p>
+                        <h3 data-ar="اقرأها في صلاتك">Use It in Salah</h3>
+                        <p data-ar="اقرأها في صلواتك. استعمال السورة هو أسرع طريق لئلا تنساها أبداً.">Recite it in your prayers. Using a surah is the fastest way to never forget it.</p>
                     </div>
                     <div class="tip-card">
                         <div class="tip-icon">3️⃣</div>
-                        <h3>Say It Three Times</h3>
-                        <p>Three times before bed, every night — protection and practice at the same time.</p>
+                        <h3 data-ar="قلها ثلاث مرات">Say It Three Times</h3>
+                        <p data-ar="ثلاث مرات قبل النوم كل ليلة — حماية وتدريب في الوقت نفسه.">Three times before bed, every night — protection and practice at the same time.</p>
                     </div>
                     <div class="tip-card">
                         <div class="tip-icon">🤲</div>
-                        <h3>Make Dua</h3>
-                        <p>Ask Allah to help you memorize and understand His words.</p>
+                        <h3 data-ar="ادعُ الله">Make Dua</h3>
+                        <p data-ar="اطلب من الله أن يعينك على حفظ كلامه وفهمه.">Ask Allah to help you memorize and understand His words.</p>
                     </div>
                 </div>
             </section>
 
             <!-- Navigation -->
             <div class="page-navigation">
-                <a href="ayat-al-kursi.html" class="nav-btn">← Ayat al-Kursi</a>
-                <a href="surah-al-falaq.html" class="nav-btn next">Surah Al-Falaq →</a>
+                <a href="ayat-al-kursi.html" class="nav-btn" data-ar="السابق: آية الكرسي">← Ayat al-Kursi</a>
+                <a href="surah-al-falaq.html" class="nav-btn next" data-ar="التالي: سورة الفلق">Surah Al-Falaq →</a>
             </div>
 
         </div>
@@ -344,13 +347,14 @@
     <footer>
         <div class="footer-content">
             <div class="footer-dua">
-                <p>🤲 May Allah make it easy for you to learn and memorize His words!</p>
+                <p data-ar="🤲 يسّر الله لك تعلّم كلامه وحفظه!">🤲 May Allah make it easy for you to learn and memorize His words!</p>
             </div>
-            <p class="footer-subtitle">🌙 Islamic Kids - Learning Islam with Love ✨</p>
+            <p class="footer-subtitle" data-ar="🌙 أطفال الإسلام - نتعلّم ديننا بالحب ✨">🌙 Islamic Kids - Learning Islam with Love ✨</p>
         </div>
     </footer>
 
     <script src="surah.js"></script>
 
+    <script src="bilingual.js"></script>
 </body>
 </html>

@@ -27,24 +27,27 @@
         <nav class="navbar">
             <div class="logo">
                 <span class="crescent">☪</span>
-                <h1>Islamic Kids</h1>
+                <h1 data-ar="أطفال الإسلام">Islamic Kids</h1>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="stories.html" class="active">Stories</a></li>
-                <li><a href="quran.html">Quran</a></li>
-                <li><a href="index.html#learn">Learn</a></li>
-            </ul>
+            <div class="nav-cluster">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="stories.html" class="active" data-ar="القصص">Stories</a></li>
+                    <li><a href="quran.html" data-ar="القرآن">Quran</a></li>
+                    <li><a href="index.html#learn" data-ar="تعلّم">Learn</a></li>
+                </ul>
+                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
+            </div>
         </nav>
     </header>
 
     <!-- Stories Hero -->
     <section class="stories-hero">
-        <h1>📚 Interactive Stories</h1>
-        <p>Choose a story to begin your adventure!</p>
+        <h1 data-ar="📚 قصص تفاعلية">📚 Interactive Stories</h1>
+        <p data-ar="اختر قصة لتبدأ مغامرتك!">Choose a story to begin your adventure!</p>
     </section>
 
     <!-- Stories Grid -->
@@ -56,15 +59,15 @@
                 <div class="story-select-card featured">
                     <div class="story-thumbnail">🌍</div>
                     <div class="story-info">
-                        <h3>Prophet Adam - The First Human</h3>
-                        <p>An interactive adventure! Learn about the first human and how we're all one family.</p>
-                        <div class="story-meta">
+                        <h3 data-ar="النبي آدم - أول إنسان">Prophet Adam - The First Human</h3>
+                        <p data-ar="مغامرة تفاعلية! تعرّف على أول إنسان وكيف أننا جميعاً أسرة واحدة.">An interactive adventure! Learn about the first human and how we're all one family.</p>
+                        <div class="story-meta" data-ar="<span>🎮 تفاعلية</span> <span>⭐ اجمع النجوم</span> <span>🎯 أنشطة</span> <span>🎬 فيديو</span>">
                             <span>🎮 Interactive</span>
                             <span>⭐ Earn Stars</span>
                             <span>🎯 Activities</span>
                             <span>🎬 Video</span>
                         </div>
-                        <button class="start-story-btn">Play Story →</button>
+                        <button class="start-story-btn" data-ar="ابدأ القصة ←">Play Story →</button>
                     </div>
                 </div>
             </a>
@@ -74,15 +77,15 @@
                 <div class="story-select-card featured">
                     <div class="story-thumbnail">🕋</div>
                     <div class="story-info">
-                        <h3>Prophet Ibrahim's Trust in Allah</h3>
-                        <p>An interactive adventure! Tap, drag, and play through Ibrahim's amazing story.</p>
-                        <div class="story-meta">
+                        <h3 data-ar="ثقة النبي إبراهيم بالله">Prophet Ibrahim's Trust in Allah</h3>
+                        <p data-ar="مغامرة تفاعلية! المس واسحب والعب خلال قصة إبراهيم المدهشة.">An interactive adventure! Tap, drag, and play through Ibrahim's amazing story.</p>
+                        <div class="story-meta" data-ar="<span>🎮 تفاعلية</span> <span>⭐ اجمع النجوم</span> <span>🎯 أنشطة</span> <span>🎬 فيديو</span>">
                             <span>🎮 Interactive</span>
                             <span>⭐ Earn Stars</span>
                             <span>🎯 Activities</span>
                             <span>🎬 Video</span>
                         </div>
-                        <button class="start-story-btn">Play Story →</button>
+                        <button class="start-story-btn" data-ar="ابدأ القصة ←">Play Story →</button>
                     </div>
                 </div>
             </a>
@@ -92,14 +95,14 @@
                 <div class="story-select-card">
                     <div class="story-thumbnail">🌊</div>
                     <div class="story-info">
-                        <h3>Prophet Nuh and the Great Ark</h3>
-                        <p>Learn about patience and trust in Allah through the story of Prophet Nuh (AS).</p>
-                        <div class="story-meta">
+                        <h3 data-ar="النبي نوح والسفينة العظيمة">Prophet Nuh and the Great Ark</h3>
+                        <p data-ar="تعلّم الصبر والثقة بالله من قصة النبي نوح عليه السلام.">Learn about patience and trust in Allah through the story of Prophet Nuh (AS).</p>
+                        <div class="story-meta" data-ar="<span>📖 ١٠ دقائق قراءة</span> <span>🎯 مع اختبار</span> <span>🎬 فيديو إضافي</span>">
                             <span>📖 10 min read</span>
                             <span>🎯 Quiz included</span>
                             <span>🎬 Bonus video</span>
                         </div>
-                        <button class="start-story-btn">Start Story →</button>
+                        <button class="start-story-btn" data-ar="ابدأ القصة ←">Start Story →</button>
                     </div>
                 </div>
             </a>
@@ -109,14 +112,14 @@
                 <div class="story-select-card">
                     <div class="story-thumbnail">⭐</div>
                     <div class="story-info">
-                        <h3>Prophet Yusuf and the Beautiful Dream</h3>
-                        <p>Discover the amazing journey of Prophet Yusuf (AS) and his incredible dreams.</p>
-                        <div class="story-meta">
+                        <h3 data-ar="النبي يوسف والرؤيا الجميلة">Prophet Yusuf and the Beautiful Dream</h3>
+                        <p data-ar="اكتشف رحلة النبي يوسف عليه السلام المدهشة ورؤاه العجيبة.">Discover the amazing journey of Prophet Yusuf (AS) and his incredible dreams.</p>
+                        <div class="story-meta" data-ar="<span>📖 ١٢ دقيقة قراءة</span> <span>🎯 مع اختبار</span> <span>🎬 فيديو إضافي</span>">
                             <span>📖 12 min read</span>
                             <span>🎯 Quiz included</span>
                             <span>🎬 Bonus video</span>
                         </div>
-                        <button class="start-story-btn">Start Story →</button>
+                        <button class="start-story-btn" data-ar="ابدأ القصة ←">Start Story →</button>
                     </div>
                 </div>
             </a>
@@ -126,15 +129,15 @@
                 <div class="story-select-card featured">
                     <div class="story-thumbnail">🌊</div>
                     <div class="story-info">
-                        <h3>Prophet Musa and the Parting of the Sea</h3>
-                        <p>From a basket on the river to a path through the sea - a story of courage and trust in Allah.</p>
-                        <div class="story-meta">
+                        <h3 data-ar="النبي موسى وانشقاق البحر">Prophet Musa and the Parting of the Sea</h3>
+                        <p data-ar="من سلة على النهر إلى طريق في البحر - قصة شجاعة وثقة بالله.">From a basket on the river to a path through the sea - a story of courage and trust in Allah.</p>
+                        <div class="story-meta" data-ar="<span>🎮 تفاعلية</span> <span>⭐ اجمع النجوم</span> <span>🎯 أنشطة</span> <span>🎬 فيديو</span>">
                             <span>🎮 Interactive</span>
                             <span>⭐ Earn Stars</span>
                             <span>🎯 Activities</span>
                             <span>🎬 Video</span>
                         </div>
-                        <button class="start-story-btn">Play Story →</button>
+                        <button class="start-story-btn" data-ar="ابدأ القصة ←">Play Story →</button>
                     </div>
                 </div>
             </a>
@@ -145,10 +148,11 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p>🌙 Islamic Kids Stories - Teaching faith through storytelling ✨</p>
-            <p class="footer-subtitle">Made with love for young Muslims everywhere</p>
+            <p data-ar="🌙 قصص أطفال الإسلام - نعلّم الإيمان بالحكاية ✨">🌙 Islamic Kids Stories - Teaching faith through storytelling ✨</p>
+            <p class="footer-subtitle" data-ar="صُنع بحب لأطفال المسلمين في كل مكان">Made with love for young Muslims everywhere</p>
         </div>
     </footer>
 
+    <script src="bilingual.js"></script>
 </body>
 </html>

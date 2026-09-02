@@ -17,17 +17,20 @@
         <nav class="navbar">
             <div class="logo">
                 <span class="crescent">☪</span>
-                <h1>Islamic Kids</h1>
+                <h1 data-ar="أطفال الإسلام">Islamic Kids</h1>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="stories.html">Stories</a></li>
-                <li><a href="quran.html">Quran</a></li>
-                <li><a href="#learn">Learn</a></li>
-            </ul>
+            <div class="nav-cluster">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="stories.html" data-ar="القصص">Stories</a></li>
+                    <li><a href="quran.html" data-ar="القرآن">Quran</a></li>
+                    <li><a href="#learn" data-ar="تعلّم">Learn</a></li>
+                </ul>
+                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
+            </div>
         </nav>
     </header>
 
@@ -35,9 +38,9 @@
     <section class="hero">
         <div class="hero-content">
             <span class="hero-eyebrow" lang="ar" dir="rtl">ٱقْرَأْ</span>
-            <span class="hero-eyebrow-latin">Iqra &middot; Read</span>
-            <h1 class="hero-title">The first word ever revealed was an invitation to <em>read</em>.</h1>
-            <p class="hero-subtitle">Prophet stories and surahs for children, told slowly and beautifully &mdash; with narration in English and Arabic.</p>
+            <span class="hero-eyebrow-latin" data-ar="اقرأ">Iqra &middot; Read</span>
+            <h1 class="hero-title" data-ar="أول كلمة نزلت من القرآن كانت دعوة إلى <em>القراءة</em>.">The first word ever revealed was an invitation to <em>read</em>.</h1>
+            <p class="hero-subtitle" data-ar="قصص الأنبياء وسور القرآن للأطفال، تُروى على مهل وبجمال &amp;mdash; مع تلاوة بالعربية والإنجليزية.">Prophet stories and surahs for children, told slowly and beautifully &mdash; with narration in English and Arabic.</p>
             <div class="hero-actions">
                 <a href="stories.html" class="cta-button">Start a story</a>
                 <a href="quran.html" class="cta-button secondary">Learn a surah</a>
@@ -47,48 +50,48 @@
 
     <!-- Featured Stories -->
     <section class="featured-stories">
-        <h2 class="section-title">Featured Stories</h2>
+        <h2 class="section-title" data-ar="قصص مختارة">Featured Stories</h2>
         <div class="story-grid">
             <a href="story-prophet-nuh.html" class="story-card fade-in">
                 <div class="story-icon">🌊</div>
-                <h3>Prophet Nuh and the Great Ark</h3>
-                <p>Learn about patience and trust in Allah through the story of Prophet Nuh (AS).</p>
-                <div class="story-badges">
+                <h3 data-ar="النبي نوح والسفينة العظيمة">Prophet Nuh and the Great Ark</h3>
+                <p data-ar="تعلّم الصبر والثقة بالله من قصة النبي نوح عليه السلام.">Learn about patience and trust in Allah through the story of Prophet Nuh (AS).</p>
+                <div class="story-badges" data-ar="<span class=&quot;badge&quot;>اختبار</span> <span class=&quot;badge&quot;>فيديو</span>">
                     <span class="badge">Quiz</span>
                     <span class="badge">Video</span>
                 </div>
-                <span class="read-button">Read Story</span>
+                <span class="read-button" data-ar="اقرأ القصة">Read Story</span>
             </a>
             <a href="story-prophet-yusuf.html" class="story-card fade-in">
                 <div class="story-icon">⭐</div>
-                <h3>Prophet Yusuf's Beautiful Dream</h3>
-                <p>Discover the amazing journey of Prophet Yusuf (AS) and his incredible dreams.</p>
-                <div class="story-badges">
+                <h3 data-ar="رؤيا النبي يوسف الجميلة">Prophet Yusuf's Beautiful Dream</h3>
+                <p data-ar="اكتشف رحلة النبي يوسف عليه السلام المدهشة ورؤاه العجيبة.">Discover the amazing journey of Prophet Yusuf (AS) and his incredible dreams.</p>
+                <div class="story-badges" data-ar="<span class=&quot;badge&quot;>اختبار</span> <span class=&quot;badge&quot;>فيديو</span>">
                     <span class="badge">Quiz</span>
                     <span class="badge">Video</span>
                 </div>
-                <span class="read-button">Read Story</span>
+                <span class="read-button" data-ar="اقرأ القصة">Read Story</span>
             </a>
             <a href="story-prophet-ibrahim.html" class="story-card fade-in">
                 <div class="story-icon">🕋</div>
-                <h3>Prophet Ibrahim's Trust</h3>
-                <p>Learn about faith and trust in Allah through Prophet Ibrahim's amazing journey.</p>
-                <div class="story-badges">
+                <h3 data-ar="ثقة النبي إبراهيم بالله">Prophet Ibrahim's Trust</h3>
+                <p data-ar="تعلّم الإيمان والثقة بالله من رحلة النبي إبراهيم المدهشة.">Learn about faith and trust in Allah through Prophet Ibrahim's amazing journey.</p>
+                <div class="story-badges" data-ar="<span class=&quot;badge&quot;>اختبار</span> <span class=&quot;badge&quot;>فيديو</span>">
                     <span class="badge">Quiz</span>
                     <span class="badge">Video</span>
                 </div>
-                <span class="read-button">Read Story</span>
+                <span class="read-button" data-ar="اقرأ القصة">Read Story</span>
             </a>
             <a href="story-prophet-musa.html" class="story-card fade-in">
                 <div class="story-icon">🌊</div>
-                <h3>Prophet Musa and the Sea</h3>
-                <p>From a basket on the river to a path through the sea - courage and trust in Allah.</p>
-                <div class="story-badges">
+                <h3 data-ar="النبي موسى والبحر">Prophet Musa and the Sea</h3>
+                <p data-ar="من سلة على النهر إلى طريق في البحر - شجاعة وثقة بالله.">From a basket on the river to a path through the sea - courage and trust in Allah.</p>
+                <div class="story-badges" data-ar="<span class=&quot;badge&quot;>جديد</span> <span class=&quot;badge&quot;>اختبار</span> <span class=&quot;badge&quot;>فيديو</span>">
                     <span class="badge">New</span>
                     <span class="badge">Quiz</span>
                     <span class="badge">Video</span>
                 </div>
-                <span class="read-button">Read Story</span>
+                <span class="read-button" data-ar="اقرأ القصة">Read Story</span>
             </a>
         </div>
         <a href="stories.html" class="section-more">See all stories &rarr;</a>
@@ -96,40 +99,40 @@
 
     <!-- Learn Quran Section -->
     <section class="featured-stories" id="learn">
-        <h2 class="section-title">Learn Quran</h2>
+        <h2 class="section-title" data-ar="تعلّم القرآن">Learn Quran</h2>
         <div class="story-grid">
             <a href="surah-fatiha.html" class="story-card highlight-card fade-in">
                 <div class="story-icon">📿</div>
-                <h3>Surah Al-Fatiha</h3>
-                <p>Learn the opening chapter of the Quran - recited in every prayer!</p>
-                <div class="story-badges">
+                <h3 data-ar="سورة الفاتحة">Surah Al-Fatiha</h3>
+                <p data-ar="تعلّم أول سورة في القرآن - نقرأها في كل صلاة!">Learn the opening chapter of the Quran - recited in every prayer!</p>
+                <div class="story-badges" data-ar="<span class=&quot;badge&quot;>اختبار</span> <span class=&quot;badge&quot;>فيديو</span> <span class=&quot;badge&quot;>٧ آيات</span>">
                     <span class="badge">Quiz</span>
                     <span class="badge">Video</span>
                     <span class="badge">7 Verses</span>
                 </div>
-                <span class="read-button">Learn Now</span>
+                <span class="read-button" data-ar="تعلّم الآن">Learn Now</span>
             </a>
             <a href="ayat-al-kursi.html" class="story-card highlight-card fade-in">
                 <div class="story-icon">🪑</div>
-                <h3>Ayat al-Kursi</h3>
-                <p>The greatest verse in the Quran - your protection before you sleep!</p>
-                <div class="story-badges">
+                <h3 data-ar="آية الكرسي">Ayat al-Kursi</h3>
+                <p data-ar="أعظم آية في القرآن - حمايتك قبل النوم!">The greatest verse in the Quran - your protection before you sleep!</p>
+                <div class="story-badges" data-ar="<span class=&quot;badge&quot;>جديد</span> <span class=&quot;badge&quot;>اختبار</span> <span class=&quot;badge&quot;>فيديو</span>">
                     <span class="badge">New</span>
                     <span class="badge">Quiz</span>
                     <span class="badge">Video</span>
                 </div>
-                <span class="read-button">Learn Now</span>
+                <span class="read-button" data-ar="تعلّم الآن">Learn Now</span>
             </a>
             <a href="surah-al-ikhlas.html" class="story-card fade-in">
                 <div class="story-icon">💎</div>
-                <h3>Surah Al-Ikhlas</h3>
-                <p>Only 4 verses, but worth a third of the whole Quran!</p>
-                <div class="story-badges">
+                <h3 data-ar="سورة الإخلاص">Surah Al-Ikhlas</h3>
+                <p data-ar="أربع آيات فقط، لكنها تعدل ثلث القرآن!">Only 4 verses, but worth a third of the whole Quran!</p>
+                <div class="story-badges" data-ar="<span class=&quot;badge&quot;>جديد</span> <span class=&quot;badge&quot;>اختبار</span> <span class=&quot;badge&quot;>٤ آيات</span>">
                     <span class="badge">New</span>
                     <span class="badge">Quiz</span>
                     <span class="badge">4 Verses</span>
                 </div>
-                <span class="read-button">Learn Now</span>
+                <span class="read-button" data-ar="تعلّم الآن">Learn Now</span>
             </a>
         </div>
         <a href="quran.html" class="section-more">See all surahs &rarr;</a>
@@ -137,27 +140,27 @@
 
     <!-- Learn About Section -->
     <section class="learn-section">
-        <h2 class="section-title">Learn About Islam</h2>
+        <h2 class="section-title" data-ar="تعرّف على الإسلام">Learn About Islam</h2>
         <div class="learn-grid">
             <a href="stories.html" class="learn-card fade-in">
                 <div class="learn-icon">👨‍👩‍👧‍👦</div>
-                <h3>Prophets</h3>
-                <p>Meet the prophets and their inspiring stories</p>
+                <h3 data-ar="الأنبياء">Prophets</h3>
+                <p data-ar="تعرّف على الأنبياء وقصصهم الملهمة">Meet the prophets and their inspiring stories</p>
             </a>
             <div class="learn-card fade-in">
                 <div class="learn-icon">❤️</div>
-                <h3>Values</h3>
-                <p>Learn important Islamic values and manners</p>
+                <h3 data-ar="القيم">Values</h3>
+                <p data-ar="تعلّم القيم والأخلاق الإسلامية">Learn important Islamic values and manners</p>
             </div>
             <div class="learn-card fade-in">
                 <div class="learn-icon">🕋</div>
-                <h3>Five Pillars</h3>
-                <p>Understand the foundation of Islam</p>
+                <h3 data-ar="أركان الإسلام">Five Pillars</h3>
+                <p data-ar="افهم أركان الإسلام">Understand the foundation of Islam</p>
             </div>
             <a href="quran.html" class="learn-card fade-in">
                 <div class="learn-icon">🤲</div>
-                <h3>Prayers</h3>
-                <p>Learn how to pray and make dua</p>
+                <h3 data-ar="الصلاة">Prayers</h3>
+                <p data-ar="تعلّم كيف تصلي وتدعو">Learn how to pray and make dua</p>
             </a>
         </div>
     </section>
@@ -165,22 +168,22 @@
     <!-- Interactive Section -->
     <section class="interactive-section">
         <div class="interactive-card">
-            <h3>🎨 Fun Activities</h3>
-            <p>Color, quiz, and play Islamic-themed games!</p>
-            <button class="activity-button">Explore Activities</button>
+            <h3 data-ar="🎨 أنشطة ممتعة">🎨 Fun Activities</h3>
+            <p data-ar="لوّن، وأجب، والعب ألعاباً إسلامية ممتعة!">Color, quiz, and play Islamic-themed games!</p>
+            <button class="activity-button" data-ar="استكشف الأنشطة">Explore Activities</button>
         </div>
         <div class="interactive-card">
-            <h3>📅 Ramadan Countdown</h3>
-            <p>Count the days until the blessed month!</p>
-            <div class="countdown">Coming Soon!</div>
+            <h3 data-ar="📅 العد لرمضان">📅 Ramadan Countdown</h3>
+            <p data-ar="عُدّ الأيام حتى الشهر المبارك!">Count the days until the blessed month!</p>
+            <div class="countdown" data-ar="قريباً!">Coming Soon!</div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p>🌙 Islamic Kids Stories - Teaching faith through storytelling ✨</p>
-            <p class="footer-subtitle">Made with love for young Muslims everywhere</p>
+            <p data-ar="🌙 قصص أطفال الإسلام - نعلّم الإيمان بالحكاية ✨">🌙 Islamic Kids Stories - Teaching faith through storytelling ✨</p>
+            <p class="footer-subtitle" data-ar="صُنع بحب لأطفال المسلمين في كل مكان">Made with love for young Muslims everywhere</p>
         </div>
     </footer>
     <script>
@@ -198,5 +201,6 @@
     <script data-goatcounter="https://islamickids.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
     <noscript><img src="https://islamickids.goatcounter.com/count?p=/" style="position:absolute;left:-9999px" alt=""></noscript>
+    <script src="bilingual.js"></script>
 </body>
 </html>

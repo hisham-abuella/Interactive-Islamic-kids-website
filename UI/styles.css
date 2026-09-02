@@ -846,3 +846,146 @@ button:focus-visible,
         transform: none !important;
     }
 }
+
+
+/* ============================================
+   Bilingual switching
+   The toggle sits in the navbar on every page and always names the
+   language you would switch TO, so a child reads "عربي" and knows
+   exactly what tapping it does. See bilingual.js.
+   ============================================ */
+
+.lang-toggle-btn {
+    background: var(--gold);
+    color: var(--ink);
+    border: 2px solid var(--gold-light);
+    padding: 0.4rem 1rem;
+    border-radius: var(--radius-full);
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    box-shadow: var(--shadow-sm);
+}
+
+.lang-toggle-btn:hover,
+.lang-toggle-btn:focus-visible {
+    background: var(--gold-light);
+    transform: scale(1.06);
+    box-shadow: var(--shadow-amber);
+}
+
+.lang-toggle-btn:focus-visible {
+    outline: 3px solid var(--parchment);
+    outline-offset: 2px;
+}
+
+/* Group the toggle with the nav links so it stays reachable on mobile */
+.nav-cluster {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* --- Arabic mode ------------------------------------------------ */
+
+/* Transliteration only exists to help readers who cannot read the
+   script, so it is noise once the page is in Arabic. */
+html[lang="ar"] .transliteration {
+    display: none;
+}
+
+html[lang="ar"] body {
+    font-family: 'Amiri', 'Nunito', Georgia, serif;
+}
+
+html[lang="ar"] .verse-explanation,
+html[lang="ar"] .intro-card,
+html[lang="ar"] .story-card,
+html[lang="ar"] .reply-card,
+html[lang="ar"] .fact-card,
+html[lang="ar"] .tip-card,
+html[lang="ar"] .quiz-card,
+html[lang="ar"] .surah-hero-content,
+html[lang="ar"] .stories-hero {
+    text-align: right;
+}
+
+/* The accent rule that marks explanations should hug the text edge */
+html[lang="ar"] .verse-explanation {
+    border-left: none;
+    border-right: 3px solid var(--gold);
+    padding-left: 0;
+    padding-right: 1rem;
+}
+
+html[lang="ar"] .intro-card ul,
+html[lang="ar"] .quiz-options {
+    padding-right: 1.2rem;
+    padding-left: 0;
+}
+
+/* Prev/next buttons keep pointing the way the reader is travelling */
+html[lang="ar"] .page-navigation {
+    flex-direction: row-reverse;
+}
+
+html[lang="ar"] .quiz-option,
+html[lang="ar"] .start-story-btn {
+    text-align: center;
+}
+
+/* Arabic reads better with a little more line height at body sizes */
+html[lang="ar"] p,
+html[lang="ar"] li {
+    line-height: 1.95;
+}
+
+html[lang="ar"] .section-title,
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3 {
+    letter-spacing: 0;
+}
+
+@media (max-width: 768px) {
+    .nav-cluster {
+        gap: 0.5rem;
+    }
+    .lang-toggle-btn {
+        padding: 0.35rem 0.8rem;
+        font-size: 0.82rem;
+    }
+}
+
+
+/* Safety net: any prose that has no Arabic yet keeps reading left-to-right
+   in Arabic mode, so a half-translated page degrades gracefully instead of
+   right-aligning English sentences. Remove a rule here once its page is done. */
+html[lang="ar"] .surah-container p:not([data-ar]),
+html[lang="ar"] .surah-container li:not([data-ar]),
+html[lang="ar"] .surah-container h2:not([data-ar]),
+html[lang="ar"] .surah-container h3:not([data-ar]),
+html[lang="ar"] .story-container p:not([data-ar]),
+html[lang="ar"] .story-container li:not([data-ar]),
+html[lang="ar"] .story-container h2:not([data-ar]),
+html[lang="ar"] .story-container h3:not([data-ar]),
+html[lang="ar"] .story-scene p:not([data-ar]),
+html[lang="ar"] .story-scene h2:not([data-ar]),
+html[lang="ar"] .quiz-question:not([data-ar]),
+html[lang="ar"] .quiz-option:not([data-ar]),
+html[lang="ar"] .surah-hero-content h1:not([data-ar]),
+html[lang="ar"] .surah-subtitle:not([data-ar]),
+html[lang="ar"] .info-badge:not([data-ar]) {
+    direction: ltr;
+    text-align: left;
+}
+
+html[lang="ar"] .surah-hero-content h1:not([data-ar]),
+html[lang="ar"] .surah-subtitle:not([data-ar]),
+html[lang="ar"] .info-badge:not([data-ar]) {
+    text-align: center;
+}

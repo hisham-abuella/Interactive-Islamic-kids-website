@@ -26,17 +26,20 @@
         <nav class="navbar">
             <div class="logo">
                 <span class="crescent">☪</span>
-                <h1>Islamic Kids</h1>
+                <h1 data-ar="أطفال الإسلام">Islamic Kids</h1>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="stories.html">Stories</a></li>
-                <li><a href="quran.html" class="active">Quran</a></li>
-                <li><a href="index.html#learn">Learn</a></li>
-            </ul>
+            <div class="nav-cluster">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="stories.html" data-ar="القصص">Stories</a></li>
+                    <li><a href="quran.html" class="active" data-ar="القرآن">Quran</a></li>
+                    <li><a href="index.html#learn" data-ar="تعلّم">Learn</a></li>
+                </ul>
+                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
+            </div>
         </nav>
     </header>
 
@@ -44,7 +47,7 @@
     <section class="surah-hero">
         <div class="surah-hero-content">
             <div class="surah-icon">🪑</div>
-            <h1>Ayat al-Kursi</h1>
+            <h1 data-ar="آية الكرسي">Ayat al-Kursi</h1>
             <p class="surah-subtitle">The Verse of the Throne - آية الكرسي</p>
             <div class="surah-info">
                 <span class="info-badge">📿 1 Mighty Verse</span>
@@ -103,7 +106,7 @@
                 <div class="bismillah-card">
                     <p class="arabic-large">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
                     <p class="transliteration">Bismillah ir-Rahman ir-Raheem</p>
-                    <p class="translation">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
+                    <p class="translation" data-ar="&quot;بسم الله الرحمن الرحيم&quot;">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
                 </div>
             </section>
 
@@ -236,7 +239,7 @@
 
             <!-- Video -->
             <section class="video-section">
-                <h2 class="section-title">🎬 Learn to Recite</h2>
+                <h2 class="section-title" data-ar="🎬 تعلّم التلاوة">🎬 Learn to Recite</h2>
                 <p class="video-intro">Listen and repeat until you can say the whole verse by heart!</p>
                 <div class="video-container">
                     <div class="video-frame">
@@ -257,12 +260,12 @@
             <section class="quiz-section">
                 <div class="quiz-intro">
                     <div class="quiz-icon">🎯</div>
-                    <h2>Test Your Knowledge!</h2>
+                    <h2 data-ar="اختبر معلوماتك!">Test Your Knowledge!</h2>
                     <p>Answer these questions about Ayat al-Kursi</p>
                 </div>
 
                 <div class="quiz-card" data-question="1">
-                    <div class="question-number">Question 1 of 4</div>
+                    <div class="question-number" data-ar="السؤال ١ من ٤">Question 1 of 4</div>
                     <p class="quiz-question">What does the word "Kursi" mean?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false">Book</button>
@@ -274,19 +277,19 @@
                 </div>
 
                 <div class="quiz-card hidden" data-question="2">
-                    <div class="question-number">Question 2 of 4</div>
+                    <div class="question-number" data-ar="السؤال ٢ من ٤">Question 2 of 4</div>
                     <p class="quiz-question">Which surah is Ayat al-Kursi found in?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">Surah Al-Fatiha</button>
-                        <button class="quiz-option" data-correct="false">Surah Al-Ikhlas</button>
+                        <button class="quiz-option" data-correct="false" data-ar="سورة الفاتحة">Surah Al-Fatiha</button>
+                        <button class="quiz-option" data-correct="false" data-ar="سورة الإخلاص">Surah Al-Ikhlas</button>
                         <button class="quiz-option" data-correct="true">Surah Al-Baqarah</button>
-                        <button class="quiz-option" data-correct="false">Surah An-Nas</button>
+                        <button class="quiz-option" data-correct="false" data-ar="سورة الناس">Surah An-Nas</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="3">
-                    <div class="question-number">Question 3 of 4</div>
+                    <div class="question-number" data-ar="السؤال ٣ من ٤">Question 3 of 4</div>
                     <p class="quiz-question">The verse tells us that Allah never does which of these?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false">Never listens</button>
@@ -298,7 +301,7 @@
                 </div>
 
                 <div class="quiz-card hidden" data-question="4">
-                    <div class="question-number">Question 4 of 4</div>
+                    <div class="question-number" data-ar="السؤال ٤ من ٤">Question 4 of 4</div>
                     <p class="quiz-question">When did the Prophet ﷺ tell us to recite Ayat al-Kursi for protection?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false">Only on Fridays</button>
@@ -312,8 +315,8 @@
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
                         <div class="results-icon">🎉</div>
-                        <h2>MashaAllah!</h2>
-                        <p class="results-score">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
+                        <h2 data-ar="ما شاء الله!">MashaAllah!</h2>
+                        <p class="results-score" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٤ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
                         <p class="results-message">Now try saying Ayat al-Kursi before you sleep tonight!</p>
                     </div>
                 </div>
@@ -332,7 +335,7 @@
 
             <!-- Fun Facts -->
             <section class="fun-facts-section">
-                <h2 class="section-title">🌟 Amazing Fun Facts!</h2>
+                <h2 class="section-title" data-ar="🌟 معلومات ممتعة!">🌟 Amazing Fun Facts!</h2>
                 <div class="facts-grid">
                     <div class="fact-card">
                         <div class="fact-number">1</div>
@@ -363,7 +366,7 @@
 
             <!-- Tips -->
             <section class="tips-section">
-                <h2 class="section-title">💡 Tips for Memorization</h2>
+                <h2 class="section-title" data-ar="💡 نصائح للحفظ">💡 Tips for Memorization</h2>
                 <div class="tips-grid">
                     <div class="tip-card">
                         <div class="tip-icon">🧩</div>
@@ -382,7 +385,7 @@
                     </div>
                     <div class="tip-card">
                         <div class="tip-icon">🤲</div>
-                        <h3>Make Dua</h3>
+                        <h3 data-ar="ادعُ الله">Make Dua</h3>
                         <p>Ask Allah to make memorizing His words easy for you. He loves to be asked!</p>
                     </div>
                 </div>
@@ -403,11 +406,12 @@
             <div class="footer-dua">
                 <p>🤲 May Allah protect you, always — day and night!</p>
             </div>
-            <p class="footer-subtitle">🌙 Islamic Kids - Learning Islam with Love ✨</p>
+            <p class="footer-subtitle" data-ar="🌙 أطفال الإسلام - نتعلّم ديننا بالحب ✨">🌙 Islamic Kids - Learning Islam with Love ✨</p>
         </div>
     </footer>
 
     <script src="surah.js"></script>
 
+    <script src="bilingual.js"></script>
 </body>
 </html>

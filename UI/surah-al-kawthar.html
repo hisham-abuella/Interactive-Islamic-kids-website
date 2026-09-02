@@ -26,17 +26,20 @@
         <nav class="navbar">
             <div class="logo">
                 <span class="crescent">☪</span>
-                <h1>Islamic Kids</h1>
+                <h1 data-ar="أطفال الإسلام">Islamic Kids</h1>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="stories.html">Stories</a></li>
-                <li><a href="quran.html" class="active">Quran</a></li>
-                <li><a href="index.html#learn">Learn</a></li>
-            </ul>
+            <div class="nav-cluster">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="stories.html" data-ar="القصص">Stories</a></li>
+                    <li><a href="quran.html" class="active" data-ar="القرآن">Quran</a></li>
+                    <li><a href="index.html#learn" data-ar="تعلّم">Learn</a></li>
+                </ul>
+                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
+            </div>
         </nav>
     </header>
 
@@ -44,8 +47,8 @@
     <section class="surah-hero">
         <div class="surah-hero-content">
             <div class="surah-icon">🌊</div>
-            <h1>Surah Al-Kawthar</h1>
-            <p class="surah-subtitle">The Abundance - الكوثر</p>
+            <h1 data-ar="سورة الكوثر">Surah Al-Kawthar</h1>
+            <p class="surah-subtitle" data-ar="الكوثر">The Abundance - الكوثر</p>
             <div class="surah-info">
                 <span class="info-badge">📿 3 Verses</span>
                 <span class="info-badge">🕌 Makki Surah</span>
@@ -61,41 +64,41 @@
             <!-- Introduction -->
             <section class="intro-section">
                 <div class="intro-card">
-                    <h2>🌟 Why is Surah Al-Kawthar Special?</h2>
-                    <p>Surah Al-Kawthar is chapter number <strong>108</strong>, and it is the <strong>shortest surah in the entire Quran</strong> — only <strong>3 verses</strong> and just ten words!</p>
-                    <p><em>"Al-Kawthar"</em> means <strong>a huge amount of good</strong> — so much that you could never count it. It comes from the same Arabic root as the word <em>kathir</em>, which means "a lot".</p>
-                    <p>This is the perfect surah to learn if you have never memorized one before. You can do it <strong>today</strong>!</p>
+                    <h2 data-ar="🌟 لماذا سورة الكوثر مميزة؟">🌟 Why is Surah Al-Kawthar Special?</h2>
+                    <p data-ar="سورة الكوثر هي السورة رقم <strong>١٠٨</strong>، وهي <strong>أقصر سورة في القرآن كله</strong> — <strong>٣ آيات</strong> وعشر كلمات فقط!">Surah Al-Kawthar is chapter number <strong>108</strong>, and it is the <strong>shortest surah in the entire Quran</strong> — only <strong>3 verses</strong> and just ten words!</p>
+                    <p data-ar="<em>&quot;الكوثر&quot;</em> يعني <strong>الخير الكثير جداً</strong> — كثيراً لدرجة أنك لا تستطيع إحصاءه. وهي من نفس أصل كلمة <em>كثير</em>."><em>"Al-Kawthar"</em> means <strong>a huge amount of good</strong> — so much that you could never count it. It comes from the same Arabic root as the word <em>kathir</em>, which means "a lot".</p>
+                    <p data-ar="هذه أفضل سورة تبدأ بها إن لم تحفظ سورة من قبل. تستطيع حفظها <strong>اليوم</strong>!">This is the perfect surah to learn if you have never memorized one before. You can do it <strong>today</strong>!</p>
                 </div>
 
                 <div class="intro-card highlight">
-                    <h2>💔 A Sad Day Turned Happy</h2>
-                    <p>The Prophet ﷺ was going through a very hard time. His baby son had passed away, and one unkind man began mocking him, saying he was <em>"abtar"</em> — cut off, with nobody to remember him.</p>
-                    <p>Imagine how much that would hurt. So Allah revealed this little surah to comfort His Prophet ﷺ, and it told him three things:</p>
+                    <h2 data-ar="💔 يوم حزين تحوّل إلى فرح">💔 A Sad Day Turned Happy</h2>
+                    <p data-ar="كان النبي ﷺ يمرّ بوقت صعب جداً. فقد توفي ابنه الصغير، وبدأ رجل سيئ يسخر منه ويقول إنه <em>&quot;أبتر&quot;</em> — أي مقطوع لا أحد يذكره بعده.">The Prophet ﷺ was going through a very hard time. His baby son had passed away, and one unkind man began mocking him, saying he was <em>"abtar"</em> — cut off, with nobody to remember him.</p>
+                    <p data-ar="تخيّل كم يؤلم هذا الكلام. فأنزل الله هذه السورة الصغيرة ليطمئن نبيه ﷺ، وأخبرته ثلاثة أمور:">Imagine how much that would hurt. So Allah revealed this little surah to comfort His Prophet ﷺ, and it told him three things:</p>
                     <ul>
-                        <li>💫 <strong>You have been given so much good</strong>, more than you can count</li>
-                        <li>💫 <strong>So pray and give</strong> — thank Allah for it</li>
-                        <li>💫 <strong>The one who mocks you</strong> is the one who will be forgotten</li>
+                        <li data-ar="💫 <strong>أُعطيت خيراً كثيراً</strong> أكثر مما تُحصي">💫 <strong>You have been given so much good</strong>, more than you can count</li>
+                        <li data-ar="💫 <strong>فصلِّ وأعطِ</strong> — واشكر الله عليه">💫 <strong>So pray and give</strong> — thank Allah for it</li>
+                        <li data-ar="💫 <strong>الذي يسخر منك</strong> هو الذي سيُنسى">💫 <strong>The one who mocks you</strong> is the one who will be forgotten</li>
                     </ul>
-                    <p>And it came true! Billions of people say "ﷺ" after the Prophet's name every day — and nobody remembers the name of the man who mocked him.</p>
+                    <p data-ar="وقد تحقق ذلك! فمليارات الناس يقولون &quot;ﷺ&quot; بعد اسم النبي كل يوم — ولا أحد يذكر اسم الرجل الذي سخر منه.">And it came true! Billions of people say "ﷺ" after the Prophet's name every day — and nobody remembers the name of the man who mocked him.</p>
                 </div>
 
                 <div class="story-card special">
-                    <h2>🌊 The River in Jannah</h2>
+                    <h2 data-ar="🌊 النهر في الجنة">🌊 The River in Jannah</h2>
                     <div class="story-content">
-                        <p>The Prophet ﷺ told us that Al-Kawthar is also the name of a <strong>river in Paradise</strong> that Allah has given him.</p>
-                        <p>He described it: its water is <strong>whiter than milk</strong> and <strong>sweeter than honey</strong>. Its banks are made of gold, and its stones are pearls. And here is the best part — <strong>whoever drinks from it will never, ever feel thirsty again</strong>.</p>
-                        <p>The Prophet ﷺ will be standing at that river welcoming his ummah. Will you be one of them, in shaa Allah?</p>
+                        <p data-ar="أخبرنا النبي ﷺ أن الكوثر أيضاً اسم <strong>نهر في الجنة</strong> أعطاه الله إياه.">The Prophet ﷺ told us that Al-Kawthar is also the name of a <strong>river in Paradise</strong> that Allah has given him.</p>
+                        <p data-ar="ووصفه فقال: ماؤه <strong>أشدّ بياضاً من اللبن</strong> و<strong>أحلى من العسل</strong>. وضفافه من ذهب، وحصاه لؤلؤ. وأجمل ما فيه — <strong>من شرب منه لا يظمأ أبداً بعدها</strong>.">He described it: its water is <strong>whiter than milk</strong> and <strong>sweeter than honey</strong>. Its banks are made of gold, and its stones are pearls. And here is the best part — <strong>whoever drinks from it will never, ever feel thirsty again</strong>.</p>
+                        <p data-ar="وسيقف النبي ﷺ عند ذلك النهر يستقبل أمته. فهل تكون منهم إن شاء الله؟">The Prophet ﷺ will be standing at that river welcoming his ummah. Will you be one of them, in shaa Allah?</p>
                         <div class="lights-container">
-                            <div class="light-badge">🥛 Whiter than milk</div>
-                            <div class="light-badge">🍯 Sweeter than honey</div>
+                            <div class="light-badge" data-ar="🥛 أبيض من اللبن">🥛 Whiter than milk</div>
+                            <div class="light-badge" data-ar="🍯 أحلى من العسل">🍯 Sweeter than honey</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="story-card healing">
-                    <h2>🤲 What This Teaches You</h2>
-                    <p>When someone says something unkind to you, remember Surah Al-Kawthar. You do <strong>not</strong> need to shout back or be mean in return.</p>
-                    <p>Instead: count your blessings, thank Allah, pray, and be generous. Allah takes care of the rest — just as He did for His Prophet ﷺ.</p>
+                    <h2 data-ar="🤲 ماذا تتعلم من هذا">🤲 What This Teaches You</h2>
+                    <p data-ar="حين يقول لك أحد كلاماً سيئاً، تذكّر سورة الكوثر. <strong>لا</strong> تحتاج أن تصرخ في وجهه أو تسيء إليه.">When someone says something unkind to you, remember Surah Al-Kawthar. You do <strong>not</strong> need to shout back or be mean in return.</p>
+                    <p data-ar="بل عُدّ نعمك، واشكر الله، وصلِّ، وكن كريماً. والله يتولى الباقي — كما فعل مع نبيه ﷺ.">Instead: count your blessings, thank Allah, pray, and be generous. Allah takes care of the rest — just as He did for His Prophet ﷺ.</p>
                 </div>
             </section>
 
@@ -104,20 +107,20 @@
                 <div class="bismillah-card">
                     <p class="arabic-large">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
                     <p class="transliteration">Bismillah ir-Rahman ir-Raheem</p>
-                    <p class="translation">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
+                    <p class="translation" data-ar="&quot;بسم الله الرحمن الرحيم&quot;">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
                 </div>
             </section>
 
             <!-- Verses -->
             <section class="verses-section">
-                <h2 class="section-title">📜 Learn Each Verse</h2>
+                <h2 class="section-title" data-ar="📜 تعلّم كل آية">📜 Learn Each Verse</h2>
 
                 <div class="verse-card" data-verse="1">
                     <div class="verse-number">1</div>
                     <div class="verse-content">
                         <p class="arabic">إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ</p>
                         <p class="transliteration">Inna a'taynaka al-Kawthar</p>
-                        <p class="translation">"Indeed, We have given you al-Kawthar (abundance)."</p>
+                        <p class="translation" data-ar="&quot;إنا أعطيناك الكوثر&quot;">"Indeed, We have given you al-Kawthar (abundance)."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
                             <p>Allah says: <em>We have <strong>given</strong> you</em> — already done, it is yours! Al-Kawthar means so much goodness you could never finish counting it: the Quran, the river in Jannah, and blessings beyond imagining.</p>
@@ -130,10 +133,10 @@
                     <div class="verse-content">
                         <p class="arabic">فَصَلِّ لِرَبِّكَ وَانْحَرْ</p>
                         <p class="transliteration">Fasalli li Rabbika wanhar</p>
-                        <p class="translation">"So pray to your Lord and sacrifice."</p>
+                        <p class="translation" data-ar="&quot;فصلِّ لربك وانحر&quot;">"So pray to your Lord and sacrifice."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
-                            <p>Notice the word <em>"so"</em>! Allah gave you so much, <strong>so</strong> say thank you. And how do we say thank you? Two ways: <strong>pray</strong> to Allah, and <strong>give</strong> to others — like the sacrifice families share on Eid al-Adha.</p>
+                            <p data-ar="لاحظ الفاء في <em>&quot;فصلِّ&quot;</em>! أعطاك الله الكثير، <strong>فـ</strong>اشكره. وكيف نشكر؟ بطريقتين: <strong>الصلاة</strong> لله، و<strong>العطاء</strong> للناس — كالأضحية التي تتقاسمها العائلات في عيد الأضحى.">Notice the word <em>"so"</em>! Allah gave you so much, <strong>so</strong> say thank you. And how do we say thank you? Two ways: <strong>pray</strong> to Allah, and <strong>give</strong> to others — like the sacrifice families share on Eid al-Adha.</p>
                         </div>
                     </div>
                 </div>
@@ -143,10 +146,10 @@
                     <div class="verse-content">
                         <p class="arabic">إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ</p>
                         <p class="transliteration">Inna shani'aka huwal-abtar</p>
-                        <p class="translation">"Indeed, the one who hates you — he is the one cut off."</p>
+                        <p class="translation" data-ar="&quot;إن شانئك هو الأبتر&quot;">"Indeed, the one who hates you — he is the one cut off."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
-                            <p>The man called the Prophet ﷺ "abtar" — cut off and forgotten. Allah answered: <strong>no, you are the one who will be forgotten!</strong> Today the whole world loves and remembers the Prophet ﷺ. Allah always defends those who are His.</p>
+                            <p data-ar="سمّى الرجل النبي ﷺ &quot;أبتر&quot; أي مقطوعاً منسياً. فأجاب الله: <strong>بل أنت الذي ستُنسى!</strong> واليوم يحب العالم كله النبي ﷺ ويذكره. والله يدافع دائماً عن أوليائه.">The man called the Prophet ﷺ "abtar" — cut off and forgotten. Allah answered: <strong>no, you are the one who will be forgotten!</strong> Today the whole world loves and remembers the Prophet ﷺ. Allah always defends those who are His.</p>
                         </div>
                     </div>
                 </div>
@@ -154,7 +157,7 @@
 
             <!-- Full Surah -->
             <section class="full-surah-section">
-                <h2 class="section-title">📿 Complete Surah</h2>
+                <h2 class="section-title" data-ar="📿 السورة كاملة">📿 Complete Surah</h2>
                 <div class="full-surah-card">
                     <p class="arabic-full" dir="rtl">
                         بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ۝
@@ -167,8 +170,8 @@
 
             <!-- Video -->
             <section class="video-section">
-                <h2 class="section-title">🎬 Learn to Recite</h2>
-                <p class="video-intro">Only three lines — this is the perfect surah to memorize in one sitting!</p>
+                <h2 class="section-title" data-ar="🎬 تعلّم التلاوة">🎬 Learn to Recite</h2>
+                <p class="video-intro" data-ar="ثلاث آيات فقط — هذه أفضل سورة تحفظها في جلسة واحدة!">Only three lines — this is the perfect surah to memorize in one sitting!</p>
                 <div class="video-container">
                     <div class="video-frame">
                         <iframe
@@ -188,54 +191,54 @@
             <section class="quiz-section">
                 <div class="quiz-intro">
                     <div class="quiz-icon">🎯</div>
-                    <h2>Test Your Knowledge!</h2>
-                    <p>Answer these questions about Surah Al-Kawthar</p>
+                    <h2 data-ar="اختبر معلوماتك!">Test Your Knowledge!</h2>
+                    <p data-ar="أجب عن هذه الأسئلة عن سورة الكوثر">Answer these questions about Surah Al-Kawthar</p>
                 </div>
 
                 <div class="quiz-card" data-question="1">
-                    <div class="question-number">Question 1 of 4</div>
-                    <p class="quiz-question">What is special about Surah Al-Kawthar's length?</p>
+                    <div class="question-number" data-ar="السؤال ١ من ٤">Question 1 of 4</div>
+                    <p class="quiz-question" data-ar="ما المميز في طول سورة الكوثر؟">What is special about Surah Al-Kawthar's length?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">It is the longest surah</button>
-                        <button class="quiz-option" data-correct="true">It is the shortest surah in the Quran</button>
-                        <button class="quiz-option" data-correct="false">It has exactly 100 verses</button>
-                        <button class="quiz-option" data-correct="false">It is the middle surah</button>
+                        <button class="quiz-option" data-correct="false" data-ar="هي أطول سورة">It is the longest surah</button>
+                        <button class="quiz-option" data-correct="true" data-ar="هي أقصر سورة في القرآن">It is the shortest surah in the Quran</button>
+                        <button class="quiz-option" data-correct="false" data-ar="فيها ١٠٠ آية بالضبط">It has exactly 100 verses</button>
+                        <button class="quiz-option" data-correct="false" data-ar="هي السورة الوسطى">It is the middle surah</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="2">
-                    <div class="question-number">Question 2 of 4</div>
-                    <p class="quiz-question">What does "Al-Kawthar" mean?</p>
+                    <div class="question-number" data-ar="السؤال ٢ من ٤">Question 2 of 4</div>
+                    <p class="quiz-question" data-ar="ماذا تعني كلمة &quot;الكوثر&quot;؟">What does "Al-Kawthar" mean?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">The Night</button>
-                        <button class="quiz-option" data-correct="false">The Elephant</button>
-                        <button class="quiz-option" data-correct="true">Abundance — a huge amount of good</button>
-                        <button class="quiz-option" data-correct="false">The People</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الليل">The Night</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الفيل">The Elephant</button>
+                        <button class="quiz-option" data-correct="true" data-ar="الخير الكثير جداً">Abundance — a huge amount of good</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الناس">The People</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="3">
-                    <div class="question-number">Question 3 of 4</div>
-                    <p class="quiz-question">How does the Prophet ﷺ describe the river of Al-Kawthar?</p>
+                    <div class="question-number" data-ar="السؤال ٣ من ٤">Question 3 of 4</div>
+                    <p class="quiz-question" data-ar="كيف وصف النبي ﷺ نهر الكوثر؟">How does the Prophet ﷺ describe the river of Al-Kawthar?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">Cold as ice and very deep</button>
-                        <button class="quiz-option" data-correct="true">Whiter than milk and sweeter than honey</button>
-                        <button class="quiz-option" data-correct="false">Green like the sea</button>
-                        <button class="quiz-option" data-correct="false">Made of sand</button>
+                        <button class="quiz-option" data-correct="false" data-ar="بارد كالثلج وعميق جداً">Cold as ice and very deep</button>
+                        <button class="quiz-option" data-correct="true" data-ar="أبيض من اللبن وأحلى من العسل">Whiter than milk and sweeter than honey</button>
+                        <button class="quiz-option" data-correct="false" data-ar="أخضر كالبحر">Green like the sea</button>
+                        <button class="quiz-option" data-correct="false" data-ar="من رمل">Made of sand</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="4">
-                    <div class="question-number">Question 4 of 4</div>
-                    <p class="quiz-question">What two things does the surah tell us to do to thank Allah?</p>
+                    <div class="question-number" data-ar="السؤال ٤ من ٤">Question 4 of 4</div>
+                    <p class="quiz-question" data-ar="ما الأمران اللذان تأمرنا بهما السورة شكراً لله؟">What two things does the surah tell us to do to thank Allah?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">Sleep and eat</button>
-                        <button class="quiz-option" data-correct="true">Pray and give to others</button>
-                        <button class="quiz-option" data-correct="false">Shout back at unkind people</button>
-                        <button class="quiz-option" data-correct="false">Keep everything for ourselves</button>
+                        <button class="quiz-option" data-correct="false" data-ar="النوم والأكل">Sleep and eat</button>
+                        <button class="quiz-option" data-correct="true" data-ar="الصلاة والعطاء للناس">Pray and give to others</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الصراخ في وجه المسيئين">Shout back at unkind people</button>
+                        <button class="quiz-option" data-correct="false" data-ar="أن نحتفظ بكل شيء لأنفسنا">Keep everything for ourselves</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
@@ -243,85 +246,85 @@
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
                         <div class="results-icon">🎉</div>
-                        <h2>MashaAllah!</h2>
-                        <p class="results-score">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
-                        <p class="results-message">Three little verses — see if you can recite them by heart now!</p>
+                        <h2 data-ar="ما شاء الله!">MashaAllah!</h2>
+                        <p class="results-score" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٤ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
+                        <p class="results-message" data-ar="ثلاث آيات صغيرة — جرّب أن تقرأها الآن عن ظهر قلب!">Three little verses — see if you can recite them by heart now!</p>
                     </div>
                 </div>
             </section>
 
             <!-- Reflection -->
             <section class="reply-section">
-                <h2 class="section-title">💬 Allah Always Answers</h2>
+                <h2 class="section-title" data-ar="💬 الله يجيب دائماً">💬 Allah Always Answers</h2>
                 <div class="reply-card">
-                    <p>One man said a cruel thing about the Prophet ﷺ. Allah did not leave His Prophet to answer alone — He sent down a surah that would be recited until the end of time.</p>
-                    <p class="hadith">The Prophet ﷺ said about Al-Kawthar: <em>"It is a river which my Lord has promised me, and there is abundant good in it."</em></p>
-                    <p>Remember: unkind words cannot take away what Allah has given you.</p>
+                    <p data-ar="قال رجل واحد كلاماً قاسياً عن النبي ﷺ. فلم يترك الله نبيه يجيب وحده — بل أنزل سورة تُقرأ إلى آخر الزمان.">One man said a cruel thing about the Prophet ﷺ. Allah did not leave His Prophet to answer alone — He sent down a surah that would be recited until the end of time.</p>
+                    <p class="hadith" data-ar="قال النبي ﷺ عن الكوثر: <em>&quot;هو نهر وعدنيه ربي، عليه خير كثير&quot;</em>">The Prophet ﷺ said about Al-Kawthar: <em>"It is a river which my Lord has promised me, and there is abundant good in it."</em></p>
+                    <p data-ar="تذكّر: الكلام السيئ لا يستطيع أن يسلبك ما أعطاك الله.">Remember: unkind words cannot take away what Allah has given you.</p>
                 </div>
             </section>
 
             <!-- Fun Facts -->
             <section class="fun-facts-section">
-                <h2 class="section-title">🌟 Amazing Fun Facts!</h2>
+                <h2 class="section-title" data-ar="🌟 معلومات ممتعة!">🌟 Amazing Fun Facts!</h2>
                 <div class="facts-grid">
                     <div class="fact-card">
                         <div class="fact-number">1</div>
-                        <p>It is surah number <strong>108</strong> in the Quran</p>
+                        <p data-ar="هي السورة رقم <strong>١٠٨</strong> في القرآن">It is surah number <strong>108</strong> in the Quran</p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">2</div>
-                        <p>It is the <strong>shortest surah</strong> — only 3 verses</p>
+                        <p data-ar="هي <strong>أقصر سورة</strong> — ٣ آيات فقط">It is the <strong>shortest surah</strong> — only 3 verses</p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">3</div>
-                        <p>Al-Kawthar is also a <strong>river in Paradise</strong></p>
+                        <p data-ar="الكوثر أيضاً <strong>نهر في الجنة</strong>">Al-Kawthar is also a <strong>river in Paradise</strong></p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">4</div>
-                        <p>It was revealed to <strong>comfort the Prophet ﷺ</strong> when he was sad</p>
+                        <p data-ar="نزلت <strong>لتطمئن النبي ﷺ</strong> حين حزن">It was revealed to <strong>comfort the Prophet ﷺ</strong> when he was sad</p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">5</div>
-                        <p>Whoever drinks from that river will <strong>never be thirsty again</strong></p>
+                        <p data-ar="من شرب من ذلك النهر <strong>لا يظمأ أبداً</strong>">Whoever drinks from that river will <strong>never be thirsty again</strong></p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">6</div>
-                        <p>Its promise came true — the Prophet ﷺ is <strong>never forgotten</strong></p>
+                        <p data-ar="تحقق وعدها — فالنبي ﷺ <strong>لا يُنسى أبداً</strong>">Its promise came true — the Prophet ﷺ is <strong>never forgotten</strong></p>
                     </div>
                 </div>
             </section>
 
             <!-- Tips -->
             <section class="tips-section">
-                <h2 class="section-title">💡 Tips for Memorization</h2>
+                <h2 class="section-title" data-ar="💡 نصائح للحفظ">💡 Tips for Memorization</h2>
                 <div class="tips-grid">
                     <div class="tip-card">
                         <div class="tip-icon">1️⃣</div>
-                        <h3>Start Here</h3>
-                        <p>If this is your first surah after Al-Fatiha, you picked the easiest one. Ten words — you have got this!</p>
+                        <h3 data-ar="ابدأ من هنا">Start Here</h3>
+                        <p data-ar="إن كانت هذه أول سورة تحفظها بعد الفاتحة فقد اخترت أسهلها. عشر كلمات — تستطيع ذلك!">If this is your first surah after Al-Fatiha, you picked the easiest one. Ten words — you have got this!</p>
                     </div>
                     <div class="tip-card">
                         <div class="tip-icon">📖</div>
-                        <h3>Know the Story</h3>
-                        <p>Remember <em>why</em> it came down. When a surah means something to you, it sticks.</p>
+                        <h3 data-ar="اعرف القصة">Know the Story</h3>
+                        <p data-ar="تذكّر <em>لماذا</em> نزلت. فحين تعني لك السورة شيئاً، تثبت في ذاكرتك.">Remember <em>why</em> it came down. When a surah means something to you, it sticks.</p>
                     </div>
                     <div class="tip-card">
                         <div class="tip-icon">🕌</div>
-                        <h3>Use It in Salah</h3>
-                        <p>Recite it in your prayers. Using a surah is the fastest way to never forget it.</p>
+                        <h3 data-ar="اقرأها في صلاتك">Use It in Salah</h3>
+                        <p data-ar="اقرأها في صلواتك. استعمال السورة هو أسرع طريق لئلا تنساها أبداً.">Recite it in your prayers. Using a surah is the fastest way to never forget it.</p>
                     </div>
                     <div class="tip-card">
                         <div class="tip-icon">🤲</div>
-                        <h3>Make Dua</h3>
-                        <p>Ask Allah to help you memorize and understand His words.</p>
+                        <h3 data-ar="ادعُ الله">Make Dua</h3>
+                        <p data-ar="اطلب من الله أن يعينك على حفظ كلامه وفهمه.">Ask Allah to help you memorize and understand His words.</p>
                     </div>
                 </div>
             </section>
 
             <!-- Navigation -->
             <div class="page-navigation">
-                <a href="surah-an-nas.html" class="nav-btn">← Surah An-Nas</a>
-                <a href="surah-al-asr.html" class="nav-btn next">Surah Al-Asr →</a>
+                <a href="surah-an-nas.html" class="nav-btn" data-ar="السابق: سورة الناس">← Surah An-Nas</a>
+                <a href="surah-al-asr.html" class="nav-btn next" data-ar="التالي: سورة العصر">Surah Al-Asr →</a>
             </div>
 
         </div>
@@ -331,13 +334,14 @@
     <footer>
         <div class="footer-content">
             <div class="footer-dua">
-                <p>🤲 May Allah make it easy for you to learn and memorize His words!</p>
+                <p data-ar="🤲 يسّر الله لك تعلّم كلامه وحفظه!">🤲 May Allah make it easy for you to learn and memorize His words!</p>
             </div>
-            <p class="footer-subtitle">🌙 Islamic Kids - Learning Islam with Love ✨</p>
+            <p class="footer-subtitle" data-ar="🌙 أطفال الإسلام - نتعلّم ديننا بالحب ✨">🌙 Islamic Kids - Learning Islam with Love ✨</p>
         </div>
     </footer>
 
     <script src="surah.js"></script>
 
+    <script src="bilingual.js"></script>
 </body>
 </html>

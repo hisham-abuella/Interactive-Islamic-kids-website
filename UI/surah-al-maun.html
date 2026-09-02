@@ -26,17 +26,20 @@
         <nav class="navbar">
             <div class="logo">
                 <span class="crescent">☪</span>
-                <h1>Islamic Kids</h1>
+                <h1 data-ar="أطفال الإسلام">Islamic Kids</h1>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="stories.html">Stories</a></li>
-                <li><a href="quran.html" class="active">Quran</a></li>
-                <li><a href="index.html#learn">Learn</a></li>
-            </ul>
+            <div class="nav-cluster">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="stories.html" data-ar="القصص">Stories</a></li>
+                    <li><a href="quran.html" class="active" data-ar="القرآن">Quran</a></li>
+                    <li><a href="index.html#learn" data-ar="تعلّم">Learn</a></li>
+                </ul>
+                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
+            </div>
         </nav>
     </header>
 
@@ -106,13 +109,13 @@
                 <div class="bismillah-card">
                     <p class="arabic-large">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
                     <p class="transliteration">Bismillah ir-Rahman ir-Raheem</p>
-                    <p class="translation">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
+                    <p class="translation" data-ar="&quot;بسم الله الرحمن الرحيم&quot;">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
                 </div>
             </section>
 
             <!-- Verses -->
             <section class="verses-section">
-                <h2 class="section-title">📜 Learn Each Verse</h2>
+                <h2 class="section-title" data-ar="📜 تعلّم كل آية">📜 Learn Each Verse</h2>
 
                 <div class="verse-card" data-verse="1">
                     <div class="verse-number">1</div>
@@ -208,7 +211,7 @@
 
             <!-- Full Surah -->
             <section class="full-surah-section">
-                <h2 class="section-title">📿 Complete Surah</h2>
+                <h2 class="section-title" data-ar="📿 السورة كاملة">📿 Complete Surah</h2>
                 <div class="full-surah-card">
                     <p class="arabic-full" dir="rtl">
                         بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ۝
@@ -225,7 +228,7 @@
 
             <!-- Video -->
             <section class="video-section">
-                <h2 class="section-title">🎬 Learn to Recite</h2>
+                <h2 class="section-title" data-ar="🎬 تعلّم التلاوة">🎬 Learn to Recite</h2>
                 <p class="video-intro">Seven short verses about being a kind person — listen and repeat!</p>
                 <div class="video-container">
                     <div class="video-frame">
@@ -246,24 +249,24 @@
             <section class="quiz-section">
                 <div class="quiz-intro">
                     <div class="quiz-icon">🎯</div>
-                    <h2>Test Your Knowledge!</h2>
+                    <h2 data-ar="اختبر معلوماتك!">Test Your Knowledge!</h2>
                     <p>Answer these questions about Surah Al-Maun</p>
                 </div>
 
                 <div class="quiz-card" data-question="1">
-                    <div class="question-number">Question 1 of 4</div>
+                    <div class="question-number" data-ar="السؤال ١ من ٤">Question 1 of 4</div>
                     <p class="quiz-question">What does "Al-Maun" mean?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">The Daybreak</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الفلق">The Daybreak</button>
                         <button class="quiz-option" data-correct="true">Small helpful things we share</button>
                         <button class="quiz-option" data-correct="false">The Victory</button>
-                        <button class="quiz-option" data-correct="false">The Elephant</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الفيل">The Elephant</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="2">
-                    <div class="question-number">Question 2 of 4</div>
+                    <div class="question-number" data-ar="السؤال ٢ من ٤">Question 2 of 4</div>
                     <p class="quiz-question">Who is the first person the surah says we must not push away?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false">A traveller</button>
@@ -275,7 +278,7 @@
                 </div>
 
                 <div class="quiz-card hidden" data-question="3">
-                    <div class="question-number">Question 3 of 4</div>
+                    <div class="question-number" data-ar="السؤال ٣ من ٤">Question 3 of 4</div>
                     <p class="quiz-question">Which praying people does the surah warn?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false">Everyone who prays</button>
@@ -287,7 +290,7 @@
                 </div>
 
                 <div class="quiz-card hidden" data-question="4">
-                    <div class="question-number">Question 4 of 4</div>
+                    <div class="question-number" data-ar="السؤال ٤ من ٤">Question 4 of 4</div>
                     <p class="quiz-question">What is "riya"?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false">Praying very quietly</button>
@@ -301,8 +304,8 @@
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
                         <div class="results-icon">🎉</div>
-                        <h2>MashaAllah!</h2>
-                        <p class="results-score">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
+                        <h2 data-ar="ما شاء الله!">MashaAllah!</h2>
+                        <p class="results-score" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٤ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
                         <p class="results-message">Share something small with someone today, just for Allah!</p>
                     </div>
                 </div>
@@ -320,7 +323,7 @@
 
             <!-- Fun Facts -->
             <section class="fun-facts-section">
-                <h2 class="section-title">🌟 Amazing Fun Facts!</h2>
+                <h2 class="section-title" data-ar="🌟 معلومات ممتعة!">🌟 Amazing Fun Facts!</h2>
                 <div class="facts-grid">
                     <div class="fact-card">
                         <div class="fact-number">1</div>
@@ -351,7 +354,7 @@
 
             <!-- Tips -->
             <section class="tips-section">
-                <h2 class="section-title">💡 Tips for Memorization</h2>
+                <h2 class="section-title" data-ar="💡 نصائح للحفظ">💡 Tips for Memorization</h2>
                 <div class="tips-grid">
                     <div class="tip-card">
                         <div class="tip-icon">🔗</div>
@@ -370,8 +373,8 @@
                     </div>
                     <div class="tip-card">
                         <div class="tip-icon">🤲</div>
-                        <h3>Make Dua</h3>
-                        <p>Ask Allah to help you memorize and understand His words.</p>
+                        <h3 data-ar="ادعُ الله">Make Dua</h3>
+                        <p data-ar="اطلب من الله أن يعينك على حفظ كلامه وفهمه.">Ask Allah to help you memorize and understand His words.</p>
                     </div>
                 </div>
             </section>
@@ -389,13 +392,14 @@
     <footer>
         <div class="footer-content">
             <div class="footer-dua">
-                <p>🤲 May Allah make it easy for you to learn and memorize His words!</p>
+                <p data-ar="🤲 يسّر الله لك تعلّم كلامه وحفظه!">🤲 May Allah make it easy for you to learn and memorize His words!</p>
             </div>
-            <p class="footer-subtitle">🌙 Islamic Kids - Learning Islam with Love ✨</p>
+            <p class="footer-subtitle" data-ar="🌙 أطفال الإسلام - نتعلّم ديننا بالحب ✨">🌙 Islamic Kids - Learning Islam with Love ✨</p>
         </div>
     </footer>
 
     <script src="surah.js"></script>
 
+    <script src="bilingual.js"></script>
 </body>
 </html>

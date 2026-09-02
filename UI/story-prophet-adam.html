@@ -32,21 +32,21 @@
         <nav class="navbar">
             <div class="logo">
                 <span class="crescent">☪</span>
-                <h1>Islamic Kids</h1>
+                <h1 data-ar="أطفال الإسلام">Islamic Kids</h1>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links">
-                <li><a href="index.html" data-i18n="navHome">Home</a></li>
-                <li><a href="stories.html" class="active" data-i18n="navStories">Stories</a></li>
-                <li><a href="quran.html" data-i18n="navQuran">Quran</a></li>
-                <li><a href="index.html#learn" data-i18n="navLearn">Learn</a></li>
-            </ul>
-            <!-- Language Toggle -->
-            <div class="lang-toggle">
-                <button class="lang-toggle-btn" onclick="window.i18n.toggleLanguage()" title="Switch Language">AR</button>
+            <div class="nav-cluster">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-i18n="navHome" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="stories.html" class="active" data-i18n="navStories" data-ar="القصص">Stories</a></li>
+                    <li><a href="quran.html" data-i18n="navQuran" data-ar="القرآن">Quran</a></li>
+                    <li><a href="index.html#learn" data-i18n="navLearn" data-ar="تعلّم">Learn</a></li>
+                </ul>
+                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
             </div>
+            <!-- Language Toggle -->
         </nav>
     </header>
 
@@ -68,8 +68,8 @@
             <!-- Story Header -->
             <div class="story-header">
                 <div class="story-icon animated-icon">🌍</div>
-                <h1 class="story-title" data-i18n="storyTitle">Prophet Adam - The First Human</h1>
-                <p class="story-subtitle" data-i18n="storySubtitle">An Interactive Adventure</p>
+                <h1 class="story-title" data-i18n="storyTitle" data-ar="النبي آدم - أول إنسان">Prophet Adam - The First Human</h1>
+                <p class="story-subtitle" data-i18n="storySubtitle" data-ar="مغامرة تفاعلية">An Interactive Adventure</p>
             </div>
 
             <!-- Progress Bar -->
@@ -392,7 +392,7 @@
                 </div>
 
                 <div class="quiz-card" data-question="1">
-                    <div class="question-number" data-i18n-template="questionOf" data-num="1" data-total="3">Question 1 of 3</div>
+                    <div class="question-number" data-i18n-template="questionOf" data-num="1" data-total="3" data-ar="السؤال ١ من ٣">Question 1 of 3</div>
                     <p class="quiz-question" data-i18n="q1Question">What was Adam created from?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false" data-i18n="q1Option1">Light</button>
@@ -404,7 +404,7 @@
                 </div>
 
                 <div class="quiz-card hidden" data-question="2">
-                    <div class="question-number" data-i18n-template="questionOf" data-num="2" data-total="3">Question 2 of 3</div>
+                    <div class="question-number" data-i18n-template="questionOf" data-num="2" data-total="3" data-ar="السؤال ٢ من ٣">Question 2 of 3</div>
                     <p class="quiz-question" data-i18n="q2Question">Who refused to bow to Adam?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false" data-i18n="q2Option1">The angels</button>
@@ -416,7 +416,7 @@
                 </div>
 
                 <div class="quiz-card hidden" data-question="3">
-                    <div class="question-number" data-i18n-template="questionOf" data-num="3" data-total="3">Question 3 of 3</div>
+                    <div class="question-number" data-i18n-template="questionOf" data-num="3" data-total="3" data-ar="السؤال ٣ من ٣">Question 3 of 3</div>
                     <p class="quiz-question" data-i18n="q3Question">What happened when Adam asked Allah for forgiveness?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false" data-i18n="q3Option1">Allah was angry</button>
@@ -431,7 +431,7 @@
                     <div class="results-content">
                         <div class="results-icon">🎉</div>
                         <h2 data-i18n="resultsTitle">Amazing Job!</h2>
-                        <p class="results-score"><span data-i18n-template="resultsScore" data-score="0" data-total="3">You got <span id="scoreDisplay">0</span> out of 3 correct!</span></p>
+                        <p class="results-score"><span data-i18n-template="resultsScore" data-score="0" data-total="3" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٣ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 3 correct!</span></p>
                         <div class="final-stars">
                             <p><span data-i18n="totalStarsEarned">Total Stars Earned:</span> <span id="totalStars">0</span> ⭐</p>
                         </div>
@@ -523,5 +523,6 @@
         });
     </script>
 
+    <script src="bilingual.js"></script>
 </body>
 </html>

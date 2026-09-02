@@ -26,17 +26,20 @@
         <nav class="navbar">
             <div class="logo">
                 <span class="crescent">☪</span>
-                <h1>Islamic Kids</h1>
+                <h1 data-ar="أطفال الإسلام">Islamic Kids</h1>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="stories.html">Stories</a></li>
-                <li><a href="quran.html" class="active">Quran</a></li>
-                <li><a href="index.html#learn">Learn</a></li>
-            </ul>
+            <div class="nav-cluster">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="stories.html" data-ar="القصص">Stories</a></li>
+                    <li><a href="quran.html" class="active" data-ar="القرآن">Quran</a></li>
+                    <li><a href="index.html#learn" data-ar="تعلّم">Learn</a></li>
+                </ul>
+                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
+            </div>
         </nav>
     </header>
 
@@ -44,9 +47,9 @@
     <section class="surah-hero">
         <div class="surah-hero-content">
             <div class="surah-icon">🤍</div>
-            <h1>Surah An-Nas</h1>
-            <p class="surah-subtitle">Mankind - الناس</p>
-            <div class="surah-info">
+            <h1 data-ar="سورة الناس">Surah An-Nas</h1>
+            <p class="surah-subtitle" data-ar="الناس">Mankind - الناس</p>
+            <div class="surah-info" data-ar="<span class=&quot;info-badge&quot;>📿 ٦ آيات</span> <span class=&quot;info-badge&quot;>🕌 سورة مكية</span> <span class=&quot;info-badge&quot;>📖 آخر سورة</span>">
                 <span class="info-badge">📿 6 Verses</span>
                 <span class="info-badge">🕌 Makki Surah</span>
                 <span class="info-badge">📖 The Last Surah</span>
@@ -61,39 +64,39 @@
             <!-- Introduction -->
             <section class="intro-section">
                 <div class="intro-card">
-                    <h2>🌟 Why is Surah An-Nas Special?</h2>
-                    <p>Surah An-Nas is chapter number <strong>114</strong> — the <strong>very last surah</strong> in the whole Quran! It has <strong>6 short verses</strong>.</p>
-                    <p><em>"An-Nas"</em> means <strong>the people</strong>, or mankind. That is you, me, and everybody else. The word <em>"nas"</em> appears <strong>five times</strong> in these six little verses!</p>
-                    <p>Here is something beautiful: the Quran <em>opens</em> with Surah Al-Fatiha, where we ask Allah to guide us — and it <em>closes</em> with Surah An-Nas, where we ask Allah to protect us. Guidance at the start, protection at the end.</p>
+                    <h2 data-ar="🌟 لماذا سورة الناس مميزة؟">🌟 Why is Surah An-Nas Special?</h2>
+                    <p data-ar="سورة الناس هي السورة رقم <strong>١١٤</strong> — <strong>آخر سورة</strong> في القرآن كله! وفيها <strong>٦ آيات قصيرة</strong>.">Surah An-Nas is chapter number <strong>114</strong> — the <strong>very last surah</strong> in the whole Quran! It has <strong>6 short verses</strong>.</p>
+                    <p data-ar="<em>&quot;الناس&quot;</em> تعني <strong>البشر</strong> جميعاً. أنت وأنا وكل أحد. وكلمة <em>&quot;الناس&quot;</em> تتكرر <strong>خمس مرات</strong> في هذه الآيات الست الصغيرة!"><em>"An-Nas"</em> means <strong>the people</strong>, or mankind. That is you, me, and everybody else. The word <em>"nas"</em> appears <strong>five times</strong> in these six little verses!</p>
+                    <p data-ar="وهنا شيء جميل: القرآن <em>يبدأ</em> بسورة الفاتحة حيث نسأل الله الهداية — و<em>ينتهي</em> بسورة الناس حيث نسأل الله الحماية. هداية في البداية، وحماية في النهاية.">Here is something beautiful: the Quran <em>opens</em> with Surah Al-Fatiha, where we ask Allah to guide us — and it <em>closes</em> with Surah An-Nas, where we ask Allah to protect us. Guidance at the start, protection at the end.</p>
                 </div>
 
                 <div class="intro-card highlight">
-                    <h2>👑 Three Names of Allah</h2>
-                    <p>Before you ask Allah for anything, this surah teaches you to call Him by <strong>three names</strong> — and each one is bigger than the last:</p>
+                    <h2 data-ar="👑 ثلاثة من أسماء الله">👑 Three Names of Allah</h2>
+                    <p data-ar="قبل أن تسأل الله شيئاً، تعلّمك هذه السورة أن تناديه بـ<strong>ثلاثة أسماء</strong> — كل واحد أعظم من الذي قبله:">Before you ask Allah for anything, this surah teaches you to call Him by <strong>three names</strong> — and each one is bigger than the last:</p>
                     <ul>
-                        <li>💫 <strong>Rabb an-Nas</strong> — the <em>Lord</em> of people, who made us and takes care of us</li>
-                        <li>💫 <strong>Malik an-Nas</strong> — the <em>King</em> of people, who is in charge of everyone</li>
-                        <li>💫 <strong>Ilah an-Nas</strong> — the <em>God</em> of people, the only One we worship</li>
+                        <li data-ar="💫 <strong>ربّ الناس</strong> — <em>ربّهم</em> الذي خلقنا ويرعانا">💫 <strong>Rabb an-Nas</strong> — the <em>Lord</em> of people, who made us and takes care of us</li>
+                        <li data-ar="💫 <strong>ملك الناس</strong> — <em>مالكهم</em> الذي يملك أمر الجميع">💫 <strong>Malik an-Nas</strong> — the <em>King</em> of people, who is in charge of everyone</li>
+                        <li data-ar="💫 <strong>إله الناس</strong> — <em>معبودهم</em> الذي لا نعبد سواه">💫 <strong>Ilah an-Nas</strong> — the <em>God</em> of people, the only One we worship</li>
                     </ul>
-                    <p>It is like knocking on the door and saying: <em>You made me, You are my King, and You are the only One I worship — please keep me safe!</em></p>
+                    <p data-ar="وكأنك تطرق الباب وتقول: <em>أنت خلقتني، وأنت مليكي، وأنت وحدك من أعبد — فاحفظني!</em>">It is like knocking on the door and saying: <em>You made me, You are my King, and You are the only One I worship — please keep me safe!</em></p>
                 </div>
 
                 <div class="story-card special">
-                    <h2>🤫 The Sneaky Whisperer</h2>
+                    <h2 data-ar="🤫 الوسواس الخنّاس">🤫 The Sneaky Whisperer</h2>
                     <div class="story-content">
-                        <p>This surah protects you from something you cannot even see: <strong>whispers</strong>. Shaytan cannot force you to do anything at all. He can only <em>whisper</em> little bad ideas into your heart — <em>"go on, tell a lie"</em>, <em>"do not share"</em>, <em>"skip your salah today"</em>.</p>
-                        <p>His special name here is <em>Al-Khannas</em>, which means <strong>"the one who sneaks away"</strong>. As soon as you remember Allah, he shrinks back and runs off — like a mouse when the light switches on!</p>
+                        <p data-ar="هذه السورة تحميك من شيء لا تراه أصلاً: <strong>الوسوسة</strong>. فالشيطان لا يستطيع أن يجبرك على شيء أبداً. كل ما يفعله أنه <em>يوسوس</em> بأفكار سيئة صغيرة في قلبك — <em>&quot;هيا اكذب&quot;</em>، <em>&quot;لا تشارك&quot;</em>، <em>&quot;اترك صلاتك اليوم&quot;</em>.">This surah protects you from something you cannot even see: <strong>whispers</strong>. Shaytan cannot force you to do anything at all. He can only <em>whisper</em> little bad ideas into your heart — <em>"go on, tell a lie"</em>, <em>"do not share"</em>, <em>"skip your salah today"</em>.</p>
+                        <p data-ar="واسمه هنا <em>الخنّاس</em>، أي <strong>&quot;الذي يتراجع ويختفي&quot;</strong>. فما إن تذكر الله حتى ينكمش ويهرب — كالفأر حين يُضاء النور!">His special name here is <em>Al-Khannas</em>, which means <strong>"the one who sneaks away"</strong>. As soon as you remember Allah, he shrinks back and runs off — like a mouse when the light switches on!</p>
                         <div class="lights-container">
-                            <div class="light-badge">🌟 You remember Allah</div>
-                            <div class="light-badge">💨 The whisperer runs away</div>
+                            <div class="light-badge" data-ar="🌟 تذكر الله">🌟 You remember Allah</div>
+                            <div class="light-badge" data-ar="💨 فيهرب الموسوس">💨 The whisperer runs away</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="story-card healing">
-                    <h2>🌙 The Three Protectors</h2>
-                    <p>Every night before sleeping, the Prophet ﷺ would cup his hands, recite <strong>Surah Al-Ikhlas</strong>, <strong>Surah Al-Falaq</strong> and <strong>Surah An-Nas</strong>, blow into his hands, and wipe them over his body — three times.</p>
-                    <p>Al-Falaq guards you from harm <strong>outside</strong> you. An-Nas guards your <strong>heart</strong> — your thoughts and choices. Together they cover everything!</p>
+                    <h2 data-ar="🌙 السور الثلاث الحامية">🌙 The Three Protectors</h2>
+                    <p data-ar="كل ليلة قبل النوم، كان النبي ﷺ يجمع كفّيه ويقرأ <strong>سورة الإخلاص</strong> و<strong>سورة الفلق</strong> و<strong>سورة الناس</strong>، ثم ينفث فيهما ويمسح بهما جسده — ثلاث مرات.">Every night before sleeping, the Prophet ﷺ would cup his hands, recite <strong>Surah Al-Ikhlas</strong>, <strong>Surah Al-Falaq</strong> and <strong>Surah An-Nas</strong>, blow into his hands, and wipe them over his body — three times.</p>
+                    <p data-ar="الفلق تحميك من الأذى <strong>خارجك</strong>. والناس تحمي <strong>قلبك</strong> — أفكارك واختياراتك. وهما معاً تشملان كل شيء!">Al-Falaq guards you from harm <strong>outside</strong> you. An-Nas guards your <strong>heart</strong> — your thoughts and choices. Together they cover everything!</p>
                 </div>
             </section>
 
@@ -102,23 +105,23 @@
                 <div class="bismillah-card">
                     <p class="arabic-large">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
                     <p class="transliteration">Bismillah ir-Rahman ir-Raheem</p>
-                    <p class="translation">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
+                    <p class="translation" data-ar="&quot;بسم الله الرحمن الرحيم&quot;">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
                 </div>
             </section>
 
             <!-- Verses -->
             <section class="verses-section">
-                <h2 class="section-title">📜 Learn Each Verse</h2>
+                <h2 class="section-title" data-ar="📜 تعلّم كل آية">📜 Learn Each Verse</h2>
 
                 <div class="verse-card" data-verse="1">
                     <div class="verse-number">1</div>
                     <div class="verse-content">
                         <p class="arabic">قُلْ أَعُوذُ بِرَبِّ النَّاسِ</p>
                         <p class="transliteration">Qul a'oodhu bi Rabbin-nas</p>
-                        <p class="translation">"Say: I seek refuge in the Lord of mankind."</p>
+                        <p class="translation" data-ar="&quot;قل أعوذ بربّ الناس&quot;">"Say: I seek refuge in the Lord of mankind."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
-                            <p>"I seek refuge" means <em>"I run to Allah to keep me safe"</em>. Allah is your <strong>Rabb</strong> — the One who created you, feeds you, and looks after you every single day.</p>
+                            <p data-ar="&quot;أعوذ&quot; تعني <em>&quot;ألجأ إلى الله ليحفظني&quot;</em>. والله هو <strong>ربّك</strong> — الذي خلقك ويرزقك ويرعاك كل يوم.">"I seek refuge" means <em>"I run to Allah to keep me safe"</em>. Allah is your <strong>Rabb</strong> — the One who created you, feeds you, and looks after you every single day.</p>
                         </div>
                     </div>
                 </div>
@@ -128,10 +131,10 @@
                     <div class="verse-content">
                         <p class="arabic">مَلِكِ النَّاسِ</p>
                         <p class="transliteration">Malikin-nas</p>
-                        <p class="translation">"The King of mankind."</p>
+                        <p class="translation" data-ar="&quot;ملك الناس&quot;">"The King of mankind."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
-                            <p>Kings and presidents rule for a little while, over a little piece of land. Allah is the <strong>King of every single person</strong>, everywhere, forever. Nobody is outside His kingdom.</p>
+                            <p data-ar="الملوك والرؤساء يحكمون وقتاً قصيراً على قطعة صغيرة من الأرض. أما الله فهو <strong>ملك كل إنسان</strong>، في كل مكان، وإلى الأبد. ولا أحد خارج ملكه.">Kings and presidents rule for a little while, over a little piece of land. Allah is the <strong>King of every single person</strong>, everywhere, forever. Nobody is outside His kingdom.</p>
                         </div>
                     </div>
                 </div>
@@ -141,10 +144,10 @@
                     <div class="verse-content">
                         <p class="arabic">إِلَٰهِ النَّاسِ</p>
                         <p class="transliteration">Ilahin-nas</p>
-                        <p class="translation">"The God of mankind."</p>
+                        <p class="translation" data-ar="&quot;إله الناس&quot;">"The God of mankind."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
-                            <p><em>Ilah</em> means <strong>the One we worship</strong>. Not the sun, not statues, not money — only Allah. This is the greatest name of all three, so it comes last, like the top of a staircase.</p>
+                            <p data-ar="<em>الإله</em> هو <strong>المعبود</strong>. لا الشمس، ولا التماثيل، ولا المال — الله وحده. وهذا أعظم الأسماء الثلاثة، ولذلك جاء في الآخر، كأعلى درجة في السلّم."><em>Ilah</em> means <strong>the One we worship</strong>. Not the sun, not statues, not money — only Allah. This is the greatest name of all three, so it comes last, like the top of a staircase.</p>
                         </div>
                     </div>
                 </div>
@@ -154,10 +157,10 @@
                     <div class="verse-content">
                         <p class="arabic">مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ</p>
                         <p class="transliteration">Min sharril-waswasil-khannas</p>
-                        <p class="translation">"From the evil of the sneaking whisperer."</p>
+                        <p class="translation" data-ar="&quot;من شرّ الوسواس الخنّاس&quot;">"From the evil of the sneaking whisperer."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
-                            <p><em>Waswas</em> means <strong>whispering</strong> and <em>Khannas</em> means <strong>the one who sneaks away</strong>. He whispers bad ideas — but the moment you remember Allah, he disappears. He has <strong>no power over you at all</strong>.</p>
+                            <p data-ar="<em>الوسواس</em> هو <strong>الهمس الخفي</strong>، و<em>الخنّاس</em> هو <strong>الذي يتراجع ويختفي</strong>. يوسوس بالأفكار السيئة — لكنه يختفي لحظة أن تذكر الله. وليس له <strong>عليك سلطان أبداً</strong>."><em>Waswas</em> means <strong>whispering</strong> and <em>Khannas</em> means <strong>the one who sneaks away</strong>. He whispers bad ideas — but the moment you remember Allah, he disappears. He has <strong>no power over you at all</strong>.</p>
                         </div>
                     </div>
                 </div>
@@ -167,10 +170,10 @@
                     <div class="verse-content">
                         <p class="arabic">الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ</p>
                         <p class="transliteration">Alladhi yuwaswisu fee sudoorin-nas</p>
-                        <p class="translation">"Who whispers into the hearts of mankind."</p>
+                        <p class="translation" data-ar="&quot;الذي يوسوس في صدور الناس&quot;">"Who whispers into the hearts of mankind."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
-                            <p>The whispers land right in your <strong>chest</strong>, where your heart is. So if a bad thought pops in, do not panic — it is not <em>your</em> fault, and having the thought is not a sin. Just say <em>"A'oodhu billahi minash-shaytanir-rajeem"</em> and carry on.</p>
+                            <p data-ar="تقع الوسوسة في <strong>صدرك</strong> حيث قلبك. فإذا جاءتك فكرة سيئة فلا تفزع — ليست <em>ذنبك</em>، ومجرد خطورها ليس معصية. قل فقط <em>&quot;أعوذ بالله من الشيطان الرجيم&quot;</em> وامضِ في طريقك.">The whispers land right in your <strong>chest</strong>, where your heart is. So if a bad thought pops in, do not panic — it is not <em>your</em> fault, and having the thought is not a sin. Just say <em>"A'oodhu billahi minash-shaytanir-rajeem"</em> and carry on.</p>
                         </div>
                     </div>
                 </div>
@@ -180,10 +183,10 @@
                     <div class="verse-content">
                         <p class="arabic">مِنَ الْجِنَّةِ وَالنَّاسِ</p>
                         <p class="transliteration">Minal-jinnati wan-nas</p>
-                        <p class="translation">"From among the jinn and mankind."</p>
+                        <p class="translation" data-ar="&quot;من الجِنّة والناس&quot;">"From among the jinn and mankind."</p>
                         <div class="verse-explanation">
                             <span class="explanation-icon">💡</span>
-                            <p>Bad whispers can come from <strong>jinn</strong> — creatures we cannot see — but also from <strong>people</strong>! A friend who says <em>"go on, nobody will know"</em> is whispering too. Choose good friends, and ask Allah to protect you from both kinds.</p>
+                            <p data-ar="قد تأتي الوسوسة من <strong>الجنّ</strong> — وهم خلق لا نراهم — وقد تأتي أيضاً من <strong>الناس</strong>! فالصديق الذي يقول لك <em>&quot;هيا، لن يعلم أحد&quot;</em> يوسوس أيضاً. فاختر أصدقاء صالحين، واسأل الله أن يحميك من النوعين.">Bad whispers can come from <strong>jinn</strong> — creatures we cannot see — but also from <strong>people</strong>! A friend who says <em>"go on, nobody will know"</em> is whispering too. Choose good friends, and ask Allah to protect you from both kinds.</p>
                         </div>
                     </div>
                 </div>
@@ -191,7 +194,7 @@
 
             <!-- Full Surah -->
             <section class="full-surah-section">
-                <h2 class="section-title">📿 Complete Surah</h2>
+                <h2 class="section-title" data-ar="📿 السورة كاملة">📿 Complete Surah</h2>
                 <div class="full-surah-card">
                     <p class="arabic-full" dir="rtl">
                         بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ۝
@@ -207,8 +210,8 @@
 
             <!-- Video -->
             <section class="video-section">
-                <h2 class="section-title">🎬 Learn to Recite</h2>
-                <p class="video-intro">Listen and repeat — the ending of every verse rhymes, so it is lovely to learn!</p>
+                <h2 class="section-title" data-ar="🎬 تعلّم التلاوة">🎬 Learn to Recite</h2>
+                <p class="video-intro" data-ar="استمع وردّد — فنهاية كل آية متشابهة، وهذا يجعل حفظها ممتعاً!">Listen and repeat — the ending of every verse rhymes, so it is lovely to learn!</p>
                 <div class="video-container">
                     <div class="video-frame">
                         <iframe
@@ -228,54 +231,54 @@
             <section class="quiz-section">
                 <div class="quiz-intro">
                     <div class="quiz-icon">🎯</div>
-                    <h2>Test Your Knowledge!</h2>
-                    <p>Answer these questions about Surah An-Nas</p>
+                    <h2 data-ar="اختبر معلوماتك!">Test Your Knowledge!</h2>
+                    <p data-ar="أجب عن هذه الأسئلة عن سورة الناس">Answer these questions about Surah An-Nas</p>
                 </div>
 
                 <div class="quiz-card" data-question="1">
-                    <div class="question-number">Question 1 of 4</div>
-                    <p class="quiz-question">What number surah is An-Nas in the Quran?</p>
+                    <div class="question-number" data-ar="السؤال ١ من ٤">Question 1 of 4</div>
+                    <p class="quiz-question" data-ar="ما رقم سورة الناس في القرآن؟">What number surah is An-Nas in the Quran?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">112 — the third from last</button>
-                        <button class="quiz-option" data-correct="false">113 — the second from last</button>
-                        <button class="quiz-option" data-correct="true">114 — the very last one</button>
-                        <button class="quiz-option" data-correct="false">1 — the very first one</button>
+                        <button class="quiz-option" data-correct="false" data-ar="١١٢ — الثالثة من الآخر">112 — the third from last</button>
+                        <button class="quiz-option" data-correct="false" data-ar="١١٣ — الثانية من الآخر">113 — the second from last</button>
+                        <button class="quiz-option" data-correct="true" data-ar="١١٤ — الأخيرة تماماً">114 — the very last one</button>
+                        <button class="quiz-option" data-correct="false" data-ar="١ — الأولى تماماً">1 — the very first one</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="2">
-                    <div class="question-number">Question 2 of 4</div>
-                    <p class="quiz-question">What does "An-Nas" mean?</p>
+                    <div class="question-number" data-ar="السؤال ٢ من ٤">Question 2 of 4</div>
+                    <p class="quiz-question" data-ar="ماذا تعني كلمة &quot;الناس&quot;؟">What does "An-Nas" mean?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">The Night</button>
-                        <button class="quiz-option" data-correct="true">Mankind, the people</button>
-                        <button class="quiz-option" data-correct="false">The Daybreak</button>
-                        <button class="quiz-option" data-correct="false">The Sincerity</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الليل">The Night</button>
+                        <button class="quiz-option" data-correct="true" data-ar="البشر، الناس">Mankind, the people</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الفلق">The Daybreak</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الإخلاص">The Sincerity</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="3">
-                    <div class="question-number">Question 3 of 4</div>
-                    <p class="quiz-question">What does the sneaky whisperer do when you remember Allah?</p>
+                    <div class="question-number" data-ar="السؤال ٣ من ٤">Question 3 of 4</div>
+                    <p class="quiz-question" data-ar="ماذا يفعل الوسواس الخنّاس حين تذكر الله؟">What does the sneaky whisperer do when you remember Allah?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="false">He gets stronger</button>
-                        <button class="quiz-option" data-correct="false">He forces you to do bad things</button>
-                        <button class="quiz-option" data-correct="true">He sneaks away and runs off</button>
-                        <button class="quiz-option" data-correct="false">He falls asleep</button>
+                        <button class="quiz-option" data-correct="false" data-ar="يزداد قوة">He gets stronger</button>
+                        <button class="quiz-option" data-correct="false" data-ar="يجبرك على فعل السوء">He forces you to do bad things</button>
+                        <button class="quiz-option" data-correct="true" data-ar="ينكمش ويهرب">He sneaks away and runs off</button>
+                        <button class="quiz-option" data-correct="false" data-ar="ينام">He falls asleep</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="4">
-                    <div class="question-number">Question 4 of 4</div>
-                    <p class="quiz-question">Which three names of Allah does this surah use?</p>
+                    <div class="question-number" data-ar="السؤال ٤ من ٤">Question 4 of 4</div>
+                    <p class="quiz-question" data-ar="أي ثلاثة أسماء لله وردت في هذه السورة؟">Which three names of Allah does this surah use?</p>
                     <div class="quiz-options">
-                        <button class="quiz-option" data-correct="true">Lord, King, and God of mankind</button>
-                        <button class="quiz-option" data-correct="false">The One, the Eternal, the Maker</button>
-                        <button class="quiz-option" data-correct="false">The Daybreak, the Night, the Morning</button>
-                        <button class="quiz-option" data-correct="false">The Most Gracious only</button>
+                        <button class="quiz-option" data-correct="true" data-ar="ربّ الناس، وملك الناس، وإله الناس">Lord, King, and God of mankind</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الأحد، الصمد، الخالق">The One, the Eternal, the Maker</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الفلق، والليل، والصباح">The Daybreak, the Night, the Morning</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الرحمن فقط">The Most Gracious only</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
@@ -283,85 +286,85 @@
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
                         <div class="results-icon">🎉</div>
-                        <h2>MashaAllah!</h2>
-                        <p class="results-score">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
-                        <p class="results-message">Now you know the last surah of the Quran. Recite it tonight!</p>
+                        <h2 data-ar="ما شاء الله!">MashaAllah!</h2>
+                        <p class="results-score" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٤ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
+                        <p class="results-message" data-ar="الآن تعرف آخر سورة في القرآن. اقرأها الليلة!">Now you know the last surah of the Quran. Recite it tonight!</p>
                     </div>
                 </div>
             </section>
 
             <!-- Hadith -->
             <section class="reply-section">
-                <h2 class="section-title">💬 The Best Protection</h2>
+                <h2 class="section-title" data-ar="💬 خير ما تتعوّذ به">💬 The Best Protection</h2>
                 <div class="reply-card">
-                    <p>Al-Falaq and An-Nas were revealed together, and the Prophet ﷺ was delighted with them.</p>
-                    <p class="hadith">Prophet Muhammad ﷺ said: <em>"Have you not seen the verses revealed tonight, the like of which has never been seen before? Qul a'oodhu bi Rabbil-falaq and Qul a'oodhu bi Rabbin-nas."</em></p>
-                    <p>Two tiny surahs — and no better protection exists anywhere.</p>
+                    <p data-ar="نزلت الفلق والناس معاً، وقد سُرّ بهما النبي ﷺ.">Al-Falaq and An-Nas were revealed together, and the Prophet ﷺ was delighted with them.</p>
+                    <p class="hadith" data-ar="قال النبي محمد ﷺ: <em>&quot;ألم تر آيات أُنزلت الليلة لم يُر مثلهنّ قط؟ قل أعوذ بربّ الفلق، وقل أعوذ بربّ الناس&quot;</em>">Prophet Muhammad ﷺ said: <em>"Have you not seen the verses revealed tonight, the like of which has never been seen before? Qul a'oodhu bi Rabbil-falaq and Qul a'oodhu bi Rabbin-nas."</em></p>
+                    <p data-ar="سورتان صغيرتان — ولا حماية أفضل منهما في الدنيا كلها.">Two tiny surahs — and no better protection exists anywhere.</p>
                 </div>
             </section>
 
             <!-- Fun Facts -->
             <section class="fun-facts-section">
-                <h2 class="section-title">🌟 Amazing Fun Facts!</h2>
+                <h2 class="section-title" data-ar="🌟 معلومات ممتعة!">🌟 Amazing Fun Facts!</h2>
                 <div class="facts-grid">
                     <div class="fact-card">
                         <div class="fact-number">1</div>
-                        <p>It is the <strong>last surah</strong> in the Quran, number 114</p>
+                        <p data-ar="هي <strong>آخر سورة</strong> في القرآن، رقم ١١٤">It is the <strong>last surah</strong> in the Quran, number 114</p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">2</div>
-                        <p>The word <strong>"nas"</strong> appears 5 times in 6 verses</p>
+                        <p data-ar="كلمة <strong>&quot;الناس&quot;</strong> تتكرر ٥ مرات في ٦ آيات">The word <strong>"nas"</strong> appears 5 times in 6 verses</p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">3</div>
-                        <p>It names Allah as <strong>Lord, King and God</strong></p>
+                        <p data-ar="تسمّي الله <strong>ربّاً وملكاً وإلهاً</strong>">It names Allah as <strong>Lord, King and God</strong></p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">4</div>
-                        <p>Shaytan can only <strong>whisper</strong> — he can never force you</p>
+                        <p data-ar="الشيطان <strong>يوسوس</strong> فقط — ولا يستطيع إجبارك أبداً">Shaytan can only <strong>whisper</strong> — he can never force you</p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">5</div>
-                        <p>With Al-Falaq it forms <strong>Al-Mu'awwidhatayn</strong></p>
+                        <p data-ar="مع سورة الفلق تكوّنان <strong>المعوّذتين</strong>">With Al-Falaq it forms <strong>Al-Mu'awwidhatayn</strong></p>
                     </div>
                     <div class="fact-card">
                         <div class="fact-number">6</div>
-                        <p>The Quran begins with <strong>guidance</strong> and ends with <strong>protection</strong></p>
+                        <p data-ar="القرآن يبدأ بـ<strong>الهداية</strong> وينتهي بـ<strong>الحماية</strong>">The Quran begins with <strong>guidance</strong> and ends with <strong>protection</strong></p>
                     </div>
                 </div>
             </section>
 
             <!-- Tips -->
             <section class="tips-section">
-                <h2 class="section-title">💡 Tips for Memorization</h2>
+                <h2 class="section-title" data-ar="💡 نصائح للحفظ">💡 Tips for Memorization</h2>
                 <div class="tips-grid">
                     <div class="tip-card">
                         <div class="tip-icon">🔁</div>
-                        <h3>Follow the Rhyme</h3>
-                        <p>Almost every verse ends in <em>"-nas"</em>. Say them out loud and let the rhyme pull you along.</p>
+                        <h3 data-ar="اتبع الإيقاع">Follow the Rhyme</h3>
+                        <p data-ar="كل آية تقريباً تنتهي بـ<em>&quot;الناس&quot;</em>. اقرأها بصوت عالٍ ودع الإيقاع يقودك.">Almost every verse ends in <em>"-nas"</em>. Say them out loud and let the rhyme pull you along.</p>
                     </div>
                     <div class="tip-card">
                         <div class="tip-icon">🪜</div>
-                        <h3>Climb the Three Names</h3>
-                        <p>Rabb, then Malik, then Ilah — Lord, King, God. Picture three steps going up.</p>
+                        <h3 data-ar="اصعد الأسماء الثلاثة">Climb the Three Names</h3>
+                        <p data-ar="ربّ، ثم ملك، ثم إله. تخيّلها ثلاث درجات تصعد إلى أعلى.">Rabb, then Malik, then Ilah — Lord, King, God. Picture three steps going up.</p>
                     </div>
                     <div class="tip-card">
                         <div class="tip-icon">🕌</div>
-                        <h3>Use It in Salah</h3>
-                        <p>Recite it in your prayers. Using a surah is the fastest way to never forget it.</p>
+                        <h3 data-ar="اقرأها في صلاتك">Use It in Salah</h3>
+                        <p data-ar="اقرأها في صلواتك. استعمال السورة هو أسرع طريق لئلا تنساها أبداً.">Recite it in your prayers. Using a surah is the fastest way to never forget it.</p>
                     </div>
                     <div class="tip-card">
                         <div class="tip-icon">🤲</div>
-                        <h3>Make Dua</h3>
-                        <p>Ask Allah to help you memorize and understand His words.</p>
+                        <h3 data-ar="ادعُ الله">Make Dua</h3>
+                        <p data-ar="اطلب من الله أن يعينك على حفظ كلامه وفهمه.">Ask Allah to help you memorize and understand His words.</p>
                     </div>
                 </div>
             </section>
 
             <!-- Navigation -->
             <div class="page-navigation">
-                <a href="surah-al-falaq.html" class="nav-btn">← Surah Al-Falaq</a>
-                <a href="surah-al-kawthar.html" class="nav-btn next">Surah Al-Kawthar →</a>
+                <a href="surah-al-falaq.html" class="nav-btn" data-ar="السابق: سورة الفلق">← Surah Al-Falaq</a>
+                <a href="surah-al-kawthar.html" class="nav-btn next" data-ar="التالي: سورة الكوثر">Surah Al-Kawthar →</a>
             </div>
 
         </div>
@@ -371,13 +374,14 @@
     <footer>
         <div class="footer-content">
             <div class="footer-dua">
-                <p>🤲 May Allah make it easy for you to learn and memorize His words!</p>
+                <p data-ar="🤲 يسّر الله لك تعلّم كلامه وحفظه!">🤲 May Allah make it easy for you to learn and memorize His words!</p>
             </div>
-            <p class="footer-subtitle">🌙 Islamic Kids - Learning Islam with Love ✨</p>
+            <p class="footer-subtitle" data-ar="🌙 أطفال الإسلام - نتعلّم ديننا بالحب ✨">🌙 Islamic Kids - Learning Islam with Love ✨</p>
         </div>
     </footer>
 
     <script src="surah.js"></script>
 
+    <script src="bilingual.js"></script>
 </body>
 </html>
