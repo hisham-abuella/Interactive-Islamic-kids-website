@@ -908,10 +908,15 @@ html[lang="ar"] .story-card,
 html[lang="ar"] .reply-card,
 html[lang="ar"] .fact-card,
 html[lang="ar"] .tip-card,
-html[lang="ar"] .quiz-card,
+html[lang="ar"] .quiz-card {
+    text-align: right;
+}
+
+/* Heroes stay centred in both languages - the icon and title are a
+   composition, not running text. */
 html[lang="ar"] .surah-hero-content,
 html[lang="ar"] .stories-hero {
-    text-align: right;
+    text-align: center;
 }
 
 /* The accent rule that marks explanations should hug the text edge */
