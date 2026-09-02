@@ -17,6 +17,10 @@
 - [x] Surah An-Nas (114) (no voice narration yet)
 - [x] Surah Al-Kawthar (108) (no voice narration yet)
 - [x] Surah Al-Asr (103) (no voice narration yet)
+- [x] Surah An-Nasr (110) (no voice narration yet)
+- [x] Surah Al-Kafirun (109) (no voice narration yet)
+- [x] Surah Al-Maun (107) (no voice narration yet)
+- [x] Surah Quraysh (106) (no voice narration yet)
 
 ---
 
@@ -51,11 +55,11 @@
 - [x] Surah Al-Asr (103) - 3 verses - Time
 
 ### Phase 2 - Short & Essential
-- [ ] Surah An-Nasr (110) - 3 verses - Divine Support
+- [x] Surah An-Nasr (110) - 3 verses - Divine Support
 - [ ] Surah Al-Masad (111) - 5 verses - The Palm Fiber
-- [ ] Surah Al-Kafirun (109) - 6 verses - The Disbelievers
-- [ ] Surah Al-Maun (107) - 7 verses - Small Kindnesses
-- [ ] Surah Quraysh (106) - 4 verses - The Quraysh
+- [x] Surah Al-Kafirun (109) - 6 verses - The Disbelievers
+- [x] Surah Al-Maun (107) - 7 verses - Small Kindnesses
+- [x] Surah Quraysh (106) - 4 verses - The Quraysh
 
 ### Phase 3 - Slightly Longer
 - [ ] Surah Al-Fil (105) - 5 verses - The Elephant
@@ -115,8 +119,9 @@
 
 ## Pending Audio Generation
 - [ ] prophet-musa (EN + AR) - 20 slides each, run `generate-audio-elevenlabs.js prophet-musa en|ar`
-- [ ] surah-fatiha, ayat-al-kursi, surah-al-ikhlas, surah-al-falaq, surah-an-nas,
-      surah-al-kawthar, surah-al-asr - no narration system on surah pages yet
+- [ ] All surah pages (fatiha, ayat-al-kursi, al-ikhlas, al-falaq, an-nas, al-kawthar,
+      al-asr, an-nasr, al-kafirun, al-maun, quraysh) - no narration system on surah
+      pages yet
 
 ---
 
