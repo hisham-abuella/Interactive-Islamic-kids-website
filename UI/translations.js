@@ -26,6 +26,16 @@ const translations = {
         modalButton: "Let's Begin!",
         welcomeMessage: "Welcome, {name}! Ready for an adventure?",
 
+        // Shared story UI (used by stories.js)
+        welcomeGreeting: "\ud83d\udc4b Welcome, {name}! Enjoy this story!",
+        congratsName: "Congratulations, {name}!",
+        feedbackCorrect: "\ud83c\udf89 Correct! Great job!",
+        feedbackCorrectAlt: "\ud83c\udf89 Correct! Well done!",
+        feedbackTryAgain: "\ud83d\udcaa Not quite! Try again! ",
+        retryButton: "\ud83d\udd04 Try Again",
+        swipeHint: "Swipe left or right to navigate",
+        exitFullscreen: "\u2715 Exit Fullscreen",
+
         // Scene 1: Creation
         scene1Title: "A Special Creation",
         scene1Text: "Before there were any people on Earth, Allah decided to create something very special. Allah told the angels: \"I am going to create a human being from clay.\"",
@@ -188,8 +198,18 @@ const translations = {
         modalGreeting: "السلام عليكم!",
         modalQuestion: "ما اسمك يا صغيري؟",
         modalPlaceholder: "أدخل اسمك...",
-        modalButton: "!هيا نبدأ",
-        welcomeMessage: "مرحباً {name}! هل أنت مستعد للمغامرة؟",
+        modalButton: "هيا نبدأ!",
+        welcomeMessage: "أهلاً {name}! هل أنت مستعد للمغامرة؟",
+
+        // Shared story UI (used by stories.js)
+        welcomeGreeting: "\ud83d\udc4b أهلاً {name}! استمتع بهذه القصة!",
+        congratsName: "أحسنت يا {name}!",
+        feedbackCorrect: "\ud83c\udf89 إجابة صحيحة! أحسنت!",
+        feedbackCorrectAlt: "\ud83c\udf89 إجابة صحيحة! ممتاز!",
+        feedbackTryAgain: "\ud83d\udcaa ليست صحيحة! حاول مرة أخرى! ",
+        retryButton: "\ud83d\udd04 حاول مرة أخرى",
+        swipeHint: "اسحب يميناً أو يساراً للتنقل",
+        exitFullscreen: "\u2715 إنهاء ملء الشاشة",
 
         // Scene 1: Creation
         scene1Title: "خلق مميز",

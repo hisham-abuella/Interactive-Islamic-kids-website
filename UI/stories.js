@@ -22,6 +22,30 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeBackgroundAnimations();
 });
 
+// Re-label the welcome modal if the child switches language while it is open.
+document.addEventListener('languageChanged', function () {
+    var modal = document.getElementById('nameModal');
+    if (!modal) return;
+    var title = modal.querySelector('h2');
+    var subtitle = modal.querySelector('p');
+    var input = modal.querySelector('.name-input');
+    var button = modal.querySelector('.name-submit-btn');
+    if (title) title.textContent = t('modalGreeting', 'Assalamu Alaikum!');
+    if (subtitle) subtitle.textContent = t('modalQuestion', "What's your name, little one?");
+    if (input) input.placeholder = t('modalPlaceholder', 'Enter your name...');
+    if (button) button.textContent = t('modalButton', "Let's Begin!") + ' \u2728';
+});
+
+// Look up a translated string, falling back to the English text if the
+// translations layer has not loaded (stories.js also runs on its own).
+function t(key, fallback) {
+    if (window.i18n && typeof window.i18n.getText === 'function') {
+        var v = window.i18n.getText(key);
+        if (v && v !== key) return v;
+    }
+    return fallback;
+}
+
 // Name Input Modal
 function showNameModal() {
     const modal = document.createElement('div');
@@ -36,20 +60,20 @@ function showNameModal() {
     icon.textContent = '🌟';
 
     const title = document.createElement('h2');
-    title.textContent = 'Assalamu Alaikum!';
+    title.textContent = t('modalGreeting', 'Assalamu Alaikum!');
 
     const subtitle = document.createElement('p');
-    subtitle.textContent = "What's your name, little one?";
+    subtitle.textContent = t('modalQuestion', "What's your name, little one?");
 
     const input = document.createElement('input');
     input.type = 'text';
     input.className = 'name-input';
-    input.placeholder = 'Enter your name...';
+    input.placeholder = t('modalPlaceholder', 'Enter your name...');
     input.maxLength = 20;
 
     const button = document.createElement('button');
     button.className = 'name-submit-btn';
-    button.textContent = "Let's Begin! ✨";
+    button.textContent = t('modalButton', "Let's Begin!") + ' ✨';
     button.addEventListener('click', function() {
         submitName(input.value);
     });
@@ -100,7 +124,7 @@ function personalizeStory() {
     if (storyHeader && !document.querySelector('.personal-greeting')) {
         const greeting = document.createElement('div');
         greeting.className = 'personal-greeting';
-        greeting.textContent = '👋 Welcome, ' + childName + '! Enjoy this story!';
+        greeting.textContent = t('welcomeGreeting', '👋 Welcome, {name}! Enjoy this story!').replace('{name}', childName);
         storyHeader.insertBefore(greeting, storyHeader.firstChild);
     }
 
@@ -109,7 +133,7 @@ function personalizeStory() {
     if (quizResults) {
         const resultsContent = quizResults.querySelector('.results-content h2');
         if (resultsContent && !resultsContent.dataset.personalized) {
-            resultsContent.textContent = 'Congratulations, ' + childName + '!';
+            resultsContent.textContent = t('congratsName', 'Congratulations, {name}!').replace('{name}', childName);
             resultsContent.dataset.personalized = 'true';
         }
     }
@@ -165,7 +189,7 @@ function setupMiniQuiz(quiz) {
                 // Mark as correctly answered
                 quiz.classList.add('answered-correct');
                 this.classList.add('correct');
-                feedback.textContent = '🎉 Correct! Great job!';
+                feedback.textContent = t('feedbackCorrect', '🎉 Correct! Great job!');
                 feedback.className = 'quiz-feedback correct';
                 playSound('correct');
                 createConfetti(quiz);
@@ -191,7 +215,7 @@ function showRetryFeedback(feedback, type, quizElement) {
 
     // Create message
     const message = document.createElement('span');
-    message.textContent = '💪 Not quite! Try again! ';
+    message.textContent = t('feedbackTryAgain', '💪 Not quite! Try again! ');
     feedback.appendChild(message);
 
     // Create line break
@@ -200,7 +224,7 @@ function showRetryFeedback(feedback, type, quizElement) {
     // Create retry button
     const retryBtn = document.createElement('button');
     retryBtn.className = 'retry-btn';
-    retryBtn.textContent = '🔄 Try Again';
+    retryBtn.textContent = t('retryButton', '🔄 Try Again');
     retryBtn.addEventListener('click', function() {
         if (type === 'mini') {
             resetMiniQuiz(quizElement);
@@ -254,7 +278,7 @@ function setupFinalQuizCard(card, index) {
                 card.classList.add('answered-correct');
                 card.dataset.cardIndex = index;
                 this.classList.add('correct');
-                feedback.textContent = '🎉 Correct! Well done!';
+                feedback.textContent = t('feedbackCorrectAlt', '🎉 Correct! Well done!');
                 feedback.className = 'quiz-feedback correct';
                 score++;
                 playSound('correct');
@@ -600,7 +624,12 @@ function initializeSlideMode() {
     if ('ontouchstart' in window) {
         const swipeHint = document.createElement('div');
         swipeHint.className = 'swipe-hint';
-        swipeHint.innerHTML = '<span class="swipe-hint-icon">👆</span>Swipe left or right to navigate';
+        swipeHint.textContent = '';
+        var swipeIcon = document.createElement('span');
+        swipeIcon.className = 'swipe-hint-icon';
+        swipeIcon.textContent = '👆';
+        swipeHint.appendChild(swipeIcon);
+        swipeHint.appendChild(document.createTextNode(t('swipeHint', 'Swipe left or right to navigate')));
         slideNav.after(swipeHint);
 
         // Remove hint after 5 seconds
@@ -870,7 +899,7 @@ function createFullscreenControls() {
 
     const exitBtn = document.createElement('button');
     exitBtn.className = 'fullscreen-exit-btn';
-    exitBtn.textContent = '✕ Exit Fullscreen';
+    exitBtn.textContent = t('exitFullscreen', '✕ Exit Fullscreen');
     exitBtn.addEventListener('click', exitFullscreen);
 
     controls.appendChild(exitBtn);
