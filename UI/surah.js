@@ -107,7 +107,11 @@ function showNextQuestion(currentIndex, totalCards) {
         if (quizResults) {
             quizResults.classList.remove('hidden');
             if (scoreDisplay) {
-                scoreDisplay.textContent = score;
+                // The Arabic copy uses Arabic-Indic numerals, so a Western digit
+                // here reads as "أجبت 3 من ٤". Match the surrounding text.
+                scoreDisplay.textContent = document.documentElement.lang === 'ar'
+                    ? String(score).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d])
+                    : score;
             }
             createConfetti(quizResults);
             quizResults.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -188,7 +192,15 @@ function initializeAnimations() {
         });
     }, observerOptions);
 
-    // Observe verse cards
+    // Cards are visible by default. We only hide them to animate them in, and only
+    // when we can be sure something will bring them back: IntersectionObserver is
+    // supported and the reader has not asked for reduced motion. Otherwise the page
+    // stays fully readable - which is what happens when it is printed, when JS is
+    // off, or on a browser without the observer.
+    const canAnimate = 'IntersectionObserver' in window &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!canAnimate) return;
+
     document.querySelectorAll('.verse-card, .fact-card, .tip-card').forEach(card => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(30px)';

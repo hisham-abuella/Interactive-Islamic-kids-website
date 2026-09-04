@@ -64,20 +64,14 @@ Worth stating plainly, because it is the point of the whole exercise:
       `AudioNarration.init('prophet-musa')` is correct, but `audio/prophet-musa/` does not exist,
       so it silently falls back to Web Speech. Fix:
       `node scripts/generate-audio-elevenlabs.js prophet-musa en` then `... ar`.
-- [ ] **Scroll-reveal hides content with no fallback.** `surah.js:187-198` sets `opacity:0` on
-      verse, fact and tip cards until an IntersectionObserver fires. If it never fires — printing a
-      page, JS disabled, an older browser — the content is permanently blank. This matters more
-      than usual here: printing a surah to read aloud is a natural thing for this owner to do.
-      *Fix: reveal by default and let the observer only add the animation.*
-- [ ] **Decide the YouTube question** (owner's call, `ceo` recommendation). All 16 pages embed
-      videos the owner does not control, on plain `youtube.com/embed` with no `rel=0`, no
-      `modestbranding`, not `youtube-nocookie.com` — so a child gets end-screen recommendations
-      from any channel, a "Watch on YouTube" escape, and ads. Three have already died.
-      *Ranked options:* (1) drop video and lean on the site's own ElevenLabs narration —
-      recommended; (2) self-host the video; (3) the father records his own narration;
-      (4) `youtube-nocookie.com` + `rel=0` — a bandage that stops neither deletion nor ads.
-      Related: the "quiz unlocks a bonus video" pattern (`story-prophet-musa.html:271-273`)
-      actively trains the child to expect a YouTube reward.
+- [x] ~~**Scroll-reveal hides content with no fallback.**~~ Fixed 2026-09-03. `surah.js` now only
+      hides cards when it can guarantee something will bring them back (IntersectionObserver
+      present and reduced-motion not requested), and a new `@media print` block forces
+      `opacity: 1 !important`, which beats the inline style. Printing a surah to read aloud now
+      works whether or not the page was scrolled. Both paths verified in a browser.
+- [x] ~~Decide the YouTube question.~~ **Decided 2026-09-03: keep YouTube for now, revisit later.**
+      Moved to P2 below. Do not re-open this in a review — it is a known, accepted risk, not an
+      oversight.
 
 ---
 
@@ -97,11 +91,16 @@ Worth stating plainly, because it is the point of the whole exercise:
       prompts, a one-line recap, and a resume point for the next night.
 
 **Accessibility**
-- [ ] `.nav-toggle` is ~34×27px and `.lang-toggle-btn` ~37px tall — both under the 44×44 minimum.
-- [ ] Fullscreen button has `title` but no `aria-label` (`stories.js:778-784`).
+- [x] ~~`.nav-toggle` ~34×27px, `.lang-toggle-btn` ~37px~~ — both now 44px (lang button measured
+      at 82×44 in-browser). Fixed 2026-09-03.
+- [x] ~~Fullscreen button had `title` but no `aria-label`~~ — now labelled, and translated via a
+      new `fullscreenToggle` key. Fixed 2026-09-03.
 - [ ] No `aria-hidden` anywhere — decorative emoji in headings are announced as content.
-- [ ] Two `<h1>`s per page (site logo + page title).
-- [ ] `prefers-reduced-motion` handles confetti but not the scroll-reveal opacity above.
+- [x] ~~Two `<h1>`s per page~~ — the site wordmark is now a `<span class="logo-text">` on all 19
+      pages, so each page has exactly one `<h1>`, its own title. Fixed 2026-09-03.
+- [x] ~~`prefers-reduced-motion` missed the scroll-reveal opacity~~ — now part of the guard above.
+      Fixed 2026-09-03.
+- [ ] No `aria-hidden` on decorative emoji — still open (see below).
 
 **Frontend**
 - [ ] **325 hardcoded hex values** across the four page-type sheets (`stories.css` 141,
@@ -110,22 +109,25 @@ Worth stating plainly, because it is the point of the whole exercise:
       = `--gold`), `#FBF6EA` (19×, = `--parchment`), `#7A5518` (15×, **no matching token**).
 - [ ] `surah.css` has **zero** `html[lang="ar"]` overrides against 34 LTR-assuming rules
       (`border-left`, `padding-left`), so RTL border accents do not mirror on surah pages.
-- [ ] `.lang-toggle-btn` is defined twice (`styles.css:858`, `stories.css:1460`) with different
-      focus behaviour, diverging by page type through load order.
+- [ ] `.lang-toggle-btn` is defined twice (`styles.css`, `stories.css`) with different focus
+      behaviour, diverging by page type through load order. The 44px minimum was added to the
+      `styles.css` copy only, so the duplicate should be deleted rather than kept in sync.
 
 **Bilingual**
 - [ ] Narration does not react to a mid-slide language switch. `bilingual.js` dispatches
       `languageChanged`; `audio-narration.js` only listens for `slideChanged`. Language is picked
       up on the *next* play, so this is a polish issue, not a break.
-- [ ] `index.html:45-46` hero CTAs have no `data-ar` and stay English.
+- [x] ~~`index.html` hero CTAs had no `data-ar`~~ — "Start a story" / "Learn a surah" now
+      translated. Fixed 2026-09-03.
 - [ ] Nav arrows on `story-prophet-adam.html:469-470` are outside any translation attribute and do
       not mirror in RTL; arrows are dropped entirely from the Arabic on three other story pages.
-- [ ] Double-escaped entities (`&amp;mdash;`) inside `data-ar` on `index.html:43` and
-      `ayat-al-kursi.html:330-331` — renders correctly by accident, fragile.
-- [ ] `surah.js:110` writes the live quiz score as a Western digit beside Arabic-Indic totals
-      ("أجبت 3 من ٤").
-- [ ] Prophet honorifics appear only in the `<meta description>` on `story-prophet-adam.html`,
-      `story-prophet-ibrahim.html` and `story-prophet-musa.html`, never in visible text.
+- [x] ~~Double-escaped entities inside `data-ar`~~ — 3 fixed across `index.html` and
+      `ayat-al-kursi.html`. Fixed 2026-09-03.
+- [x] ~~Quiz score used a Western digit beside Arabic-Indic totals ("أجبت 3 من ٤")~~ — the score
+      is now converted to Arabic-Indic when the page is in Arabic. Fixed 2026-09-03.
+- [ ] Prophet honorifics appear only in the `<meta description>` on `story-prophet-adam.html` and
+      `story-prophet-ibrahim.html`, never in visible text. (Musa fixed 2026-09-03; Yusuf's Yaqub
+      fixed earlier.)
 
 **Read-aloud**
 - [ ] Rewrite the sentences that trip a parent reading aloud — `surah-fatiha.html:194` and
@@ -139,6 +141,16 @@ Worth stating plainly, because it is the point of the whole exercise:
 ## P2 — content roadmap
 
 See `plan.md` for the full list. Immediate:
+
+- [ ] **Revisit the YouTube dependency** (decided 2026-09-03: keep for now). All 16 pages embed
+      videos the owner does not control, on plain `youtube.com/embed` with no `rel=0`, no
+      `modestbranding`, not `youtube-nocookie.com` — so a child gets end-screen recommendations
+      from any channel, a "Watch on YouTube" escape, and ads. Three have already died silently.
+      *Ranked options when revisited:* (1) drop video and lean on the site's own ElevenLabs
+      narration — `ceo` recommendation; (2) self-host the video; (3) the father records his own
+      narration; (4) `youtube-nocookie.com` + `rel=0` — a ~10-minute bandage that reduces
+      recommendations and tracking but stops neither deletion nor ads.
+      **Meanwhile:** re-check all 16 embeds every review pass — they rot without warning.
 
 - [ ] **Surah Al-Masad (111)** — the last Phase 2 surah, deliberately deferred: it centres on a
       curse against Abu Lahab and his wife and needs gentler framing for a young child.

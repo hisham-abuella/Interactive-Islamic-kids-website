@@ -113,22 +113,30 @@ header {
     50% { opacity: 0.8; transform: scale(1.05); }
 }
 
-.logo h1 {
+/* The site name is a wordmark, not the page heading - it is a <span> so each
+   page has exactly one <h1>, its own title. */
+.logo h1,
+.logo .logo-text {
     font-family: 'Baloo 2', cursive;
     font-size: 1.8rem;
     font-weight: 800;
     letter-spacing: -0.02em;
+    line-height: 1.2;
 }
 
 /* Mobile hamburger */
 .nav-toggle {
     display: none;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     gap: 5px;
     background: none;
     border: none;
     cursor: pointer;
     padding: 4px;
+    min-width: 44px;    /* children's hands - WCAG target size */
+    min-height: 44px;
 }
 
 .nav-toggle span {
@@ -862,6 +870,7 @@ button:focus-visible,
     color: var(--ink);
     border: 2px solid var(--gold-light);
     padding: 0.4rem 1rem;
+    min-height: 44px;   /* children's hands - WCAG target size */
     border-radius: var(--radius-full);
     font-family: inherit;
     font-weight: 800;
@@ -965,6 +974,7 @@ html[lang="ar"] h3 {
     .lang-toggle-btn {
         padding: 0.35rem 0.8rem;
         font-size: 0.82rem;
+        min-height: 44px;
     }
 }
 
@@ -995,4 +1005,29 @@ html[lang="ar"] .surah-hero-content h1:not([data-ar]),
 html[lang="ar"] .surah-subtitle:not([data-ar]),
 html[lang="ar"] .info-badge:not([data-ar]) {
     text-align: center;
+}
+
+
+/* Printing a surah to read aloud is a normal thing to do here, so the printed
+   page must never depend on JavaScript having run or on anything having been
+   scrolled into view. */
+@media print {
+    .verse-card,
+    .fact-card,
+    .tip-card,
+    .story-scene {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    .floating-decorations,
+    .nav-toggle,
+    .lang-toggle-btn,
+    .fullscreen-toggle,
+    .video-section,
+    header {
+        display: none !important;
+    }
+    body {
+        background: #fff;
+    }
 }

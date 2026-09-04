@@ -124,3 +124,12 @@
 YouTube "bonus video unlock" pattern site-wide with existing/expanded ElevenLabs narration rather
 than patching YouTube params, (c) self-host Google Fonts to remove the one remaining silent
 network dependency. Scope call belongs to the owner; this is the CEO's ranked recommendation only.
+
+2026-09-03
+[DECISION] YouTube embeds: OWNER DECIDED TO KEEP FOR NOW, revisit later.
+The control-test finding stands and is not withdrawn - all 16 pages still embed video the owner
+does not control, and three have already died silently. It is now an ACCEPTED, KNOWN risk rather
+than an open question. Moved from P0 to P2 in UI/TODO.md.
+Do not re-open this as a fresh finding in future reviews; report only NEW evidence, e.g. an embed
+that has newly died, or a change in what the player exposes.
+Standing action while the decision holds: re-check all 16 embeds via oEmbed every review pass.

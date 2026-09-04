@@ -780,7 +780,9 @@ function initializeFullscreenMode() {
     fullscreenBtn.className = 'fullscreen-toggle';
     fullscreenBtn.id = 'fullscreenToggle';
     fullscreenBtn.textContent = '⛶';
-    fullscreenBtn.title = 'Toggle Fullscreen';
+    fullscreenBtn.title = t('fullscreenToggle', 'Toggle Fullscreen');
+    // icon-only control: a title is a tooltip, not an accessible name
+    fullscreenBtn.setAttribute('aria-label', t('fullscreenToggle', 'Toggle Fullscreen'));
     fullscreenBtn.addEventListener('click', toggleFullscreen);
 
     document.body.appendChild(fullscreenBtn);

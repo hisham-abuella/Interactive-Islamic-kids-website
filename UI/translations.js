@@ -35,6 +35,7 @@ const translations = {
         retryButton: "\ud83d\udd04 Try Again",
         swipeHint: "Swipe left or right to navigate",
         exitFullscreen: "\u2715 Exit Fullscreen",
+        fullscreenToggle: "Toggle Fullscreen",
 
         // Scene 1: Creation
         scene1Title: "A Special Creation",
@@ -210,6 +211,7 @@ const translations = {
         retryButton: "\ud83d\udd04 حاول مرة أخرى",
         swipeHint: "اسحب يميناً أو يساراً للتنقل",
         exitFullscreen: "\u2715 إنهاء ملء الشاشة",
+        fullscreenToggle: "ملء الشاشة",
 
         // Scene 1: Creation
         scene1Title: "خلق مميز",
