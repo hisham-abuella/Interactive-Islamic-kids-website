@@ -55,11 +55,27 @@ Worth stating plainly, because it is the point of the whole exercise:
 
 ## P0 — do next
 
+**Quiz bilingual audit (2026-09-03): 63 questions / 252 options reviewed in both languages.**
+Parity is 100% — 60 questions carry `data-ar`, the 3 on the Adam page are covered by `data-i18n`.
+Every question has exactly one correct option and no duplicate choices, and the correct answer is
+the same answer in both languages throughout. Fixed in that pass:
+- Three "what does X mean?" questions answered themselves once the page was Arabic
+  (`ماذا تعني كلمة "الفاتحة"؟` → `الفاتحة`). Al-Fatiha, Al-Falaq and An-Nas now use real glosses,
+  and near-synonym distractors ("The Closing"/"The End") were replaced in both languages.
+- `surah-al-maun.html` glossed the distractor "The Daybreak" as `الفلق` (a surah name) instead of
+  `الصبح` (the meaning).
+- `surah-al-asr.html` Q2 asked what Allah swears by ("Time") — the same answer as Q1, so it was
+  free once Q1 was answered. Replaced with a question on the surah's core message.
+
+
 - [ ] **Quiz answers are guessable from length.** 39 of 63 questions (62%) have the correct answer
       as the *strictly* longest option, plus 5 more tied — against 25% expected by chance. A child
       can score well without learning. Worst: `surah-al-ikhlas.html:251` (44 chars vs 21/22/22),
       `surah-al-kawthar.html:213`, `surah-al-maun.html:283`, `surah-al-kafirun.html:244`.
       *Fix: pad distractors to comparable length, or trim correct answers. Roughly a day.*
+      Still 39/63 after the bilingual audit above — that pass fixed correctness and sense, not
+      length. Note the replacement Al-Asr Q2 is itself a long correct answer, so this needs a
+      deliberate pass over all 63, not incidental edits.
 - [ ] **Prophet Musa has no narration audio.** 20 EN + 20 AR scripts exist and
       `AudioNarration.init('prophet-musa')` is correct, but `audio/prophet-musa/` does not exist,
       so it silently falls back to Web Speech. Fix:
