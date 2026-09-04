@@ -226,7 +226,9 @@ header {
     font-family: 'Amiri', 'Baloo 2', serif;
     font-size: 2.5rem;
     line-height: 1;
-    color: var(--gold);
+    /* --gold on parchment is 2.82:1 and fails even the large-text bar;
+       --gold-text is 5.06:1. This word is scripture, so it gets the readable token. */
+    color: var(--gold-text);
     margin-bottom: 0.35rem;
     direction: rtl;
 }

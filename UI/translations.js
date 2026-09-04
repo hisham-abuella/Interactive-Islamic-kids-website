@@ -214,7 +214,7 @@ const translations = {
         // Scene 1: Creation
         scene1Title: "خلق مميز",
         scene1Text: "قبل أن يكون هناك أي بشر على الأرض، قرر الله أن يخلق شيئاً مميزاً جداً. قال الله للملائكة: \"إني خالق بشراً من طين.\"",
-        scene1TapPrompt: "!اضغط لتعرف كيف خُلق آدم",
+        scene1TapPrompt: "اضغط لتعرف كيف خُلق آدم!",
         scene1Fact: "خلق الله آدم من أنواع مختلفة من الطين من جميع أنحاء الأرض. لهذا السبب يملك الناس اليوم ألوان بشرة مختلفة - درجات جميلة من البني والأسمر وغيرها!",
 
         // Scene 2: The Soul
@@ -227,13 +227,13 @@ const translations = {
         // Scene 3: Angels Prostrate
         scene3Title: "الملائكة تسجد",
         scene3Text: "أمر الله جميع الملائكة بالسجود لآدم تكريماً له. أطاعت جميع الملائكة الله وسجدت لآدم فوراً!",
-        scene3TapPrompt: "!اضغط لترى الملائكة تسجد",
-        scene3Result: "!سجدت جميع الملائكة لآدم",
+        scene3TapPrompt: "اضغط لترى الملائكة تسجد!",
+        scene3Result: "سجدت جميع الملائكة لآدم!",
 
         // Scene 4: Iblis Refuses
         scene4Title: "واحد رفض",
         scene4Text: "لكن كان هناك واحد لم يسجد - إبليس (الشيطان). كان متكبراً ومغروراً. قال: \"أنا خير منه! خلقتني من نار وخلقته من طين!\"",
-        scene4Highlight: "!الكبر والغرور سيئان جداً! يجب أن نكون متواضعين دائماً",
+        scene4Highlight: "الكبر والغرور سيئان جداً! يجب أن نكون متواضعين دائماً!",
         scene4Question: "كيف تعتقد أن الله شعر تجاه رفض إبليس؟",
         scene4Happy: "سعيد",
         scene4Displeased: "غاضب",
@@ -242,7 +242,7 @@ const translations = {
         // Scene 5: Knowledge
         scene5Title: "آدم يتعلم الأسماء",
         scene5Text: "علّم الله آدم أسماء كل شيء - الحيوانات والنباتات والأشياء وغيرها! عندما سأل الله الملائكة عن هذه الأسماء، لم يعرفوها. لكن آدم عرفها كلها!",
-        scene5Activity: "!طابق الأسماء! اسحب كل عنصر إلى اسمه",
+        scene5Activity: "طابق الأسماء! اسحب كل عنصر إلى اسمه!",
         scene5Sun: "الشمس",
         scene5Tree: "شجرة",
         scene5Bird: "طائر",
@@ -250,7 +250,7 @@ const translations = {
         // Scene 6: Hawa
         scene6Title: "رفيقة لآدم",
         scene6Text: "خلق الله حواء لتكون رفيقة لآدم. عاشا معاً بسعادة في الجنة، حديقة جميلة فيها كل ما يمكن أن يتمنياه!",
-        scene6TapPrompt: "!اضغط لترى كيف كانت الجنة",
+        scene6TapPrompt: "اضغط لترى كيف كانت الجنة!",
         scene6Jannah1: "زهور جميلة في كل مكان",
         scene6Jannah2: "فواكه لذيذة للأكل",
         scene6Jannah3: "أنهار من الماء النقي",
@@ -267,7 +267,7 @@ const translations = {
         // Scene 8: The Mistake
         scene8Title: "خطأ",
         scene8Text: "وسوس الشيطان لآدم وحواء وخدعهما. أكلا من الشجرة المحرمة. بمجرد أن فعلا ذلك، أدركا أنهما ارتكبا خطأً كبيراً!",
-        scene8Highlight: "!الشيطان يحاول دائماً خداعنا. يجب أن نكون حذرين",
+        scene8Highlight: "الشيطان يحاول دائماً خداعنا. يجب أن نكون حذرين!",
         scene8TapPrompt: "ما الذي يمكننا تعلمه من هذا؟",
         scene8Lesson1: "استمع دائماً لأوامر الله",
         scene8Lesson2: "لا تستمع لوسوسات الشيطان",
@@ -278,33 +278,33 @@ const translations = {
         scene9Text1: "شعر آدم وحواء بالندم الشديد. توجها إلى الله وقالا:",
         scene9Quran: "\"ربنا ظلمنا أنفسنا وإن لم تغفر لنا وترحمنا لنكونن من الخاسرين.\"",
         scene9Text2: "وسبحان الله - غفر الله لهما! الله أرحم الراحمين!",
-        scene9Celebrate: "!غفر الله لهما",
+        scene9Celebrate: "غفر الله لهما!",
 
         // Scene 10: Life on Earth
         scene10Title: "منزل جديد على الأرض",
         scene10Text: "أُرسل آدم وحواء للعيش على الأرض. أخبرهما الله أن الأرض ستكون موطنهما، ومنهما سيأتي جميع البشر في العالم - بما فيهم أنت!",
-        scene10Activity: "!اضغط لترى كيف يرتبط جميع البشر",
-        scene10Counter: ":الأشخاص",
+        scene10Activity: "اضغط لترى كيف يرتبط جميع البشر!",
+        scene10Counter: "الأشخاص:",
         scene10AddBtn: "أضف شخصاً",
 
         // Lesson Box
         lessonTitle: "ما نتعلمه من النبي آدم",
-        lesson1: "!خلق الله جميع البشر - نحن جميعاً عائلة واحدة",
+        lesson1: "خلق الله جميع البشر - نحن جميعاً عائلة واحدة!",
         lesson2: "لا تكن متكبراً مثل إبليس - كن متواضعاً دائماً",
         lesson3: "عندما نخطئ، نستغفر الله",
         lesson4: "الله أرحم الراحمين ويحب أن يغفر",
-        lessonInstruction: "!اضغط على كل درس لتحديده كما تعلمته",
+        lessonInstruction: "اضغط على كل درس لتحديده كما تعلمته!",
 
         // Dua Box
         duaTitle: "دعاء آدم للمغفرة",
         duaTranslation: "\"ربنا ظلمنا أنفسنا وإن لم تغفر لنا وترحمنا لنكونن من الخاسرين.\"",
-        duaNote: "!قل هذا الدعاء عندما تخطئ وتريد مغفرة الله",
-        memorizeBtn: "!أريد حفظ هذا",
-        memorizeSaved: "!تمت إضافته إلى أدعيتك",
+        duaNote: "قل هذا الدعاء عندما تخطئ وتريد مغفرة الله!",
+        memorizeBtn: "أريد حفظ هذا!",
+        memorizeSaved: "تمت إضافته إلى أدعيتك!",
 
         // Final Quiz
-        quizTitle: "!اكتملت القصة! التحدي الأخير",
-        quizSubtitle: "!أجب على هذه الأسئلة لكسب نجوم إضافية",
+        quizTitle: "اكتملت القصة! التحدي الأخير!",
+        quizSubtitle: "أجب على هذه الأسئلة لكسب نجوم إضافية!",
         questionOf: "السؤال {num} من {total}",
         q1Question: "من ماذا خُلق آدم؟",
         q1Option1: "نور",
@@ -323,14 +323,14 @@ const translations = {
         q3Option4: "كان على آدم الانتظار",
 
         // Quiz Results
-        resultsTitle: "!عمل رائع",
+        resultsTitle: "عمل رائع!",
         resultsTitleWithName: "عمل رائع يا {name}!",
-        resultsScore: "!أجبت على {score} من {total} بشكل صحيح",
-        totalStarsEarned: ":إجمالي النجوم المكتسبة",
+        resultsScore: "أجبت على {score} من {total} بشكل صحيح!",
+        totalStarsEarned: "إجمالي النجوم المكتسبة:",
 
         // Video Section
-        videoUnlock: "!تم فتح الفيديو الإضافي",
-        videoSubtitle: "!شاهد هذه القصة الجميلة عن النبي آدم",
+        videoUnlock: "تم فتح الفيديو الإضافي!",
+        videoSubtitle: "شاهد هذه القصة الجميلة عن النبي آدم!",
 
         // Navigation
         backToStories: "العودة للقصص",
@@ -342,14 +342,14 @@ const translations = {
         footerSubtitle: "قصص إسلامية للأطفال",
 
         // Feedback Messages
-        feedbackCorrect: "!صحيح! أحسنت",
-        feedbackTryAgain: "!حاول مرة أخرى",
-        feedbackPerfect: "!ممتاز! أجبت على الكل بشكل صحيح",
-        feedbackTryElsewhere: "!حسناً، حاول وضعه في مكان آخر",
-        feedbackAllLessons: "!رائع! تعلمت جميع الدروس",
-        feedbackSubhanAllah: "!سبحان الله",
-        feedbackTrustAllah: "!نعم! شعر إبراهيم بالسلام لأنه وثق بالله تماماً",
-        feedbackThinkAgain: "!فكر في الأمر... إبراهيم وثق بالله"
+        feedbackCorrect: "صحيح! أحسنت!",
+        feedbackTryAgain: "حاول مرة أخرى!",
+        feedbackPerfect: "ممتاز! أجبت على الكل بشكل صحيح!",
+        feedbackTryElsewhere: "حسناً، حاول وضعه في مكان آخر!",
+        feedbackAllLessons: "رائع! تعلمت جميع الدروس!",
+        feedbackSubhanAllah: "سبحان الله!",
+        feedbackTrustAllah: "نعم! شعر إبراهيم بالسلام لأنه وثق بالله تماماً!",
+        feedbackThinkAgain: "فكر في الأمر... إبراهيم وثق بالله!"
     }
 };
 

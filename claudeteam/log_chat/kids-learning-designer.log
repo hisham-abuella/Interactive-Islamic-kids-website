@@ -1,0 +1,202 @@
+kids-learning-designer audit — surah + story pedagogy
+Scope: UI/ (11 surah pages incl. ayat-al-kursi, 5 story pages, quran.html hub)
+Report-only run, no edits made (worktree instruction).
+
+=== 1. QUIZ QUALITY ===
+Scripted audit (/tmp/quiz_audit.py) parsed every quiz-card block in all 16 pages
+(11 surah pages x4 + 5 story pages x3 = 59 questions, full coverage confirmed).
+
+LONGEST-OPTION GIVEAWAY RATE: 40/59 = 68%.
+This is not noise — it is the dominant pattern across the whole site. A child (or a
+tired parent skimming) can beat the quiz over two-thirds of the time by picking the
+longest button without reading any of them.
+
+Worst offenders (correct answer is >1.5x the length of every distractor):
+- UI/surah-al-maun.html:285 — Q3: correct "Those who are careless and pray just to be
+  seen" (47 chars) vs distractors 18/25/28 chars.
+- UI/surah-al-ikhlas.html:253 — Q4: correct "Everyone needs Allah, but Allah needs no
+  one" (44) vs 21/22/22.
+- UI/surah-quraysh.html:252 — Q4: correct "Food from hunger, and safety from fear" (38)
+  vs 15/15/22.
+- UI/surah-al-kafirun.html:246 — Q1: correct "To take turns worshipping each other's
+  gods" (43) vs 24/18/21.
+- UI/surah-al-maun.html:297 — Q4: correct "Doing good just so people will see you" (38)
+  vs 20/23/25.
+- UI/ayat-al-kursi.html:267 (Q1 block start) — Q3/Q4 correct answers are the fullest,
+  most explanatory options every time.
+
+Recall-vs-understanding: most questions are straight recall of a fact stated verbatim
+one paragraph above ("How many verses...", "What does the name mean...", "Which surah
+is this..."). Very few require synthesis (e.g. surah-al-kafirun Q3 "You follow your
+way, and I follow mine" tests grasp of the surah's message, not a lookup — that's the
+model to replicate). Distractors are rarely silly/implausible (good — they're mostly
+plausible near-misses), but because the correct answer is also the most descriptive
+sentence, a child never has to distinguish them on content.
+
+Answerable-without-reading: verse-count questions ("How many verses in Surah X?") and
+"which surah is this" questions are answerable from the hero/meta chip at the top of
+the page without engaging with the verses at all (e.g. surah-fatiha.html Q1, surah-al-
+falaq.html Q2, surah-al-ikhlas.html Q1). These test page-scanning, not comprehension.
+
+Fix: shuffle option order at render time (trivial JS, ~30 min) — this alone kills the
+positional/length tell without rewriting any content. Separately, rewrite the ~15
+worst offenders so correct and incorrect options are matched in length/register
+(~2-3 hrs, content-scholar should co-own wording).
+
+=== 2. MEMORIZATION PATH ===
+Confirmed in UI/surah-fatiha.html:108-193 (verse-card pattern, identical across all
+11 surah pages): every verse-card unconditionally renders Arabic (.arabic), English
+transliteration (.transliteration), translation (.translation), AND an explanation
+block, all visible simultaneously, with no toggle. Checked *.js/*.css for a
+show/hide/toggle affordance on transliteration — none exists.
+
+Effect on a memorizing child: transliteration is the path of least resistance to
+"performing" the verse without ever decoding the Arabic script. A child who can lean
+on Latin-letter transliteration will default to reading that, not the Arabic — by
+week 2 they can "recite" fluently while still unable to read مَالِكِ يَوْمِ الدِّينِ
+unaided. This directly matches the charter's stated known failure mode.
+
+Concrete staged alternative (3 stages, toggle-driven, no new content needed —
+just visibility state + a control):
+  Stage 1 (Night 1, "Learn"): Arabic + transliteration + translation + explanation
+  all shown, as today.
+  Stage 2 (Night 2+, "Practice"): transliteration collapsed behind a tap
+  ("🔤 Show pronunciation help") — Arabic + translation visible by default, child
+  reads Arabic first and only reveals transliteration if stuck.
+  Stage 3 (Night 5+/"Recite"): Arabic only, translation collapsed behind a tap;
+  transliteration removed entirely from this mode. Explanation stays available on
+  tap as a hint, not inline.
+  Persist stage choice in localStorage per surah so the father doesn't have to
+  reconfigure each night; default to Stage 1 for a surah never opened before.
+Effort: medium (~1 day) — mostly CSS class toggling + a 3-state control + localStorage
+per surah-slug; the HTML/data already carries every field needed, this is a render/
+visibility change, not new content.
+
+=== 3. COGNITIVE LOAD & LENGTH ===
+Scripted word counts (/tmp/wordcount2.py), isolating intro+verses+full-surah-recap
+("core lesson content" a father reads aloud) separately from fun-facts+tips:
+
+  Surah                core   +tips  combined
+  surah-al-ikhlas       493    145      638   <- shortest
+  surah-al-asr          513    150      663
+  surah-al-kawthar      523    152      675
+  surah-quraysh         550    142      692
+  surah-an-nasr         559    151      710
+  surah-al-falaq        629    158      787
+  surah-an-nas          633    146      779
+  surah-al-kafirun      642    150      792
+  surah-fatiha          688    123      811
+  surah-al-maun         706    143      849
+  ayat-al-kursi         767    153      920   <- longest, 44% more core text than
+                                                 shortest, 30-40% above the group median
+
+All 11 pages are in a fairly tight, plausible bedtime band (~640-920 words combined ≈
+5-7 min read-aloud at a slow, expressive pace for a young child) — none are wildly
+oversized. Ayat al-Kursi is the clear outlier on raw length, consistent with it also
+being the longest single verse on the site (one continuous 50-word ayah vs. 3-7 short
+verses elsewhere), and it's also structurally the densest (single unbroken verse,
+no natural multi-verse pacing built in).
+
+Natural break point for Ayat al-Kursi: the verse itself splits into recognizable
+clauses (Allah's oneness/eternal-living → His knowledge → His Throne/dominion →
+His greatness) — the site should chunk it into 3-4 shown-one-at-a-time phrase cards
+(it may already partially do this in the verses-section; confirm and, if not,
+build it) rather than presenting the full 50-word ayah as one block, and treat
+"today we learned the first half" as a legitimate stopping point for night 1.
+Effort: small for a content note now (flag this for content-scholar), medium
+(~half day) if the phrase-by-phrase card breakdown needs building.
+
+=== 4. PROGRESS & MOTIVATION ===
+UI/quran.html:55-90+ — 11 `.story-select-card` entries, structurally identical
+(thumbnail, title, meta chips, single "Start Learning →" button). No stars, no
+percent-complete, no visited/completed state, no locking, verified by grep for
+progress/star/unlock/completed/locked — zero hits in quran.html.
+
+Contrast: UI/story-prophet-adam.html:54-78 has a persistent `.stars-counter` (id=
+starsCounter/starCount) and a `.progress-bar`/`.progress-text` ("0% Complete"), plus
+per-scene `.scene-reward` chips (+1/+2/+3 stars) and a `.video-unlock` reward gate at
+the end (line 444). The story system already has the full motivational vocabulary
+(stars, %, unlock) — surah pages have none of it, and it's the same child navigating
+both experiences, so the inconsistency itself is confusing ("stories give me stars,
+surahs don't — are surahs less important?").
+
+Recommendation: port the story-page star/progress pattern onto surah pages
+(1 star per quiz question correct + completion badge on quran.html cards showing
+0-4 stars / "Recited to Dad ✓" checkbox a parent can tap), and change quran.html
+cards from identical to state-aware: locked/dim until the previous surah in the
+ramp is at least visited, checkmark or star-count badge once attempted, subtle
+"Continue" highlight on the next unstarted one. This also directly serves difficulty-
+ramp guidance (item 5) by making the recommended order visible instead of implicit.
+Effort: medium-large (~1-2 days) — needs a shared localStorage schema (surah slug ->
+stars/completed) reused by both quran.html cards and each surah page's quiz.
+
+=== 5. DIFFICULTY RAMP ===
+Stated order: Fatiha -> Ayat al-Kursi -> Al-Ikhlas -> Al-Falaq -> An-Nas -> Al-Kawthar
+-> Al-Asr -> An-Nasr -> Al-Kafirun -> Al-Maun -> Quraysh.
+
+Ayat al-Kursi at position 2 is wrong for a child, on two independent measures this
+audit can point to:
+  - It is the longest page on the site by word count (920 combined vs. 638-811 for
+    everything else, see item 3) — a beginner's second-ever surah page souring them
+    on length before they've built any reading stamina.
+  - It is a single dense 50-word ayah with no verse-by-verse rhythm (contrast Fatiha's
+    seven short, end-stopped verses) — much harder to chunk into a bedtime session.
+  Traditionally Ayat al-Kursi is memorized precisely because of its weight and
+  virtue, but that's an argument for teaching it once a child already has 3-4 short,
+  successful surahs behind them (confidence + stamina), not as the first thing after
+  Fatiha.
+
+Recommended reordering: Fatiha -> Al-Ikhlas -> Al-Falaq -> An-Nas -> Al-Kawthar ->
+Al-Asr -> Quraysh -> An-Nasr -> Al-Kafirun -> Al-Maun -> Ayat al-Kursi (moved to
+last, as a "graduation" piece once every other card already has stars). This is a
+sequencing/labeling change only (card order on quran.html + any "next surah" links),
+no content rewrite. Effort: small (~1-2 hrs).
+
+=== 6. PARENT AFFORDANCES ===
+Grepped for "ask your child", "parent tip", "read aloud", "recap" across all HTML —
+zero hits anywhere on the site. Checked UI/surah-fatiha.html:352-376
+(.tips-section, "Tips for Memorization") as the closest existing feature: every tip
+is phrased in second person addressed to the child ("You already recite it...",
+"Ask Allah to help you...") — there is nothing addressed to the reading parent.
+
+Missing, in priority order:
+  1. A one-line "tonight's recap" the father can say before closing the page, e.g.
+     under fun-facts or tips: "Tonight you and [child] learned: Al-Fatiha is 7
+     verses and means 'The Opening.'" — gives the ritual a natural close and gives
+     the parent something to repeat at breakfast.
+  2. "Ask your child" prompts interleaved between verse-cards — a father reading
+     aloud has no cue for when to pause and check in versus just reading straight
+     through 5-7 verse-cards non-stop. E.g. after verse 3 of Fatiha: "💬 Ask: what
+     does 'Ar-Rahman' mean?" This is cheap (one line per verse-card, content-scholar
+     supplies wording) and directly supports active recall mid-session rather than
+     only at the end-quiz.
+  3. An explicit resume/stopping point — nothing marks "you can stop here for
+     tonight" for pages long enough to need it (chiefly Ayat al-Kursi, item 3).
+     Combine with the progress state (item 4): if a father closes the tab after
+     verse 3 of 7, the star/progress system (once built) should reopen there next
+     time rather than restarting the page.
+  4. A "read this part yourself, Dad reads the rest" split isn't necessary yet, but
+     becomes relevant once the memorization staging (item 2) exists.
+Effort: (1) and (2) are small content+markup additions (~2-3 hrs combined, mostly
+content-scholar's wording); (3) depends on the progress-state work in item 4.
+
+=== PRIORITIZED RECOMMENDATIONS ===
+P0 (do first, cheap, high impact):
+  - Shuffle quiz option order at render (kills 68% longest-answer tell). ~30 min.
+  - Reorder quran.html: move Ayat al-Kursi from position 2 to last. ~1-2 hrs.
+P1 (this sprint):
+  - Rewrite the ~15 worst length-skewed quiz options so correct/incorrect answers
+    are length-matched (content-scholar co-owns wording). ~2-3 hrs.
+  - Add one-line parent recap + inline "Ask your child" prompts to surah pages.
+    ~2-3 hrs.
+P2 (larger, plan separately):
+  - Build 3-stage transliteration-hide memorization toggle (localStorage per surah).
+    ~1 day.
+  - Port story-page star/progress system onto quran.html + surah pages, incl.
+    completion state cards. ~1-2 days.
+P3 (content, not urgent):
+  - Chunk Ayat al-Kursi into phrase-level cards with a mid-verse stopping point.
+    ~half day, needs content-scholar sign-off on the split points.
+
+Scripts used (not committed, /tmp only): /tmp/quiz_audit.py, /tmp/wordcount.py,
+/tmp/wordcount2.py.

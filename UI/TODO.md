@@ -1,75 +1,181 @@
-# UI Improvements TODO
+# Islamic Kids — TODO
 
-## Slide UI Improvements
+What is true, and what is left. This file merges the original UI-polish backlog with the findings
+of the full-site team review of **2026-09-03** (`ceo`, `islamic-content-scholar`,
+`arabic-language-reviewer`, `link-integrity-auditor` + `audio-narration-engineer`,
+`accessibility-auditor` + `frontend-lead`, `kids-learning-designer`).
 
-- [x] **Fullscreen mode** - Immersive reading experience, especially for kids
-- [x] **Better slide transitions** - Fade, slide, or flip animations
-- [x] **Larger navigation buttons** - More touch-friendly for children
-- [x] **Progress indicator redesign** - Story path/journey visual instead of dots
-- [x] **Slide counter styling** - More playful design with book emoji and decorative elements
-- [ ] **Auto-advance option** - For younger kids who can't read yet (with audio later)
+Full evidence with `file:line` citations is in `claudeteam/log_chat/*.log`.
 
-## Visual Enhancements
-
-- [x] **Animated backgrounds** - Subtle stars/clouds moving
-- [ ] **Scene-specific themes** - Different colors per scene (creation=earth tones, Jannah=green/gold)
-- [ ] **Character illustrations** - Instead of just emojis
-- [ ] **Reading mode toggle** - Light/dark/sepia modes
-
-## Fullscreen Mode Features
-
-- [x] Hide browser chrome
-- [x] Larger text and images
-- [x] Floating controls that fade out
-- [x] Swipe gestures more prominent
-- [x] Exit button in corner
+**What this project is:** a father reading Islamic stories and Quran to his own son, at home, with
+full control over what his son sees. Priorities below are ranked by what *that* father and *that*
+son would actually notice.
 
 ---
 
-## Implementation Progress
+## Verified correct — the assurance side
 
-### Phase 1: Core Fullscreen & Navigation - COMPLETED
-- [x] Add fullscreen toggle button (purple button with expand icon)
-- [x] Improve slide container design (rounded corners, shadows, decorative stars)
-- [x] Better navigation controls (70px buttons, gradient colors, touch-friendly)
-- [x] Smoother transitions (cubic-bezier easing, active state animations)
+Worth stating plainly, because it is the point of the whole exercise:
 
-### Phase 2: Visual Polish - COMPLETED
-- [x] Animated backgrounds (floating stars and clouds)
-- [x] Progress indicator redesign (journey path with checkmarks)
-- [x] Slide counter styling (golden badge with book emoji)
-
-### Phase 3: Advanced Features - PENDING
-- [ ] Scene-specific themes
-- [ ] Reading mode toggle (light/dark/sepia)
-- [ ] Auto-advance option
-- [ ] Character illustrations
+- **The scripture is sound.** Every verse card and every complete-surah block across all 10 short
+  surahs diffs *exactly* against `api.alquran.cloud` simple-script text. Ayat al-Kursi's 8
+  phrase-cards concatenate to an exact match of 2:255. No critical or major findings.
+- **Al-Fatiha now follows the standard Hafs counting** — Bismillah is verse 1, the final verse is
+  whole, the badge says 7. Verified and holding.
+- **All 10 hadith trace to authentic sources** (Bukhari, Muslim, Tirmidhi, Abu Dawud, Nasa'i) with
+  faithful paraphrases. No fabricated or misattributed hadith.
+- **Aqeedah is sound** — the Kursi explanation, Al-Ikhlas's negations, and the Ibrahim
+  star/moon/sun episode are all consistent with mainstream Sunni tafsir.
+- **All 16 YouTube embeds are live** as of 2026-09-03 (re-check every pass — three died before).
+- **Narration scripts are consistent**: for adam/ibrahim/nuh/yusuf, slide count == EN count ==
+  AR count == audio file count, exactly. `voice-scripts.js` and `scripts/voice-scripts-data.json`
+  agree.
+- **The Arabic is trustworthy** — natural, warm MSA with correct dual agreement and consistent
+  terminology; nested inline markup round-trips; no hardcoded English left in the JS.
 
 ---
 
-## Implemented Features Summary
+## Fixed in this pass (2026-09-03)
 
-### Fullscreen Mode
-- Toggle button (purple, positioned top-right)
-- CSS fullscreen with browser fullscreen API support
-- Floating exit controls that fade after 3 seconds
-- ESC key to exit
-- Larger text and illustrations in fullscreen
+- [x] **Al-Fatiha joined the Quran ring.** It dead-ended to Home/Stories; the first surah a child
+      learns was outside the chain. Both chains are now complete and symmetric (verified).
+- [x] **Story chain repaired.** Nuh and Musa both pointed "next" to Yusuf, so Musa was unreachable
+      by the chain. Order now matches the hub: adam → ibrahim → nuh → yusuf → musa.
+- [x] **`ٱقْرَأْ` hero contrast.** `--gold` on parchment was 2.82:1, failing even the 3:1 large-text
+      bar. Now `--gold-text` at 5.06:1.
+- [x] **30 Arabic strings in `translations.js`** had punctuation hard-coded at the *front*
+      (`!اضغط...`) as an RTL workaround. Moved to the end.
+- [x] **`data-ar` / `data-i18n` conflict** on the Adam page: 9 elements carried both, so the older
+      system clobbered the newer value on every switch. `data-ar` removed from those 9.
+- [x] Prophet Yaqub given his honorific in visible text.
+- [x] `class="hadith"` mislabels corrected with `.quran-quote` (a Quranic verse) and
+      `.scholar-quote` (an athar of ash-Shafi'i), documented in `surah.css`.
 
-### Slide Container
-- Enhanced gradient background
-- 25px border radius with shadows
-- Decorative star/sparkle corners
-- Smooth slide content styling
+---
 
-### Navigation
-- 70px circular buttons (teal for prev, orange for next)
-- Golden slide counter badge with book emoji
-- Journey-style progress dots with checkmarks
-- Gradient progress line behind dots
+## P0 — do next
 
-### Animations
-- Floating background stars and clouds
-- Twinkle animation on decorative elements
-- Smooth slide transitions with cubic-bezier easing
-- Active slide fade-in effect
+- [ ] **Quiz answers are guessable from length.** 39 of 63 questions (62%) have the correct answer
+      as the *strictly* longest option, plus 5 more tied — against 25% expected by chance. A child
+      can score well without learning. Worst: `surah-al-ikhlas.html:251` (44 chars vs 21/22/22),
+      `surah-al-kawthar.html:213`, `surah-al-maun.html:283`, `surah-al-kafirun.html:244`.
+      *Fix: pad distractors to comparable length, or trim correct answers. Roughly a day.*
+- [ ] **Prophet Musa has no narration audio.** 20 EN + 20 AR scripts exist and
+      `AudioNarration.init('prophet-musa')` is correct, but `audio/prophet-musa/` does not exist,
+      so it silently falls back to Web Speech. Fix:
+      `node scripts/generate-audio-elevenlabs.js prophet-musa en` then `... ar`.
+- [ ] **Scroll-reveal hides content with no fallback.** `surah.js:187-198` sets `opacity:0` on
+      verse, fact and tip cards until an IntersectionObserver fires. If it never fires — printing a
+      page, JS disabled, an older browser — the content is permanently blank. This matters more
+      than usual here: printing a surah to read aloud is a natural thing for this owner to do.
+      *Fix: reveal by default and let the observer only add the animation.*
+- [ ] **Decide the YouTube question** (owner's call, `ceo` recommendation). All 16 pages embed
+      videos the owner does not control, on plain `youtube.com/embed` with no `rel=0`, no
+      `modestbranding`, not `youtube-nocookie.com` — so a child gets end-screen recommendations
+      from any channel, a "Watch on YouTube" escape, and ads. Three have already died.
+      *Ranked options:* (1) drop video and lean on the site's own ElevenLabs narration —
+      recommended; (2) self-host the video; (3) the father records his own narration;
+      (4) `youtube-nocookie.com` + `rel=0` — a bandage that stops neither deletion nor ads.
+      Related: the "quiz unlocks a bonus video" pattern (`story-prophet-musa.html:271-273`)
+      actively trains the child to expect a YouTube reward.
+
+---
+
+## P1 — soon
+
+**Learning**
+- [ ] **Staged memorization ("training wheels").** Every verse card always shows Arabic +
+      transliteration + translation + explanation, so a child reads the transliteration instead of
+      the Arabic. Add a three-stage toggle — Read / Practice (hide transliteration) / Recite
+      (Arabic only, reveal on tap) — persisted per surah in `localStorage`.
+- [ ] **Progress state on the Quran hub.** `quran.html` is 11 structurally identical cards with no
+      progress, heading past 30. The Adam page already has a star/progress/unlock system to copy.
+- [ ] **Ayat al-Kursi sits at position 2** but is the longest page on the site (767 words vs 493
+      for Al-Ikhlas) and the hardest to chunk. Consider moving it later, as a graduation piece.
+- [ ] **Parent affordances.** Zero instances of "ask your child", "parent tip" or a recap anywhere;
+      the existing tips address the child, not the reading father. Add inline "ask your child"
+      prompts, a one-line recap, and a resume point for the next night.
+
+**Accessibility**
+- [ ] `.nav-toggle` is ~34×27px and `.lang-toggle-btn` ~37px tall — both under the 44×44 minimum.
+- [ ] Fullscreen button has `title` but no `aria-label` (`stories.js:778-784`).
+- [ ] No `aria-hidden` anywhere — decorative emoji in headings are announced as content.
+- [ ] Two `<h1>`s per page (site logo + page title).
+- [ ] `prefers-reduced-motion` handles confetti but not the scroll-reveal opacity above.
+
+**Frontend**
+- [ ] **325 hardcoded hex values** across the four page-type sheets (`stories.css` 141,
+      `surah.css` 75, `interactive-story.css` 70, `story-styles.css` 39) — a regression of the
+      "329 remapped once already" rule. Worst: `#1A8F80` (55×, = `--teal-500`), `#C08A2E` (22×,
+      = `--gold`), `#FBF6EA` (19×, = `--parchment`), `#7A5518` (15×, **no matching token**).
+- [ ] `surah.css` has **zero** `html[lang="ar"]` overrides against 34 LTR-assuming rules
+      (`border-left`, `padding-left`), so RTL border accents do not mirror on surah pages.
+- [ ] `.lang-toggle-btn` is defined twice (`styles.css:858`, `stories.css:1460`) with different
+      focus behaviour, diverging by page type through load order.
+
+**Bilingual**
+- [ ] Narration does not react to a mid-slide language switch. `bilingual.js` dispatches
+      `languageChanged`; `audio-narration.js` only listens for `slideChanged`. Language is picked
+      up on the *next* play, so this is a polish issue, not a break.
+- [ ] `index.html:45-46` hero CTAs have no `data-ar` and stay English.
+- [ ] Nav arrows on `story-prophet-adam.html:469-470` are outside any translation attribute and do
+      not mirror in RTL; arrows are dropped entirely from the Arabic on three other story pages.
+- [ ] Double-escaped entities (`&amp;mdash;`) inside `data-ar` on `index.html:43` and
+      `ayat-al-kursi.html:330-331` — renders correctly by accident, fragile.
+- [ ] `surah.js:110` writes the live quiz score as a Western digit beside Arabic-Indic totals
+      ("أجبت 3 من ٤").
+- [ ] Prophet honorifics appear only in the `<meta description>` on `story-prophet-adam.html`,
+      `story-prophet-ibrahim.html` and `story-prophet-musa.html`, never in visible text.
+
+**Read-aloud**
+- [ ] Rewrite the sentences that trip a parent reading aloud — `surah-fatiha.html:194` and
+      `surah-al-maun.html:90-91` stack em-dash and colon asides that must be pre-read. Suggested
+      rewrites are in `claudeteam/log_chat/ceo.log`.
+- [ ] `ayat-al-kursi.html:99` presents the "protection until death" hadith with full certainty
+      though it is scholarly disputed. Consider a soft footnote.
+
+---
+
+## P2 — content roadmap
+
+See `plan.md` for the full list. Immediate:
+
+- [ ] **Surah Al-Masad (111)** — the last Phase 2 surah, deliberately deferred: it centres on a
+      curse against Abu Lahab and his wife and needs gentler framing for a young child.
+- [ ] **Narration for surah pages.** The feature does not exist there at all. Now more feasible
+      since Arabic text exists — needs EN/AR scripts, `surah-<id>` keys in both script stores,
+      ElevenLabs generation, and `init()` calls. The pipeline itself needs no changes.
+- [ ] Phase 3 surahs: Al-Fil, Al-Humazah, At-Takathur, and the rest of Juz Amma.
+- [ ] Phase 1 stories: Prophet Isa, Prophet Muhammad ﷺ.
+
+---
+
+## P3 — original UI backlog
+
+Carried over from the previous version of this file. Completed items are kept for the record.
+
+- [x] Fullscreen mode, slide transitions, larger nav buttons, progress indicator, slide counter
+- [x] Animated backgrounds, floating controls, swipe gestures, exit button
+- [ ] **Scene-specific themes** — different colours per scene (creation = earth tones,
+      Jannah = green/gold)
+- [ ] **Character illustrations** instead of emojis
+- [ ] **Reading mode toggle** — light/dark/sepia. Worth reconsidering as a *print/bedtime* mode,
+      which serves the read-aloud use case better than a theme switcher.
+- [ ] **Auto-advance option** for younger kids who cannot read yet — pairs naturally with the
+      narration work above.
+
+---
+
+## Known false positives — do not re-chase
+
+Each of these was reported by a checker and disproved on inspection. Recorded so the next pass does
+not spend time on them:
+
+- **`.arabic-full` contrast is fine.** Reported as 1.86:1 by pairing it with `.verse-card`'s cream
+  background. It only ever renders inside `.full-surah-card`, whose background is `var(--ink)`
+  (#14383A), giving **6.70:1 — passes AA**.
+- **`//gc.zgo.at/count.js` is not a broken link.** It is the protocol-relative GoatCounter tag.
+- **The Adam page is not untranslated.** It uses the older `data-i18n` path, so a checker that
+  simulates only `data-ar` reports it as English. Verified translating correctly in a browser.
+- **Regex extractors miss nested inline markup** (`<em><strong>`), reporting translated strings as
+  missing. Check by simulating the switch, not by attribute presence.

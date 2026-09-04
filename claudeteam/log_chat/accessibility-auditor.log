@@ -1,0 +1,287 @@
+Accessibility + Frontend audit — Islamic Kids UI
+Date: 2026-09-03
+Scope: UI/styles.css, surah.css, stories.css, story-styles.css, interactive-story.css,
+       bilingual.js, surah.js, stories.js, surah-fatiha.html, story-prophet-*.html
+Method: read-only. Contrast computed via WCAG relative-luminance formula in /tmp/a11y.py
+        (sRGB -> linear -> 0.2126R+0.7152G+0.0722B; ratio = (L1+.05)/(L2+.05)).
+        Hardcoded-hex census via regex over the four page-type sheets + styles.css.
+No server/browser was needed; all findings are static-analysis + code-read, file:line cited.
+
+================================================================
+CRITICAL
+================================================================
+
+C1. Quranic Arabic verse text fails contrast badly (1.86:1, needs 3:1 for large text)
+    UI/surah.css:459 `.arabic-full { color: var(--gold-light); }` — used inside `.verse-card`,
+    whose background is `#FFFDF8` (UI/surah.css:297, near-white). --gold-light resolves to
+    #E0B75C (UI/styles.css:17).
+    Computed: gold-light(#E0B75C) on verse-card(#FFFDF8) = 1.86:1. FAILS AA even at the large-text
+    (3:1) threshold — this is the worst pair on the site. It renders on every surah page
+    (`<p class="arabic-full" dir="rtl">`, e.g. UI/surah-fatiha.html:212) and is exactly the core
+    Quran text the owner reads with his son. It also fails hardest on print/grayscale/faded ink,
+    which matters here per the stated print-to-read-aloud use case.
+    Same variable at UI/surah.css:264 `.arabic-large` is fine — that one sits on `.bismillah-card`
+    whose background is `--ink` (#14383A): gold-light on ink = 6.70:1, PASS. So --gold-light is a
+    correct choice on dark cards and a contrast failure on light cards — it is being reused across
+    two backgrounds with opposite requirements.
+    Fix: on `.verse-card` (light bg) use `--gold-text` (#8A6220, 5.06:1 on parchment) or `--ink`,
+    not `--gold-light`. Keep `--gold-light` only on dark/`--ink` backgrounds.
+
+C2. Hero eyebrow gold fails AA even as large text
+    UI/styles.css:229 `.hero-eyebrow { font-size: 2.5rem; color: var(--gold); }` on `.hero`
+    background = `--parchment` (#FBF6EA) (UI/styles.css:171-179, radial gradient overlay is
+    ~7% alpha and doesn't materially change luminance).
+    Computed: gold(#C08A2E) on parchment(#FBF6EA) = 2.82:1. Font is 40px (qualifies as "large
+    text", 3:1 threshold) and still fails. This is the homepage-style hero eyebrow — high
+    visibility, high failure.
+    Fix: swap to `--gold-text` (#8A6220 → 5.06:1) or add a dark text-shadow/outline; do not use
+    raw `--gold` as a foreground color on parchment at any size.
+
+C3. surah.js hides verse/fact/tip cards with an inline `opacity:0` that has no CSS fallback —
+    real invisibility risk, worse than "known issue" framing suggests for this project's actual
+    use case (printing pages to read aloud)
+    UI/surah.js:187-198 (`initializeAnimations`):
+        document.querySelectorAll('.verse-card, .fact-card, .tip-card').forEach(card => {
+            card.style.opacity = '0';               // <- inline style, JS-set
+            card.style.transform = 'translateY(30px)';
+            ...
+            observer.observe(card);
+        });
+    The observer only flips opacity back to 1 for cards that have scrolled into the viewport
+    (`entries.forEach(... entry.isIntersecting ...)`, UI/surah.js:178-184). Cards below the fold
+    that never intersect stay `opacity:0` forever.
+    Verified this is NOT mitigated by the site's `prefers-reduced-motion` block
+    (UI/styles.css:834-846): that block only forces `.fade-in { opacity: 1 !important; }` and
+    speeds up animation/transition durations — it never targets `.verse-card/.fact-card/.tip-card`,
+    which get their opacity from a plain (non-!important) inline style, not the `.fade-in` class.
+    So a user with reduced-motion turned on still gets invisible cards if the observer never fires.
+    Concrete failure modes, ranked by likelihood for this project:
+      - Ctrl+P / browser Print without first scrolling through the page: most cards below the
+        fold never intersected, so they print blank. This is the scenario the owner described
+        (printing a surah page to read to his son) — HIGH real risk.
+      - JS disabled or blocked (privacy extensions, content blockers): cards never get opacity
+        set back to 1 at all — permanently blank, worse than "no animation," it's no content.
+      - Very old/embedded browsers without IntersectionObserver: same as above, and there's no
+        `if (!('IntersectionObserver' in window))` feature-detect fallback anywhere in surah.js.
+      - Full-page screenshot tools that don't scroll (many do scroll-and-stitch, so this is a
+        secondary risk vs. print).
+    Fix (cheap and safe): move the opacity/transform into a CSS class (`.reveal-pending`) applied
+    via JS instead of inline styles, and add `@media print { .verse-card, .fact-card, .tip-card,
+    .reveal-pending { opacity: 1 !important; transform: none !important; } }` plus a
+    `<noscript>` rule or a `.reveal-pending { opacity: 1; }` default with JS only *adding* the
+    hidden state after confirming `IntersectionObserver` exists. That covers print, no-JS, and
+    old browsers in one change without touching the animation itself.
+
+================================================================
+MAJOR
+================================================================
+
+M1. Icon-only fullscreen button has no accessible name for screen readers
+    UI/stories.js:778-784:
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.title = 'Toggle Fullscreen';   // title only, no aria-label
+    `title` is not reliably exposed to the accessibility tree the way `aria-label` is (and isn't
+    reachable at all on touch devices). A screen-reader user hears "button" with no name, or at
+    best the raw glyph. This is precisely the failure mode both charters call out by name
+    ("fullscreen ... easy to ship without a label"). Same gap for the exit control created in
+    `createFullscreenControls()` — check its button markup too (UI/stories.js:891+) for the same
+    title-only pattern.
+    Fix: `fullscreenBtn.setAttribute('aria-label', 'Toggle fullscreen');` (and update the label on
+    exit-state text/icon swap). One line.
+
+M2. Mobile hamburger nav toggle is well under the 44x44 touch-target minimum
+    UI/styles.css:124-131:
+        .nav-toggle { display:flex; flex-direction:column; gap:5px; padding:4px; border:none; }
+        .nav-toggle span { width:26px; height:3px; ... }
+    Computed box: width ≈ 26 + 2×4(padding) = 34px; height ≈ (3×3px spans + 2×5px gaps) + 2×4px
+    padding ≈ 19 + 8 = 27px. Actual tappable area ≈ 34×27px — about 60% of the 44×44 CSS-px
+    minimum by area. This is the only way to open navigation on phones (`display:flex` only under
+    `@media (max-width:768px)`, UI/styles.css:739), so it's a primary control, not a peripheral one.
+    Fix: add `min-width:44px; min-height:44px;` and center the icon inside, or increase padding to
+    ~9px on each side.
+
+M3. Two `<h1>`s per page — page title competes with a `<h1>` site logo
+    UI/surah-fatiha.html:29 `<h1 data-ar="أطفال الإسلام">Islamic Kids</h1>` (header logo) and
+    UI/surah-fatiha.html:50 `<h1 data-ar="سورة الفاتحة">Surah Al-Fatiha</h1>` (page title) both
+    exist on the same page; the same pattern repeats across every story/surah page. Screen-reader
+    users jumping "by headings" land on the site name before the actual page subject, and the
+    single-h1-per-page best practice (WCAG 2.4.6 / HTML5 outline guidance) is broken. Not a hard
+    AA failure but a real navigation-quality issue for a repeat-visitor site with many pages.
+    Fix: demote the logo to a `<p class="logo-text">`/`<span>` or `<div role="heading"
+    aria-level="1">` only on the homepage, and keep it a plain link label everywhere else so each
+    inner page has exactly one `<h1>`, the page subject.
+
+M4. Decorative emoji are not hidden from assistive tech anywhere on the site
+    `grep -c aria-hidden` across UI/stories.html, UI/surah-fatiha.html, UI/story-prophet-adam.html
+    → 0 in all three. Every decorative glyph (📖 🌟 📿 ✨ 🩺 💬 💡 ⛶ ☪, etc.), including inside
+    headings like `<h2 data-ar="...">🌟 Why is Surah Al-Fatiha Special?</h2>`
+    (UI/surah-fatiha.html:67), is exposed to screen readers as literal announced content ("star
+    star Why is..."). This is the exact concern flagged in the accessibility-auditor charter
+    ("Emoji used decoratively should not be announced as content").
+    Fix: wrap purely decorative emoji in `<span aria-hidden="true">🌟</span>` site-wide; keep them
+    in `data-ar` too since bilingual.js swaps innerHTML wholesale (UI/bilingual.js:44-49) — the
+    aria-hidden span needs to be replicated on both the English and Arabic markup for each node.
+
+M5. `--gold` / `--gold-light` used as small-body-text/border color elsewhere and inherited by
+    downstream failing pairs
+    In addition to C1/C2: UI/styles.css:532 `border-color: var(--gold)` on a component whose
+    text sits near it — borders at 3:1 are a lower bar (UI border contrast, not text), so this one
+    is likely fine (border, not text) but flagging because `--gold` is used 2x as `color:` outside
+    the two already-cited large-heading contexts across styles.css/surah.css per the hex census —
+    worth a project-wide sweep for any additional small-text usage of `--gold`/`--gold-light`
+    beyond the two found (`surah.css:264`, `surah.css:459`, `styles.css:229`). None of the 5
+    remaining `var(--gold)`/`var(--gold-light)` occurrences found were on body-copy-sized text in
+    this pass, but recommend a lint rule (see F1) so a future PR can't reintroduce it silently.
+
+M6. `.lang-toggle-btn` and `.fullscreen-toggle` collide across stylesheets by page type
+    `.lang-toggle-btn` is defined twice: UI/styles.css:858-874 (gold pill, ink text) and
+    UI/stories.css:1460-1474 (translucent-white pill, white text). Load order is styles.css then
+    the page sheet (per frontend-lead charter), so on any page that loads stories.css AFTER
+    styles.css, the stories.css version wins for that page's toggle, and the styles.css version
+    only applies on pages that don't load stories.css (surah pages). This is the same failure
+    mode the frontend-lead charter names ("A toggle's styles lived in stories.css ... surah pages
+    do not load [it], so the control was unstyled there") — here it's not unstyled but silently
+    *inconsistent* branding/contrast between page types, and a future edit to one copy alone will
+    silently diverge again. The stories.css copy (UI/stories.css:1460) has no `:focus-visible`
+    rule of its own — it relies on the generic `button:focus-visible` in styles.css
+    (UI/styles.css:821), which is fine functionally, but there's no `.lang-toggle-btn:focus-visible`
+    override on story pages, so the focus ring there is the plain default outline rather than the
+    styled amber one surah pages get (UI/styles.css:880-883). Minor inconsistency, real duplication
+    risk.
+    Fix: consolidate `.lang-toggle-btn` into styles.css only (it's a token-layer component, not
+    page-type-specific); delete the stories.css copy or make it intentionally theme via a
+    modifier class instead of a full redefinition.
+
+================================================================
+MINOR
+================================================================
+
+M7. lang/dir runtime switching is actually implemented correctly — verified, not a bug
+    UI/bilingual.js:38-40 sets `root.lang`, `root.dir`, and `data-lang` together inside `apply()`,
+    called both on init and on toggle. This is correct and avoids the "stale lang read in an
+    English voice" failure the charter warns about. No action needed — noting as a pass since it
+    was explicitly asked to be checked.
+
+M8. `prefers-reduced-motion` is implemented once, correctly, but has a narrower blast radius than
+    the animations on the page
+    UI/styles.css:834-846 covers all `animation-duration`/`transition-duration`/`scroll-behavior`
+    globally (via the `*` selector) plus `.fade-in { opacity: 1 !important; }` specifically — this
+    does neutralize the confetti keyframes injected by UI/surah.js:145-153 (`@keyframes
+    confettiFall`) since the universal-selector override with `!important` still wins regardless of
+    which stylesheet declared the animation. Good. But it does NOT cover the scroll-reveal opacity
+    on `.verse-card/.fact-card/.tip-card` (see C3) since those are set via inline style, not a
+    class the reduced-motion block targets. Recommend folding a fix for C3 into this same rule so
+    one change resolves both the print/no-JS risk and the reduced-motion gap.
+
+M9. `--gold-text` #8A6220 vs `--gold` #C08A2E: correct fix exists, just under-applied
+    Confirms the frontend-lead charter's own note that `--gold-text` was created for this exact
+    reason. gold-text on parchment = 5.06:1 (PASS), gold-text on parchment-deep = 4.53:1 (PASS,
+    just over 4.5). The fix for C1/C2 already exists as a token — this is a rollout gap, not a
+    missing solution.
+
+M10. surah.css has zero RTL mirror rules despite the page supporting live language switching
+     `grep -c 'html\[lang="ar"\]' surah.css` → 0, vs. 34 LTR-assuming declarations
+     (`text-align:left`/`margin-left`/`border-left`/`padding-left` combined) in the same file.
+     Concretely: UI/surah.css:135 `border-left: 5px solid #1A8F80;` and UI/surah.css:139
+     `border-left-color: #C08A2E;` on `.intro-card`/`.intro-card.highlight` — this accent border
+     stays on the visual left edge even in Arabic/RTL mode (confirmed the toggle is live on this
+     page: UI/surah-fatiha.html:212 already has a `dir="rtl"` node, and bilingual.js flips
+     `html[dir]` at runtime). In RTL reading order the visual left is the trailing edge, so the
+     "highlight" accent reads as an afterthought instead of a leading accent. Visual-only bug, not
+     a WCAG failure, but breaks the RTL polish the frontend-lead charter is responsible for.
+     Contrast: stories.css does this correctly — 34 `html[lang="ar"]` overrides exist there
+     (including in interactive-story.css, story-styles.css) — so the pattern is known and just
+     wasn't carried into surah.css.
+     Fix: add `html[lang="ar"] .intro-card, html[lang="ar"] .intro-card.highlight { border-left:
+     none; border-right: 5px solid ...; }` (2 rules) or better, refactor to a logical property:
+     `border-inline-start` instead of `border-left`, which mirrors automatically with `dir` and
+     needs zero override rules going forward.
+
+M11. `.lang-toggle-btn` (styles.css version) is under the 44px touch-target height
+     UI/styles.css:858-865: `padding: 0.4rem 1rem; font-size: 0.9rem; line-height: 1.4;` with a
+     2px border. Computed height ≈ 14.4px(font) × 1.4(line-height) + 12.8px(padding) + 4px(border)
+     ≈ 37px — about 84% of the 44px minimum. Width is comfortably over 44px so this is a
+     height-only shortfall. Low severity (single-axis, close to threshold) but worth a
+     `min-height: 44px;` addition alongside the M6 consolidation.
+
+================================================================
+Hardcoded-hex census (frontend-lead hard rule #1: tokens only in page-type sheets)
+================================================================
+Regex count of `#[0-9a-f]{3,8}` literals, page-type sheets only (styles.css excluded from the
+"never hardcode" rule since it's the token layer, included below for reference):
+
+  stories.css              141 occurrences / 31 unique hex values
+  surah.css                 75 occurrences / 26 unique hex values
+  interactive-story.css     70 occurrences / 28 unique hex values
+  story-styles.css          39 occurrences / 23 unique hex values
+  ---------------------------------------------------------------
+  page-type sheets total:  325 hardcoded hex occurrences / ~50 unique values
+  styles.css (token layer): 40 occurrences (mostly legitimate — inside the --girih/--shamsa SVG
+                             data-URIs which must be literal hex, plus var() alternates)
+
+Worst offenders (repeated raw literals that already have a token equivalent and should be
+`var(...)`  instead):
+  #1A8F80  → 26x stories.css, 13x surah.css, 12x interactive-story.css, 4x story-styles.css
+             (= --teal-500/--emerald-500 territory; 55 occurrences total, single highest offender)
+  #C08A2E  → 11x stories.css, 6x surah.css, 3x interactive-story.css, 2x story-styles.css
+             (= --gold, 22 occurrences — every one of these should be `var(--gold)`)
+  #E6DCC8  → 14x stories.css, 3x surah.css, 2x interactive-story.css (= --slate-200)
+  #1E9B92  → 11x stories.css, 4x surah.css (= --teal-400)
+  #FBF6EA  → 10x stories.css, 2x surah.css, 6x interactive-story.css, 1x story-styles.css
+             (= --parchment/--cream — the base background color reimplemented 19x)
+  #A07223  → 7x stories.css, 3x surah.css, 1x story-styles.css (= --amber-600)
+  #5C7370  → 7x stories.css, 4x surah.css, 5x interactive-story.css, 1x story-styles.css
+             (= --slate-500)
+  #7A5518  → 4x stories.css, 5x surah.css, 4x interactive-story.css, 2x story-styles.css — this
+             hex has NO matching token in styles.css `:root` at all (closest is --gold-text
+             #8A6220, a different value) — 15 occurrences of an entirely untokenized color.
+  #ef4444 / #fee2e2 → interactive-story.css only, 2x each — this is the reserved red for
+             wrong-answer feedback (frontend-lead exception #2), correctly NOT tokenized. Not a
+             violation.
+  #000 / #fff → low-value literals (2x each in styles.css/surah.css) for shadow rgba bases —
+             cosmetic, not worth chasing.
+
+This is the same 329-hardcoded-colors problem the frontend-lead charter says "was remapped once
+already" — it appears to have regressed back to ~325 occurrences in the page-type sheets, with
+#1A8F80 and #C08A2E as the two highest-value targets to convert to `var(--teal-500)`/
+`var(--gold)` first (81 combined occurrences, would meaningfully cut the count).
+
+================================================================
+Verified fine / no action needed
+================================================================
+- Body-copy contrast: ink(#14383A) on parchment(#FBF6EA) = 11.75:1, excellent.
+- cobalt(#24508C) on parchment = 7.49:1, PASS.
+- quiz-option resting state text(#2E5B58) on white = 7.63:1, PASS.
+- header white-on-turquoise-deep = 6.34:1, PASS.
+- .fullscreen-toggle is 50x50px (UI/stories.css:1527-1533) — passes the 44x44 minimum, and has a
+  correct RTL mirror (`right`→`left` swap at UI/stories.css:1553).
+- Focus-visible rings exist and are reasonably broad: `a, button, .quiz-option, .nav-toggle` share
+  one rule (UI/styles.css:820-823) plus a dedicated `.lang-toggle-btn:focus-visible`
+  (UI/styles.css:880-883). Since `.fullscreen-toggle`/quiz options are real `<button>` elements,
+  the generic `button:focus-visible` selector covers them even without a dedicated rule.
+- Only one raw `<img>` tag exists across the entire UI/ tree (grep confirmed) — the site is
+  emoji/CSS-illustration based, so missing alt text is a near-non-issue; did not find an
+  unlabelled `<img>`.
+- 360px width: `.nav-cluster`/`.lang-toggle-btn` have a dedicated `@media (max-width: 768px)`
+  rule (UI/styles.css:959-966) that shrinks gap/padding/font-size — should not overflow at 360px.
+- `quiz-option` computed touch-target size (1rem padding all sides + border, 2-col grid) comfortably
+  clears 44x44 in both axes; not flagged.
+
+================================================================
+Priority order for a fix PR
+================================================================
+1. C3 (surah.js inline opacity, print/no-JS risk) — highest real-world impact given stated
+   print-to-read use case, and cheapest fix (swap inline style for a class + one print rule).
+2. C1 (arabic-full 1.86:1 on verse cards) — one-line token swap, fixes the actual Quran text.
+3. C2 (hero-eyebrow 2.82:1) — one-line token swap.
+4. M1 (fullscreen aria-label) — one line.
+5. M2 (nav-toggle touch target) — a few lines of CSS.
+6. M4 (aria-hidden on decorative emoji) — mechanical but touches every page; can be scripted.
+7. M6/M11 (lang-toggle-btn consolidation + min-height) — do together, one PR.
+8. M3 (double h1) — cosmetic/structural, low urgency.
+9. M10 (surah.css RTL borders) — cosmetic, low urgency, but cheap if bundled with other surah.css
+   edits.
+10. Hardcoded-hex sweep — largest line-count, no urgency, best done as its own mechanical PR
+    (find/replace #1A8F80→var(--teal-500), #C08A2E→var(--gold), etc.) with a visual diff check
+    per frontend-lead's "verify in a real browser, screenshot before/after" method.

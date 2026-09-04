@@ -833,3 +833,13 @@
         padding: 0.4rem 0.8rem;
     }
 }
+
+
+/* `.hadith` styles a quoted saying. These modifiers record what the quote
+   actually is, so the markup does not imply a hadith where there is none:
+   `.quran-quote` is a verse of the Quran, `.scholar-quote` is an athar - a
+   saying of a scholar, not of the Prophet ﷺ. */
+.hadith.quran-quote,
+.hadith.scholar-quote {
+    /* inherits .hadith presentation; the class is a semantic label */
+}

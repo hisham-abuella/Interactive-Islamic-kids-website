@@ -1,0 +1,212 @@
+=== 2026-09-03 — Combined link-integrity-auditor + audio-narration-engineer pass ===
+Scope: all 19 HTML pages under UI/. Read-only (link-integrity-auditor); narration findings
+reported per audio-narration-engineer charter but no files edited (per task instructions, this
+pass is report-only for both roles despite audio-narration-engineer's normal edit authority).
+
+--- TASK A: LINK & MEDIA INTEGRITY ---
+
+[1] Hub reachability — PASS
+19/19 pages reachable by following <a href> from index.html, stories.html, quran.html
+(BFS over local .html links). Orphans: none.
+
+[2] Prev/next chains — MAJOR gaps found
+Markup pattern actually used site-wide: two `<a class="nav-btn">` at the foot of each page —
+the first (no "next" class) is the back-link, the second (class="nav-btn next") is forward.
+
+Quran ring (10 pages: ayat-al-kursi + 9 surahs excluding fatiha) — PASS, fully symmetric:
+  quran.html -> ayat-al-kursi -> al-ikhlas -> al-falaq -> an-nas -> al-kawthar -> al-asr ->
+  an-nasr -> al-kafirun -> al-maun -> quraysh -> quran.html
+  Every forward link's target has a matching back-link. Verified via grep -n "nav-btn" on each
+  of the 10 pages (line numbers: ayat-al-kursi.html:396-397, surah-al-ikhlas.html:339-340,
+  surah-al-falaq.html:354-355, surah-an-nas.html:366-367, surah-al-kawthar.html:326-327,
+  surah-al-asr.html:326-327, surah-an-nasr.html:326-327, surah-al-kafirun.html:369-370,
+  surah-al-maun.html:384-385, surah-quraysh.html:339-340).
+
+  MAJOR: surah-fatiha.html:387-388 is STILL outside this ring — its back-link goes to
+  index.html and its forward link goes to stories.html, not into the surah sequence at all.
+  This matches the charter's documented known failure mode ("Al-Fatiha sat outside the
+  prev/next chain, sending readers to Home instead of onward") — it has NOT been fixed.
+  Fix: point surah-fatiha.html's back-link at quran.html (or the ring's true predecessor) and
+  its forward link at ayat-al-kursi.html, and reciprocally point quran.html/ayat-al-kursi.html
+  at it, or explicitly document fatiha as the ring's head/tail.
+
+  Story pages (5) — MAJOR, chain is one-directional only:
+  story-prophet-adam.html:469-470  back->stories.html   next->story-prophet-ibrahim.html
+  story-prophet-ibrahim.html:403-404 back->stories.html next->story-prophet-nuh.html
+  story-prophet-nuh.html:249-250    back->stories.html   next->story-prophet-yusuf.html
+  story-prophet-yusuf.html:259-260  back->story-prophet-nuh.html  next->stories.html
+  story-prophet-musa.html:293-294   back->stories.html   next->story-prophet-yusuf.html
+
+  Forward chain works (adam->ibrahim->nuh->yusuf->stories.html) but back-links are broken:
+  ibrahim's back-link should point to adam, currently points to stories.html (ASYMMETRY).
+  nuh's back-link should point to ibrahim, currently points to stories.html (ASYMMETRY).
+  yusuf's back-link correctly points to nuh — the one pair that IS symmetric.
+  story-prophet-musa.html is completely disconnected from the ring: nothing else's "next"
+  points to it, and its own "next" (->yusuf) collides with yusuf's real predecessor (nuh) —
+  two different stories both claim "next" into yusuf, and yusuf's single back-link can only
+  point one place. Musa was added without being woven into the sequence.
+  Fix: adam->ibrahim->nuh->musa->yusuf (or whatever the intended reading order is), with
+  matching back-links at each hop, not just the head node.
+
+[3] href/src resolution — PASS
+303 href/src attributes checked across all 19 pages. 0 broken local paths. Protocol-relative
+`//gc.zgo.at/count.js` correctly excluded (not broken, per charter note).
+
+[4] YouTube embed liveness — PASS, all 16 embeds live
+Checked every id via oEmbed (https://www.youtube.com/oembed?url=...&format=json):
+  nJSW3fra0u0 ayat-al-kursi.html            200 "Ayat Al-Kursi Repeats with ZAKY..." / One4kids
+  fzOBRSvmSC8 story-prophet-adam.html       200 "Prophet Stories Adam (AS)..." / IQRA CARTOON
+  W45DrRGECQE story-prophet-ibrahim.html    200 "Prophet Stories IBRAHIM (AS)..." / IQRA CARTOON
+  dlA_UuwzL54 story-prophet-musa.html       200 "Prophet Stories MUSA/MOSES (AS) Part 1..." / IQRA CARTOON
+  CgYVH9IYF3c story-prophet-nuh.html        200 "Prophet Stories NOAH (AS)..." / IQRA CARTOON
+  2EDI8RCNWjo story-prophet-yusuf.html      200 "Prophet Stories YUSUF (AS)..." / IQRA CARTOON
+  qwVaMN4ahpg surah-al-asr.html             200 "Learn Surah Al-Asr..." / Bismillah Beginnings
+  B9ozfgJYgKE surah-al-falaq.html           200 "Learn Surah Al-falaq..." / Osratouna tv
+  wz_a9uAPmB8 surah-al-ikhlas.html          200 "Learn Surah Al-ikhlas..." / Osratouna tv
+  zafKAQnQVpA surah-al-kafirun.html         200 "Quran for Kids: Learn Surah Al-Kafiroon..." / Learn with Zakaria
+  JqLHyujWACg surah-al-kawthar.html         200 "Learn Surah Al-Kawthar..." / Osratouna tv
+  2cudvUi4wUA surah-al-maun.html            200 "Learn Surah Al ma'un..." / Osratouna tv
+  RiTEz2KpwMk surah-an-nas.html             200 "Learn Surah An-nas..." / Osratouna tv
+  RJ-UBQ7DH6Q surah-an-nasr.html            200 "Learn Surah An-nasr..." / Osratouna tv
+  Cr_rRRstbjQ surah-fatiha.html             200 "Surah Fatiha #01..." / IQRA CARTOON
+  EaQy0FSVR3E surah-quraysh.html            200 "Learn Surah Quraish..." / Osratouna tv
+Note for future passes: the charter records three embeds that died before (Ayat al-Kursi,
+Al-Ikhlas, the Musa bonus video). All three are alive today — treat this as a point-in-time
+result, not proof they can't rot again; re-check every pass as instructed.
+
+[5] Duplicate element ids — PASS
+No duplicate `id="..."` found on any of the 19 pages.
+
+[6] Nav consistency — PASS
+All 19 pages carry the same 4 nav items (index.html, stories.html, quran.html,
+index.html#learn/#learn) and exactly one `class="active"` link in the nav, correctly matching
+the current section (Home/Stories/Quran) on every page checked, e.g. story pages mark Stories
+active (story-prophet-adam.html:43), quran.html marks Quran active (quran.html:39).
+
+[7] audio/ tree vs references — MAJOR (see Task B #11 for detail)
+Audio dirs on disk: prophet-adam, prophet-ibrahim, prophet-nuh, prophet-yusuf (134 files total).
+No prophet-musa directory exists, yet story-prophet-musa.html:294-area calls
+AudioNarration.init('prophet-musa').
+
+--- TASK B: NARRATION HEALTH ---
+
+Four numbers per story (slides / EN scripts / AR scripts / audio files-per-lang):
+  prophet-adam:    slides=18  EN=18  AR=18  audio(en)=18  audio(ar)=18   MATCH
+  prophet-ibrahim: slides=16  EN=16  AR=16  audio(en)=16  audio(ar)=16   MATCH
+  prophet-nuh:     slides=16  EN=16  AR=16  audio(en)=16  audio(ar)=16   MATCH
+  prophet-yusuf:   slides=17  EN=17  AR=17  audio(en)=17  audio(ar)=17   MATCH
+  prophet-musa:    slides=20  EN=20  AR=20  audio(en)=0   audio(ar)=0    CRITICAL MISMATCH
+
+Slide count derivation (per charter's ordering rule: .story-scene, .mini-quiz, .lesson-box,
+.dua-box, then quiz-intro(1) + quiz-card(3) + results-card(1) + video-section(1) = +6 fixed):
+  adam:    scene10+quiz0+lesson1+dua1=12, +6 = 18  == EN/AR 18  MATCH
+  ibrahim: scene8+quiz0+lesson1+dua1=10,  +6 = 16  == EN/AR 16  MATCH
+  nuh:     scene7+quiz1+lesson1+dua1=10,  +6 = 16  == EN/AR 16  MATCH
+  yusuf:   scene8+quiz1+lesson1+dua1=11,  +6 = 17  == EN/AR 17  MATCH
+  musa:    scene10+quiz2+lesson1+dua1=14, +6 = 20  == EN/AR 20  MATCH
+All five stories' slide indexing lines up exactly with both script stores; the counting rule
+in the charter holds precisely across every story checked, including musa.
+
+[8] voice-scripts.js vs scripts/voice-scripts-data.json — PASS, in agreement
+Both stores hold the same 5 keys (prophet-adam, prophet-ibrahim, prophet-nuh, prophet-yusuf,
+prophet-musa) with identical en/ar entry counts per story (18/16/16/17/20 respectively,
+verified above). No diff between the two stores' coverage.
+
+[9] Slide index order — PASS (see derivation above). Order and counts match spec for all 5.
+
+[10] AudioNarration.init(id) — PASS, correct id on every story page
+  story-prophet-adam.html    -> init('prophet-adam')
+  story-prophet-ibrahim.html -> init('prophet-ibrahim')
+  story-prophet-nuh.html     -> init('prophet-nuh')
+  story-prophet-yusuf.html   -> init('prophet-yusuf')
+  story-prophet-musa.html    -> init('prophet-musa')
+Each id matches its expected audio/{id}/ directory name (musa's directory just doesn't exist —
+see #11).
+
+[11] prophet-musa missing audio — CONFIRMED CRITICAL, still open
+`find audio -type d -name 'prophet-musa'` returns nothing; only prophet-adam, prophet-ibrahim,
+prophet-nuh, prophet-yusuf exist under audio/. Scripts are complete (20 EN + 20 AR entries in
+both voice-scripts.js and scripts/voice-scripts-data.json), so this is pure generation debt,
+not a content gap. Story page falls back silently to Web Speech API (audio-narration.js:349-351,
+::playAudioFile error path around line 376-380 re-routes to playWithWebSpeech).
+Exact fix commands (per audio-narration-engineer charter, run from UI/):
+  node scripts/generate-audio-elevenlabs.js prophet-musa en
+  node scripts/generate-audio-elevenlabs.js prophet-musa ar
+This will consume ElevenLabs quota (~30k chars/mo budget) — confirm quota headroom before
+running both, since musa's 20 slides x 2 languages is the largest of the five stories.
+
+[12] Surah pages have no narration system — CONFIRMED, not a "missing files" bug
+`grep -l "AudioNarration" surah-*.html` returns zero matches across all 10 surah pages
+(surah-fatiha, ayat-al-kursi, and the 9 numbered surahs). This is a feature that does not
+exist yet, per charter — correctly not reported as broken.
+Assessment of what adding it would take now that Arabic text exists on those pages
+(surah-fatiha.html has 99 `data-ar=` attributes, i.e. full bilingual verse/tafsir text is
+already authored):
+  - Content: EN+AR narration scripts would need authoring per surah (verse-by-verse or
+    section-by-section, mirroring the story pattern's {slide, title, script} shape) — text
+    exists but is verse/tafsir markup, not narration prose, so this is real writing work, not
+    a copy-paste.
+  - Data plumbing: add a `surah-<id>` key to both voice-scripts.js and
+    scripts/voice-scripts-data.json following the existing schema exactly — the pipeline
+    (AudioNarration.init, playAudioFile, playWithWebSpeech fallback) is generic and does not
+    need to change, it is keyed purely off the story/surah id string.
+  - Audio: 10 surahs x 2 languages via generate-audio-elevenlabs.js — surah pages are shorter
+    than story pages (single-page verse presentation, not an 18-slide interactive scene), so
+    slide/segment count per surah is likely lower than the story average, but still real
+    ElevenLabs quota cost x10.
+  - Markup: each surah page needs an `AudioNarration.init('surah-<id>')` call and the narration
+    control bar HTML/CSS the story pages already carry (audio-narration.js:195 shows an
+    RTL-aware `html[lang="ar"] .narration-control-bar` rule already exists, reusable as-is).
+  Net: no architectural blocker — the pipeline is id-driven and RTL-ready — but it is a full
+  content+audio production pass across 10 pages, not a small patch.
+
+[13] Bilingual switching vs narration language — MAJOR gap: not reactive
+Read audio-narration.js and bilingual.js in full.
+  - Language is chosen freshly on every playback START: audio-narration.js:325-330
+    `getCurrentLanguage()` returns `window.i18n.getCurrentLanguage()` if present, else
+    `localStorage.getItem('islamicKidsLang') || 'en'` — same key bilingual.js writes
+    (bilingual.js: `var KEY = 'islamicKidsLang';`). So a fresh play/replay after a language
+    toggle DOES pick up the new language correctly — this part works.
+  - BUT audio-narration.js only re-evaluates language at two triggers: a `slideChanged`
+    DOM event (audio-narration.js:311-315, only when `autoPlayEnabled`) and explicit user
+    button clicks (`togglePlayPause` -> `playSlideNarration`, audio-narration.js:459-466).
+    It has NO listener for the `languageChanged` event that bilingual.js dispatches on every
+    toggle (bilingual.js: `document.dispatchEvent(new CustomEvent('languageChanged', ...))`).
+    Confirmed via `grep -n "languageChanged" audio-narration.js` — zero matches.
+  - Net effect: if a child/parent taps the language toggle WHILE narration is already playing
+    or paused on the current slide, the already-loaded audio track keeps playing in the old
+    language; the switch only takes effect on the next natural trigger (next slide's
+    auto-narration, or the user manually pressing play/pause again). There is no audio glitch
+    or wrong-language mislabeling, but the language toggle is silently inert for in-flight
+    narration — a parent who switches to Arabic mid-story and expects the currently-playing
+    line to also change will not see that happen until the next slide.
+  Fix: add `document.addEventListener('languageChanged', function(e){ ... re-trigger
+  playSlideNarration(self.currentSlide, e.detail.lang) ... })` in audio-narration.js's init
+  (near line 311, alongside the existing slideChanged listener), guarded to only restart
+  playback if audio was actively playing/paused when the toggle fired.
+
+--- SUMMARY: RANKED FINDINGS ---
+CRITICAL
+  1. prophet-musa has zero generated audio files despite complete EN/AR scripts and a correct
+     AudioNarration.init call — silently falls back to Web Speech for every child using it.
+     Fix: node scripts/generate-audio-elevenlabs.js prophet-musa en && ... ar
+
+MAJOR
+  2. surah-fatiha.html sits outside the Quran prev/next ring (back->index.html,
+     next->stories.html) — known issue, still unfixed.
+  3. Story prev/next chain is one-directional: back-links on ibrahim and nuh point to
+     stories.html instead of the true previous story; prophet-musa is not woven into the
+     ring at all (nothing points forward into it, and its own forward link collides with
+     yusuf's existing predecessor).
+  4. Narration language toggle (bilingual.js `languageChanged` event) is not listened for by
+     audio-narration.js — in-flight narration does not switch language until the next slide
+     or manual replay.
+
+MINOR
+  5. None outstanding beyond the above — hub reachability, href/src resolution, YouTube
+     liveness (all 16), duplicate ids, and nav consistency all passed clean this pass.
+
+INFO (not a defect, confirmed per charter)
+  6. Surah pages have no narration system yet; Arabic text (data-ar) already exists on those
+     pages, so adding narration is a content+audio production task, not blocked by any
+     architecture change — see [12] for a scoped breakdown.

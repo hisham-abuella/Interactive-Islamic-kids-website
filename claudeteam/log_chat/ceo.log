@@ -1,0 +1,126 @@
+2026-09-03
+
+[FINDING] Read-aloud test — worst offenders trip a reading-aloud parent
+- surah-fatiha.html:194 "We ask Allah for the path of the good people He was pleased with — the prophets and the
+  truthful. And we ask Him to keep us away from the two wrong paths: the path of people who knew
+  the truth but turned away, and the path of people who got lost from it." Two em-dash/colon
+  clauses stacked in one breath; a parent has to pre-read this before saying it aloud.
+  Spoken rewrite: "We ask Allah for the path of good people — the prophets, the truthful ones.
+  Not the path of people who knew the truth and turned away. Not the path of people who got lost."
+  (Break into three short sentences a child can follow verse by verse.)
+- surah-al-maun.html:90-91 "Here is the part that surprises everybody. The surah says 'woe to
+  those who pray' — wait, is praying not a good thing? Read the next line and it becomes clear:
+  these are people who are heedless about their prayer, and who pray to be seen." The aside
+  ("wait, is praying not a good thing?") reads like a written rhetorical device, not something a
+  parent naturally says aloud mid-sentence — it needs to become an actual question directed at the
+  child, with a pause. Spoken rewrite: "The surah says something surprising: 'woe to those who
+  pray.' [pause — ask: Wait, isn't praying a good thing?] Keep listening — it's about people who
+  only pray so others will see them."
+- surah-al-maun.html:69 "'Al-Maun' means the small helpful things — everyday bits and pieces
+  people borrow from each other. A cup of sugar. A pen. A bucket. Little things that cost you
+  almost nothing to share." This one actually speaks very well (short fragments, concrete nouns) —
+  flagged as a positive model for the rewrites above.
+- story-prophet-musa.html:74 "Long ago in Egypt there ruled a cruel king called Pharaoh. He
+  thought he was a god, and he treated the Children of Israel very badly. One day he gave a
+  terrible order: every baby boy born to them must be taken away." Fine aloud, but it's the
+  opening paragraph and already carries three separate facts (setting, villain, threat) with no
+  built-in pause point for a child reaction — add a beat after "he thought he was a god."
+- Good news: most paragraphs across all five pages are short (2-3 sentences), present-tense,
+  concrete, and built with a "Quick Question!" quiz card every 2-3 story beats — this genuinely
+  gives natural pause-and-ask points (story-prophet-musa.html:100, story-prophet-nuh.html:100).
+  This is the site's strongest read-aloud asset and should not be disturbed when editing prose.
+- Session length: each page is one story/surah + intro + verse-by-verse + video + quiz + hadith +
+  fun facts — roughly 400-700 spoken words of narrative content, comparable to a single bedtime
+  story. Reasonable for one sitting. No single page is egregiously long; stopping point is clear
+  (quiz results screen / "Back to Stories" nav).
+
+[FINDING] Control test — the YouTube dependency, verified against actual markup
+- grep across all 16 surah/story pages confirms 16 iframes at src="https://www.youtube.com/embed/<id>"
+  (surah-al-falaq.html:208, surah-al-maun.html:238, surah-fatiha.html:234,
+  story-prophet-musa.html:281, story-prophet-nuh.html:237, plus 11 more).
+- Iframe attributes checked directly (surah-al-falaq.html:205-213, story-prophet-musa.html:278-286):
+  plain youtube.com/embed domain (not youtube-nocookie.com), NO rel param, NO modestbranding, NO
+  playsinline. allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;
+  picture-in-picture" and allowfullscreen are set.
+- What that markup actually exposes a child to: end-screen suggested-video grid after playback
+  (rel is unset, so YouTube shows related videos which can be from any channel, not just the
+  same one); a full "Watch on YouTube" / channel-link escape hatch baked into the player chrome;
+  ads (pre-roll/mid-roll, YouTube's choice, unrelated to content curation on this site); and,
+  once tapped through to youtube.com on a phone, the entire YouTube recommendation surface,
+  comments, and sign-in prompts — none of which the father chose or reviewed.
+- Live-checked all 16 video IDs via YouTube's oEmbed endpoint right now: all 16 return 200 (none
+  currently 404). This means the three previously-broken videos mentioned in the charter have
+  since been fixed or swapped — but the underlying risk is structural, not a one-time bug: any of
+  these 16 can go private, be deleted, get age-restricted, or get replaced by the uploader at any
+  time, with zero warning to this site.
+- Alternatives, ranked, with honest costs:
+  1. **Drop video, lean on the existing ElevenLabs narration (RECOMMENDED).** The site already
+     ships pre-generated ElevenLabs audio + a "Listen Mode" toggle for 4 of 5 stories checked
+     (audio/prophet-adam, prophet-ibrahim, prophet-nuh, prophet-yusuf — audio-narration.js:321).
+     Cost: build/extend narration for surah pages and for story-prophet-musa.html (audio folder
+     confirms Musa currently has NO narration audio — a real gap). No new production cost beyond
+     what's already proven to work; zero third-party risk; works offline; unchanged in five years.
+     This is the only option that fully passes "if this changed tomorrow without us, would we
+     notice?" — answer: nothing to change, because nothing depends on anyone else.
+  2. **Father records his own narration/video.** Highest emotional value (his son's memory of his
+     own recorded voice, not a stranger's) but highest production cost — time, equipment, one
+     recording per surah/story, re-recording if content changes. Best long-term investment if he
+     has the time; worth doing for a handful of favorites even without doing all 16.
+  3. **Self-host video/audio files.** Full control, no ads/recommendations/escape hatch. Cost:
+     needs the right to redistribute the specific videos (most YouTube kids'-Quran-recitation
+     videos are not licensed for this), plus hosting/bandwidth. Only viable for content the site
+     has explicit rights to, which likely rules out most of the current 16.
+  4. **Switch to youtube-nocookie.com + rel=0 + modestbranding=1, keep YouTube.** Cheapest fix
+     (edit 16 src attributes). Reduces cookie tracking and trims some chrome, but does NOT remove
+     ads, does NOT remove the "Watch on YouTube" escape, and does NOT stop the video from being
+     deleted/gone tomorrow. Treats a product problem as a technical one — a bandage, not a fix.
+  5. **Keep YouTube as-is, add a periodic liveness check.** Catches breakage (like the 3 that
+     already 404'd) but does nothing about content the father does not control while the video is
+     still up — recommendations, ads, and the platform's choices remain. Worth doing as a safety
+     net ONLY in combination with another option, never as the whole answer.
+- Recommendation: adopt (1) now — it costs nothing new to build for 4 of 5 pages checked and just
+  needs Musa's narration filled in — and treat (2) as the aspirational upgrade for the surahs and
+  stories the father cares most about. Do not settle for (4) alone; it is the option most likely
+  to be mistaken for "done" when the actual risk (an embed he does not own or control) is still
+  live on every page.
+
+[FINDING] Other third-party dependencies and what each risks for a child's session
+- Google Fonts (index.html:9-11, surah-fatiha.html:9-11, and presumably all pages): a <link> to
+  fonts.googleapis.com/fonts.gstatic.com on every page load. Leaks the visitor's IP and a
+  fingerprint-able request pattern to Google on every page view; does not expose the child to any
+  content, but it is a live network dependency — if Google changes/removes the font family or the
+  CDN has an outage, page typography breaks. Low risk, easy self-host fix (download the 3 font
+  families, serve locally) that also removes the dependency in one shot.
+- GoatCounter analytics (index.html:201-203, script + noscript pixel): per commit history
+  ("Keep GoatCounter analytics only on main page") this is intentionally scoped to index.html
+  only, confirmed absent from surah-fatiha.html. Privacy-respecting, cookie-free analytics by
+  design, and already scoped down to one page — low risk, no action needed.
+- YouTube embed (see above) — the only dependency that puts unreviewed third-party content
+  directly in front of the child, not just a network call.
+- No other CDN scripts (no jsdelivr/cloudflare/unpkg) found in the pages checked — the JS
+  (audio-narration.js, stories.js, translations.js, interactive-story.js, surah.js) is all local.
+
+[FINDING] Product gaps for this exact use case, ranked by what this father and son would notice
+1. Musa's story has no pre-recorded narration (audio/ folder has prophet-adam, prophet-ibrahim,
+   prophet-nuh, prophet-yusuf but no prophet-musa) even though the page includes the same
+   "Listen Mode" toggle pattern as the others — a parent who reaches for Listen Mode on Musa will
+   hit a hole the other four stories don't have.
+2. The YouTube dependency itself (detailed above) — the single highest-leverage fix for "I
+   control what my son sees," and the one most likely to break again exactly as it did before.
+3. No print/no-screen mode. A bedtime read-aloud tool built for a phone/tablet screen still asks
+   the parent to hold a lit device at bedtime; a simple print-friendly or "text-only" view (verses
+   + story text, no video/quiz chrome) would suit an actual bedtime routine better than the
+   quiz-and-video web-page format built for daytime interactive use.
+4. No "read together" progress or memory across sessions beyond the in-page quiz score — nothing
+   marks which surahs/stories father and son have already done, so re-visits start cold with no
+   sense of "we've done 6 of 16 together."
+5. No explicit start of story-prophet-musa.html "Listen Mode" tie-in: the video is framed as a
+   quiz-unlocked "bonus" (story-prophet-musa.html:271-273 "Bonus Video Unlocked!") which trains
+   the child to expect a YouTube reward at the end of every story — reinforcing exactly the
+   dependency flagged as the top control-test risk, and one the father may not have intended as a
+   built-in incentive structure.
+
+[DECISION] Recommend prioritizing: (a) fill in Musa's missing narration audio, (b) replace the
+YouTube "bonus video unlock" pattern site-wide with existing/expanded ElevenLabs narration rather
+than patching YouTube params, (c) self-host Google Fonts to remove the one remaining silent
+network dependency. Scope call belongs to the owner; this is the CEO's ranked recommendation only.
