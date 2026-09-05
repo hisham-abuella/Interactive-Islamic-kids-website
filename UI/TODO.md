@@ -191,9 +191,17 @@ See `plan.md` for the full list. Immediate:
       none of it helped him because of what he chose. The fire is stated once, as the Quran states
       it, without dwelling. Arabic verified verse-by-verse against alquran.cloud; embed checked
       live; chain and hub updated (Quraysh → Al-Masad → Ayat al-Kursi).
-- [ ] **Narration for surah pages.** The feature does not exist there at all. Now more feasible
-      since Arabic text exists — needs EN/AR scripts, `surah-<id>` keys in both script stores,
-      ElevenLabs generation, and `init()` calls. The pipeline itself needs no changes.
+- [ ] **Narration for surah pages.** Two things block it, measured 2026-09-05:
+      1. **The playback system does not exist there.** Narration is slide-indexed and lives on
+         story pages; surah pages are scroll pages with no `AudioNarration.init()` and no slide
+         model. A per-section or per-verse model needs building first.
+      2. **Quota.** Narrating all 12 surah pages in both languages is **79,323 characters**
+         (66,692 EN + 12,631 AR). The ElevenLabs cycle had **24,402 left** and resets **17 Sept**,
+         so it does not fit — English alone does not fit either. Cheapest-first, 4 of 12 pages
+         would fit today.
+      *Options:* wait for the reset and do it in one pass; do a chosen subset now (Al-Fatiha and
+      the three Quls are the ones a child recites most); or English first, Arabic after the reset.
+
 - [ ] Phase 3 surahs: Al-Fil, Al-Humazah, At-Takathur, and the rest of Juz Amma.
 - [ ] Phase 1 stories: Prophet Isa, Prophet Muhammad ﷺ.
 
