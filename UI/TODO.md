@@ -119,31 +119,34 @@ the same answer in both languages throughout. Fixed in that pass:
 - [ ] No `aria-hidden` on decorative emoji — still open (see below).
 
 **Frontend**
-- [ ] **325 hardcoded hex values** across the four page-type sheets (`stories.css` 141,
-      `surah.css` 75, `interactive-story.css` 70, `story-styles.css` 39) — a regression of the
-      "329 remapped once already" rule. Worst: `#1A8F80` (55×, = `--teal-500`), `#C08A2E` (22×,
-      = `--gold`), `#FBF6EA` (19×, = `--parchment`), `#7A5518` (15×, **no matching token**).
-- [ ] `surah.css` has **zero** `html[lang="ar"]` overrides against 34 LTR-assuming rules
-      (`border-left`, `padding-left`), so RTL border accents do not mirror on surah pages.
-- [ ] `.lang-toggle-btn` is defined twice (`styles.css`, `stories.css`) with different focus
-      behaviour, diverging by page type through load order. The 44px minimum was added to the
-      `styles.css` copy only, so the duplicate should be deleted rather than kept in sync.
+- [x] ~~**325 hardcoded hex values** across the four page-type sheets~~ — 303 tokenised
+      2026-09-04, leaving 22 (the reserved red, plus true one-offs). Ten recurring shades that had
+      no token gained one: `--card`, `--gold-ink`, `--gold-ink-strong`, `--gold-wash`,
+      `--parchment-warm`, `--rule-warm`, `--cobalt-deep`, `--cobalt-mid`, `--cobalt-pale`,
+      `--cobalt-wash`. Every replacement was hex → token of the identical value; verified in a
+      browser that computed colours are unchanged and no token is undefined.
+- [x] ~~`surah.css` has zero `html[lang="ar"]` overrides~~ — the "34 LTR-assuming rules" was an
+      overcount; only 4 were directional and 3 needed mirroring. `.intro-card`,
+      `.intro-card.highlight` and `.did-you-know` now flip their accent stripe to the reading
+      edge (the rest were already covered cross-file by `stories.css`). Verified by toggling
+      language in a browser. Fixed 2026-09-04.
+- [x] ~~`.lang-toggle-btn` defined twice~~ — the `stories.css` copy is deleted, so the control no
+      longer diverges by page type and the 44px target applies everywhere. Fixed 2026-09-04.
 
 **Bilingual**
-- [ ] Narration does not react to a mid-slide language switch. `bilingual.js` dispatches
-      `languageChanged`; `audio-narration.js` only listens for `slideChanged`. Language is picked
-      up on the *next* play, so this is a polish issue, not a break.
+- [x] ~~Narration does not react to a mid-slide language switch~~ — `audio-narration.js` now
+      listens for `languageChanged` and, if narration is playing, restarts the current slide in
+      the new language. Fixed 2026-09-04.
 - [x] ~~`index.html` hero CTAs had no `data-ar`~~ — "Start a story" / "Learn a surah" now
       translated. Fixed 2026-09-03.
-- [ ] Nav arrows on `story-prophet-adam.html:469-470` are outside any translation attribute and do
-      not mirror in RTL; arrows are dropped entirely from the Arabic on three other story pages.
+- [x] ~~Arabic nav labels lost their direction arrows~~ — 8 story nav labels now carry an arrow
+      pointing the RTL way. Fixed 2026-09-04.
 - [x] ~~Double-escaped entities inside `data-ar`~~ — 3 fixed across `index.html` and
       `ayat-al-kursi.html`. Fixed 2026-09-03.
 - [x] ~~Quiz score used a Western digit beside Arabic-Indic totals ("أجبت 3 من ٤")~~ — the score
       is now converted to Arabic-Indic when the page is in Arabic. Fixed 2026-09-03.
-- [ ] Prophet honorifics appear only in the `<meta description>` on `story-prophet-adam.html` and
-      `story-prophet-ibrahim.html`, never in visible text. (Musa fixed 2026-09-03; Yusuf's Yaqub
-      fixed earlier.)
+- [x] ~~Prophet honorifics missing from visible text~~ — Adam and Ibrahim now carry them in their
+      visible titles, in both languages. All five story pages are consistent. Fixed 2026-09-04.
 
 **Read-aloud**
 - [ ] Rewrite the sentences that trip a parent reading aloud — `surah-fatiha.html:194` and

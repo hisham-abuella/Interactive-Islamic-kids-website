@@ -314,6 +314,17 @@ const AudioNarration = {
                 self.playSlideNarration(e.detail.slideIndex);
             }
         });
+
+        // Follow a language switch. getCurrentLanguage() is read at play time, so
+        // the next slide would have been correct anyway - but narration already
+        // playing would have carried on in the old language until it finished.
+        document.addEventListener('languageChanged', function() {
+            if (self.isPlaying && self.currentSlide >= 0) {
+                var slide = self.currentSlide;
+                self.stop();
+                self.playSlideNarration(slide);
+            }
+        });
     },
 
     // Check if pre-generated audio files are available

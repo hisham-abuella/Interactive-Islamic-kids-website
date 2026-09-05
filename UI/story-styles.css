@@ -2,7 +2,7 @@
    (base reset, header, nav, footer loaded from styles.css) */
 
 body {
-    background: linear-gradient(135deg, #FBF6EA 0%, #E7EDF6 100%);
+    background: linear-gradient(135deg, var(--parchment) 0%, var(--cobalt-wash) 100%);
 }
 
 /* Story Header */
@@ -20,8 +20,8 @@ body {
 
 .story-category {
     display: inline-block;
-    background: linear-gradient(135deg, #F7EDD8 0%, #F3E4C4 100%);
-    color: #7A5518;
+    background: linear-gradient(135deg, var(--gold-wash) 0%, var(--gold-pale) 100%);
+    color: var(--gold-ink);
     padding: 0.5rem 1.5rem;
     border-radius: 20px;
     font-weight: 700;
@@ -32,7 +32,7 @@ body {
     font-family: 'Baloo 2', cursive;
     font-size: 2.5rem;
     font-weight: 800;
-    color: var(--teal-600, #17877F);
+    color: var(--teal-600, var(--turquoise));
     margin-bottom: 1.5rem;
     line-height: 1.2;
 }
@@ -41,12 +41,12 @@ body {
     display: flex;
     gap: 2rem;
     margin-bottom: 2rem;
-    color: var(--slate-500, #5C7370);
+    color: var(--slate-500, var(--slate-500));
     font-size: 1.1rem;
 }
 
 .audio-button {
-    background: linear-gradient(135deg, #C08A2E 0%, #A07223 100%);
+    background: linear-gradient(135deg, var(--gold) 0%, var(--amber-600) 100%);
     color: white;
     padding: 1rem 2rem;
     border: none;
@@ -65,7 +65,7 @@ body {
 }
 
 .illustration-frame {
-    background: linear-gradient(135deg, #E7EDF6 0%, #C9D8EC 100%);
+    background: linear-gradient(135deg, var(--cobalt-wash) 0%, var(--cobalt-pale) 100%);
     padding: 2rem;
     border-radius: var(--radius-lg, 20px);
     height: 100%;
@@ -141,43 +141,43 @@ body {
 
 .paragraph-text p {
     font-size: 1.2rem;
-    color: var(--slate-700, #2E5B58);
+    color: var(--slate-700, var(--slate-700));
     line-height: 1.9;
 }
 
 /* Did You Know Box */
 .did-you-know {
-    background: linear-gradient(135deg, #F7EDD8 0%, #F3E4C4 100%);
+    background: linear-gradient(135deg, var(--gold-wash) 0%, var(--gold-pale) 100%);
     padding: 2rem;
     border-radius: var(--radius-lg, 20px);
     margin: 3rem 0;
-    border-left: 5px solid #C08A2E;
+    border-left: 5px solid var(--gold);
 }
 
 .did-you-know h3 {
     font-family: 'Baloo 2', cursive;
-    color: #7A5518;
+    color: var(--gold-ink);
     margin-bottom: 1rem;
     font-size: 1.4rem;
 }
 
 .did-you-know p {
-    color: #5E4212;
+    color: var(--gold-ink-strong);
     font-size: 1.1rem;
 }
 
 /* Lesson Box */
 .lesson-box {
-    background: linear-gradient(135deg, #F3E9D6 0%, #E6DCC8 100%);
+    background: linear-gradient(135deg, var(--parchment-deep) 0%, var(--slate-200) 100%);
     padding: 2rem;
     border-radius: var(--radius-lg, 20px);
     margin: 3rem 0;
-    border-left: 5px solid #1A8F80;
+    border-left: 5px solid var(--emerald-500);
 }
 
 .lesson-box h3 {
     font-family: 'Baloo 2', cursive;
-    color: #14383A;
+    color: var(--ink);
     margin-bottom: 1rem;
     font-size: 1.4rem;
 }
@@ -188,7 +188,7 @@ body {
 }
 
 .lesson-box li {
-    color: #0F6B65;
+    color: var(--turquoise-deep);
     font-size: 1.1rem;
     padding: 0.5rem 0;
     padding-left: 2rem;
@@ -199,30 +199,30 @@ body {
     content: '✓';
     position: absolute;
     left: 0;
-    color: #1A8F80;
+    color: var(--emerald-500);
     font-weight: bold;
     font-size: 1.3rem;
 }
 
 /* Prayer Box */
 .prayer-box {
-    background: linear-gradient(135deg, #E7EDF6 0%, #C9D8EC 100%);
+    background: linear-gradient(135deg, var(--cobalt-wash) 0%, var(--cobalt-pale) 100%);
     padding: 2rem;
     border-radius: var(--radius-lg, 20px);
     margin: 3rem 0;
     text-align: center;
-    border: 3px solid #5A79B0;
+    border: 3px solid var(--cobalt-mid);
 }
 
 .prayer-box h3 {
     font-family: 'Baloo 2', cursive;
-    color: #1B3C6B;
+    color: var(--cobalt-deep);
     margin-bottom: 1rem;
     font-size: 1.4rem;
 }
 
 .prayer-box p {
-    color: #24508C;
+    color: var(--cobalt);
     font-size: 1.2rem;
     font-style: italic;
     line-height: 1.8;
@@ -239,7 +239,7 @@ body {
 .quiz-section h2 {
     font-family: 'Baloo 2', cursive;
     font-size: 2rem;
-    color: var(--teal-600, #17877F);
+    color: var(--teal-600, var(--turquoise));
     margin-bottom: 2rem;
 }
 
@@ -252,7 +252,7 @@ body {
 
 .quiz-question {
     font-size: 1.3rem;
-    color: var(--slate-900, #14383A);
+    color: var(--slate-900, var(--ink));
     margin-bottom: 2rem;
     font-weight: 600;
 }
@@ -264,10 +264,10 @@ body {
 }
 
 .quiz-option {
-    background: linear-gradient(135deg, #F5EFE2 0%, #E6DCC8 100%);
-    color: var(--slate-700, #2E5B58);
+    background: linear-gradient(135deg, var(--parchment-warm) 0%, var(--slate-200) 100%);
+    color: var(--slate-700, var(--slate-700));
     padding: 1rem;
-    border: 2px solid #D9CFBC;
+    border: 2px solid var(--rule-warm);
     border-radius: 15px;
     font-size: 1.1rem;
     font-weight: 600;
@@ -276,9 +276,9 @@ body {
 }
 
 .quiz-option:hover {
-    background: linear-gradient(135deg, #1A8F80 0%, #1E9B92 100%);
+    background: linear-gradient(135deg, var(--emerald-500) 0%, var(--teal-500) 100%);
     color: white;
-    border-color: #1A8F80;
+    border-color: var(--emerald-500);
     transform: translateY(-2px);
 }
 
@@ -293,7 +293,7 @@ body {
 .related-stories h2 {
     font-family: 'Baloo 2', cursive;
     font-size: 2rem;
-    color: var(--teal-600, #17877F);
+    color: var(--teal-600, var(--turquoise));
     margin-bottom: 2rem;
 }
 
@@ -324,7 +324,7 @@ body {
 
 .mini-card h4 {
     font-family: 'Baloo 2', cursive;
-    color: var(--teal-600, #17877F);
+    color: var(--teal-600, var(--turquoise));
     font-size: 1.2rem;
 }
 

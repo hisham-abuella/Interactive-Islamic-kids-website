@@ -15,7 +15,7 @@ const translations = {
         starsLabel: "Stars",
 
         // Story Header
-        storyTitle: "Prophet Adam - The First Human",
+        storyTitle: "Prophet Adam (peace be upon him) - The First Human",
         storySubtitle: "An Interactive Adventure",
         progressComplete: "% Complete",
 
@@ -191,7 +191,7 @@ const translations = {
         starsLabel: "نجوم",
 
         // Story Header
-        storyTitle: "النبي آدم - أول إنسان",
+        storyTitle: "النبي آدم عليه السلام - أول إنسان",
         storySubtitle: "مغامرة تفاعلية",
         progressComplete: "% مكتمل",
 

@@ -42,6 +42,19 @@
     --cream: #FBF6EA;
     --cream-blue: #EEF4F3;
 
+    /* --- Shades that were repeated as raw hex across the page-type sheets.
+           Same values, now addressable. Added 2026-09-04. --- */
+    --card: #FFFDF8;              /* the near-white card face on parchment */
+    --gold-ink: #7A5518;          /* dark gold for text on a pale gold wash */
+    --gold-ink-strong: #5E4212;   /* the darkest gold, for small emphasis text */
+    --gold-wash: #F7EDD8;         /* pale gold surface, lighter than --gold-pale */
+    --parchment-warm: #F5EFE2;    /* parchment, one step warmer */
+    --rule-warm: #D9CFBC;         /* hairline rule on parchment */
+    --cobalt-deep: #1B3C6B;       /* deep cobalt, hero gradients */
+    --cobalt-mid: #5A79B0;
+    --cobalt-pale: #C9D8EC;
+    --cobalt-wash: #E7EDF6;       /* palest cobalt surface */
+
     --radius-lg: 20px;
     --radius-xl: 28px;
     --radius-full: 50px;
@@ -936,6 +949,24 @@ html[lang="ar"] .verse-explanation {
     border-right: 3px solid var(--gold);
     padding-left: 0;
     padding-right: 1rem;
+}
+
+/* Accent stripes must sit on the reading edge. stories.css already mirrors
+   .story-scene, .lesson-box, .fun-fact, .lesson-reveal and .highlight-text;
+   these three had no RTL rule anywhere, so the stripe stayed on the left while
+   the Arabic text sat on the right. */
+html[lang="ar"] .intro-card,
+html[lang="ar"] .did-you-know {
+    border-left: none;
+    border-right: 5px solid var(--emerald-500);
+}
+
+html[lang="ar"] .did-you-know {
+    border-right-color: var(--gold);
+}
+
+html[lang="ar"] .intro-card.highlight {
+    border-right-color: var(--gold);
 }
 
 html[lang="ar"] .intro-card ul,
