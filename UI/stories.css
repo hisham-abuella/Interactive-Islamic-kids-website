@@ -2053,3 +2053,66 @@ html[lang="ar"] .fullscreen-controls {
     outline: 3px solid var(--gold);
     outline-offset: 2px;
 }
+
+
+/* ============================================
+   Scene moods
+   A scene reads differently at night, in a fire, or beside water. Each is a
+   wash over the existing card, not a repaint - the manuscript ground still
+   shows through, and text colour is untouched so contrast is unchanged.
+   ============================================ */
+
+.story-scene[data-mood] {
+    transition: background 0.5s ease, border-color 0.5s ease;
+}
+
+/* first light, hope, a beginning */
+.story-scene[data-mood="dawn"] {
+    background: linear-gradient(135deg, var(--gold-wash) 0%, var(--parchment) 70%);
+    border-left-color: var(--gold);
+}
+
+/* night, doubt, searching */
+.story-scene[data-mood="night"] {
+    background: linear-gradient(135deg, var(--cobalt-wash) 0%, var(--parchment) 70%);
+    border-left-color: var(--cobalt);
+}
+
+/* water, the flood, the sea */
+.story-scene[data-mood="water"] {
+    background: linear-gradient(135deg, var(--cream-blue) 0%, var(--parchment) 70%);
+    border-left-color: var(--turquoise);
+}
+
+/* fire, trial, heat */
+.story-scene[data-mood="fire"] {
+    background: linear-gradient(135deg, var(--gold-pale) 0%, var(--parchment) 70%);
+    border-left-color: var(--gold-ink);
+}
+
+/* earth, building, the ordinary world */
+.story-scene[data-mood="earth"] {
+    background: linear-gradient(135deg, var(--parchment-warm) 0%, var(--parchment) 70%);
+    border-left-color: var(--gold-ink-strong);
+}
+
+/* green, relief, safety, Jannah */
+.story-scene[data-mood="garden"] {
+    background: linear-gradient(135deg, var(--cream-blue) 0%, var(--parchment-warm) 70%);
+    border-left-color: var(--emerald-500);
+}
+
+html[lang="ar"] .story-scene[data-mood] {
+    border-left-color: transparent;
+}
+
+html[lang="ar"] .story-scene[data-mood="dawn"]   { border-right-color: var(--gold); }
+html[lang="ar"] .story-scene[data-mood="night"]  { border-right-color: var(--cobalt); }
+html[lang="ar"] .story-scene[data-mood="water"]  { border-right-color: var(--turquoise); }
+html[lang="ar"] .story-scene[data-mood="fire"]   { border-right-color: var(--gold-ink); }
+html[lang="ar"] .story-scene[data-mood="earth"]  { border-right-color: var(--gold-ink-strong); }
+html[lang="ar"] .story-scene[data-mood="garden"] { border-right-color: var(--emerald-500); }
+
+@media (prefers-reduced-motion: reduce) {
+    .story-scene[data-mood] { transition: none; }
+}

@@ -78,10 +78,10 @@ the same answer in both languages throughout. Fixed in that pass:
       fixed terms like "Ameen" and one-word meanings like "Time" that cannot be padded without
       damaging them.
 
-- [ ] **Prophet Musa has no narration audio.** 20 EN + 20 AR scripts exist and
-      `AudioNarration.init('prophet-musa')` is correct, but `audio/prophet-musa/` does not exist,
-      so it silently falls back to Web Speech. Fix:
-      `node scripts/generate-audio-elevenlabs.js prophet-musa en` then `... ar`.
+- [x] ~~**Prophet Musa has no narration audio.**~~ Generated 2026-09-05, EN and AR (7,770
+      characters). All five stories now have complete narration: slide count == EN == AR ==
+      audio-file count for every one.
+
 - [x] ~~**Scroll-reveal hides content with no fallback.**~~ Fixed 2026-09-03. `surah.js` now only
       hides cards when it can guarantee something will bring them back (IntersectionObserver
       present and reduced-motion not requested), and a new `@media print` block forces
@@ -205,8 +205,11 @@ Carried over from the previous version of this file. Completed items are kept fo
 
 - [x] Fullscreen mode, slide transitions, larger nav buttons, progress indicator, slide counter
 - [x] Animated backgrounds, floating controls, swipe gestures, exit button
-- [ ] **Scene-specific themes** — different colours per scene (creation = earth tones,
-      Jannah = green/gold)
+- [x] ~~**Scene-specific themes**~~ — built 2026-09-05. Each of the 43 story scenes carries a
+      `data-mood` (dawn, night, water, fire, earth, garden) chosen from what actually happens in
+      that scene rather than cycled mechanically. Each is a wash over the existing card, so the
+      manuscript ground shows through and text colour — and therefore contrast — is untouched.
+      Mirrors for RTL.
 - [ ] **Character illustrations** instead of emojis
 - [x] ~~**Reading mode toggle**~~ — shipped 2026-09-05 as a **bedtime mode** rather than a
       light/dark/sepia switcher, because the real use case is reading aloud in a dim room. A moon

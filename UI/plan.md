@@ -7,7 +7,7 @@
 - [x] Prophet Ibrahim
 - [x] Prophet Nuh
 - [x] Prophet Yusuf
-- [x] Prophet Musa (scripts written; ElevenLabs audio not generated yet)
+- [x] Prophet Musa (audio generated 2026-09-05, EN + AR)
 
 ### Surahs / Verses
 - [x] Surah Al-Fatiha (no voice narration yet)
@@ -119,7 +119,7 @@
 ---
 
 ## Pending Audio Generation
-- [ ] prophet-musa (EN + AR) - 20 slides each, run `generate-audio-elevenlabs.js prophet-musa en|ar`
+- [x] prophet-musa (EN + AR) - generated 2026-09-05
 - [ ] All surah pages (fatiha, ayat-al-kursi, al-ikhlas, al-falaq, an-nas, al-kawthar,
       al-asr, an-nasr, al-kafirun, al-maun, quraysh) - no narration system on surah
       pages yet
