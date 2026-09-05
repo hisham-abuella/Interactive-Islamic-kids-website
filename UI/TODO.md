@@ -208,8 +208,11 @@ Carried over from the previous version of this file. Completed items are kept fo
 - [ ] **Scene-specific themes** — different colours per scene (creation = earth tones,
       Jannah = green/gold)
 - [ ] **Character illustrations** instead of emojis
-- [ ] **Reading mode toggle** — light/dark/sepia. Worth reconsidering as a *print/bedtime* mode,
-      which serves the read-aloud use case better than a theme switcher.
+- [x] ~~**Reading mode toggle**~~ — shipped 2026-09-05 as a **bedtime mode** rather than a
+      light/dark/sepia switcher, because the real use case is reading aloud in a dim room. A moon
+      button in the navbar of all 20 pages dims the parchment to a warm, low-blue ground; the
+      choice persists per device. Every text/background pair was measured: body 8.77:1, verse
+      Arabic 11.25:1, translation 13.79:1, Quranic text 9.42:1.
 - [ ] **Auto-advance option** for younger kids who cannot read yet — pairs naturally with the
       narration work above.
 

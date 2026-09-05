@@ -1079,3 +1079,115 @@ html[lang="ar"] .info-badge:not([data-ar]) {
         background: #fff;
     }
 }
+
+
+/* ============================================
+   Bedtime reading mode
+   The site is read aloud at night. This dims the parchment to a warm,
+   low-blue ground so a lamp-lit room does not get a bright white page,
+   while keeping every text/background pair above WCAG AA.
+   ============================================ */
+
+.bedtime-btn {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    color: #fff;
+    font-size: 1.05rem;
+    line-height: 1;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.bedtime-btn:hover,
+.bedtime-btn:focus-visible {
+    background: rgba(255, 255, 255, 0.18);
+    transform: scale(1.06);
+}
+
+.bedtime-btn:focus-visible {
+    outline: 3px solid var(--gold-light);
+    outline-offset: 2px;
+}
+
+.bedtime-btn[aria-pressed="true"] {
+    background: var(--gold);
+    border-color: var(--gold-light);
+    color: var(--ink);
+}
+
+html[data-theme="bedtime"] {
+    --parchment: #2A2520;
+    --parchment-deep: #221E1A;
+    --parchment-warm: #2F2A24;
+    --card: #322C25;
+    --cream: #2A2520;
+    --cream-blue: #262A2B;
+    --gold-wash: #38301F;
+    --gold-pale: #4A3F28;
+    --amber-50: #38301F;
+    --amber-100: #4A3F28;
+    --ink: #F2E7D2;
+    --slate-900: #F2E7D2;
+    --slate-800: #E7DBC5;
+    --slate-700: #D9CDB6;
+    --slate-500: #B5AA95;
+    --slate-400: #8E8674;
+    --slate-200: #4A4238;
+    --gold-text: #E8C070;
+    --gold-ink: #E8C070;
+    --gold-ink-strong: #F0D094;
+    --turquoise: #3FB8AE;
+    --turquoise-deep: #1F5F5A;
+    --cobalt: #7FA6DE;
+    --cobalt-wash: #26303C;
+    --cobalt-pale: #3A4759;
+    --cobalt-deep: #9BBBEA;
+    --rule: rgba(232, 192, 112, 0.28);
+    --rule-warm: rgba(232, 192, 112, 0.20);
+}
+
+html[data-theme="bedtime"] body {
+    background: var(--parchment);
+    color: var(--ink);
+}
+
+/* Cards were white literals in a few places; keep them on the night ground. */
+html[data-theme="bedtime"] .intro-card,
+html[data-theme="bedtime"] .verse-card,
+html[data-theme="bedtime"] .quiz-card,
+html[data-theme="bedtime"] .fact-card,
+html[data-theme="bedtime"] .tip-card,
+html[data-theme="bedtime"] .story-select-card,
+html[data-theme="bedtime"] .quiz-option {
+    background: var(--card);
+    color: var(--ink);
+}
+
+html[data-theme="bedtime"] .story-thumbnail,
+html[data-theme="bedtime"] .surah-hero {
+    filter: brightness(0.82) saturate(0.9);
+}
+
+/* --ink is a TEXT colour by day but a few surfaces use it as a dark GROUND
+   (the complete-surah card, the bismillah card). In bedtime mode --ink flips
+   to a light cream, which would turn those surfaces light under light gold
+   script - the Quranic text measured 1.54:1 before this rule. Pin them dark. */
+html[data-theme="bedtime"] .full-surah-card,
+html[data-theme="bedtime"] .bismillah-card,
+html[data-theme="bedtime"] .dua-box,
+html[data-theme="bedtime"] footer {
+    background: #1B1713;
+}
+
+html[data-theme="bedtime"] .full-surah-card .arabic-full,
+html[data-theme="bedtime"] .bismillah-card .arabic-large {
+    color: var(--gold-light);
+}
+
+/* The floating decorations are cheerful by day and noisy at night. */
+html[data-theme="bedtime"] .floating-decorations {
+    opacity: 0.35;
+}
