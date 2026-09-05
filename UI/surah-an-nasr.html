@@ -15,17 +15,17 @@
 <body>
     <!-- Floating Decorations -->
     <div class="floating-decorations">
-        <span class="floating-star" style="top: 10%; left: 5%;">⭐</span>
-        <span class="floating-star" style="top: 20%; right: 10%;">✨</span>
-        <span class="floating-lantern" style="top: 40%; left: 8%;">🏮</span>
-        <span class="floating-star" style="top: 60%; right: 5%;">⭐</span>
+        <span class="floating-star" style="top: 10%; left: 5%;" aria-hidden="true">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;" aria-hidden="true">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;" aria-hidden="true">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;" aria-hidden="true">⭐</span>
     </div>
 
     <!-- Header -->
     <header>
         <nav class="navbar">
             <div class="logo">
-                <span class="crescent">☪</span>
+                <span class="crescent" aria-hidden="true">☪</span>
                 <span class="logo-text" data-ar="أطفال الإسلام">Islamic Kids</span>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
@@ -46,7 +46,7 @@
     <!-- Hero -->
     <section class="surah-hero">
         <div class="surah-hero-content">
-            <div class="surah-icon">🕊️</div>
+            <div class="surah-icon" aria-hidden="true">🕊️</div>
             <h1 data-ar="سورة النصر">Surah An-Nasr</h1>
             <p class="surah-subtitle" data-ar="النصر">Divine Support / The Victory - النصر</p>
             <div class="surah-info" data-ar="<span class=&quot;info-badge&quot;>📿 ٣ آيات</span> <span class=&quot;info-badge&quot;>🕌 سورة مدنية</span> <span class=&quot;info-badge&quot;>📖 آخر سورة نزلت</span>">
@@ -122,7 +122,7 @@
                         <p class="transliteration">Idha ja'a nasrullahi wal-fath</p>
                         <p class="translation" data-ar="&quot;إذا جاء نصر الله والفتح&quot;">"When the help of Allah and the victory come."</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="انظر لمن النصر — إنه نصر <strong>الله</strong>! فالمسلمون لم ينتصروا لأن جيشهم أكبر، بل انتصروا لأن <strong>الله نصرهم</strong>. و<em>الفتح</em> يعني &quot;الانفتاح&quot;، لأن مكة فتحت لهم أبوابها.">Look at whose help it is — <strong>Allah's</strong> help! The Muslims did not win because they had the biggest army. They won because <strong>Allah helped them</strong>. <em>Al-Fath</em> means "the opening", because Makkah opened its gates to them.</p>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                         <p class="transliteration">Wa ra'aytan-nasa yadkhuloona fee deenillahi afwaja</p>
                         <p class="translation" data-ar="&quot;ورأيت الناس يدخلون في دين الله أفواجاً&quot;">"And you see the people entering the religion of Allah in crowds."</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="<em>أفواجاً</em> تعني <strong>جماعات كبيرة</strong>، فوجاً بعد فوج! في البداية آمن عدد قليل جداً وكانوا يخفون إيمانهم. والآن صارت أسر بأكملها تسلم معاً. لقد قلب الله الأمر كله."><em>Afwaja</em> means <strong>in big groups</strong>, crowd after crowd! At the start only a handful of people believed, and they had to hide it. Now whole families were becoming Muslim together. Allah had turned it all around.</p>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                         <p class="transliteration">Fasabbih bihamdi Rabbika wastaghfirh, innahu kana tawwaba</p>
                         <p class="translation" data-ar="&quot;فسبّح بحمد ربك واستغفره إنه كان تواباً&quot;">"Then glorify the praises of your Lord and ask His forgiveness. Indeed, He is ever Accepting of repentance."</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="وهنا المفاجأة! بعد نصر عظيم لا يقول الله &quot;احتفلوا&quot;. بل يقول <strong>قل سبحان الله، وقل الحمد لله، وقل أستغفر الله</strong>. ويذكّرنا أنه <em>التواب</em> — <strong>يقبل التوبة دائماً</strong> مهما كان.">Here is the surprise! After a great victory Allah does not say "celebrate". He says <strong>say SubhanAllah, say Alhamdulillah, and say Astaghfirullah</strong>. And He reminds us that He is <em>Tawwab</em> — <strong>always ready to forgive</strong>, no matter what.</p>
                         </div>
                     </div>
@@ -190,7 +190,7 @@
             <!-- Quiz -->
             <section class="quiz-section">
                 <div class="quiz-intro">
-                    <div class="quiz-icon">🎯</div>
+                    <div class="quiz-icon" aria-hidden="true">🎯</div>
                     <h2 data-ar="اختبر معلوماتك!">Test Your Knowledge!</h2>
                     <p data-ar="أجب عن هذه الأسئلة عن سورة النصر">Answer these questions about Surah An-Nasr</p>
                 </div>
@@ -245,7 +245,7 @@
 
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
-                        <div class="results-icon">🎉</div>
+                        <div class="results-icon" aria-hidden="true">🎉</div>
                         <h2 data-ar="ما شاء الله!">MashaAllah!</h2>
                         <p class="results-score" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٤ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
                         <p class="results-message" data-ar="في المرة القادمة حين يحدث خير، قل الحمد لله أولاً!">Next time something good happens, say Alhamdulillah first!</p>
@@ -299,22 +299,22 @@
                 <h2 class="section-title" data-ar="💡 نصائح للحفظ">💡 Tips for Memorization</h2>
                 <div class="tips-grid">
                     <div class="tip-card">
-                        <div class="tip-icon">3️⃣</div>
+                        <div class="tip-icon" aria-hidden="true">3️⃣</div>
                         <h3 data-ar="ثلاث خطوات قصيرة">Three Short Steps</h3>
                         <p data-ar="يأتي النصر، فيدخل الناس، ثم تحمد الله. احفظ ترتيب القصة وستتبعك الآيات.">Victory comes, people join, then praise Allah. Learn the story order and the verses follow.</p>
                     </div>
                     <div class="tip-card">
-                        <div class="tip-icon">🎉</div>
+                        <div class="tip-icon" aria-hidden="true">🎉</div>
                         <h3 data-ar="اربطها بالفوز">Link It to Winning</h3>
                         <p data-ar="ردّدها في نفسك كلما حدث لك خير. فالمواقف الحقيقية تثبّت السور.">Say it in your head whenever something goes well for you. Real moments make surahs stick.</p>
                     </div>
                     <div class="tip-card">
-                        <div class="tip-icon">🕌</div>
+                        <div class="tip-icon" aria-hidden="true">🕌</div>
                         <h3 data-ar="اقرأها في صلاتك">Use It in Salah</h3>
                         <p data-ar="اقرأها في صلواتك. استعمال السورة هو أسرع طريق لئلا تنساها أبداً.">Recite it in your prayers. Using a surah is the fastest way to never forget it.</p>
                     </div>
                     <div class="tip-card">
-                        <div class="tip-icon">🤲</div>
+                        <div class="tip-icon" aria-hidden="true">🤲</div>
                         <h3 data-ar="ادعُ الله">Make Dua</h3>
                         <p data-ar="اطلب من الله أن يعينك على حفظ كلامه وفهمه.">Ask Allah to help you memorize and understand His words.</p>
                     </div>

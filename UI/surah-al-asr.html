@@ -15,17 +15,17 @@
 <body>
     <!-- Floating Decorations -->
     <div class="floating-decorations">
-        <span class="floating-star" style="top: 10%; left: 5%;">⭐</span>
-        <span class="floating-star" style="top: 20%; right: 10%;">✨</span>
-        <span class="floating-lantern" style="top: 40%; left: 8%;">🏮</span>
-        <span class="floating-star" style="top: 60%; right: 5%;">⭐</span>
+        <span class="floating-star" style="top: 10%; left: 5%;" aria-hidden="true">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;" aria-hidden="true">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;" aria-hidden="true">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;" aria-hidden="true">⭐</span>
     </div>
 
     <!-- Header -->
     <header>
         <nav class="navbar">
             <div class="logo">
-                <span class="crescent">☪</span>
+                <span class="crescent" aria-hidden="true">☪</span>
                 <span class="logo-text" data-ar="أطفال الإسلام">Islamic Kids</span>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
@@ -46,7 +46,7 @@
     <!-- Hero -->
     <section class="surah-hero">
         <div class="surah-hero-content">
-            <div class="surah-icon">⏳</div>
+            <div class="surah-icon" aria-hidden="true">⏳</div>
             <h1 data-ar="سورة العصر">Surah Al-Asr</h1>
             <p class="surah-subtitle" data-ar="العصر">Time - العصر</p>
             <div class="surah-info" data-ar="<span class=&quot;info-badge&quot;>📿 ٣ آيات</span> <span class=&quot;info-badge&quot;>🕌 سورة مكية</span> <span class=&quot;info-badge&quot;>🗝️ وصفة النجاح</span>">
@@ -122,7 +122,7 @@
                         <p class="transliteration">Wal-'Asr</p>
                         <p class="translation" data-ar="&quot;والعصر&quot;">"By time!"</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="هذه أقصر آية ستحفظها — <strong>كلمة واحدة</strong>! يقسم الله بـ<strong>الزمن نفسه</strong>. ولا يجوز القسم بالمخلوقات إلا لله، وهو يفعل ذلك ليجعلنا نتوقف ونصغي. فشيء مهم قادم بعدها...">This is the shortest verse you will learn — just <strong>one word</strong>! Allah swears by <strong>time itself</strong>. Only Allah may swear by His creation, and He does it to make us stop and listen. Something important is coming next...</p>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                         <p class="transliteration">Innal-insana lafee khusr</p>
                         <p class="translation" data-ar="&quot;إن الإنسان لفي خسر&quot;">"Indeed, mankind is in loss."</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="<em>الخسر</em> يعني <strong>الخسارة</strong> — كأن تفقد شيئاً ثميناً. فكل يوم يمضي يذهب معه جزء من عمرك. وإن لم تستعمله في خير فقد <strong>ضاع إلى الأبد</strong>. يبدو الأمر مخيفاً... لكن انتظر الآية التالية!"><em>Khusr</em> means <strong>loss</strong> — like losing something precious. Every day that passes, a piece of your life is spent. If you did not use it for something good, it is <strong>gone forever</strong>. That sounds scary... but wait for the next verse!</p>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                         <p class="transliteration">Illal-ladheena amanoo wa 'amilus-salihati wa tawasaw bil-haqqi wa tawasaw bis-sabr</p>
                         <p class="translation" data-ar="&quot;إلا الذين آمنوا وعملوا الصالحات وتواصوا بالحق وتواصوا بالصبر&quot;">"Except those who believe, and do righteous deeds, and advise each other to truth, and advise each other to patience."</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="وهنا المخرج! <em>&quot;إلا&quot;</em> — أربعة أمور تنجيك: <strong>الإيمان</strong>، و<strong>العمل الصالح</strong>، و<strong>التواصي بالحق</strong>، و<strong>التواصي بالصبر</strong>. افعلها ولن يضيع وقتك أبداً.">Here is the way out! <em>"Except"</em> — these four things save you: <strong>believe</strong>, <strong>do good</strong>, <strong>tell each other the truth</strong>, and <strong>help each other be patient</strong>. Do these, and your time is never wasted.</p>
                         </div>
                     </div>
@@ -190,7 +190,7 @@
             <!-- Quiz -->
             <section class="quiz-section">
                 <div class="quiz-intro">
-                    <div class="quiz-icon">🎯</div>
+                    <div class="quiz-icon" aria-hidden="true">🎯</div>
                     <h2 data-ar="اختبر معلوماتك!">Test Your Knowledge!</h2>
                     <p data-ar="أجب عن هذه الأسئلة عن سورة العصر">Answer these questions about Surah Al-Asr</p>
                 </div>
@@ -245,7 +245,7 @@
 
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
-                        <div class="results-icon">🎉</div>
+                        <div class="results-icon" aria-hidden="true">🎉</div>
                         <h2 data-ar="ما شاء الله!">MashaAllah!</h2>
                         <p class="results-score" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٤ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
                         <p class="results-message" data-ar="الآن اقرأ سورة العصر على من تحب قبل أن تودّعه!">Now recite Surah Al-Asr to someone you love before you say goodbye!</p>
@@ -299,22 +299,22 @@
                 <h2 class="section-title" data-ar="💡 نصائح للحفظ">💡 Tips for Memorization</h2>
                 <div class="tips-grid">
                     <div class="tip-card">
-                        <div class="tip-icon">✌️</div>
+                        <div class="tip-icon" aria-hidden="true">✌️</div>
                         <h3 data-ar="اثنتان سهلتان وواحدة أطول">Two Easy, One Longer</h3>
                         <p data-ar="الآيتان الأولى والثانية تأخذان دقيقة. ثم قسّم الآية الثالثة إلى أجزائها الأربعة واحفظ جزءاً في كل مرة.">Verses 1 and 2 take a minute. Then break verse 3 into its four parts and learn one at a time.</p>
                     </div>
                     <div class="tip-card">
-                        <div class="tip-icon">👋</div>
+                        <div class="tip-icon" aria-hidden="true">👋</div>
                         <h3 data-ar="قلها عند الوداع">Say It at Goodbye</h3>
                         <p data-ar="اقتدِ بالصحابة — اقرأها كلما فارقت صديقاً. تدريب يومي دون أن تشعر!">Copy the companions — recite it whenever you part from a friend. Daily practice without even trying!</p>
                     </div>
                     <div class="tip-card">
-                        <div class="tip-icon">🔢</div>
+                        <div class="tip-icon" aria-hidden="true">🔢</div>
                         <h3 data-ar="عُدّها على أصابعك">Count on Your Fingers</h3>
                         <p data-ar="إيمان، وعمل صالح، وحق، وصبر. أربعة أصابع، أربعة أركان — سهلة الحفظ.">Believe, do good, truth, patience. Four fingers, four ingredients — easy to remember.</p>
                     </div>
                     <div class="tip-card">
-                        <div class="tip-icon">🤲</div>
+                        <div class="tip-icon" aria-hidden="true">🤲</div>
                         <h3 data-ar="ادعُ الله">Make Dua</h3>
                         <p data-ar="اطلب من الله أن يعينك على حفظ كلامه وفهمه.">Ask Allah to help you memorize and understand His words.</p>
                     </div>

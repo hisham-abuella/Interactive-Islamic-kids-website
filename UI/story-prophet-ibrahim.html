@@ -16,17 +16,17 @@
 <body>
     <!-- Floating Decorations -->
     <div class="floating-decorations">
-        <span class="floating-star" style="top: 10%; left: 5%;">⭐</span>
-        <span class="floating-star" style="top: 20%; right: 10%;">✨</span>
-        <span class="floating-lantern" style="top: 40%; left: 8%;">🏮</span>
-        <span class="floating-star" style="top: 60%; right: 5%;">⭐</span>
+        <span class="floating-star" style="top: 10%; left: 5%;" aria-hidden="true">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;" aria-hidden="true">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;" aria-hidden="true">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;" aria-hidden="true">⭐</span>
     </div>
 
     <!-- Header -->
     <header>
         <nav class="navbar">
             <div class="logo">
-                <span class="crescent">☪</span>
+                <span class="crescent" aria-hidden="true">☪</span>
                 <span class="logo-text" data-ar="أطفال الإسلام">Islamic Kids</span>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
@@ -46,7 +46,7 @@
 
     <!-- Stars Counter -->
     <div class="stars-counter" id="starsCounter">
-        <span class="star-icon">⭐</span>
+        <span class="star-icon" aria-hidden="true">⭐</span>
         <span class="star-count" id="starCount">0</span>
     </div>
 
@@ -61,7 +61,7 @@
 
             <!-- Story Header -->
             <div class="story-header">
-                <div class="story-icon animated-icon">🕋</div>
+                <div class="story-icon animated-icon" aria-hidden="true">🕋</div>
                 <h1 class="story-title" data-ar="ثقة النبي إبراهيم عليه السلام بالله">Prophet Ibrahim (peace be upon him) and His Trust in Allah</h1>
                 <p class="story-subtitle" data-ar="مغامرة تفاعلية">An Interactive Adventure</p>
             </div>
@@ -77,8 +77,8 @@
 
                 <!-- Scene 1: Introduction -->
                 <div class="story-scene interactive-scene" data-scene="1">
-                    <div class="scene-illustration">
-                        <span class="main-emoji animated-bounce">👶</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji animated-bounce" aria-hidden="true">👶</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-ar="مولود مميز">A Special Baby</h2>
@@ -103,11 +103,11 @@
 
                 <!-- Scene 2: The Stars -->
                 <div class="story-scene interactive-scene" data-scene="2">
-                    <div class="scene-illustration">
+                    <div class="scene-illustration" aria-hidden="true">
                         <div class="night-sky">
-                            <span class="twinkle-star" style="top: 10%; left: 20%;">⭐</span>
-                            <span class="twinkle-star" style="top: 30%; left: 60%;">⭐</span>
-                            <span class="twinkle-star" style="top: 20%; left: 80%;">⭐</span>
+                            <span class="twinkle-star" style="top: 10%; left: 20%;" aria-hidden="true">⭐</span>
+                            <span class="twinkle-star" style="top: 30%; left: 60%;" aria-hidden="true">⭐</span>
+                            <span class="twinkle-star" style="top: 20%; left: 80%;" aria-hidden="true">⭐</span>
                             <span class="moon-icon">🌙</span>
                         </div>
                     </div>
@@ -120,11 +120,11 @@
                             <p class="choice-question" data-ar="ماذا رأى إبراهيم بعد ذلك؟">What did Ibrahim see next?</p>
                             <div class="choice-options">
                                 <button class="choice-btn" data-answer="moon" data-correct="true" data-ar="<span class=&quot;choice-emoji&quot;>🌙</span> <span>القمر</span>">
-                                    <span class="choice-emoji">🌙</span>
+                                    <span class="choice-emoji" aria-hidden="true">🌙</span>
                                     <span>The Moon</span>
                                 </button>
                                 <button class="choice-btn" data-answer="clouds" data-correct="false" data-ar="<span class=&quot;choice-emoji&quot;>☁️</span> <span>الغيوم</span>">
-                                    <span class="choice-emoji">☁️</span>
+                                    <span class="choice-emoji" aria-hidden="true">☁️</span>
                                     <span>Clouds</span>
                                 </button>
                             </div>
@@ -136,8 +136,8 @@
 
                 <!-- Scene 3: The Moon -->
                 <div class="story-scene interactive-scene" data-scene="3">
-                    <div class="scene-illustration">
-                        <span class="main-emoji moon-glow">🌕</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji moon-glow" aria-hidden="true">🌕</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-ar="القمر الجميل">The Beautiful Moon</h2>
@@ -159,8 +159,8 @@
 
                 <!-- Scene 4: The Sun -->
                 <div class="story-scene interactive-scene" data-scene="4">
-                    <div class="scene-illustration">
-                        <span class="main-emoji sun-rays">☀️</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji sun-rays" aria-hidden="true">☀️</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-ar="الشمس العظيمة">The Mighty Sun</h2>
@@ -184,8 +184,8 @@
 
                 <!-- Scene 5: The Idols -->
                 <div class="story-scene interactive-scene" data-scene="5">
-                    <div class="scene-illustration">
-                        <span class="main-emoji">🗿</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji" aria-hidden="true">🗿</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-ar="التماثيل الحجرية">The Stone Statues</h2>
@@ -215,8 +215,8 @@
 
                 <!-- Scene 6: The Fire -->
                 <div class="story-scene interactive-scene" data-scene="6">
-                    <div class="scene-illustration fire-scene">
-                        <span class="main-emoji fire-animation">🔥</span>
+                    <div class="scene-illustration fire-scene" aria-hidden="true">
+                        <span class="main-emoji fire-animation" aria-hidden="true">🔥</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-ar="النار العظيمة">The Great Fire</h2>
@@ -237,8 +237,8 @@
 
                 <!-- Scene 7: The Miracle -->
                 <div class="story-scene interactive-scene" data-scene="7">
-                    <div class="scene-illustration">
-                        <span class="main-emoji miracle-glow">🌸</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji miracle-glow" aria-hidden="true">🌸</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-ar="معجزة الله المدهشة!">Allah's Amazing Miracle!</h2>
@@ -255,8 +255,8 @@
 
                 <!-- Scene 8: Building the Kaaba -->
                 <div class="story-scene interactive-scene" data-scene="8">
-                    <div class="scene-illustration">
-                        <span class="main-emoji kaaba-icon">🕋</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji kaaba-icon" aria-hidden="true">🕋</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-ar="بناء بيت الله">Building Allah's House</h2>
@@ -363,7 +363,7 @@
 
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
-                        <div class="results-icon">🎉</div>
+                        <div class="results-icon" aria-hidden="true">🎉</div>
                         <h2 data-ar="عمل رائع!">Amazing Job!</h2>
                         <p class="results-score" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٣ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 3 correct!</p>
                         <div class="final-stars">
@@ -377,8 +377,8 @@
             <div class="video-section hidden" id="videoSection">
                 <div class="video-unlock">
                     <div class="unlock-animation">
-                        <span class="unlock-lantern">🏮</span>
-                        <span class="unlock-stars">✨</span>
+                        <span class="unlock-lantern" aria-hidden="true">🏮</span>
+                        <span class="unlock-stars" aria-hidden="true">✨</span>
                     </div>
                     <h2 data-ar="🎬 فتحت الفيديو الإضافي!">🎬 Bonus Video Unlocked!</h2>
                     <p data-ar="شاهد هذه القصة الجميلة عن النبي إبراهيم!">Watch this beautiful story about Prophet Ibrahim!</p>

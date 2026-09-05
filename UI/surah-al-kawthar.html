@@ -15,17 +15,17 @@
 <body>
     <!-- Floating Decorations -->
     <div class="floating-decorations">
-        <span class="floating-star" style="top: 10%; left: 5%;">⭐</span>
-        <span class="floating-star" style="top: 20%; right: 10%;">✨</span>
-        <span class="floating-lantern" style="top: 40%; left: 8%;">🏮</span>
-        <span class="floating-star" style="top: 60%; right: 5%;">⭐</span>
+        <span class="floating-star" style="top: 10%; left: 5%;" aria-hidden="true">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;" aria-hidden="true">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;" aria-hidden="true">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;" aria-hidden="true">⭐</span>
     </div>
 
     <!-- Header -->
     <header>
         <nav class="navbar">
             <div class="logo">
-                <span class="crescent">☪</span>
+                <span class="crescent" aria-hidden="true">☪</span>
                 <span class="logo-text" data-ar="أطفال الإسلام">Islamic Kids</span>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
@@ -46,7 +46,7 @@
     <!-- Hero -->
     <section class="surah-hero">
         <div class="surah-hero-content">
-            <div class="surah-icon">🌊</div>
+            <div class="surah-icon" aria-hidden="true">🌊</div>
             <h1 data-ar="سورة الكوثر">Surah Al-Kawthar</h1>
             <p class="surah-subtitle" data-ar="الكوثر">The Abundance - الكوثر</p>
             <div class="surah-info" data-ar="<span class=&quot;info-badge&quot;>📿 ٣ آيات</span> <span class=&quot;info-badge&quot;>🕌 سورة مكية</span> <span class=&quot;info-badge&quot;>🏆 أقصر سورة</span>">
@@ -122,7 +122,7 @@
                         <p class="transliteration">Inna a'taynaka al-Kawthar</p>
                         <p class="translation" data-ar="&quot;إنا أعطيناك الكوثر&quot;">"Indeed, We have given you al-Kawthar (abundance)."</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="يقول الله: <em>إنا <strong>أعطينا</strong>ك</em> — أمر تم فعلاً، وهو لك! والكوثر يعني خيراً كثيراً لا تستطيع إحصاءه: القرآن، ونهر الجنة، ونعماً لا تخطر على بال.">Allah says: <em>We have <strong>given</strong> you</em> — already done, it is yours! Al-Kawthar means so much goodness you could never finish counting it: the Quran, the river in Jannah, and blessings beyond imagining.</p>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                         <p class="transliteration">Fasalli li Rabbika wanhar</p>
                         <p class="translation" data-ar="&quot;فصلِّ لربك وانحر&quot;">"So pray to your Lord and sacrifice."</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="لاحظ الفاء في <em>&quot;فصلِّ&quot;</em>! أعطاك الله الكثير، <strong>فـ</strong>اشكره. وكيف نشكر؟ بطريقتين: <strong>الصلاة</strong> لله، و<strong>العطاء</strong> للناس — كالأضحية التي تتقاسمها العائلات في عيد الأضحى.">Notice the word <em>"so"</em>! Allah gave you so much, <strong>so</strong> say thank you. And how do we say thank you? Two ways: <strong>pray</strong> to Allah, and <strong>give</strong> to others — like the sacrifice families share on Eid al-Adha.</p>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                         <p class="transliteration">Inna shani'aka huwal-abtar</p>
                         <p class="translation" data-ar="&quot;إن شانئك هو الأبتر&quot;">"Indeed, the one who hates you — he is the one cut off."</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="سمّى الرجل النبي ﷺ &quot;أبتر&quot; أي مقطوعاً منسياً. فأجاب الله: <strong>بل أنت الذي ستُنسى!</strong> واليوم يحب العالم كله النبي ﷺ ويذكره. والله يدافع دائماً عن أوليائه.">The man called the Prophet ﷺ "abtar" — cut off and forgotten. Allah answered: <strong>no, you are the one who will be forgotten!</strong> Today the whole world loves and remembers the Prophet ﷺ. Allah always defends those who are His.</p>
                         </div>
                     </div>
@@ -190,7 +190,7 @@
             <!-- Quiz -->
             <section class="quiz-section">
                 <div class="quiz-intro">
-                    <div class="quiz-icon">🎯</div>
+                    <div class="quiz-icon" aria-hidden="true">🎯</div>
                     <h2 data-ar="اختبر معلوماتك!">Test Your Knowledge!</h2>
                     <p data-ar="أجب عن هذه الأسئلة عن سورة الكوثر">Answer these questions about Surah Al-Kawthar</p>
                 </div>
@@ -245,7 +245,7 @@
 
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
-                        <div class="results-icon">🎉</div>
+                        <div class="results-icon" aria-hidden="true">🎉</div>
                         <h2 data-ar="ما شاء الله!">MashaAllah!</h2>
                         <p class="results-score" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٤ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
                         <p class="results-message" data-ar="ثلاث آيات صغيرة — جرّب أن تقرأها الآن عن ظهر قلب!">Three little verses — see if you can recite them by heart now!</p>
@@ -299,22 +299,22 @@
                 <h2 class="section-title" data-ar="💡 نصائح للحفظ">💡 Tips for Memorization</h2>
                 <div class="tips-grid">
                     <div class="tip-card">
-                        <div class="tip-icon">1️⃣</div>
+                        <div class="tip-icon" aria-hidden="true">1️⃣</div>
                         <h3 data-ar="ابدأ من هنا">Start Here</h3>
                         <p data-ar="إن كانت هذه أول سورة تحفظها بعد الفاتحة فقد اخترت أسهلها. عشر كلمات — تستطيع ذلك!">If this is your first surah after Al-Fatiha, you picked the easiest one. Ten words — you have got this!</p>
                     </div>
                     <div class="tip-card">
-                        <div class="tip-icon">📖</div>
+                        <div class="tip-icon" aria-hidden="true">📖</div>
                         <h3 data-ar="اعرف القصة">Know the Story</h3>
                         <p data-ar="تذكّر <em>لماذا</em> نزلت. فحين تعني لك السورة شيئاً، تثبت في ذاكرتك.">Remember <em>why</em> it came down. When a surah means something to you, it sticks.</p>
                     </div>
                     <div class="tip-card">
-                        <div class="tip-icon">🕌</div>
+                        <div class="tip-icon" aria-hidden="true">🕌</div>
                         <h3 data-ar="اقرأها في صلاتك">Use It in Salah</h3>
                         <p data-ar="اقرأها في صلواتك. استعمال السورة هو أسرع طريق لئلا تنساها أبداً.">Recite it in your prayers. Using a surah is the fastest way to never forget it.</p>
                     </div>
                     <div class="tip-card">
-                        <div class="tip-icon">🤲</div>
+                        <div class="tip-icon" aria-hidden="true">🤲</div>
                         <h3 data-ar="ادعُ الله">Make Dua</h3>
                         <p data-ar="اطلب من الله أن يعينك على حفظ كلامه وفهمه.">Ask Allah to help you memorize and understand His words.</p>
                     </div>

@@ -21,17 +21,17 @@
 <body>
     <!-- Floating Decorations -->
     <div class="floating-decorations">
-        <span class="floating-star" style="top: 10%; left: 5%;">⭐</span>
-        <span class="floating-star" style="top: 20%; right: 10%;">✨</span>
-        <span class="floating-lantern" style="top: 40%; left: 8%;">🏮</span>
-        <span class="floating-star" style="top: 60%; right: 5%;">⭐</span>
+        <span class="floating-star" style="top: 10%; left: 5%;" aria-hidden="true">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;" aria-hidden="true">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;" aria-hidden="true">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;" aria-hidden="true">⭐</span>
     </div>
 
     <!-- Header -->
     <header>
         <nav class="navbar">
             <div class="logo">
-                <span class="crescent">☪</span>
+                <span class="crescent" aria-hidden="true">☪</span>
                 <span class="logo-text" data-ar="أطفال الإسلام">Islamic Kids</span>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
@@ -52,7 +52,7 @@
 
     <!-- Stars Counter -->
     <div class="stars-counter" id="starsCounter">
-        <span class="star-icon">⭐</span>
+        <span class="star-icon" aria-hidden="true">⭐</span>
         <span class="star-count" id="starCount">0</span>
     </div>
 
@@ -67,7 +67,7 @@
 
             <!-- Story Header -->
             <div class="story-header">
-                <div class="story-icon animated-icon">🌍</div>
+                <div class="story-icon animated-icon" aria-hidden="true">🌍</div>
                 <h1 class="story-title" data-i18n="storyTitle">Prophet Adam (peace be upon him) - The First Human</h1>
                 <p class="story-subtitle" data-i18n="storySubtitle">An Interactive Adventure</p>
             </div>
@@ -83,8 +83,8 @@
 
                 <!-- Scene 1: Creation -->
                 <div class="story-scene interactive-scene" data-scene="1">
-                    <div class="scene-illustration">
-                        <span class="main-emoji animated-bounce">🏺</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji animated-bounce" aria-hidden="true">🏺</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene1Title">A Special Creation</h2>
@@ -109,7 +109,7 @@
 
                 <!-- Scene 2: The Soul -->
                 <div class="story-scene interactive-scene" data-scene="2">
-                    <div class="scene-illustration">
+                    <div class="scene-illustration" aria-hidden="true">
                         <div class="creation-animation">
                             <span class="clay-figure">🧍</span>
                             <span class="soul-sparkle">✨</span>
@@ -124,11 +124,11 @@
                             <p class="choice-question" data-i18n="scene2Question">What was the first thing Adam said?</p>
                             <div class="choice-options">
                                 <button class="choice-btn" data-answer="alhamdulillah" data-correct="true">
-                                    <span class="choice-emoji">🤲</span>
+                                    <span class="choice-emoji" aria-hidden="true">🤲</span>
                                     <span data-i18n="scene2AnswerCorrect">Alhamdulillah</span>
                                 </button>
                                 <button class="choice-btn" data-answer="hello" data-correct="false">
-                                    <span class="choice-emoji">👋</span>
+                                    <span class="choice-emoji" aria-hidden="true">👋</span>
                                     <span data-i18n="scene2AnswerWrong">Hello</span>
                                 </button>
                             </div>
@@ -140,8 +140,8 @@
 
                 <!-- Scene 3: Angels Prostrate -->
                 <div class="story-scene interactive-scene" data-scene="3">
-                    <div class="scene-illustration">
-                        <span class="main-emoji angel-glow">👼</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji angel-glow" aria-hidden="true">👼</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene3Title">The Angels Bow Down</h2>
@@ -163,8 +163,8 @@
 
                 <!-- Scene 4: Iblis Refuses -->
                 <div class="story-scene interactive-scene" data-scene="4">
-                    <div class="scene-illustration">
-                        <span class="main-emoji">😠</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji" aria-hidden="true">😠</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene4Title">One Who Refused</h2>
@@ -186,8 +186,8 @@
 
                 <!-- Scene 5: Knowledge -->
                 <div class="story-scene interactive-scene" data-scene="5">
-                    <div class="scene-illustration">
-                        <span class="main-emoji book-glow">📚</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji book-glow" aria-hidden="true">📚</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene5Title">Adam Learns Names</h2>
@@ -220,8 +220,8 @@
 
                 <!-- Scene 6: Hawa -->
                 <div class="story-scene interactive-scene" data-scene="6">
-                    <div class="scene-illustration">
-                        <span class="main-emoji love-glow">👫</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji love-glow" aria-hidden="true">👫</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene6Title">A Companion for Adam</h2>
@@ -248,8 +248,8 @@
 
                 <!-- Scene 7: The Forbidden Tree -->
                 <div class="story-scene interactive-scene" data-scene="7">
-                    <div class="scene-illustration">
-                        <span class="main-emoji tree-forbidden">🌲</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji tree-forbidden" aria-hidden="true">🌲</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene7Title">One Rule</h2>
@@ -259,11 +259,11 @@
                             <p class="choice-question" data-i18n="scene7Question">Why do you think Allah gave them this rule?</p>
                             <div class="choice-options">
                                 <button class="choice-btn" data-answer="test" data-correct="true">
-                                    <span class="choice-emoji">📝</span>
+                                    <span class="choice-emoji" aria-hidden="true">📝</span>
                                     <span data-i18n="scene7AnswerCorrect">To test their obedience</span>
                                 </button>
                                 <button class="choice-btn" data-answer="mean" data-correct="false">
-                                    <span class="choice-emoji">😢</span>
+                                    <span class="choice-emoji" aria-hidden="true">😢</span>
                                     <span data-i18n="scene7AnswerWrong">To be mean</span>
                                 </button>
                             </div>
@@ -275,8 +275,8 @@
 
                 <!-- Scene 8: The Mistake -->
                 <div class="story-scene interactive-scene" data-scene="8">
-                    <div class="scene-illustration">
-                        <span class="main-emoji sad-emoji">😢</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji sad-emoji" aria-hidden="true">😢</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene8Title">A Mistake</h2>
@@ -302,8 +302,8 @@
 
                 <!-- Scene 9: Repentance -->
                 <div class="story-scene interactive-scene" data-scene="9">
-                    <div class="scene-illustration">
-                        <span class="main-emoji prayer-glow">🤲</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji prayer-glow" aria-hidden="true">🤲</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene9Title">Asking for Forgiveness</h2>
@@ -321,8 +321,8 @@
 
                 <!-- Scene 10: Life on Earth -->
                 <div class="story-scene interactive-scene" data-scene="10">
-                    <div class="scene-illustration">
-                        <span class="main-emoji earth-spin">🌍</span>
+                    <div class="scene-illustration" aria-hidden="true">
+                        <span class="main-emoji earth-spin" aria-hidden="true">🌍</span>
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene10Title">A New Home on Earth</h2>
@@ -429,7 +429,7 @@
 
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
-                        <div class="results-icon">🎉</div>
+                        <div class="results-icon" aria-hidden="true">🎉</div>
                         <h2 data-i18n="resultsTitle">Amazing Job!</h2>
                         <p class="results-score"><span data-i18n-template="resultsScore" data-score="0" data-total="3" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٣ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 3 correct!</span></p>
                         <div class="final-stars">
@@ -443,8 +443,8 @@
             <div class="video-section hidden" id="videoSection">
                 <div class="video-unlock">
                     <div class="unlock-animation">
-                        <span class="unlock-lantern">🏮</span>
-                        <span class="unlock-stars">✨</span>
+                        <span class="unlock-lantern" aria-hidden="true">🏮</span>
+                        <span class="unlock-stars" aria-hidden="true">✨</span>
                     </div>
                     <h2>🎬 <span data-i18n="videoUnlock">Bonus Video Unlocked!</span></h2>
                     <p data-i18n="videoSubtitle">Watch this beautiful story about Prophet Adam!</p>

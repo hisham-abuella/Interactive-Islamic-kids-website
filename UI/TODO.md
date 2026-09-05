@@ -111,12 +111,14 @@ the same answer in both languages throughout. Fixed in that pass:
       at 82×44 in-browser). Fixed 2026-09-03.
 - [x] ~~Fullscreen button had `title` but no `aria-label`~~ — now labelled, and translated via a
       new `fullscreenToggle` key. Fixed 2026-09-03.
-- [ ] No `aria-hidden` anywhere — decorative emoji in headings are announced as content.
+
 - [x] ~~Two `<h1>`s per page~~ — the site wordmark is now a `<span class="logo-text">` on all 19
       pages, so each page has exactly one `<h1>`, its own title. Fixed 2026-09-03.
 - [x] ~~`prefers-reduced-motion` missed the scroll-reveal opacity~~ — now part of the guard above.
       Fixed 2026-09-03.
-- [ ] No `aria-hidden` on decorative emoji — still open (see below).
+- [x] ~~No `aria-hidden` anywhere~~ — 344 ornamental elements silenced across all 19 pages
+      (floating stars, crescent, section icons, scene illustrations). `verse-number` and
+      `fact-number` were deliberately left announced: they carry real information. Fixed 2026-09-04.
 
 **Frontend**
 - [x] ~~**325 hardcoded hex values** across the four page-type sheets~~ — 303 tokenised
@@ -149,11 +151,13 @@ the same answer in both languages throughout. Fixed in that pass:
       visible titles, in both languages. All five story pages are consistent. Fixed 2026-09-04.
 
 **Read-aloud**
-- [ ] Rewrite the sentences that trip a parent reading aloud — `surah-fatiha.html:194` and
-      `surah-al-maun.html:90-91` stack em-dash and colon asides that must be pre-read. Suggested
-      rewrites are in `claudeteam/log_chat/ceo.log`.
-- [ ] `ayat-al-kursi.html:99` presents the "protection until death" hadith with full certainty
-      though it is scholarly disputed. Consider a soft footnote.
+- [x] ~~Rewrite the sentences that trip a parent reading aloud~~ — Al-Fatiha's verse 7
+      explanation is now four short sentences, and Al-Maun's rhetorical aside became a real
+      **"Ask your child:"** prompt with a line break — the first instance of the parent
+      affordance below. Fixed 2026-09-04.
+- [x] ~~`ayat-al-kursi.html` presented a scholarly-disputed hadith with full certainty~~ — now
+      "It is also reported that…" with a one-line note that scholars differ, in both languages.
+      Fixed 2026-09-04.
 
 ---
 

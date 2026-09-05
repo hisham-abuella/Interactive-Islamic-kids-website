@@ -15,17 +15,17 @@
 <body>
     <!-- Floating Decorations -->
     <div class="floating-decorations">
-        <span class="floating-star" style="top: 10%; left: 5%;">⭐</span>
-        <span class="floating-star" style="top: 20%; right: 10%;">✨</span>
-        <span class="floating-lantern" style="top: 40%; left: 8%;">🏮</span>
-        <span class="floating-star" style="top: 60%; right: 5%;">⭐</span>
+        <span class="floating-star" style="top: 10%; left: 5%;" aria-hidden="true">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;" aria-hidden="true">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;" aria-hidden="true">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;" aria-hidden="true">⭐</span>
     </div>
 
     <!-- Header -->
     <header>
         <nav class="navbar">
             <div class="logo">
-                <span class="crescent">☪</span>
+                <span class="crescent" aria-hidden="true">☪</span>
                 <span class="logo-text" data-ar="أطفال الإسلام">Islamic Kids</span>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
@@ -46,7 +46,7 @@
     <!-- Hero -->
     <section class="surah-hero">
         <div class="surah-hero-content">
-            <div class="surah-icon">💎</div>
+            <div class="surah-icon" aria-hidden="true">💎</div>
             <h1 data-ar="سورة الإخلاص">Surah Al-Ikhlas</h1>
             <p class="surah-subtitle" data-ar="الإخلاص">The Sincerity / The Oneness of Allah - الإخلاص</p>
             <div class="surah-info" data-ar="<span class=&quot;info-badge&quot;>📿 ٤ آيات</span> <span class=&quot;info-badge&quot;>🕌 سورة مكية</span> <span class=&quot;info-badge&quot;>✨ تعدل ثلث القرآن</span>">
@@ -122,7 +122,7 @@
                         <p class="transliteration">Qul Huwa Allahu Ahad</p>
                         <p class="translation" data-ar="&quot;قل هو الله أحد&quot;">"Say: He is Allah, the One."</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="يأمر الله نبيه ﷺ أن <em>يقولها بصوت واضح</em>: الله <strong>واحد</strong>! لا إله إلا هو خلق كل شيء. ليس له شريك ولا نظير.">Allah tells the Prophet ﷺ to <em>say it out loud</em>: Allah is <strong>One</strong>! There is only one God who made everything. He has no partner and no equal.</p>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                         <p class="transliteration">Allahus-Samad</p>
                         <p class="translation" data-ar="&quot;الله الصمد&quot;">"Allah, the Eternal Refuge."</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="<em>الصمد</em> هو الذي يقصده الجميع ويعتمدون عليه. أنت تحتاج إلى الطعام والماء وأهلك — لكن <strong>الله لا يحتاج من أحد شيئاً</strong>. والكل يحتاج إليه!"><em>As-Samad</em> means the One that everybody turns to and depends on. You need food, water, and your family — but <strong>Allah needs nothing from anyone</strong>. Everyone needs Him!</p>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                         <p class="transliteration">Lam yalid wa lam yoolad</p>
                         <p class="translation" data-ar="&quot;لم يلد ولم يولد&quot;">"He does not give birth, nor was He born."</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="لكل إنسان أب وأم. أما الله فـ<strong>لا ولد له ولا والد</strong>. كان قبل كل شيء، وسيبقى إلى الأبد.">Every person has a mum and a dad. But Allah has <strong>no children and no parents</strong>. He was always here, before everything, and He will always be here.</p>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                         <p class="transliteration">Wa lam yakul-lahu kufuwan ahad</p>
                         <p class="translation" data-ar="&quot;ولم يكن له كفواً أحد&quot;">"And there is none comparable to Him."</p>
                         <div class="verse-explanation">
-                            <span class="explanation-icon">💡</span>
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
                             <p data-ar="لا شيء في الكون كله يشبه الله — لا الشمس، ولا أكبر جبل، ولا أي شيء يخطر ببالك. <strong>الله ليس كمثله شيء!</strong>">Nothing in the whole universe is like Allah — not the sun, not the biggest mountain, not anything you can picture in your mind. <strong>Allah is one of a kind!</strong></p>
                         </div>
                     </div>
@@ -204,7 +204,7 @@
             <!-- Quiz -->
             <section class="quiz-section">
                 <div class="quiz-intro">
-                    <div class="quiz-icon">🎯</div>
+                    <div class="quiz-icon" aria-hidden="true">🎯</div>
                     <h2 data-ar="اختبر معلوماتك!">Test Your Knowledge!</h2>
                     <p data-ar="أجب عن هذه الأسئلة عن سورة الإخلاص">Answer these questions about Surah Al-Ikhlas</p>
                 </div>
@@ -259,7 +259,7 @@
 
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
-                        <div class="results-icon">🎉</div>
+                        <div class="results-icon" aria-hidden="true">🎉</div>
                         <h2 data-ar="ما شاء الله!">MashaAllah!</h2>
                         <p class="results-score" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٤ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
                         <p class="results-message" data-ar="جرّب قراءة سورة الإخلاص ثلاث مرات قبل نومك!">Try reciting Surah Al-Ikhlas three times before you sleep!</p>
@@ -312,22 +312,22 @@
                 <h2 class="section-title" data-ar="💡 نصائح للحفظ">💡 Tips for Memorization</h2>
                 <div class="tips-grid">
                     <div class="tip-card">
-                        <div class="tip-icon">4️⃣</div>
+                        <div class="tip-icon" aria-hidden="true">4️⃣</div>
                         <h3 data-ar="أربع آيات فقط">Only Four Lines</h3>
                         <p data-ar="احفظ آية كل يوم وستعرف السورة كلها قبل نهاية الأسبوع!">Learn one verse a day and you will know the whole surah by the end of the week!</p>
                     </div>
                     <div class="tip-card">
-                        <div class="tip-icon">🕌</div>
+                        <div class="tip-icon" aria-hidden="true">🕌</div>
                         <h3 data-ar="اقرأها في صلاتك">Use It in Salah</h3>
                         <p data-ar="اقرأها في صلواتك. استعمال السورة هو أسرع طريق لئلا تنساها أبداً.">Recite it in your prayers. Using a surah is the fastest way to never forget it.</p>
                     </div>
                     <div class="tip-card">
-                        <div class="tip-icon">3️⃣</div>
+                        <div class="tip-icon" aria-hidden="true">3️⃣</div>
                         <h3 data-ar="قلها ثلاث مرات">Say It Three Times</h3>
                         <p data-ar="ثلاث مرات قبل النوم كل ليلة — حماية وتدريب في الوقت نفسه.">Three times before bed, every night — protection and practice at the same time.</p>
                     </div>
                     <div class="tip-card">
-                        <div class="tip-icon">🤲</div>
+                        <div class="tip-icon" aria-hidden="true">🤲</div>
                         <h3 data-ar="ادعُ الله">Make Dua</h3>
                         <p data-ar="اطلب من الله أن يعينك على حفظ كلامه وفهمه.">Ask Allah to help you memorize and understand His words.</p>
                     </div>
