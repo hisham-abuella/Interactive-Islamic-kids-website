@@ -120,9 +120,7 @@
 
 ## Pending Audio Generation
 - [x] prophet-musa (EN + AR) - generated 2026-09-05
-- [ ] All surah pages (fatiha, ayat-al-kursi, al-ikhlas, al-falaq, an-nas, al-kawthar,
-      al-asr, an-nasr, al-kafirun, al-maun, quraysh) - no narration system on surah
-      pages yet
+- [x] All 12 surah pages - per-verse narration generated 2026-09-05 (EN + AR, 122 files)
 
 ---
 

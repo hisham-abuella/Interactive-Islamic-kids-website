@@ -191,16 +191,15 @@ See `plan.md` for the full list. Immediate:
       none of it helped him because of what he chose. The fire is stated once, as the Quran states
       it, without dwelling. Arabic verified verse-by-verse against alquran.cloud; embed checked
       live; chain and hub updated (Quraysh → Al-Masad → Ayat al-Kursi).
-- [ ] **Narration for surah pages.** Two things block it, measured 2026-09-05:
-      1. **The playback system does not exist there.** Narration is slide-indexed and lives on
-         story pages; surah pages are scroll pages with no `AudioNarration.init()` and no slide
-         model. A per-section or per-verse model needs building first.
-      2. **Quota.** Narrating all 12 surah pages in both languages is **79,323 characters**
-         (66,692 EN + 12,631 AR). The ElevenLabs cycle had **24,402 left** and resets **17 Sept**,
-         so it does not fit — English alone does not fit either. Cheapest-first, 4 of 12 pages
-         would fit today.
-      *Options:* wait for the reset and do it in one pass; do a chosen subset now (Al-Fatiha and
-      the three Quls are the ones a child recites most); or English first, Arabic after the reset.
+- [x] ~~**Narration for surah pages.**~~ Built and generated 2026-09-05.
+      Story pages are slide-based, so a scroll page needed a different unit: **the verse**. Each
+      verse card has its own Listen button, plus one control that reads the whole surah verse by
+      verse. The spoken text is taken from the page itself — the translation and the explanation
+      beside it — so narration cannot drift out of sync with what is written, and it falls back to
+      the browser's own speech synthesis wherever a file is missing.
+      **All 12 surahs, both languages: 122 files** (61 EN + 61 AR).
+      My earlier "79,323 characters, does not fit" estimate was wrong — it costed narrating whole
+      pages. Per-verse is 23,682, and the actual charge was lower still.
 
 - [ ] Phase 3 surahs: Al-Fil, Al-Humazah, At-Takathur, and the rest of Juz Amma.
 - [ ] Phase 1 stories: Prophet Isa, Prophet Muhammad ﷺ.

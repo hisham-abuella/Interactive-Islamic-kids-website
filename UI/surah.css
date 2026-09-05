@@ -997,3 +997,60 @@ html[lang="ar"] .parent-note {
 .parent-note strong {
     color: var(--cobalt-deep);
 }
+
+
+/* ============================================
+   Per-verse listen controls
+   ============================================ */
+
+.verse-listen {
+    display: inline-block;
+    margin-top: 0.85rem;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--turquoise-deep);
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-full);
+    padding: 0.45rem 1.1rem;
+    min-height: 40px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.verse-listen:hover {
+    background: var(--gold-wash);
+    color: var(--gold-ink);
+}
+
+.verse-listen[aria-pressed="true"] {
+    background: var(--turquoise);
+    border-color: var(--turquoise-deep);
+    color: #fff;
+}
+
+.verse-listen:focus-visible,
+.surah-listen-all:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+}
+
+.surah-listen-all {
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #fff;
+    background: var(--turquoise);
+    border: 1px solid var(--turquoise-deep);
+    border-radius: var(--radius-full);
+    padding: 0.5rem 1.2rem;
+    min-height: 44px;
+    cursor: pointer;
+}
+
+.surah-listen-all[aria-pressed="true"] {
+    background: var(--gold);
+    border-color: var(--gold-light);
+    color: var(--ink);
+}
