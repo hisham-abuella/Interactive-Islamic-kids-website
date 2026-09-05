@@ -1012,16 +1012,21 @@ html[lang="ar"] h3 {
 
 /* Safety net: any prose that has no Arabic yet keeps reading left-to-right
    in Arabic mode, so a half-translated page degrades gracefully instead of
-   right-aligning English sentences. Remove a rule here once its page is done. */
-html[lang="ar"] .surah-container p:not([data-ar]),
+   right-aligning English sentences. Remove a rule here once its page is done.
+
+   IMPORTANT: Quranic text is never translated, so it carries no data-ar and
+   this net would otherwise sweep it up and force the scripture left-to-right.
+   .arabic, .arabic-full, .arabic-large, .quran-text and .transliteration are
+   excluded for that reason. Arabic must never render LTR. */
+html[lang="ar"] .surah-container p:not([data-ar]):not(.arabic):not(.arabic-full):not(.arabic-large):not(.transliteration),
 html[lang="ar"] .surah-container li:not([data-ar]),
 html[lang="ar"] .surah-container h2:not([data-ar]),
 html[lang="ar"] .surah-container h3:not([data-ar]),
-html[lang="ar"] .story-container p:not([data-ar]),
+html[lang="ar"] .story-container p:not([data-ar]):not(.arabic):not(.quran-text):not(.transliteration),
 html[lang="ar"] .story-container li:not([data-ar]),
 html[lang="ar"] .story-container h2:not([data-ar]),
 html[lang="ar"] .story-container h3:not([data-ar]),
-html[lang="ar"] .story-scene p:not([data-ar]),
+html[lang="ar"] .story-scene p:not([data-ar]):not(.arabic):not(.quran-text),
 html[lang="ar"] .story-scene h2:not([data-ar]),
 html[lang="ar"] .quiz-question:not([data-ar]),
 html[lang="ar"] .quiz-option:not([data-ar]),
@@ -1030,6 +1035,18 @@ html[lang="ar"] .surah-subtitle:not([data-ar]),
 html[lang="ar"] .info-badge:not([data-ar]) {
     direction: ltr;
     text-align: left;
+}
+
+/* Belt and braces: whatever else changes, scripture reads right-to-left. */
+html[lang="ar"] .arabic,
+html[lang="ar"] .arabic-full,
+html[lang="ar"] .arabic-large,
+html[lang="ar"] .quran-text,
+.arabic,
+.arabic-full,
+.arabic-large,
+.quran-text {
+    direction: rtl;
 }
 
 html[lang="ar"] .surah-hero-content h1:not([data-ar]),

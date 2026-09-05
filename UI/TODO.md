@@ -203,6 +203,20 @@ Carried over from the previous version of this file. Completed items are kept fo
 
 ---
 
+## Regressions caught after shipping
+
+- **2026-09-05 — the LTR safety net forced Quranic text left-to-right in Arabic mode.**
+  The net added on 2026-09-03 targeted `p:not([data-ar])` so untranslated English would not be
+  right-aligned. Quranic verses carry no `data-ar` *by design* — scripture is not translated — so
+  they matched it, and `.arabic` / `.arabic-full` / `.arabic-large` computed to
+  `direction: ltr; text-align: left` whenever the page was in Arabic. The sacred text was being
+  rendered in the wrong reading direction on all 11 Quran pages.
+  Fixed by excluding the scripture classes from the net and pinning them to `direction: rtl`
+  unconditionally. Verified: verse, complete-surah and bismillah all compute `rtl` in **both**
+  languages now, identical in each.
+  *Lesson: `:not([data-ar])` is not a safe proxy for "untranslated" — some content is deliberately
+  never translated. Any future rule keyed on the absence of `data-ar` must exclude scripture.*
+
 ## Known false positives — do not re-chase
 
 Each of these was reported by a checker and disproved on inspection. Recorded so the next pass does
