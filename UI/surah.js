@@ -3,7 +3,55 @@
 document.addEventListener('DOMContentLoaded', function() {
     initializeQuiz();
     initializeAnimations();
+    initStagePicker();
 });
+
+// --- Training wheels -------------------------------------------------
+// Read shows everything, Practice drops the transliteration, Recite leaves
+// only the Arabic with the meaning one tap away. Remembered per surah, so a
+// child who has moved on does not land back on Read every night.
+function initStagePicker() {
+    var section = document.querySelector('.verses-section');
+    var picker = document.querySelector('.stage-picker');
+    if (!section || !picker) return;
+
+    var key = 'ik-stage-' + (location.pathname.split('/').pop() || 'surah');
+
+    // A reveal button per verse, for Recite stage
+    document.querySelectorAll('.verse-card .verse-content').forEach(function (content) {
+        if (content.querySelector('.verse-reveal')) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'verse-reveal';
+        btn.textContent = 'Show meaning';
+        btn.setAttribute('data-ar', 'أظهر المعنى');
+        btn.addEventListener('click', function () {
+            content.closest('.verse-card').classList.add('revealed');
+        });
+        content.appendChild(btn);
+    });
+
+    function apply(stage) {
+        section.setAttribute('data-stage', stage);
+        picker.querySelectorAll('.stage-btn').forEach(function (b) {
+            b.setAttribute('aria-pressed', String(b.getAttribute('data-stage') === stage));
+        });
+        document.querySelectorAll('.verse-card').forEach(function (c) {
+            c.classList.remove('revealed');
+        });
+        try { localStorage.setItem(key, stage); } catch (e) {}
+    }
+
+    picker.querySelectorAll('.stage-btn').forEach(function (b) {
+        b.addEventListener('click', function () {
+            apply(b.getAttribute('data-stage'));
+        });
+    });
+
+    var saved = 'read';
+    try { saved = localStorage.getItem(key) || 'read'; } catch (e) {}
+    apply(saved);
+}
 
 // Quiz functionality
 let score = 0;

@@ -96,10 +96,12 @@ the same answer in both languages throughout. Fixed in that pass:
 ## P1 — soon
 
 **Learning**
-- [ ] **Staged memorization ("training wheels").** Every verse card always shows Arabic +
-      transliteration + translation + explanation, so a child reads the transliteration instead of
-      the Arabic. Add a three-stage toggle — Read / Practice (hide transliteration) / Recite
-      (Arabic only, reveal on tap) — persisted per surah in `localStorage`.
+- [x] ~~**Staged memorization ("training wheels")**~~ — built 2026-09-05 on all 11 Quran pages.
+      **Read** shows everything, **Practice** drops the transliteration, **Recite** leaves only the
+      Arabic with the meaning one tap away. The stage is remembered per surah, so a child who has
+      moved on does not land back on Read every night. Verified each stage in a browser.
+      Note: in Arabic mode Read and Practice look the same, because transliteration is already
+      hidden there by design — an Arabic reader does not need it.
 - [ ] **Progress state on the Quran hub.** `quran.html` is 11 structurally identical cards with no
       progress, heading past 30. The Adam page already has a star/progress/unlock system to copy.
 - [ ] **Ayat al-Kursi sits at position 2** but is the longest page on the site (767 words vs 493

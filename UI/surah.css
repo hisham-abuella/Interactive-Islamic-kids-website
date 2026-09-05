@@ -843,3 +843,120 @@
 .hadith.scholar-quote {
     /* inherits .hadith presentation; the class is a semantic label */
 }
+
+
+/* ============================================
+   Training wheels: Read -> Practice -> Recite
+   A child who always sees the transliteration reads the transliteration.
+   Each stage removes one prop, so the Arabic is the last thing standing.
+   ============================================ */
+
+.stage-picker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem 1rem;
+    margin: 0 0 2rem;
+    padding: 1rem 1.25rem;
+    background: var(--gold-wash);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-full);
+}
+
+.stage-label {
+    font-weight: 700;
+    color: var(--gold-ink);
+    font-size: 0.95rem;
+}
+
+.stage-buttons {
+    display: flex;
+    gap: 0.35rem;
+    background: var(--card);
+    padding: 0.3rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--rule);
+}
+
+.stage-btn {
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--slate-700);
+    padding: 0.5rem 1.15rem;
+    min-height: 44px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.stage-btn:hover {
+    color: var(--turquoise-deep);
+}
+
+.stage-btn[aria-pressed="true"] {
+    background: var(--turquoise);
+    color: #fff;
+}
+
+.stage-btn:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+}
+
+/* Practice: the transliteration crutch comes away. */
+.verses-section[data-stage="practice"] .transliteration,
+.verses-section[data-stage="recite"] .transliteration {
+    display: none;
+}
+
+/* Recite: only the Arabic is left, with the meaning one tap away. */
+.verses-section[data-stage="recite"] .translation,
+.verses-section[data-stage="recite"] .verse-explanation {
+    display: none;
+}
+
+.verse-reveal {
+    display: none;
+    margin-top: 0.75rem;
+    border: 1px dashed var(--rule-strong);
+    background: none;
+    color: var(--gold-ink);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.5rem 1.1rem;
+    min-height: 44px;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+}
+
+.verses-section[data-stage="recite"] .verse-reveal {
+    display: inline-block;
+}
+
+.verse-card.revealed .translation {
+    display: block !important;
+}
+
+.verse-card.revealed .verse-reveal {
+    display: none;
+}
+
+.verse-reveal:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+}
+
+@media (max-width: 560px) {
+    .stage-picker {
+        border-radius: var(--radius-lg);
+    }
+    .stage-btn {
+        padding: 0.5rem 0.85rem;
+        font-size: 0.9rem;
+    }
+}
