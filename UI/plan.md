@@ -21,6 +21,7 @@
 - [x] Surah Al-Kafirun (109) (no voice narration yet)
 - [x] Surah Al-Maun (107) (no voice narration yet)
 - [x] Surah Quraysh (106) (no voice narration yet)
+- [x] Surah Al-Masad (111) (no voice narration yet)
 
 ---
 
@@ -56,7 +57,7 @@
 
 ### Phase 2 - Short & Essential
 - [x] Surah An-Nasr (110) - 3 verses - Divine Support
-- [ ] Surah Al-Masad (111) - 5 verses - The Palm Fiber
+- [x] Surah Al-Masad (111) - 5 verses - The Palm Fiber
 - [x] Surah Al-Kafirun (109) - 6 verses - The Disbelievers
 - [x] Surah Al-Maun (107) - 7 verses - Small Kindnesses
 - [x] Surah Quraysh (106) - 4 verses - The Quraysh

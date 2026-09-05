@@ -186,8 +186,11 @@ See `plan.md` for the full list. Immediate:
       recommendations and tracking but stops neither deletion nor ads.
       **Meanwhile:** re-check all 16 embeds every review pass — they rot without warning.
 
-- [ ] **Surah Al-Masad (111)** — the last Phase 2 surah, deliberately deferred: it centres on a
-      curse against Abu Lahab and his wife and needs gentler framing for a young child.
+- [x] ~~**Surah Al-Masad (111)**~~ — built 2026-09-05, completing Phase 2. Framed around
+      *choice* rather than punishment: Abu Lahab had wealth and was the Prophet's own uncle, and
+      none of it helped him because of what he chose. The fire is stated once, as the Quran states
+      it, without dwelling. Arabic verified verse-by-verse against alquran.cloud; embed checked
+      live; chain and hub updated (Quraysh → Al-Masad → Ayat al-Kursi).
 - [ ] **Narration for surah pages.** The feature does not exist there at all. Now more feasible
       since Arabic text exists — needs EN/AR scripts, `surah-<id>` keys in both script stores,
       ElevenLabs generation, and `init()` calls. The pipeline itself needs no changes.
