@@ -9,6 +9,7 @@ const AudioNarration = {
     currentSlide: -1,
     storyId: null,
     autoPlayEnabled: true,
+    autoAdvanceEnabled: false,
     usePreGeneratedAudio: true, // Set to true when audio files are available
 
     // Audio directory path
@@ -72,7 +73,17 @@ const AudioNarration = {
         controlBar.appendChild(progressContainer);
         controlBar.appendChild(timeDisplay);
         controlBar.appendChild(autoPlayToggle);
+        // A child too young to read should not have to tap to turn the page.
+        const advanceBtn = document.createElement('button');
+        advanceBtn.className = 'narration-btn advance-btn';
+        advanceBtn.id = 'autoAdvanceBtn';
+        advanceBtn.type = 'button';
+        advanceBtn.textContent = '⏭';
+        advanceBtn.setAttribute('aria-pressed', 'false');
+        advanceBtn.title = 'Auto-turn: off';
+
         controlBar.appendChild(speedBtn);
+        controlBar.appendChild(advanceBtn);
 
         // Insert after slide navigation
         const slideNav = document.getElementById('slideNavigation');
@@ -171,6 +182,16 @@ const AudioNarration = {
 
             .narration-btn.auto-play-btn.active {
                 background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
+            }
+
+            .narration-btn.advance-btn {
+                background: rgba(255, 255, 255, 0.16);
+                font-size: 1rem;
+            }
+
+            .narration-btn.advance-btn.active {
+                background: var(--gold, #C08A2E);
+                color: #14383A;
             }
 
             .narration-btn.speed-btn {
@@ -307,6 +328,19 @@ const AudioNarration = {
                 self.seekTo(e);
             });
         }
+
+        // Auto-advance control
+        var advBtn = document.getElementById('autoAdvanceBtn');
+        if (advBtn) {
+            advBtn.addEventListener('click', function () { self.toggleAutoAdvance(); });
+        }
+        try {
+            self.autoAdvanceEnabled = localStorage.getItem('islamicKidsAutoAdvance') === 'on';
+        } catch (e) {}
+        self.updateAutoAdvanceButton();
+        document.addEventListener('languageChanged', function () {
+            self.updateAutoAdvanceButton();
+        });
 
         // Listen for slide changes
         document.addEventListener('slideChanged', function(e) {
@@ -509,6 +543,9 @@ const AudioNarration = {
 
     // Stop playback
     stop: function() {
+        if (this.advanceTimer) {
+            clearTimeout(this.advanceTimer);
+        }
         if (this.currentAudio) {
             this.currentAudio.pause();
             this.currentAudio.currentTime = 0;
@@ -541,6 +578,43 @@ const AudioNarration = {
         if (progressBar) {
             progressBar.style.width = '0%';
         }
+
+        // Auto-advance: for a child too young to read, the story should turn
+        // its own page when the narration for this one finishes. A short pause
+        // first, so the last sentence is not clipped by the next one starting.
+        if (this.autoAdvanceEnabled && window.StorySlides && !window.StorySlides.isLast()) {
+            var self = this;
+            this.advanceTimer = setTimeout(function () {
+                if (self.autoAdvanceEnabled) {
+                    window.StorySlides.next();
+                }
+            }, 1200);
+        }
+    },
+
+    // Turn auto-advance on or off
+    toggleAutoAdvance: function () {
+        this.autoAdvanceEnabled = !this.autoAdvanceEnabled;
+        if (!this.autoAdvanceEnabled && this.advanceTimer) {
+            clearTimeout(this.advanceTimer);
+        }
+        try {
+            localStorage.setItem('islamicKidsAutoAdvance', this.autoAdvanceEnabled ? 'on' : 'off');
+        } catch (e) {}
+        this.updateAutoAdvanceButton();
+    },
+
+    updateAutoAdvanceButton: function () {
+        var btn = document.getElementById('autoAdvanceBtn');
+        if (!btn) return;
+        var on = this.autoAdvanceEnabled;
+        btn.setAttribute('aria-pressed', String(on));
+        btn.classList.toggle('active', on);
+        var label = document.documentElement.lang === 'ar'
+            ? (on ? 'التقليب التلقائي: يعمل' : 'التقليب التلقائي: متوقف')
+            : (on ? 'Auto-turn: on' : 'Auto-turn: off');
+        btn.title = label;
+        btn.setAttribute('aria-label', label);
     },
 
     // Toggle auto-play

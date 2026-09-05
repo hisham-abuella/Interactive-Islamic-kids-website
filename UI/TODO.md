@@ -213,8 +213,10 @@ Carried over from the previous version of this file. Completed items are kept fo
       button in the navbar of all 20 pages dims the parchment to a warm, low-blue ground; the
       choice persists per device. Every text/background pair was measured: body 8.77:1, verse
       Arabic 11.25:1, translation 13.79:1, Quranic text 9.42:1.
-- [ ] **Auto-advance option** for younger kids who cannot read yet — pairs naturally with the
-      narration work above.
+- [x] ~~**Auto-advance option**~~ — built 2026-09-05. A ⏭ toggle in the narration control bar; when
+      on, the story turns its own page 1.2s after a slide's narration ends, so a child too young to
+      read never has to tap. Off by default, remembered per device, and cancelled if playback is
+      stopped by hand. Verified in a browser that it advances when on and stays put when off.
 
 ---
 

@@ -1036,3 +1036,12 @@ function updateSlideViewEnhanced() {
 updateSlideView = updateSlideViewEnhanced;
 
 console.log('📚 Islamic Kids Stories - Interactive features loaded!');
+
+
+// Exposed so audio-narration.js can turn the page when a slide's narration
+// finishes - the auto-advance mode for children who cannot read yet.
+window.StorySlides = {
+    next: function () { nextSlide(); },
+    isLast: function () { return currentSlide >= totalSlides - 1; },
+    current: function () { return currentSlide; }
+};
