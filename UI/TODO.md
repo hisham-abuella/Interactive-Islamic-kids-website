@@ -68,14 +68,16 @@ the same answer in both languages throughout. Fixed in that pass:
   free once Q1 was answered. Replaced with a question on the surah's core message.
 
 
-- [ ] **Quiz answers are guessable from length.** 39 of 63 questions (62%) have the correct answer
-      as the *strictly* longest option, plus 5 more tied — against 25% expected by chance. A child
-      can score well without learning. Worst: `surah-al-ikhlas.html:251` (44 chars vs 21/22/22),
-      `surah-al-kawthar.html:213`, `surah-al-maun.html:283`, `surah-al-kafirun.html:244`.
-      *Fix: pad distractors to comparable length, or trim correct answers. Roughly a day.*
-      Still 39/63 after the bilingual audit above — that pass fixed correctness and sense, not
-      length. Note the replacement Al-Asr Q2 is itself a long correct answer, so this needs a
-      deliberate pass over all 63, not incidental edits.
+- [x] ~~**Quiz answers are guessable from length.**~~ Fixed 2026-09-04. Was 39 of 63 (62%) with
+      the correct answer strictly longest, against 25% expected by chance. Now **2 of 63 (3%)
+      longest and 5 (8%) shortest, with 89% mid-range** — neither extreme is a usable signal, and
+      the tell was checked in both directions so it is not merely inverted. 70 distractors were
+      rewritten across both languages, lengthened into more plausible wrong answers rather than
+      trimming correct ones, which would have cost teaching value.
+      The handful left are deliberate: gaps of 1–2 characters that no child could exploit, and
+      fixed terms like "Ameen" and one-word meanings like "Time" that cannot be padded without
+      damaging them.
+
 - [ ] **Prophet Musa has no narration audio.** 20 EN + 20 AR scripts exist and
       `AudioNarration.init('prophet-musa')` is correct, but `audio/prophet-musa/` does not exist,
       so it silently falls back to Web Speech. Fix:
