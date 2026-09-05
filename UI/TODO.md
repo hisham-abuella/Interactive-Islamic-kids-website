@@ -102,8 +102,12 @@ the same answer in both languages throughout. Fixed in that pass:
       moved on does not land back on Read every night. Verified each stage in a browser.
       Note: in Arabic mode Read and Practice look the same, because transliteration is already
       hidden there by design — an Arabic reader does not need it.
-- [ ] **Progress state on the Quran hub.** `quran.html` is 11 structurally identical cards with no
-      progress, heading past 30. The Adam page already has a star/progress/unlock system to copy.
+- [x] ~~**Progress state on the Quran hub**~~ — built 2026-09-05. Every surah card carries a state
+      the child sets themselves (not started → learning → memorized), with a counter and a
+      "pick up where you left off" link to the surah currently being learned. Stored on the device
+      only; no account, nothing leaves the browser. Also removed the stale "NEW" ribbons, which
+      were on two arbitrary cards and are now redundant. Verified in a browser, including that
+      tapping a badge inside a card link does not navigate.
 - [ ] **Ayat al-Kursi sits at position 2** but is the longest page on the site (767 words vs 493
       for Al-Ikhlas) and the hardest to chunk. Consider moving it later, as a graduation piece.
 - [ ] **Parent affordances.** Zero instances of "ask your child", "parent tip" or a recap anywhere;

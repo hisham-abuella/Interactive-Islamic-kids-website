@@ -50,11 +50,21 @@
         <p data-ar="سور وآيات جميلة، مشروحة خصيصاً لك!">Beautiful surahs and verses, explained just for you!</p>
     </section>
 
+    <!-- Progress -->
+    <section class="progress-strip">
+        <div class="progress-strip-inner">
+            <p class="progress-count" id="progressCount"
+               data-ar-template="حفظت {done} من {total} سور">You have memorized {done} of {total} surahs</p>
+            <a class="resume-link" id="resumeLink" href="#" hidden
+               data-ar="تابع من حيث توقفت ←">Pick up where you left off →</a>
+        </div>
+    </section>
+
     <!-- Grid -->
     <section class="stories-grid-section">
         <div class="stories-container">
 
-            <a href="surah-fatiha.html" class="story-card-link">
+            <a href="surah-fatiha.html" class="story-card-link surah-progress" data-surah="surah-fatiha.html">
                 <div class="story-select-card">
                     <div class="story-thumbnail" aria-hidden="true">📖</div>
                     <div class="story-info">
@@ -71,8 +81,8 @@
                 </div>
             </a>
 
-            <a href="ayat-al-kursi.html" class="story-card-link">
-                <div class="story-select-card featured">
+            <a href="ayat-al-kursi.html" class="story-card-link surah-progress" data-surah="ayat-al-kursi.html">
+                <div class="story-select-card">
                     <div class="story-thumbnail" aria-hidden="true">🪑</div>
                     <div class="story-info">
                         <h3 data-ar="آية الكرسي — أعظم آية في القرآن">Ayat al-Kursi — The Verse of the Throne</h3>
@@ -88,8 +98,8 @@
                 </div>
             </a>
 
-            <a href="surah-al-ikhlas.html" class="story-card-link">
-                <div class="story-select-card featured">
+            <a href="surah-al-ikhlas.html" class="story-card-link surah-progress" data-surah="surah-al-ikhlas.html">
+                <div class="story-select-card">
                     <div class="story-thumbnail" aria-hidden="true">💎</div>
                     <div class="story-info">
                         <h3 data-ar="سورة الإخلاص — توحيد الله">Surah Al-Ikhlas — The Oneness of Allah</h3>
@@ -105,7 +115,7 @@
                 </div>
             </a>
 
-            <a href="surah-al-falaq.html" class="story-card-link">
+            <a href="surah-al-falaq.html" class="story-card-link surah-progress" data-surah="surah-al-falaq.html">
                 <div class="story-select-card">
                     <div class="story-thumbnail" aria-hidden="true">🌅</div>
                     <div class="story-info">
@@ -122,7 +132,7 @@
                 </div>
             </a>
 
-            <a href="surah-an-nas.html" class="story-card-link">
+            <a href="surah-an-nas.html" class="story-card-link surah-progress" data-surah="surah-an-nas.html">
                 <div class="story-select-card">
                     <div class="story-thumbnail" aria-hidden="true">🤍</div>
                     <div class="story-info">
@@ -139,7 +149,7 @@
                 </div>
             </a>
 
-            <a href="surah-al-kawthar.html" class="story-card-link">
+            <a href="surah-al-kawthar.html" class="story-card-link surah-progress" data-surah="surah-al-kawthar.html">
                 <div class="story-select-card">
                     <div class="story-thumbnail" aria-hidden="true">🌊</div>
                     <div class="story-info">
@@ -156,7 +166,7 @@
                 </div>
             </a>
 
-            <a href="surah-al-asr.html" class="story-card-link">
+            <a href="surah-al-asr.html" class="story-card-link surah-progress" data-surah="surah-al-asr.html">
                 <div class="story-select-card">
                     <div class="story-thumbnail" aria-hidden="true">⏳</div>
                     <div class="story-info">
@@ -173,7 +183,7 @@
                 </div>
             </a>
 
-            <a href="surah-an-nasr.html" class="story-card-link">
+            <a href="surah-an-nasr.html" class="story-card-link surah-progress" data-surah="surah-an-nasr.html">
                 <div class="story-select-card">
                     <div class="story-thumbnail" aria-hidden="true">🕊️</div>
                     <div class="story-info">
@@ -190,7 +200,7 @@
                 </div>
             </a>
 
-            <a href="surah-al-kafirun.html" class="story-card-link">
+            <a href="surah-al-kafirun.html" class="story-card-link surah-progress" data-surah="surah-al-kafirun.html">
                 <div class="story-select-card">
                     <div class="story-thumbnail" aria-hidden="true">🤝</div>
                     <div class="story-info">
@@ -207,7 +217,7 @@
                 </div>
             </a>
 
-            <a href="surah-al-maun.html" class="story-card-link">
+            <a href="surah-al-maun.html" class="story-card-link surah-progress" data-surah="surah-al-maun.html">
                 <div class="story-select-card">
                     <div class="story-thumbnail" aria-hidden="true">🤲</div>
                     <div class="story-info">
@@ -224,7 +234,7 @@
                 </div>
             </a>
 
-            <a href="surah-quraysh.html" class="story-card-link">
+            <a href="surah-quraysh.html" class="story-card-link surah-progress" data-surah="surah-quraysh.html">
                 <div class="story-select-card">
                     <div class="story-thumbnail" aria-hidden="true">🐫</div>
                     <div class="story-info">
@@ -264,5 +274,6 @@
     </footer>
 
     <script src="bilingual.js"></script>
+    <script src="quran-progress.js"></script>
 </body>
 </html>
