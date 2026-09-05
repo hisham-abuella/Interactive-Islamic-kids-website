@@ -960,3 +960,40 @@
         font-size: 0.9rem;
     }
 }
+
+
+/* ============================================
+   A card written to the parent, not the child: one question to ask at the
+   pause, and one line to close the night with.
+   ============================================ */
+.parent-note {
+    margin: 3rem 0 2rem;
+    padding: 1.5rem 1.75rem;
+    background: var(--cobalt-wash);
+    border: 1px solid var(--cobalt-pale);
+    border-left: 5px solid var(--cobalt);
+    border-radius: var(--radius-lg);
+}
+
+html[lang="ar"] .parent-note {
+    border-left: none;
+    border-right: 5px solid var(--cobalt);
+    text-align: right;
+}
+
+.parent-note h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.15rem;
+    color: var(--cobalt-deep);
+    margin: 0 0 0.75rem;
+}
+
+.parent-note p {
+    margin: 0 0 0.5rem;
+    color: var(--slate-700);
+    line-height: 1.7;
+}
+
+.parent-note strong {
+    color: var(--cobalt-deep);
+}

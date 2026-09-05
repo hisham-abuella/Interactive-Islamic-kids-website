@@ -108,11 +108,14 @@ the same answer in both languages throughout. Fixed in that pass:
       only; no account, nothing leaves the browser. Also removed the stale "NEW" ribbons, which
       were on two arbitrary cards and are now redundant. Verified in a browser, including that
       tapping a badge inside a card link does not navigate.
-- [ ] **Ayat al-Kursi sits at position 2** but is the longest page on the site (767 words vs 493
-      for Al-Ikhlas) and the hardest to chunk. Consider moving it later, as a graduation piece.
-- [ ] **Parent affordances.** Zero instances of "ask your child", "parent tip" or a recap anywhere;
-      the existing tips address the child, not the reading father. Add inline "ask your child"
-      prompts, a one-line recap, and a resume point for the next night.
+- [x] ~~**Ayat al-Kursi sat at position 2**~~ — moved to last, as a graduation piece, 2026-09-05.
+      Hub card order and the full prev/next chain were rewritten together and verified symmetric:
+      Fatiha → Al-Ikhlas → Al-Falaq → An-Nas → Al-Kawthar → Al-Asr → An-Nasr → Al-Kafirun →
+      Al-Maun → Quraysh → Ayat al-Kursi.
+- [x] ~~**Parent affordances**~~ — built 2026-09-05. Every surah page now ends with a card written
+      to the adult, not the child: one **question to ask** at the pause and one **line to finish
+      with**, both specific to that surah and in both languages. The resume point is covered by the
+      memorization map's "pick up where you left off" link.
 
 **Accessibility**
 - [x] ~~`.nav-toggle` ~34×27px, `.lang-toggle-btn` ~37px~~ — both now 44px (lang button measured
