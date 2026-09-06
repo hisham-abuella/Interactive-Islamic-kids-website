@@ -48,6 +48,9 @@ PAGES = {
     'surah-ad-duha.html': 93,
     'surah-ash-sharh.html': 94,
     'surah-at-tin.html': 95,
+    'surah-al-humazah.html': 104,
+    'surah-at-takathur.html': 102,
+    'surah-al-qariah.html': 101,
 }
 
 

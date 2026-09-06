@@ -17,7 +17,7 @@ son would actually notice.
 
 Worth stating plainly, because it is the point of the whole exercise:
 
-- **The scripture is sound.** Every verse card and every complete-surah block across all 16
+- **The scripture is sound.** Every verse card and every complete-surah block across all 19
   surah pages diffs clean against `api.alquran.cloud` simple-script text, and Ayat al-Kursi's 8
   phrase-cards concatenate to 2:255. This is now a script — `scripts/verify-scripture.py` — so it
   is re-run rather than re-argued. It compares in two tiers: the consonantal letters must match
@@ -31,7 +31,7 @@ Worth stating plainly, because it is the point of the whole exercise:
   faithful paraphrases. No fabricated or misattributed hadith.
 - **Aqeedah is sound** — the Kursi explanation, Al-Ikhlas's negations, and the Ibrahim
   star/moon/sun episode are all consistent with mainstream Sunni tafsir.
-- **All 19 YouTube embeds are live** as of 2026-09-06, re-checked via the oEmbed endpoint
+- **All 25 YouTube embeds are live** as of 2026-09-06, re-checked via the oEmbed endpoint
   (re-check every pass — three died before).
 - **Narration scripts are consistent**: for adam/ibrahim/nuh/yusuf, slide count == EN count ==
   AR count == audio file count, exactly. `voice-scripts.js` and `scripts/voice-scripts-data.json`
@@ -190,8 +190,8 @@ See `plan.md` for the full list. Immediate:
       narration — `ceo` recommendation; (2) self-host the video; (3) the father records his own
       narration; (4) `youtube-nocookie.com` + `rel=0` — a ~10-minute bandage that reduces
       recommendations and tracking but stops neither deletion nor ads.
-      **Meanwhile:** re-check all 19 embeds every review pass — they rot without warning.
-      Checked 2026-09-06: all 19 live.
+      **Meanwhile:** re-check all 25 embeds every review pass — they rot without warning.
+      Checked 2026-09-06: all 25 live.
 
 - [x] ~~**Surah Al-Masad (111)**~~ — built 2026-09-05, completing Phase 2. Framed around
       *choice* rather than punishment: Abu Lahab had wealth and was the Prophet's own uncle, and
@@ -208,12 +208,16 @@ See `plan.md` for the full list. Immediate:
       My earlier "79,323 characters, does not fit" estimate was wrong — it costed narrating whole
       pages. Per-verse is 23,682, and the actual charge was lower still.
 
-- [ ] Phase 3 surahs — **Al-Fil, Az-Zalzalah, Ad-Duha, Ash-Sharh and At-Tin done**
-      (the last three on 2026-09-06); Al-Humazah, At-Takathur, Al-Qari'ah, Al-Adiyat,
-      Al-Bayyinah remain. The five that remain are the warning surahs and the long one, so the
-      gentle, commonly-memorized short surahs are now all covered.
-      Note on budget: each new surah costs ~1,500-2,200 ElevenLabs characters for its per-verse
-      narration. **7,702 left this cycle** (measured 2026-09-06), resets 17 Sept.
+- [ ] Phase 3 surahs — **eight of ten done**: Al-Fil, Az-Zalzalah, Ad-Duha, Ash-Sharh, At-Tin,
+      Al-Humazah, At-Takathur and Al-Qari'ah (the last six all on 2026-09-06).
+      **Al-Adiyat and Al-Bayyinah remain**, and then Phase 3 is complete.
+      Note on budget: each new surah costs ~1,900-2,700 ElevenLabs characters for its per-verse
+      narration in both languages. **1,132 left this cycle**, resets 17 Sept — so the two
+      remaining surahs, and Al-Qari'ah's narration below, all wait for the reset.
+      Beware when planning against this number: the ElevenLabs counter **settles behind actual
+      use**. It read 7,702 straight after a 7,160-character batch and only later fell to 5,414,
+      which is why Al-Qari'ah's audio did not fit. Re-read it immediately before generating, and
+      keep using the generator's `--budget` hard stop.
       The pipeline is now three scripts, so a surah is a content spec rather than 400 hand-written
       lines: `scripts/specs/<name>.py` holds the content, `scripts/build-surah.py` renders it
       through `scripts/surah-page-template.py`, and `scripts/build-narration-plan.py` reads the
@@ -229,6 +233,26 @@ See `plan.md` for the full list. Immediate:
       full EN/AR parity; chain re-verified symmetric across 17 pages; narration generated for
       both languages (54 files, 7,160 characters). Stage picker, bedtime mode, language toggle
       and per-verse audio all exercised in a browser.
+
+- [ ] **Al-Qari'ah's narration** — the page shipped 2026-09-06 without generated audio, because
+      only 5,414 ElevenLabs characters were left and it needed 2,700. It is not broken: the
+      missing files fall through to the browser's own speech synthesis, which was verified
+      firing on the real page (audio 404 → the verse spoken aloud). Generate it after the
+      17 Sept reset:
+      `python3 scripts/build-narration-plan.py surah-al-qariah.html -o /tmp/p.json`
+      then `node scripts/generate-surah-audio.js /tmp/p.json --budget 3000`.
+
+- [x] ~~**Surah Al-Humazah (104), At-Takathur (102) and Al-Qari'ah (101)**~~ — built 2026-09-06,
+      the warning surahs, framed the way Al-Masad was: around the *choice*, with the fire named
+      once as the Quran names it and no dwelling. Al-Humazah is really an anti-mockery surah and
+      lands closest to a child's day — it is the one that says words reach the heart. At-Takathur
+      ends on being asked about blessings, so it is framed as gratitude rather than dread, using
+      the report of dates and cool water. Al-Qari'ah turns on the scales: mountains weigh nothing,
+      a kind word weighs something.
+      Verified: all 28 verses and three complete-surah blocks diff clean against alquran.cloud;
+      all 25 embeds live; chain symmetric across 20 pages; each quiz one correct option per
+      question with full EN/AR parity. Narration generated for Al-Humazah and At-Takathur
+      (34 files, 4,282 characters); Al-Qari'ah's is pending above.
 
 - [ ] Phase 1 stories: Prophet Isa, Prophet Muhammad ﷺ.
 
