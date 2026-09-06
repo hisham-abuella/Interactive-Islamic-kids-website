@@ -4,3 +4,6 @@ Thumbs.db
 
 # Playwright MCP artifacts
 .playwright-mcp/
+
+# Python bytecode from the surah build scripts
+__pycache__/

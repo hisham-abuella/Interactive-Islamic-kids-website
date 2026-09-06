@@ -17,16 +17,22 @@ son would actually notice.
 
 Worth stating plainly, because it is the point of the whole exercise:
 
-- **The scripture is sound.** Every verse card and every complete-surah block across all 10 short
-  surahs diffs *exactly* against `api.alquran.cloud` simple-script text. Ayat al-Kursi's 8
-  phrase-cards concatenate to an exact match of 2:255. No critical or major findings.
+- **The scripture is sound.** Every verse card and every complete-surah block across all 16
+  surah pages diffs clean against `api.alquran.cloud` simple-script text, and Ayat al-Kursi's 8
+  phrase-cards concatenate to 2:255. This is now a script — `scripts/verify-scripture.py` — so it
+  is re-run rather than re-argued. It compares in two tiers: the consonantal letters must match
+  exactly, while diacritic differences are reported but allowed, because the pages legitimately
+  mix orthographic styles (the Uthmani script omits a sukun where the simple script writes one,
+  and shows idgham with a shadda). Both render as the same recitation. No critical or major
+  findings.
 - **Al-Fatiha now follows the standard Hafs counting** — Bismillah is verse 1, the final verse is
   whole, the badge says 7. Verified and holding.
 - **All 10 hadith trace to authentic sources** (Bukhari, Muslim, Tirmidhi, Abu Dawud, Nasa'i) with
   faithful paraphrases. No fabricated or misattributed hadith.
 - **Aqeedah is sound** — the Kursi explanation, Al-Ikhlas's negations, and the Ibrahim
   star/moon/sun episode are all consistent with mainstream Sunni tafsir.
-- **All 16 YouTube embeds are live** as of 2026-09-03 (re-check every pass — three died before).
+- **All 19 YouTube embeds are live** as of 2026-09-06, re-checked via the oEmbed endpoint
+  (re-check every pass — three died before).
 - **Narration scripts are consistent**: for adam/ibrahim/nuh/yusuf, slide count == EN count ==
   AR count == audio file count, exactly. `voice-scripts.js` and `scripts/voice-scripts-data.json`
   agree.
@@ -184,7 +190,8 @@ See `plan.md` for the full list. Immediate:
       narration — `ceo` recommendation; (2) self-host the video; (3) the father records his own
       narration; (4) `youtube-nocookie.com` + `rel=0` — a ~10-minute bandage that reduces
       recommendations and tracking but stops neither deletion nor ads.
-      **Meanwhile:** re-check all 16 embeds every review pass — they rot without warning.
+      **Meanwhile:** re-check all 19 embeds every review pass — they rot without warning.
+      Checked 2026-09-06: all 19 live.
 
 - [x] ~~**Surah Al-Masad (111)**~~ — built 2026-09-05, completing Phase 2. Framed around
       *choice* rather than punishment: Abu Lahab had wealth and was the Prophet's own uncle, and
@@ -201,12 +208,28 @@ See `plan.md` for the full list. Immediate:
       My earlier "79,323 characters, does not fit" estimate was wrong — it costed narrating whole
       pages. Per-verse is 23,682, and the actual charge was lower still.
 
-- [ ] Phase 3 surahs — **Al-Fil and Az-Zalzalah done 2026-09-05**; Al-Humazah, At-Takathur,
-      Al-Qari'ah, Al-Adiyat, Al-Bayyinah, At-Tin, Ash-Sharh, Ad-Duha remain.
+- [ ] Phase 3 surahs — **Al-Fil, Az-Zalzalah, Ad-Duha, Ash-Sharh and At-Tin done**
+      (the last three on 2026-09-06); Al-Humazah, At-Takathur, Al-Qari'ah, Al-Adiyat,
+      Al-Bayyinah remain. The five that remain are the warning surahs and the long one, so the
+      gentle, commonly-memorized short surahs are now all covered.
       Note on budget: each new surah costs ~1,500-2,200 ElevenLabs characters for its per-verse
-      narration. **9,447 left this cycle**, resets 17 Sept — roughly four more surahs' worth.
-      There is now a page generator (`scripts/surah-page-template.py`): a surah is a content spec,
-      not 400 hand-written lines, so each new one is consistent and cheap.
+      narration. **7,702 left this cycle** (measured 2026-09-06), resets 17 Sept.
+      The pipeline is now three scripts, so a surah is a content spec rather than 400 hand-written
+      lines: `scripts/specs/<name>.py` holds the content, `scripts/build-surah.py` renders it
+      through `scripts/surah-page-template.py`, and `scripts/build-narration-plan.py` reads the
+      finished page back to produce the narration plan.
+- [x] ~~**Surah Ad-Duha (93), Ash-Sharh (94) and At-Tin (95)**~~ — built 2026-09-06 from the
+      generator. Chosen together because they run consecutively in the mushaf and carry one
+      thread a child can hold: Allah has not left you (Ad-Duha), the ease comes *with* the
+      hardship (Ash-Sharh), and you were made in the finest form (At-Tin). Ad-Duha's verse 7
+      is glossed as "not yet knowing the way", the mainstream reading, rather than anything
+      that would suggest error in a prophet.
+      Verified: all 27 verses and the three complete-surah blocks diff clean against
+      alquran.cloud; embeds live; each quiz has exactly one correct option per question with
+      full EN/AR parity; chain re-verified symmetric across 17 pages; narration generated for
+      both languages (54 files, 7,160 characters). Stage picker, bedtime mode, language toggle
+      and per-verse audio all exercised in a browser.
+
 - [ ] Phase 1 stories: Prophet Isa, Prophet Muhammad ﷺ.
 
 ---
@@ -252,6 +275,16 @@ Carried over from the previous version of this file. Completed items are kept fo
   languages now, identical in each.
   *Lesson: `:not([data-ar])` is not a safe proxy for "untranslated" — some content is deliberately
   never translated. Any future rule keyed on the absence of `data-ar` must exclude scripture.*
+
+- **2026-09-06 — Al-Fatiha's complete-surah block still split verse 7 in two.**
+  The 2026-09-03 pass fixed the Hafs counting in the *verse cards* — bismillah as verse 1, the
+  final verse whole, the badge reading 7 — but the "Complete Surah" block below them was not
+  touched. It broke verse 7 across two lines with an ayah-end mark (۝) between them, so the block
+  displayed **8** ayah marks for a 7-ayah surah, contradicting the cards directly above it.
+  Rejoined into one line. Found by `scripts/verify-scripture.py`, which now checks the block
+  separately from the cards rather than assuming they agree.
+  *Lesson: the same content rendered twice on one page needs both copies checked. Fixing the
+  cards did not fix the block, and nothing tied them together.*
 
 ## Known false positives — do not re-chase
 

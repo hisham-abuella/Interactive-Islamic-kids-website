@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn Surah At-Tin for kids: Arabic, transliteration, verse-by-verse meaning, fun facts, memorization tips and a quiz.">
+    <meta name="theme-color" content="#0d9488">
+    <title>Surah At-Tin - Islamic Kids</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="surah.css">
+</head>
+<body>
+    <!-- Floating Decorations -->
+    <div class="floating-decorations">
+        <span class="floating-star" style="top: 10%; left: 5%;" aria-hidden="true">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;" aria-hidden="true">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;" aria-hidden="true">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;" aria-hidden="true">⭐</span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <span class="crescent" aria-hidden="true">☪</span>
+                <span class="logo-text" data-ar="أطفال الإسلام">Islamic Kids</span>
+            </div>
+            <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-cluster">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="stories.html" data-ar="القصص">Stories</a></li>
+                    <li><a href="quran.html" class="active" data-ar="القرآن">Quran</a></li>
+                    <li><a href="index.html#learn" data-ar="تعلّم">Learn</a></li>
+                </ul>
+                <button class="bedtime-btn" type="button" aria-pressed="false" aria-label="Bedtime reading mode" title="Bedtime reading mode" data-ar="وضع القراءة الليلية">🌙</button>
+                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="surah-hero">
+        <div class="surah-hero-content">
+            <div class="surah-icon" aria-hidden="true">🫒</div>
+            <h1 data-ar="سورة التين">Surah At-Tin</h1>
+            <p class="surah-subtitle" data-ar="التين">The Fig - التين</p>
+            <div class="surah-info" data-ar="<span class=&quot;info-badge&quot;>📿 ٨ آيات</span> <span class=&quot;info-badge&quot;>🕌 سورة مكية</span> <span class=&quot;info-badge&quot;>✨ في أحسن تقويم</span>">
+                <span class="info-badge">📿 8 Verses</span>
+                <span class="info-badge">🕌 Makki Surah</span>
+                <span class="info-badge">✨ Made in the Finest Form</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="surah-main">
+        <div class="surah-container">
+
+            <!-- Introduction -->
+            <section class="intro-section">
+                <div class="intro-card">
+                    <h2 data-ar="🌟 لماذا سورة التين مميزة؟">🌟 Why is Surah At-Tin Special?</h2>
+                    <p data-ar="سورة التين هي السورة رقم <strong>٩٥</strong> في القرآن، وفيها <strong>٨ آيات</strong>.">Surah At-Tin is chapter number <strong>95</strong> of the Quran, with <strong>8 verses</strong>.</p>
+                    <p data-ar="وهي السورة الوحيدة التي تبدأ بالقسم بـ<strong>ثمرتين</strong> — التين والزيتون.">It is the only surah that opens by swearing an oath by <strong>two fruits</strong> — the fig and the olive.</p>
+                    <p data-ar="ثم تخبرك بأجمل ما يمكن أن يُقال عنك: من بين كل ما خلق الله، <strong>خُلقت أنت في أحسن تقويم</strong>.">Then it tells you the most encouraging thing anyone can hear about themselves: of everything Allah made, <strong>you were made in the finest form</strong>.</p>
+                </div>
+
+                <div class="intro-card highlight">
+                    <h2 data-ar="🗺️ أربعة أقسم الله بها">🗺️ Four Things Worth Swearing By</h2>
+                    <p data-ar="التين والزيتون وطور سينين والبلد الأمين — مكة. اثنان تأكلهما، واثنان تقف عليهما.">The fig, the olive, Mount Sinai, and the safe city — Makkah. Two of them you can eat; two of them you can stand on.</p>
+                    <p data-ar="وقال كثير من العلماء إن الأخيرين موضعان كلّم الله فيهما أنبياءه: طور سينين حيث كلّم موسى عليه السلام، ومكة حيث نزل القرآن على محمد ﷺ.">Many scholars said the last two are places where Allah spoke to His prophets: Sinai, where Musa عليه السلام heard Him, and Makkah, where the Quran came down to Muhammad ﷺ.</p>
+                    <ul>
+                        <li data-ar="🫐 <strong>التين</strong> — حلوٌ نافع">🫐 The <strong>fig</strong> — sweet and full of goodness</li>
+                        <li data-ar="🫒 <strong>الزيتون</strong> — طعامٌ وزيتٌ وضياء">🫒 The <strong>olive</strong> — food, oil and light</li>
+                        <li data-ar="⛰️ <strong>طور سينين</strong> — حيث كُلّم موسى عليه السلام">⛰️ <strong>Mount Sinai</strong> — where Musa عليه السلام was spoken to</li>
+                        <li data-ar="🕋 <strong>البلد الأمين</strong> — مكة">🕋 <strong>The safe city</strong> — Makkah</li>
+                    </ul>
+                </div>
+
+                <div class="story-card special">
+                    <h2 data-ar="✨ في أحسن تقويم">✨ Made in the Finest Form</h2>
+                    <div class="story-content">
+                    <p data-ar="<em>أحسن تقويم</em> معناه <strong>أحسن صورة وأتم اعتدال</strong>. انظر إلى ما أُعطيت: يدان تكتبان، ولسانٌ يواسي، وعقلٌ يختار."><em>Ahsani taqweem</em> means <strong>the best possible shape and balance</strong>. Look at what you were given: hands that can write, a tongue that can comfort, a mind that can choose.</p>
+                    <p data-ar="والحيوان جميل أيضاً، لكنك أُعطيت زيادة: أن تقرر أي إنسان تكون. تلك هي الهبة — وهي الاختبار.">Animals are beautiful too, but you were given something extra: you can decide what kind of person to be. That is the gift — and the test.</p>
+                    <div class="lights-container">
+                            <div class="light-badge" data-ar="🧠 عقلٌ يختار">🧠 A mind that chooses</div>
+                            <div class="light-badge" data-ar="❤️ وقلبٌ يشعر">❤️ A heart that feels</div>
+                            <div class="light-badge" data-ar="🤲 ويدان تنفعان">🤲 Hands that can help</div>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="story-card healing">
+                    <h2 data-ar="⬇️ وماذا نصنع بها">⬇️ And What We Can Do With It</h2>
+                    <div class="story-content">
+                    <p data-ar="ثم تصدُقك الآية التالية: من أُعطي ذلك كله قد يهوي إلى <strong>أسفل سافلين</strong>. فحسن الخلقة لا يجعلك صالحاً وحده.">The next verse is honest: a person given all that can still sink to <strong>the lowest of the low</strong>. Being made beautifully does not automatically make you good.</p>
+                    <p data-ar="ثم يأتي المخرج في سطر واحد: <strong>إلا الذين آمنوا وعملوا الصالحات</strong>. إيمانٌ وعملٌ معاً — بهما يبقى الإنسان في المكان الذي خُلق له.">And then the way out, in one line: <strong>except those who believe and do good</strong>. Faith and good deeds together — that is what keeps a person up where they were made to be.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bismillah -->
+            <section class="bismillah-section">
+                <div class="bismillah-card">
+                    <p class="arabic-large">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+                    <p class="transliteration">Bismillah ir-Rahman ir-Raheem</p>
+                    <p class="translation" data-ar="&quot;بسم الله الرحمن الرحيم&quot;">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
+                </div>
+            </section>
+
+            <!-- Verses -->
+            <section class="verses-section">
+                <h2 class="section-title" data-ar="📜 تعلّم كل آية">📜 Learn Each Verse</h2>
+
+                <div class="stage-picker" role="group" aria-label="Learning stage">
+                    <span class="stage-label" data-ar="كيف تريد أن تتعلّم؟">How do you want to learn?</span>
+                    <div class="stage-buttons">
+                        <button class="stage-btn" type="button" data-stage="read" data-ar="اقرأ">Read</button>
+                        <button class="stage-btn" type="button" data-stage="practice" data-ar="تدرّب">Practice</button>
+                        <button class="stage-btn" type="button" data-stage="recite" data-ar="احفظ">Recite</button>
+                    </div>
+                </div>
+
+                <div class="verse-card" data-verse="1">
+                    <div class="verse-number">1</div>
+                    <div class="verse-content">
+                        <p class="arabic">وَالتِّينِ وَالزَّيْتُونِ</p>
+                        <p class="transliteration">Wat-teeni waz-zaytoon</p>
+                        <p class="translation" data-ar="&quot;والتين والزيتون&quot;">"By the fig and the olive,"</p>
+                        <div class="verse-explanation">
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
+                            <p data-ar="يقسم الله بثمرتين مألوفتين. وإذا أقسم الله بشيء فإنه يدعوك أن <strong>تتأمله حق التأمل</strong> — فحتى التينة آية.">Allah swears by two ordinary fruits. When Allah swears by something, He is telling you to <strong>look at it properly</strong> — even a fig is a sign.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="verse-card" data-verse="2">
+                    <div class="verse-number">2</div>
+                    <div class="verse-content">
+                        <p class="arabic">وَطُورِ سِينِينَ</p>
+                        <p class="transliteration">Wa Toori Seeneen</p>
+                        <p class="translation" data-ar="&quot;وطور سينين&quot;">"And Mount Sinai,"</p>
+                        <div class="verse-explanation">
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
+                            <p data-ar="الجبل الذي كلّم الله عنده <strong>نبيه موسى عليه السلام</strong>. جبلٌ صخري عادي، عظُم بما جرى عليه.">The mountain where Allah spoke to <strong>Prophet Musa عليه السلام</strong>. A plain rocky hill, made great by what happened on it.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="verse-card" data-verse="3">
+                    <div class="verse-number">3</div>
+                    <div class="verse-content">
+                        <p class="arabic">وَهَٰذَا الْبَلَدِ الْأَمِينِ</p>
+                        <p class="transliteration">Wa hadhal-baladil-ameen</p>
+                        <p class="translation" data-ar="&quot;وهذا البلد الأمين&quot;">"And this safe city,"</p>
+                        <div class="verse-explanation">
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
+                            <p data-ar="مكة، حيث الكعبة. وسُمّيت <strong>أميناً</strong> لأنه لا يُؤذى فيها أحد — ولا حتى طيرها وشجرها.">Makkah, where the Kaaba stands. It is called <strong>safe</strong> because no one is to be harmed there — not even the birds and the trees.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="verse-card" data-verse="4">
+                    <div class="verse-number">4</div>
+                    <div class="verse-content">
+                        <p class="arabic">لَقَدْ خَلَقْنَا الْإِنْسَانَ فِي أَحْسَنِ تَقْوِيمٍ</p>
+                        <p class="transliteration">Laqad khalaqnal-insana fee ahsani taqweem</p>
+                        <p class="translation" data-ar="&quot;لقد خلقنا الإنسان في أحسن تقويم&quot;">"We certainly created the human being in the finest form."</p>
+                        <div class="verse-explanation">
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
+                            <p data-ar="وهذا ما ساقت إليه الأقسام الأربعة. خُلقت <strong>معتدلاً قائماً تاماً</strong> — أحسن ما خلق الله.">This is what all four oaths were leading to. You were made <strong>upright, balanced and complete</strong> — the finest of Allah's making.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="verse-card" data-verse="5">
+                    <div class="verse-number">5</div>
+                    <div class="verse-content">
+                        <p class="arabic">ثُمَّ رَدَدْنَاهُ أَسْفَلَ سَافِلِينَ</p>
+                        <p class="transliteration">Thumma radadnahu asfala safileen</p>
+                        <p class="translation" data-ar="&quot;ثم رددناه أسفل سافلين&quot;">"Then We returned him to the lowest of the low."</p>
+                        <div class="verse-explanation">
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
+                            <p data-ar="ومن أُعطي كل هبة قد يضيّعها بسوء اختياره. <strong>خلقتك هبة، وما تصنعه بها اختيارك.</strong>">A person given every gift can still throw it away by choosing badly. <strong>How you were made is a gift; what you do with it is your choice.</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="verse-card" data-verse="6">
+                    <div class="verse-number">6</div>
+                    <div class="verse-content">
+                        <p class="arabic">إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍ</p>
+                        <p class="transliteration">Illal-ladheena amanoo wa 'amilus-salihati falahum ajrun ghayru mamnoon</p>
+                        <p class="translation" data-ar="&quot;إلا الذين آمنوا وعملوا الصالحات فلهم أجر غير ممنون&quot;">"Except those who believe and do good deeds — for them is a reward never cut off."</p>
+                        <div class="verse-explanation">
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
+                            <p data-ar="وهذا هو المخرج، ولا بد فيه من <strong>الاثنين</strong>: إيمانٌ <em>وعمل</em>. وأجرهم <strong>لا ينقطع</strong> — ليس مما يفنى.">The way out, and it takes <strong>both</strong>: believing <em>and</em> doing. And their reward <strong>never runs out</strong> — it is not the kind that stops.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="verse-card" data-verse="7">
+                    <div class="verse-number">7</div>
+                    <div class="verse-content">
+                        <p class="arabic">فَمَا يُكَذِّبُكَ بَعْدُ بِالدِّينِ</p>
+                        <p class="transliteration">Fama yukadhdhibuka ba'du bid-deen</p>
+                        <p class="translation" data-ar="&quot;فما يكذّبك بعد بالدين&quot;">"So what makes you deny the Judgement after this?"</p>
+                        <div class="verse-explanation">
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
+                            <p data-ar="بعد أن رأيت كيف أُحسن خلقك — فما الذي يجعلك تظن أنه <strong>لا يوم يُحاسب فيه</strong>؟">After seeing how carefully you were made — what could still make you think there is <strong>no Day when it all matters</strong>?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="verse-card" data-verse="8">
+                    <div class="verse-number">8</div>
+                    <div class="verse-content">
+                        <p class="arabic">أَلَيْسَ اللَّهُ بِأَحْكَمِ الْحَاكِمِينَ</p>
+                        <p class="transliteration">Alaysal-lahu bi-ahkamil-hakimeen</p>
+                        <p class="translation" data-ar="&quot;أليس الله بأحكم الحاكمين&quot;">"Is Allah not the wisest of all judges?"</p>
+                        <div class="verse-explanation">
+                            <span class="explanation-icon" aria-hidden="true">💡</span>
+                            <p data-ar="تختم السورة بسؤال تعرف جوابه. فالله يحكم <strong>بالعدل التام</strong> — لا يُظلم أحد، ولا يفوته شيء.">The surah ends with a question you already know the answer to. Allah judges <strong>perfectly and fairly</strong> — nobody is wronged, and nothing is missed.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Full Surah -->
+            <section class="full-surah-section">
+                <h2 class="section-title" data-ar="💿 السورة كاملة">💿 Complete Surah</h2>
+                <div class="full-surah-card">
+                    <p class="arabic-full" dir="rtl">
+                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ۝
+                        وَالتِّينِ وَالزَّيْتُونِ ۝
+                        وَطُورِ سِينِينَ ۝
+                        وَهَٰذَا الْبَلَدِ الْأَمِينِ ۝
+                        لَقَدْ خَلَقْنَا الْإِنْسَانَ فِي أَحْسَنِ تَقْوِيمٍ ۝
+                        ثُمَّ رَدَدْنَاهُ أَسْفَلَ سَافِلِينَ ۝
+                        إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍ ۝
+                        فَمَا يُكَذِّبُكَ بَعْدُ بِالدِّينِ ۝
+                        أَلَيْسَ اللَّهُ بِأَحْكَمِ الْحَاكِمِينَ ۝
+                    </p>
+                </div>
+            </section>
+
+            <!-- Video -->
+            <section class="video-section">
+                <h2 class="section-title" data-ar="🎬 تعلّم التلاوة">🎬 Learn to Recite</h2>
+                <p class="video-intro" data-ar="ثماني آيات تبدأ بالثمر وتنتهي بأحكم الحاكمين — استمع وردّد!">Eight verses that begin with fruit and end with the wisest of all judges — listen and repeat!</p>
+                <div class="video-container">
+                    <div class="video-frame">
+                        <iframe
+                            width="100%"
+                            height="450"
+                            src="https://www.youtube.com/embed/3YCJ1bs2BUs"
+                            title="Learn Surah At-Tin"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz -->
+            <section class="quiz-section">
+                <div class="quiz-intro">
+                    <div class="quiz-icon" aria-hidden="true">🎯</div>
+                    <h2 data-ar="اختبر معلوماتك!">Test Your Knowledge!</h2>
+                    <p data-ar="أجب عن هذه الأسئلة عن سورة التين">Answer these questions about Surah At-Tin</p>
+                </div>
+
+                <div class="quiz-card" data-question="1">
+                    <div class="question-number" data-ar="السؤال ١ من ٤">Question 1 of 4</div>
+                    <p class="quiz-question" data-ar="بأي ثمرتين تبدأ السورة؟">Which two fruits does the surah begin with?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-correct="false" data-ar="التمر والرمّان">The date and the pomegranate</button>
+                        <button class="quiz-option" data-correct="true" data-ar="التين والزيتون">The fig and the olive</button>
+                        <button class="quiz-option" data-correct="false" data-ar="العنب والتفاح">The grape and the apple</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الموز والبطيخ">The banana and the melon</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-card hidden" data-question="2">
+                    <div class="question-number" data-ar="السؤال ٢ من ٤">Question 2 of 4</div>
+                    <p class="quiz-question" data-ar="بأي بلد أمين تقسم السورة؟">Which safe city does the surah swear by?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-correct="false" data-ar="المدينة، مدينة النبي ﷺ">Madinah, the city of the Prophet ﷺ</button>
+                        <button class="quiz-option" data-correct="true" data-ar="مكة، حيث الكعبة">Makkah, where the Kaaba stands</button>
+                        <button class="quiz-option" data-correct="false" data-ar="القدس، وفيها المسجد الأقصى">Jerusalem, with the far mosque</button>
+                        <button class="quiz-option" data-correct="false" data-ar="الطائف، في الجبال القريبة">Taif, in the mountains nearby</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-card hidden" data-question="3">
+                    <div class="question-number" data-ar="السؤال ٣ من ٤">Question 3 of 4</div>
+                    <p class="quiz-question" data-ar="ماذا يخبرنا &quot;أحسن تقويم&quot; عن الإنسان؟">What does "the finest form" tell us about people?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-correct="false" data-ar="أن بعض الناس فقط أُحسن خلقهم">That only some people were made well</button>
+                        <button class="quiz-option" data-correct="true" data-ar="أن الله خلقنا في أتم صورة وأجملها">That Allah made us beautifully and completely</button>
+                        <button class="quiz-option" data-correct="false" data-ar="أننا مثل الحيوانات تماماً">That we are exactly the same as animals</button>
+                        <button class="quiz-option" data-correct="false" data-ar="أن الشكل وحده هو المهم">That how we look is the only thing that matters</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-card hidden" data-question="4">
+                    <div class="question-number" data-ar="السؤال ٤ من ٤">Question 4 of 4</div>
+                    <p class="quiz-question" data-ar="من له الأجر الذي لا ينقطع؟">Who keeps the reward that is never cut off?</p>
+                    <div class="quiz-options">
+                        <button class="quiz-option" data-correct="false" data-ar="كل من وُلد في بيت صالح">Anyone who was born in a good family</button>
+                        <button class="quiz-option" data-correct="true" data-ar="الذين آمنوا وعملوا الصالحات">Those who believe and do good deeds</button>
+                        <button class="quiz-option" data-correct="false" data-ar="من كانوا أقوى من غيرهم">People who are stronger than others</button>
+                        <button class="quiz-option" data-correct="false" data-ar="من سافروا كثيراً في الأرض">Those who have travelled a great deal</button>
+                    </div>
+                    <div class="quiz-feedback"></div>
+                </div>
+
+                <div class="quiz-results hidden" id="quizResults">
+                    <div class="results-content">
+                        <div class="results-icon" aria-hidden="true">🎉</div>
+                        <h2 data-ar="ما شاء الله!">MashaAllah!</h2>
+                        <p class="results-score" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٤ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 4 correct!</p>
+                        <p class="results-message" data-ar="خلقك الله في أحسن تقويم. فعش كما يليق بذلك.">Allah made you in the finest form. Live like someone worth that.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reflection -->
+            <section class="reply-section">
+                <h2 class="section-title" data-ar="💬 هبةٌ واختيار">💬 A Gift and a Choice</h2>
+                <div class="reply-card">
+                    <p data-ar="جاءت الآية الرابعة والخامسة متجاورتين عن قصد. تقول الأولى كم أُحسن خلقك، وتقول الثانية كم يمكن أن يهوي الإنسان مع ذلك. وكلتاهما حق، والسورة لا تخفي واحدة منهما.">Verse 4 and verse 5 sit right next to each other on purpose. One says how wonderfully you were made. The next says how far a person can fall anyway. Both are true, and the surah refuses to hide either.</p>
+                    <p data-ar="ثم تعطي الآية السادسة الجواب، وهو غير معقّد: آمِن، واعمل صالحاً. وهذا ما يستطيع الطفل أن يمسك به الليلة.">Then verse 6 gives the answer, and it is not complicated: believe, and do good. That is what a child can actually hold on to tonight.</p>
+                </div>
+            </section>
+
+            <!-- Fun Facts -->
+            <section class="fun-facts-section">
+                <h2 class="section-title" data-ar="🌟 معلومات ممتعة!">🌟 Amazing Fun Facts!</h2>
+                <div class="facts-grid">
+                    <div class="fact-card">
+                        <div class="fact-number">1</div>
+                        <p data-ar="هي السورة رقم <strong>٩٥</strong> في القرآن">It is surah number <strong>95</strong> in the Quran</p>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-number">2</div>
+                        <p data-ar="هي سورة <strong>مكية</strong>، نزلت قبل الهجرة">It is a <strong>Makki</strong> surah, revealed before the Hijrah</p>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-number">3</div>
+                        <p data-ar="وهي السورة الوحيدة التي أقسم الله فيها بـ<strong>ثمر</strong>">It is the only surah that swears by <strong>fruit</strong></p>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-number">4</div>
+                        <p data-ar="<strong>الزيتون</strong> طعامٌ وزيتٌ وضياء">The <strong>olive</strong> gives food, oil and light</p>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-number">5</div>
+                        <p data-ar="<em>طور سينين</em> حيث كُلّم <strong>موسى عليه السلام</strong>"><em>Mount Sinai</em> is where <strong>Musa عليه السلام</strong> was spoken to</p>
+                    </div>
+                    <div class="fact-card">
+                        <div class="fact-number">6</div>
+                        <p data-ar="وتختم بـ<strong>سؤال</strong> لا بخبر">It ends with a <strong>question</strong>, not a statement</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tips -->
+            <section class="tips-section">
+                <h2 class="section-title" data-ar="💡 نصائح للحفظ">💡 Tips for Memorization</h2>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <div class="tip-icon" aria-hidden="true">4️⃣</div>
+                        <h3 data-ar="أربعٌ ثم أربع">Four Then Four</h3>
+                        <p data-ar="الآيات الأربع الأولى أقسام، والأربع الأخيرة جوابها.">The first four verses are the oaths. The last four are what they were for.</p>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon" aria-hidden="true">🫒</div>
+                        <h3 data-ar="ابدأ من المائدة">Start at the Table</h3>
+                        <p data-ar="التينة والزيتونة شيئان تمسكهما، فتثبت الآية الأولى قبل غيرها.">A fig and an olive are things you can hold, so verse 1 sticks before the rest.</p>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon" aria-hidden="true">🎵</div>
+                        <h3 data-ar="أنصت للفواصل">Listen for the Ending</h3>
+                        <p data-ar="تكاد كل آية تنتهي بالنون الساكنة بعد ياء، فتحملك الفواصل من آية إلى أخرى.">Almost every verse here ends on the same -een sound, which carries you along.</p>
+                    </div>
+                    <div class="tip-card">
+                        <div class="tip-icon" aria-hidden="true">🤲</div>
+                        <h3 data-ar="ادعُ الله">Make Dua</h3>
+                        <p data-ar="اطلب من الله أن يعينك على حفظ كلامه وفهمه.">Ask Allah to help you memorize and understand His words.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- For the grown-up reading aloud -->
+            <section class="parent-note">
+                <h2 data-ar="👨‍👦 للكبير الذي يقرأ">👨‍👦 For the grown-up reading</h2>
+                <p class="parent-ask"><strong data-ar="اسأل طفلك:">Ask your child:</strong>
+                    <span data-ar="خلقك الله في أحسن تقويم — فما الخير الذي تصنعه بها اليوم؟">Allah made you in the finest form — what is one good thing you can do with it today?</span></p>
+                <p class="parent-recap"><strong data-ar="اختم بهذه:">Finish with:</strong>
+                    <span data-ar="خُلقت في أحسن صورة. وبالإيمان والعمل الصالح تبقى كذلك.">You were made beautifully. Believing and doing good is how you stay that way.</span></p>
+            </section>
+
+            <!-- Navigation -->
+            <div class="page-navigation">
+                <a href="surah-ash-sharh.html" class="nav-btn" data-ar="السابق: سورة الشرح">← Surah Ash-Sharh</a>
+                <a href="ayat-al-kursi.html" class="nav-btn next" data-ar="التالي: آية الكرسي">Ayat al-Kursi →</a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-dua">
+                <p data-ar="🤲 يسّر الله لك تعلّم كلامه وحفظه!">🤲 May Allah make it easy for you to learn and memorize His words!</p>
+            </div>
+            <p class="footer-subtitle" data-ar="🌙 أطفال الإسلام - نتعلّم ديننا بالحب ✨">🌙 Islamic Kids - Learning Islam with Love ✨</p>
+        </div>
+    </footer>
+
+    <script src="surah.js"></script>
+    <script src="surah-narration.js"></script>
+    <script src="bilingual.js"></script>
+    <script src="bedtime.js"></script>
+
+</body>
+</html>
