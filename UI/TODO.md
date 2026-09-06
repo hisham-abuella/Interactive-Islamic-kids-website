@@ -201,8 +201,10 @@ See `plan.md` for the full list. Immediate:
       My earlier "79,323 characters, does not fit" estimate was wrong — it costed narrating whole
       pages. Per-verse is 23,682, and the actual charge was lower still.
 
-- [ ] Phase 3 surahs — **Al-Fil done 2026-09-05**; Al-Humazah, At-Takathur, Al-Qari'ah,
-      Al-Adiyat, Az-Zalzalah, Al-Bayyinah, At-Tin, Ash-Sharh, Ad-Duha remain.
+- [ ] Phase 3 surahs — **Al-Fil and Az-Zalzalah done 2026-09-05**; Al-Humazah, At-Takathur,
+      Al-Qari'ah, Al-Adiyat, Al-Bayyinah, At-Tin, Ash-Sharh, Ad-Duha remain.
+      Note on budget: each new surah costs ~1,500-2,200 ElevenLabs characters for its per-verse
+      narration. **9,447 left this cycle**, resets 17 Sept — roughly four more surahs' worth.
       There is now a page generator (`scripts/surah-page-template.py`): a surah is a content spec,
       not 400 hand-written lines, so each new one is consistent and cheap.
 - [ ] Phase 1 stories: Prophet Isa, Prophet Muhammad ﷺ.

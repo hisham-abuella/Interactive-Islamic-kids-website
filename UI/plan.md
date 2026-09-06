@@ -23,6 +23,7 @@
 - [x] Surah Quraysh (106) (no voice narration yet)
 - [x] Surah Al-Masad (111)
 - [x] Surah Al-Fil (105)
+- [x] Surah Az-Zalzalah (99)
 
 ---
 
@@ -64,12 +65,13 @@
 - [x] Surah Quraysh (106) - 4 verses - The Quraysh
 
 ### Phase 3 - Slightly Longer
-- [x] Surah Al-Fil (105) - 5 verses - The Elephant
+- [x] Surah Al-Fil (105)
+- [x] Surah Az-Zalzalah (99) - 5 verses - The Elephant
 - [ ] Surah Al-Humazah (104) - 9 verses - The Backbiter
 - [ ] Surah At-Takathur (102) - 8 verses - Competition in Worldly Increase
 - [ ] Surah Al-Qari'ah (101) - 11 verses - The Striking Hour
 - [ ] Surah Al-Adiyat (100) - 11 verses - The War Horses
-- [ ] Surah Az-Zalzalah (99) - 8 verses - The Earthquake
+- [x] Surah Az-Zalzalah (99) - 8 verses - The Earthquake
 - [ ] Surah Al-Bayyinah (98) - 8 verses - The Clear Evidence
 - [ ] Surah At-Tin (95) - 8 verses - The Fig
 - [ ] Surah Ash-Sharh (94) - 8 verses - The Relief
