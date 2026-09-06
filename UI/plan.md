@@ -21,7 +21,8 @@
 - [x] Surah Al-Kafirun (109) (no voice narration yet)
 - [x] Surah Al-Maun (107) (no voice narration yet)
 - [x] Surah Quraysh (106) (no voice narration yet)
-- [x] Surah Al-Masad (111) (no voice narration yet)
+- [x] Surah Al-Masad (111)
+- [x] Surah Al-Fil (105)
 
 ---
 
@@ -63,7 +64,7 @@
 - [x] Surah Quraysh (106) - 4 verses - The Quraysh
 
 ### Phase 3 - Slightly Longer
-- [ ] Surah Al-Fil (105) - 5 verses - The Elephant
+- [x] Surah Al-Fil (105) - 5 verses - The Elephant
 - [ ] Surah Al-Humazah (104) - 9 verses - The Backbiter
 - [ ] Surah At-Takathur (102) - 8 verses - Competition in Worldly Increase
 - [ ] Surah Al-Qari'ah (101) - 11 verses - The Striking Hour

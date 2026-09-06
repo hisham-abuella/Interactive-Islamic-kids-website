@@ -201,7 +201,10 @@ See `plan.md` for the full list. Immediate:
       My earlier "79,323 characters, does not fit" estimate was wrong — it costed narrating whole
       pages. Per-verse is 23,682, and the actual charge was lower still.
 
-- [ ] Phase 3 surahs: Al-Fil, Al-Humazah, At-Takathur, and the rest of Juz Amma.
+- [ ] Phase 3 surahs — **Al-Fil done 2026-09-05**; Al-Humazah, At-Takathur, Al-Qari'ah,
+      Al-Adiyat, Az-Zalzalah, Al-Bayyinah, At-Tin, Ash-Sharh, Ad-Duha remain.
+      There is now a page generator (`scripts/surah-page-template.py`): a surah is a content spec,
+      not 400 hand-written lines, so each new one is consistent and cheap.
 - [ ] Phase 1 stories: Prophet Isa, Prophet Muhammad ﷺ.
 
 ---
@@ -217,7 +220,11 @@ Carried over from the previous version of this file. Completed items are kept fo
       that scene rather than cycled mechanically. Each is a wash over the existing card, so the
       manuscript ground shows through and text colour — and therefore contrast — is untouched.
       Mirrors for RTL.
-- [ ] **Character illustrations** instead of emojis
+- [x] ~~**Character illustrations** instead of emojis~~ — **will not do**, decided 2026-09-05.
+      Not a resourcing question: depicting the prophets is impermissible, so illustrated
+      characters are off the table for the story pages regardless of who draws them. The emoji and
+      scene moods stay. Non-figurative illustration (landscapes, the ark, the Kaaba, ornament)
+      would be permissible if ever wanted, but needs a real illustrator to be worth doing.
 - [x] ~~**Reading mode toggle**~~ — shipped 2026-09-05 as a **bedtime mode** rather than a
       light/dark/sepia switcher, because the real use case is reading aloud in a dim room. A moon
       button in the navbar of all 20 pages dims the parchment to a warm, low-blue ground; the
