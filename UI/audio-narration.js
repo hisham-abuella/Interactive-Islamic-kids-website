@@ -176,8 +176,9 @@ const AudioNarration = {
 
             .narration-btn.auto-play-btn {
                 font-size: 1rem;
-                width: 40px;
-                height: 40px;
+                /* 44px is the site's touch-target floor; this was 40. */
+                width: 44px;
+                height: 44px;
             }
 
             .narration-btn.auto-play-btn.active {
@@ -198,8 +199,9 @@ const AudioNarration = {
                 font-size: 0.8rem;
                 font-weight: bold;
                 color: white;
-                width: 40px;
-                height: 40px;
+                /* 44px is the site's touch-target floor; this was 40. */
+                width: 44px;
+                height: 44px;
             }
 
             /* Loading indicator */

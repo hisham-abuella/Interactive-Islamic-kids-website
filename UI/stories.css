@@ -430,6 +430,8 @@
 }
 
 .quiz-option {
+    /* Keeps the tap target on the 44px floor when the text fits one line. */
+    min-height: 44px;
     background: white;
     color: var(--slate-700);
     padding: 1rem;
@@ -2019,7 +2021,6 @@ html[lang="ar"] .fullscreen-controls {
 }
 
 .progress-badge {
-    display: inline-block;
     align-self: flex-start;   /* .story-info is a flex column; do not stretch */
     width: fit-content;
     margin-bottom: 0.6rem;
@@ -2029,7 +2030,12 @@ html[lang="ar"] .fullscreen-controls {
     letter-spacing: 0.02em;
     border-radius: var(--radius-full);
     padding: 0.35rem 0.85rem;
-    min-height: 32px;
+    /* 44px is the site's touch-target floor; this was 32. It matters more here
+       than elsewhere: the badge sits inside the card's link, so a miss does not
+       just do nothing - it navigates away to the surah. */
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
     border: 1px solid var(--rule);
     background: var(--card);

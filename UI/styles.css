@@ -175,6 +175,10 @@ header {
     transition: all 0.25s ease;
     padding: 0.45rem 1.1rem;
     border-radius: var(--radius-full);
+    /* Matches the 44px touch target the rest of the controls use. */
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
 }
 
 .nav-links a:hover,

@@ -264,6 +264,8 @@ body {
 }
 
 .quiz-option {
+    /* Keeps the tap target on the 44px floor when the text fits one line. */
+    min-height: 44px;
     background: linear-gradient(135deg, var(--parchment-warm) 0%, var(--slate-200) 100%);
     color: var(--slate-700, var(--slate-700));
     padding: 1rem;

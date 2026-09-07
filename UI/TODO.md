@@ -127,7 +127,9 @@ the same answer in both languages throughout. Fixed in that pass:
 
 **Accessibility**
 - [x] ~~`.nav-toggle` ~34×27px, `.lang-toggle-btn` ~37px~~ — both now 44px (lang button measured
-      at 82×44 in-browser). Fixed 2026-09-03.
+      at 82×44 in-browser). Fixed 2026-09-03. **Six more controls were still under the floor and
+      were fixed 2026-09-07** — see the regressions section. Every visible control on all five
+      page types now measures ≥44px at desktop and at 375px.
 - [x] ~~Fullscreen button had `title` but no `aria-label`~~ — now labelled, and translated via a
       new `fullscreenToggle` key. Fixed 2026-09-03.
 
@@ -328,6 +330,25 @@ Carried over from the previous version of this file. Completed items are kept fo
   both languages. Re-run it whenever questions are added.
   *Lesson: "is this quiz guessable?" has more than one answer. Fixing the tell we thought of
   left a stronger one untouched for two years of content.*
+
+- **2026-09-07 — five controls were below the 44px touch target, and the hero badges failed AA.**
+  The 2026-09-03 pass fixed `.nav-toggle` and `.lang-toggle-btn` to 44px, but nothing measured
+  the rest, so the floor was never actually site-wide. Found by measuring every visible
+  `button`/`a` on each page type at both desktop and 375px:
+  `.nav-links a` (41px), `.verse-listen` (40px), the narration bar's `.speed-btn` and
+  `.auto-play-btn` (40px each, styled from inside `audio-narration.js` rather than a stylesheet,
+  which is why they were missed), story `.quiz-option` (43.8px), and `.progress-badge` (32px).
+  The badge mattered most: it sits *inside* the hub card's link, so a miss does not do nothing —
+  it navigates away to the surah. All six are now 44px, verified with the nav open at 375px and
+  with the badge still not navigating when tapped.
+  Separately, `.info-badge` in the surah hero was **2.72:1** — white 15px text on a pale pill over
+  the teal gradient, against the 4.5:1 AA needs for normal-size text. Darkening the pill instead
+  of lightening it gives **6.99:1** and keeps the glass look. The h1 (3.41) and subtitle (3.45)
+  pass the 3.0 large-text bar and were left alone.
+  *Lesson: measure contrast against what is actually painted under the text. A first pass that
+  read only `background-color` scored the hero title at 1.08:1 (it sits on a gradient) and the
+  badge at 3.59 (its own translucent pill was not composited in). Both numbers were wrong — one
+  far too alarming, one not alarming enough.*
 
 ## Known false positives — do not re-chase
 

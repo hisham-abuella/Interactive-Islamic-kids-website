@@ -91,7 +91,10 @@
 }
 
 .info-badge {
-    background: rgba(255, 255, 255, 0.2);
+    /* A light pill over the teal hero left white 15px text at 3.59:1, under the
+       4.5:1 AA needs for normal-size text. Darkening the pill instead of
+       lightening it keeps the glass feel and clears the bar. */
+    background: rgba(0, 0, 0, 0.34);
     color: white;
     padding: 0.5rem 1.2rem;
     border-radius: 20px;
@@ -1014,7 +1017,7 @@ html[lang="ar"] .parent-note {
     border: 1px solid var(--rule);
     border-radius: var(--radius-full);
     padding: 0.45rem 1.1rem;
-    min-height: 40px;
+    min-height: 44px;
     cursor: pointer;
     transition: background 0.2s ease, color 0.2s ease;
 }
