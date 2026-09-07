@@ -74,7 +74,9 @@ the same answer in both languages throughout. Fixed in that pass:
   free once Q1 was answered. Replaced with a question on the surah's core message.
 
 
-- [x] ~~**Quiz answers are guessable from length.**~~ Fixed 2026-09-04. Was 39 of 63 (62%) with
+- [x] ~~**Quiz answers are guessable from length.**~~ Fixed 2026-09-04. (The *position* tell was
+      a separate, larger problem, found and fixed 2026-09-06 — see the regressions section.)
+      Fixed 2026-09-04. Was 39 of 63 (62%) with
       the correct answer strictly longest, against 25% expected by chance. Now **2 of 63 (3%)
       longest and 5 (8%) shortest, with 89% mid-range** — neither extreme is a usable signal, and
       the tell was checked in both directions so it is not merely inverted. 70 distractors were
@@ -309,6 +311,23 @@ Carried over from the previous version of this file. Completed items are kept fo
   separately from the cards rather than assuming they agree.
   *Lesson: the same content rendered twice on one page needs both copies checked. Fixing the
   cards did not fix the block, and nothing tied them together.*
+
+- **2026-09-06 — the correct quiz answer was sitting in slot 2 in 74% of questions.**
+  The 2026-09-04 pass fixed the *length* tell (the correct answer being the longest) and got it
+  down to 3%. Nobody measured **position**, and it was much worse: across all 95 questions the
+  answer was the second option 70 times, and the fourth option **once**. "Always tap the second
+  one" outscored knowing the surah. Five of the six surah pages added on 2026-09-06 were
+  literally `[2, 2, 2, 2]`, so this pass made an existing problem worse before catching it.
+  Fixed by rotating the correct option into a target slot on all 25 pages — 76 of 95 questions
+  moved. Distribution is now 24/24/24/23 across the four slots, and every option's text is
+  byte-identical to before: only the order changed, verified by comparing sorted option sets
+  before and after. Two constraints on the new layout: no slot holds more than two of a page's
+  questions, and no page uses each slot exactly once (which would let a child deduce the fourth
+  answer from the first three).
+  Guarded by `scripts/verify-quizzes.py`, which measures position, length *and* duplicates in
+  both languages. Re-run it whenever questions are added.
+  *Lesson: "is this quiz guessable?" has more than one answer. Fixing the tell we thought of
+  left a stronger one untouched for two years of content.*
 
 ## Known false positives — do not re-chase
 
