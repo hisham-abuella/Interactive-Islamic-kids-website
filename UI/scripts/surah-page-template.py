@@ -1,5 +1,10 @@
 """Build a surah page from a content spec.
 
+Scripture carries lang="ar" explicitly: it is never translated, so it stays
+Arabic whatever language the page is showing, and without the attribute it
+inherits lang="en" from <html> and a screen reader reads the Quran with an
+English voice.
+
 Every surah page carries the same furniture - stage picker, per-verse narration,
 parent note, aria-hidden decoration, full EN/AR parity - and hand-writing 400
 lines each invites drift. This emits the current template so new surahs are
@@ -10,6 +15,18 @@ import html
 
 def esc(s):
     return s.replace('"', '&quot;')
+
+
+def mark_arabic(text):
+    """Wrap an Arabic run inside otherwise-English text in <span lang=\"ar\">.
+
+    Mixed-script text in one element inherits the page language, so the Arabic
+    half of a subtitle like 'The Fig - \u0627\u0644\u062a\u064a\u0646' would be read aloud with an
+    English voice.
+    """
+    import re as _re
+    return _re.sub('([\u0600-\u06ff][\u0600-\u06ff\\s\u064b-\u0652]*)',
+                   lambda m: '<span lang="ar">%s</span>' % m.group(1).strip(), text)
 
 
 def page(spec):
@@ -56,7 +73,7 @@ def page(spec):
         verses.append('''                <div class="verse-card" data-verse="%d">
                     <div class="verse-number">%d</div>
                     <div class="verse-content">
-                        <p class="arabic">%s</p>
+                        <p class="arabic" lang="ar">%s</p>
                         <p class="transliteration">%s</p>
                         <p class="translation" data-ar="%s">%s</p>
                         <div class="verse-explanation">
@@ -97,6 +114,8 @@ def page(spec):
                         <p data-ar="%s">%s</p>
                     </div>''' % (t['icon'], esc(t['h'][1]), t['h'][0], esc(t['p'][1]), t['p'][0])
                            for t in tips)
+
+    spec = dict(spec, sub_en=mark_arabic(spec['sub_en']))
 
     return '''<!DOCTYPE html>
 <html lang="en">
@@ -166,7 +185,7 @@ def page(spec):
             <!-- Bismillah -->
             <section class="bismillah-section">
                 <div class="bismillah-card">
-                    <p class="arabic-large">%(bismillah_ar)s</p>
+                    <p class="arabic-large" lang="ar">%(bismillah_ar)s</p>
                     <p class="transliteration">Bismillah ir-Rahman ir-Raheem</p>
                     <p class="translation" data-ar="&quot;بسم الله الرحمن الرحيم&quot;">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
                 </div>
@@ -192,7 +211,7 @@ def page(spec):
             <section class="full-surah-section">
                 <h2 class="section-title" data-ar="\U0001f4bf السورة كاملة">\U0001f4bf Complete Surah</h2>
                 <div class="full-surah-card">
-                    <p class="arabic-full" dir="rtl">
+                    <p class="arabic-full" lang="ar" dir="rtl">
                         %(full)s
                     </p>
                 </div>

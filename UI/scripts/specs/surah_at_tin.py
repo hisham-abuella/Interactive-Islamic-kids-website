@@ -272,7 +272,7 @@ SPEC = dict(
     prev='surah-ash-sharh.html',
     prev_en='← Surah Ash-Sharh',
     prev_ar='السابق: سورة الشرح',
-    next='ayat-al-kursi.html',
-    next_en='Ayat al-Kursi →',
-    next_ar='التالي: آية الكرسي',
+    next='surah-al-humazah.html',
+    next_en='Surah Al-Humazah →',
+    next_ar='التالي: سورة الهمزة',
 )

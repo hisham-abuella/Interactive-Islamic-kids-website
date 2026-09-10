@@ -350,6 +350,35 @@ Carried over from the previous version of this file. Completed items are kept fo
   badge at 3.59 (its own translucent pill was not composited in). Both numbers were wrong — one
   far too alarming, one not alarming enough.*
 
+- **2026-09-10 — the Quran was marked as English text for screen readers.**
+  Every `.arabic`, `.arabic-full`, `.arabic-large` and `.arabic-text` element inherited
+  `lang="en"` from `<html>` whenever the page was showing English — which is most of the time
+  for the child this site is for. A screen reader would pronounce the verse being memorised with
+  an English voice. 173 elements across 25 pages; not one of them declared its own language.
+  The site already knew the right pattern — `index.html`'s hero `ٱقْرَأْ` carries
+  `lang="ar" dir="rtl"` — it was just applied in one place out of 174.
+  Scripture is never translated, so it is always Arabic whichever language the page is showing:
+  all 173 now carry `lang="ar"`, and `surah-page-template.py` emits it, so new pages get it free.
+  The 20 surah subtitles ("The Fig - التين") hold both scripts in one element, so the Arabic half
+  is now wrapped in `<span lang="ar">`; the template does this at render time. Verified the
+  wrapper round-trips through a language switch and back.
+  *Still deliberately unmarked:* inline honorifics inside English prose (`عليه السلام`, `ﷺ`) and
+  the language button's own `عربي` label, which a screen reader never reads because the button
+  is announced from its `aria-label`. Worth doing if the site ever gets a real screen-reader
+  pass; not worth 200 inline spans today.
+  *Lesson: `dir` was fixed twice in this file's history and `lang` never came up. They are not
+  the same attribute — direction is how it looks, language is how it sounds.*
+
+- **2026-09-10 — rebuilding a page silently reverted a chain link.**
+  `surah-at-tin.html` was inserted into the chain by editing the generated HTML, not the spec.
+  The spec still said `next: ayat-al-kursi`, so the next `build-surah.py` run put the old link
+  back and At-Tin stopped pointing at Al-Humazah. Caught by `verify-chain.py` on the very next
+  run, which is the only reason it did not ship.
+  `verify-chain.py` now also checks **every spec's `prev`/`next` against the hub order**, so a
+  stale spec fails the check even while the built HTML still looks right.
+  *Lesson: with a generator, the spec is the source of truth. Patching generated output is a
+  change with a timer on it.*
+
 ## Known false positives — do not re-chase
 
 Each of these was reported by a checker and disproved on inspection. Recorded so the next pass does

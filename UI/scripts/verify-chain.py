@@ -10,7 +10,8 @@ import os
 import re
 import sys
 
-UI = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+HERE = os.path.dirname(os.path.abspath(__file__))
+UI = os.path.dirname(HERE)
 HUB = 'quran.html'
 
 
@@ -66,14 +67,39 @@ def main():
         elif nxt != HUB:
             problems.append('%s is last, so next should be %s, not %s' % (page, HUB, nxt))
 
+    # The generated pages are only as good as their specs. Patching a chain link in
+    # the HTML works until someone rebuilds the page and the spec quietly puts the
+    # old link back, which is exactly how at-tin lost its "next" once.
+    import glob
+    import importlib.util
+    for path in sorted(glob.glob(os.path.join(HERE, 'specs', '*.py'))):
+        name = os.path.basename(path)[:-3]
+        sp = importlib.util.spec_from_file_location(name, path)
+        mod = importlib.util.module_from_spec(sp)
+        sp.loader.exec_module(mod)
+        spec = mod.SPEC
+        page = spec['slug'] + '.html'
+        if page not in order:
+            problems.append('spec %s builds %s, which the hub does not list' % (name, page))
+            continue
+        i = order.index(page)
+        want_prev = order[i - 1] if i else None
+        want_next = order[i + 1] if i + 1 < len(order) else HUB
+        if spec.get('prev') != want_prev:
+            problems.append('spec %s: prev is %s, hub order says %s'
+                            % (name, spec.get('prev'), want_prev))
+        if spec.get('next') != want_next:
+            problems.append('spec %s: next is %s, hub order says %s'
+                            % (name, spec.get('next'), want_next))
+
     print()
     if problems:
         for p in problems:
             print('FAIL  %s' % p)
         print('\n%d problem(s) found' % len(problems))
         return 1
-    print('Chain is complete and symmetric across all %d pages, '
-          'and every page on disk is linked from the hub.' % len(order))
+    print('Chain is complete and symmetric across all %d pages, every page on disk is\n'
+          'linked from the hub, and every spec agrees with the hub order.' % len(order))
     return 0
 
 

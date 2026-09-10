@@ -92,8 +92,8 @@ def main():
             problems += 1
             continue
         src = open(path, encoding='utf-8').read()
-        cards = [n(x) for x in re.findall(r'<p class="arabic">(.*?)</p>', src, re.S)]
-        full = re.search(r'<p class="arabic-full" dir="rtl">(.*?)</p>', src, re.S)
+        cards = [n(x) for x in re.findall(r'<p class="arabic"[^>]*>(.*?)</p>', src, re.S)]
+        full = re.search(r'<p class="arabic-full"[^>]*>(.*?)</p>', src, re.S)
         ref = api_verses(PAGES[page])
 
         bad, style = [], []
@@ -133,7 +133,7 @@ def main():
     path = os.path.join(UI, 'ayat-al-kursi.html')
     if os.path.exists(path):
         src = open(path, encoding='utf-8').read()
-        cards = [n(x) for x in re.findall(r'<p class="arabic">(.*?)</p>', src, re.S)]
+        cards = [n(x) for x in re.findall(r'<p class="arabic"[^>]*>(.*?)</p>', src, re.S)]
         ref = n(json.load(urllib.request.urlopen(
             'https://api.alquran.cloud/v1/ayah/2:255/quran-simple', timeout=30)
         )['data']['text'])
