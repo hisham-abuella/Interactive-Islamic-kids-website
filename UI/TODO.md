@@ -33,9 +33,17 @@ Worth stating plainly, because it is the point of the whole exercise:
   star/moon/sun episode are all consistent with mainstream Sunni tafsir.
 - **All 25 YouTube embeds are live** as of 2026-09-06, re-checked via the oEmbed endpoint
   (re-check every pass — three died before).
-- **Narration scripts are consistent**: for adam/ibrahim/nuh/yusuf, slide count == EN count ==
-  AR count == audio file count, exactly. `voice-scripts.js` and `scripts/voice-scripts-data.json`
-  agree.
+- **Narration scripts are consistent**, and this is now a script: `scripts/verify-narration.py`
+  checks all five stories (EN == AR == generated files) and every surah page (verse cards ==
+  files, flagging a *partial* set, which would stop mid-read). Re-checked 2026-09-11: all five
+  stories in step, every surah page fully voiced except Al-Qari'ah, which is knowingly on
+  speech-synthesis until the quota resets.
+  The slide count is deliberately *not* in that script: `stories.js` assembles slides at runtime,
+  so it only exists in a browser. Measured there — adam 18, ibrahim 16, musa 20, nuh 16, each
+  equal to its script count with no slide left unscripted. Yusuf is `classic-scroll` by design
+  and builds no slides at all; its narration plays through its 17 scripts in order regardless,
+  confirmed by watching it request `slide-0.mp3` and start. A checker that counted slides
+  statically would have reported Yusuf as broken; it is not.
 - **The Arabic is trustworthy** — natural, warm MSA with correct dual agreement and consistent
   terminology; nested inline markup round-trips; no hardcoded English left in the JS.
 
