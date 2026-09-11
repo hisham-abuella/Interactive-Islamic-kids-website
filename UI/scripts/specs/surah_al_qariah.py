@@ -308,7 +308,7 @@ SPEC = dict(
     prev='surah-at-takathur.html',
     prev_en='← Surah At-Takathur',
     prev_ar='السابق: سورة التكاثر',
-    next='ayat-al-kursi.html',
-    next_en='Ayat al-Kursi →',
-    next_ar='التالي: آية الكرسي',
+    next='surah-al-adiyat.html',
+    next_en='Surah Al-Adiyat →',
+    next_ar='التالي: سورة العاديات',
 )

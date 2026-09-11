@@ -17,6 +17,34 @@ def esc(s):
     return s.replace('"', '&quot;')
 
 
+def correct_slots(slug, n_questions):
+    """Which option slot the correct answer sits in, per question.
+
+    A quiz whose answer is always the second button is one a child can beat
+    without knowing the surah - it was 74% site-wide before this was measured.
+    Placing the answer here, in the generator, means the property survives a
+    rebuild; a shuffle applied to the built HTML does not, and was silently
+    reverted twice.
+
+    Derived from the slug, so it is stable for a given surah and reproducible,
+    with two constraints: no slot takes more than two of a page's questions
+    (kills "always slot N"), and a four-question page never uses each slot
+    exactly once (which would let a child deduce the last answer from the
+    first three).
+    """
+    import collections
+    import random
+    rnd = random.Random('islamic-kids/' + slug)
+    while True:
+        slots = [rnd.randrange(4) for _ in range(n_questions)]
+        counts = collections.Counter(slots)
+        if max(counts.values()) > 2:
+            continue
+        if n_questions == 4 and len(counts) == 4:
+            continue
+        return slots
+
+
 def mark_arabic(text):
     """Wrap an Arabic run inside otherwise-English text in <span lang=\"ar\">.
 
@@ -88,10 +116,15 @@ def page(spec):
                                             [x['ar'] + ' ۝' for x in v])
 
     quiz = []
+    slots = correct_slots(spec['slug'], len(q))
     for qi, qq in enumerate(q, 1):
+        options = list(qq['options'])
+        ci = next(i for i, o in enumerate(options) if o[2])
+        ti = min(slots[qi - 1], len(options) - 1)
+        options.insert(ti, options.pop(ci))   # rotate, so distractors keep their order
         opts = '\n'.join(
             '                        <button class="quiz-option" data-correct="%s" data-ar="%s">%s</button>'
-            % ('true' if o[2] else 'false', esc(o[1]), o[0]) for o in qq['options'])
+            % ('true' if o[2] else 'false', esc(o[1]), o[0]) for o in options)
         quiz.append('''                <div class="quiz-card%s" data-question="%d">
                     <div class="question-number" data-ar="السؤال %s من %s">Question %d of %d</div>
                     <p class="quiz-question" data-ar="%s">%s</p>

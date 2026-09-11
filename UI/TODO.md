@@ -220,16 +220,18 @@ See `plan.md` for the full list. Immediate:
       My earlier "79,323 characters, does not fit" estimate was wrong — it costed narrating whole
       pages. Per-verse is 23,682, and the actual charge was lower still.
 
-- [ ] Phase 3 surahs — **eight of ten done**: Al-Fil, Az-Zalzalah, Ad-Duha, Ash-Sharh, At-Tin,
-      Al-Humazah, At-Takathur and Al-Qari'ah (the last six all on 2026-09-06).
-      **Al-Adiyat and Al-Bayyinah remain**, and then Phase 3 is complete.
+- [x] ~~Phase 3 surahs~~ — **all ten done.** Al-Fil and Az-Zalzalah (2026-09-05); Ad-Duha,
+      Ash-Sharh, At-Tin, Al-Humazah, At-Takathur and Al-Qari'ah (2026-09-06); Al-Adiyat and
+      Al-Bayyinah (2026-09-11). The Quran section is now **22 pages**.
+      Al-Bayyinah needed the most care: its verse 6 names a group and a punishment, so the page
+      says plainly, in both languages, that this is about *the choice to reject the proof after
+      seeing it clearly* — not about anyone's family or people. The fire is stated once, as the
+      Quran states it, and the surah's weight is put where it belongs: verse 5 (sincerity,
+      prayer, zakah) and the ending where Allah is pleased with them and they with Him.
       Note on budget: each new surah costs ~1,900-2,700 ElevenLabs characters for its per-verse
-      narration in both languages. **1,132 left this cycle**, resets 17 Sept — so the two
-      remaining surahs, and Al-Qari'ah's narration below, all wait for the reset.
-      Beware when planning against this number: the ElevenLabs counter **settles behind actual
-      use**. It read 7,702 straight after a 7,160-character batch and only later fell to 5,414,
-      which is why Al-Qari'ah's audio did not fit. Re-read it immediately before generating, and
-      keep using the generator's `--budget` hard stop.
+      narration in both languages, and the ElevenLabs counter **settles behind actual use** — it
+      has now been watched drifting down twice after a batch (7,702 → 5,414, then 5,414 → 3,264).
+      Re-read the real balance immediately before generating, and keep the `--budget` hard stop.
       The pipeline is now three scripts, so a surah is a content spec rather than 400 hand-written
       lines: `scripts/specs/<name>.py` holds the content, `scripts/build-surah.py` renders it
       through `scripts/surah-page-template.py`, and `scripts/build-narration-plan.py` reads the
@@ -246,13 +248,17 @@ See `plan.md` for the full list. Immediate:
       both languages (54 files, 7,160 characters). Stage picker, bedtime mode, language toggle
       and per-verse audio all exercised in a browser.
 
-- [ ] **Al-Qari'ah's narration** — the page shipped 2026-09-06 without generated audio, because
-      only 5,414 ElevenLabs characters were left and it needed 2,700. It is not broken: the
-      missing files fall through to the browser's own speech synthesis, which was verified
-      firing on the real page (audio 404 → the verse spoken aloud). Generate it after the
-      17 Sept reset:
-      `python3 scripts/build-narration-plan.py surah-al-qariah.html -o /tmp/p.json`
-      then `node scripts/generate-surah-audio.js /tmp/p.json --budget 3000`.
+- [ ] **Narration for Al-Qari'ah, Al-Adiyat and Al-Bayyinah** — three pages shipped without
+      generated audio because the quota ran out. They are not broken: the missing files fall
+      through to the browser's own speech synthesis, verified firing on the real pages (audio
+      404 → the verse spoken aloud). **8,361 characters** does all three in one batch; **3,264
+      left** as of 2026-09-11, resets 17 Sept. After the reset:
+      `python3 scripts/build-narration-plan.py surah-al-qariah.html surah-al-adiyat.html
+      surah-al-bayyinah.html -o /tmp/p.json`
+      then `node scripts/generate-surah-audio.js /tmp/p.json --budget 9000`.
+      Do all three together rather than squeezing one in early: because the counter lags, a
+      mid-run rejection would leave a page half-voiced, which `verify-narration.py` fails on
+      because it cuts out mid-read.
 
 - [x] ~~**Surah Al-Humazah (104), At-Takathur (102) and Al-Qari'ah (101)**~~ — built 2026-09-06,
       the warning surahs, framed the way Al-Masad was: around the *choice*, with the fire named
@@ -386,6 +392,21 @@ Carried over from the previous version of this file. Completed items are kept fo
   stale spec fails the check even while the built HTML still looks right.
   *Lesson: with a generator, the spec is the source of truth. Patching generated output is a
   change with a timer on it.*
+
+- **2026-09-11 — rebuilding a page reverted the quiz shuffle, on two pages.**
+  The 2026-09-06 fix that spread the correct answer across all four slots was applied to the
+  *built HTML*. Most surah pages are generated from specs, so the moment one was rebuilt for an
+  unrelated reason its quiz went straight back to `[2, 2, 2, 2]`. It happened to At-Tin (rebuilt
+  for the `lang="ar"` fix) and Al-Qari'ah (rebuilt for a chain fix), and it was caught only
+  because the site-wide distribution drifted in a way the arithmetic could not explain: slot 2
+  rose by 9 when only 8 questions had been added.
+  Fixed properly: `surah-page-template.py` now places the correct option itself, at a slot
+  derived from the surah's slug, with the same two constraints (no slot more than twice per page;
+  a four-question page never uses each slot exactly once). Rebuilds are byte-identical, so it
+  cannot be lost again. Distribution across the 100 scored questions is 29/21/26/24.
+  *Lesson: this is the second time a fix patched into generated output was quietly undone by a
+  rebuild — the first was a chain link, days earlier. With a generator there are only two safe
+  places for a property: the spec, or the generator. Anywhere else has a timer on it.*
 
 ## Known false positives — do not re-chase
 

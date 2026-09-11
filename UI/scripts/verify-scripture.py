@@ -51,6 +51,8 @@ PAGES = {
     'surah-al-humazah.html': 104,
     'surah-at-takathur.html': 102,
     'surah-al-qariah.html': 101,
+    'surah-al-adiyat.html': 100,
+    'surah-al-bayyinah.html': 98,
 }
 
 
