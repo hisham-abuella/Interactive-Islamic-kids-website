@@ -248,17 +248,13 @@ See `plan.md` for the full list. Immediate:
       both languages (54 files, 7,160 characters). Stage picker, bedtime mode, language toggle
       and per-verse audio all exercised in a browser.
 
-- [ ] **Narration for Al-Qari'ah, Al-Adiyat and Al-Bayyinah** — three pages shipped without
-      generated audio because the quota ran out. They are not broken: the missing files fall
-      through to the browser's own speech synthesis, verified firing on the real pages (audio
-      404 → the verse spoken aloud). **8,361 characters** does all three in one batch; **3,264
-      left** as of 2026-09-11, resets 17 Sept. After the reset:
-      `python3 scripts/build-narration-plan.py surah-al-qariah.html surah-al-adiyat.html
-      surah-al-bayyinah.html -o /tmp/p.json`
-      then `node scripts/generate-surah-audio.js /tmp/p.json --budget 9000`.
-      Do all three together rather than squeezing one in early: because the counter lags, a
-      mid-run rejection would leave a page half-voiced, which `verify-narration.py` fails on
-      because it cuts out mid-read.
+- [x] ~~**Narration for Al-Qari'ah, Al-Adiyat and Al-Bayyinah**~~ — generated 2026-09-23, after the
+      quota reset. All three in one batch as planned: **60 files** (30 verses × EN + AR),
+      **8,361 characters**, none skipped, against a 33,264-character allowance that had reset to
+      zero used. `verify-narration.py` now reports all 22 surah pages complete — no page is on the
+      speech-synthesis fallback any more. Scripture, chain and quiz verifiers all still pass.
+      The counter lag is confirmed again: it read 956 immediately after an 8,361-character run,
+      so keep reading the real balance before a batch rather than trusting the last figure seen.
 
 - [x] ~~**Surah Al-Humazah (104), At-Takathur (102) and Al-Qari'ah (101)**~~ — built 2026-09-06,
       the warning surahs, framed the way Al-Masad was: around the *choice*, with the fire named
