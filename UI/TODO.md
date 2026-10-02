@@ -350,6 +350,19 @@ Carried over from the previous version of this file. Completed items are kept fo
       text beside them carries the count. Do not "fix" this by asking for eleven again.
       Rainbows were removed at the owner's request (Adam 9, Nuh cover, Nuh 7) and `rainbow` is
       in the negative prompt, so a re-render will not bring them back.
+      **No sacred site and no religious emblem in any plate** — owner's instruction, 2026-10-02,
+      and it sits alongside the no-figures rule as a standing constraint on this whole set.
+      Four plates were redrawn for it: Ibrahim's cover and scene 8 had the Kaaba, Ibrahim's
+      scene 1 came out as a blue-domed shrine, and Musa's scene 1 put a domed palace skyline on
+      the horizon. Scene 8 is still *about* building — it now shows the site, with squared stone
+      stacked, a foundation marked out, mallets and rope, and nothing yet built. `kaaba`,
+      `mosque`, `minaret`, `dome with a finial`, `shrine`, `religious building` and
+      `star and crescent emblem` are all in the negative prompt now.
+      Two things were kept on purpose, so a later pass does not churn them: the natural sun, moon
+      and stars where the Quran's own narrative turns on them (Ibrahim 2-4 are the star, the moon
+      and the sun; Yusuf's dream is the sun, the moon and the stars), and plain arcades and
+      arches as manuscript decoration. Neither is an emblem. If the owner wants those gone too,
+      that is a different and much larger pass.
 - [x] ~~**Reading mode toggle**~~ — shipped 2026-09-05 as a **bedtime mode** rather than a
       light/dark/sepia switcher, because the real use case is reading aloud in a dim room. A moon
       button in the navbar of all 20 pages dims the parchment to a warm, low-blue ground; the
