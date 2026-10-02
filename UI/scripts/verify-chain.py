@@ -77,7 +77,12 @@ def main():
         sp = importlib.util.spec_from_file_location(name, path)
         mod = importlib.util.module_from_spec(sp)
         sp.loader.exec_module(mod)
-        spec = mod.SPEC
+        # specs/ holds surah specs, which define SPEC, alongside other content
+        # specs that have nothing to do with the surah chain (illustrations.py).
+        # Only the ones that build a page belong in this check.
+        spec = getattr(mod, 'SPEC', None)
+        if spec is None:
+            continue
         page = spec['slug'] + '.html'
         if page not in order:
             problems.append('spec %s builds %s, which the hub does not list' % (name, page))

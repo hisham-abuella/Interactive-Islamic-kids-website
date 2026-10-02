@@ -2122,3 +2122,109 @@ html[lang="ar"] .story-scene[data-mood="garden"] { border-right-color: var(--eme
 @media (prefers-reduced-motion: reduce) {
     .story-scene[data-mood] { transition: none; }
 }
+
+/* =====================================================
+   SCENE PLATES
+   An illuminated miniature at the head of each passage, in place of the
+   100px emoji roundel. Two decorations on one card compete with each other,
+   and at 100px the roundel could not have carried a picture anyway.
+
+   Only scenes marked .has-plate change; the roundel rules below are left
+   intact so any scene without art still looks the way it always did.
+   The plates are generated locally — see scripts/build-illustrations.py.
+   ===================================================== */
+
+.story-scene.has-plate {
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.story-scene.has-plate .scene-illustration {
+    /* Beat the roundel: width/height/radius/background all come from
+       .scene-illustration above, and the slide and 480px rules reset the
+       box again further down. */
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    background: var(--parchment-warm);
+    border: 1px solid var(--rule-warm);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+    overflow: hidden;
+    font-size: 0;
+}
+
+.scene-plate {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Belt and braces. The plate carries width/height attributes so the browser
+   can reserve its space before the file arrives, which also means that if
+   this stylesheet ever fails to reach a browser holding a cached copy, the
+   raw <img> would render at its intrinsic 960px and shove itself straight
+   through the scene text. It happened once, on a cached sheet. These two
+   lines are what stop it, and they are deliberately not scoped to
+   .has-plate so nothing can select its way around them. The ?v= on the
+   stylesheet link is the other half of the fix. */
+img.scene-plate,
+img.story-cover {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* The plate is the same picture either way round, so RTL needs no mirror —
+   but the column layout must survive the row-reverse rules above. */
+html[lang="ar"] .story-scene.has-plate {
+    flex-direction: column;
+}
+
+/* Slide mode re-sizes the roundel to 80px; take the box back. */
+.story-slide .story-scene.has-plate .scene-illustration {
+    width: 100%;
+    height: auto;
+    margin: 0 0 0.5rem 0;
+}
+
+@media (max-width: 768px) {
+    .story-scene.has-plate .scene-illustration {
+        margin: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .story-slide .story-scene.has-plate .scene-illustration {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Printing a story to read aloud: keep the plate, drop its shadow. */
+@media print {
+    .story-scene.has-plate .scene-illustration {
+        box-shadow: none;
+        break-inside: avoid;
+    }
+}
+
+/* Hub cards carry the story's cover plate instead of an emoji. The girih
+   wash above still shows through at its own low opacity; the roundel that
+   framed the emoji is dropped, since there is no longer an emoji in it. */
+.story-thumbnail.has-cover {
+    padding: 0;
+    font-size: 0;
+    aspect-ratio: 16 / 9;
+}
+
+.story-thumbnail.has-cover::after {
+    content: none;
+}
+
+.story-cover {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

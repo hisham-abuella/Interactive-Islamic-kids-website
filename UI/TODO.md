@@ -268,6 +268,24 @@ See `plan.md` for the full list. Immediate:
       question with full EN/AR parity. Narration generated for Al-Humazah and At-Takathur
       (34 files, 4,282 characters); Al-Qari'ah's is pending above.
 
+- [ ] **Re-voice the English narration in the owner's own cloned voice** — decided 2026-10-01,
+      then **deliberately deferred** so the illustration work could land on its own. Do not
+      re-open the *choice*, only the scheduling.
+      The ElevenLabs account has a cloned voice **Hisham** (`pusofH2Ro5Ny4RH6qBEO`, category
+      `cloned`, labelled `en`). Samples were generated in English and in Arabic and listened to;
+      the verdict was **English in that voice, Arabic left exactly as it is.** An English clone
+      reading Arabic was not worth the trade, and the account already carries two professional
+      Arabic voices (`Ahmed - Warm & Classic`, `Hanafi`) if the Arabic is ever revisited.
+      Both generators hardcode Sarah (`EXAVITQu4vr4xnSDxMaL`) today:
+      `scripts/generate-audio-elevenlabs.js` (stories, slide-indexed) and
+      `scripts/generate-surah-audio.js` (surahs, verse-indexed). Only the **en** side changes;
+      the `ar` entry in each must be left alone.
+      Budget, measured 2026-10-01 — this does not fit in one cycle:
+      stories EN 17,035 / AR 12,551; surahs EN+AR 46,929; everything 76,515, against a
+      33,264-character monthly allowance. **Order agreed: the five stories in English first**
+      (17,035). Re-read the live balance immediately before starting — the counter settles
+      upward after a batch, so the figure on screen understates what has already gone.
+
 - [ ] Phase 1 stories: Prophet Isa, Prophet Muhammad ﷺ.
 
 ---
@@ -288,6 +306,50 @@ Carried over from the previous version of this file. Completed items are kept fo
       characters are off the table for the story pages regardless of who draws them. The emoji and
       scene moods stay. Non-figurative illustration (landscapes, the ark, the Kaaba, ornament)
       would be permissible if ever wanted, but needs a real illustrator to be worth doing.
+      **Superseded in part on 2026-10-01 — see scene plates below.** The figurative half of this
+      entry still stands and always will: no plate contains a person.
+- [x] ~~**Scene plates**~~ — built 2026-10-01. The "needs a real illustrator" blocker above came
+      off once the illustrator could be the machine already sitting on the owner's desk: the
+      pictures are rendered by the local Draw Things engine (`z_image_turbo`), so nothing is
+      prompted to a paid API and no image leaves the house.
+      **48 plates** — one per scene across all five stories (43), plus a cover for each (5).
+      Every scene now opens with an illuminated miniature in the site's own palette instead of a
+      100px emoji roundel, and the five hub cards on `stories.html` carry their story's cover.
+      **Nothing figurative.** Each scene is carried by its setting and its objects: the half-built
+      ark rather than the carpenter, the empty pedestals and the axe rather than Ibrahim, the
+      parted water rather than the people walking through it. Pharaoh, the angels and Iblis are
+      all handled the same way — as architecture, as light, as a single flame standing apart.
+      Animals, weather, plants and buildings do the work. The negative prompt names the human
+      figure in six different forms because one form alone leaks a stray silhouette.
+      Weight: WebP, ~55-70 KB each, `loading="lazy"`, so a story page carries about 0.5 MB of art
+      it only fetches as the child scrolls into it.
+      The pipeline is a spec plus a build script, like the surahs: `scripts/specs/illustrations.py`
+      holds the 48 prompts, `scripts/build-illustrations.py` renders them. Seeds are crc32 of the
+      plate name, so re-running reproduces the same picture rather than a new one; `--force`
+      redraws, and `story:scene` redraws just one when a plate comes out wrong.
+      Still on emoji, deliberately: the story page heroes and the `index.html` featured cards,
+      whose card shape would have to change to take a banner.
+      **Four things the first pass got wrong, all fixed — do not reintroduce them:**
+      (1) The wiring regex was non-greedy, so on the two scenes with nested markup (Adam's
+      creation animation, Ibrahim's fire scene) it left a stray `</div>` that closed the scene
+      early and dropped `.scene-text` outside it — on screen the plate rendered straight through
+      the words. `verify-illustrations.py` now *parses* the pages and asserts each scene encloses
+      exactly one plate and exactly one `.scene-text`.
+      (2) `stories.css` changed under an unchanged URL, so a returning visitor got cached CSS with
+      new markup and the plate rendered at its intrinsic 960px. The link now carries
+      `?v=20261001` on all seven pages, there is a `max-width/max-height` rule on the image that
+      is deliberately **not** scoped to `.has-plate` so nothing can select around it, and the
+      verifier fails if the `?v=` goes missing.
+      (3) "A caravan of riderless camels" drew four riders with faces straight past the negative
+      prompt. Negation does not work; describing a scene with nothing for a person to sit on
+      does. The camels now stand at rest beside their unloaded bundles. `rider/riding/mounted`
+      and `sun with a face` are in the negative prompt as well.
+      (4) **The engine cannot count.** Yusuf's dream is eleven stars (12:4); asked for eleven it
+      drew twelve, then nine. Both Yusuf plates are now composed so they never claim a number —
+      a scattered field of stars with the sun and moon as the two forms that matter, and the
+      text beside them carries the count. Do not "fix" this by asking for eleven again.
+      Rainbows were removed at the owner's request (Adam 9, Nuh cover, Nuh 7) and `rainbow` is
+      in the negative prompt, so a re-render will not bring them back.
 - [x] ~~**Reading mode toggle**~~ — shipped 2026-09-05 as a **bedtime mode** rather than a
       light/dark/sepia switcher, because the real use case is reading aloud in a dim room. A moon
       button in the navbar of all 20 pages dims the parchment to a warm, low-blue ground; the
