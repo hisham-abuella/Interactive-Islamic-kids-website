@@ -1,0 +1,145 @@
+2026-09-03 [islamic-content-scholar] religious content review — full site audit
+
+SCOPE: 11 Quran pages (surah-al-asr, surah-al-falaq, surah-al-ikhlas, surah-al-kafirun,
+surah-al-kawthar, surah-al-maun, surah-an-nas, surah-an-nasr, surah-fatiha, surah-quraysh,
+ayat-al-kursi) + 5 story pages (adam, ibrahim, musa, nuh, yusuf).
+
+METHOD: scripted Arabic diff (/tmp/quran_check.py) against
+https://api.alquran.cloud/v1/surah/{n}/quran-simple for surahs 1,103,106,107,108,109,110,
+112,113,114 and https://api.alquran.cloud/v1/ayah/2:255/quran-simple for Ayat al-Kursi.
+Normalisation: strip HTML tags, NFC-normalise, strip Unicode combining marks (diacritics),
+map ٱ/آ/أ/إ -> ا, ی -> ي, ى -> ي, strip dagger-alif, keep only Arabic letters + spaces.
+Extracted <p class="arabic"> verse cards (exact class-token match, not substring, to avoid
+false hits on "arabic-large"/"arabic-full") and <p class="arabic-full"> complete-surah blocks.
+
+[FINDING] CORRECT — Arabic text, all 10 short surahs: every verse card and every
+complete-surah block matches api.alquran.cloud quran-simple (Imlaei script) exactly after
+normalisation. The only automated "diffs" were the API's convention of prefixing ayah-1 text
+with Bismillah, which the site correctly displays as its own separate card — not a real
+discrepancy.
+
+[FINDING] CORRECT — Ayat al-Kursi (2:255): the 8 phrase-cards on ayat-al-kursi.html
+concatenate to an exact character match against 2:255 quran-simple. Site deliberately breaks
+the single mushaf verse into 8 teaching-sized phrase cards; confirmed as a pedagogical choice,
+not a numbering error — the page correctly labels it "1 Mighty Verse" / "Surah Al-Baqarah,
+verse 255" and never claims multiple verses.
+
+[FINDING] CORRECT — surah-fatiha.html: verse numbering confirmed on standard Hafs mushaf.
+Bismillah = verse 1 (verse-card data-verse="1", surah-fatiha.html:111-124), 7 verses total,
+badge says "7 Verses" (surah-fatiha.html:53), final verse 7 is the full unsplit line "صِرَاطَ
+الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ"
+(surah-fatiha.html:189). The previously-reported non-Hafs miscounting is fixed and stayed
+fixed.
+
+[FINDING] CORRECT — the previously-reported transliteration typo is fixed. surah-fatiha.html
+verse 7 transliteration now reads "wa lad-dalleen" (surah-fatiha.html:190), no stray vowels.
+"ladheena" spelling used consistently across surah-al-asr.html:148, surah-al-maun.html:176/
+189/362, surah-fatiha.html:190 — no "lazeena" drift found anywhere in the 11 Quran pages.
+
+[FINDING] CORRECT — ﷺ usage: every "Prophet Muhammad" / "the Prophet" reference across all
+11 Quran pages carries ﷺ (grep for the phrase without ﷺ returned zero hits).
+
+[FINDING MINOR] Adab inconsistency across story pages — "peace be upon him" / (AS) for
+prophets appears only in <meta name="description"> (not visible to a reader) for Adam,
+Ibrahim, and Musa:
+  story-prophet-adam.html:6, story-prophet-ibrahim.html:6, story-prophet-musa.html:6
+No visible in-body honorific anywhere in those three pages (checked all "Prophet Adam" /
+"Prophet Ibrahim" / "Prophet Musa" occurrences). By contrast:
+  story-prophet-nuh.html:74 — "Prophet Nuh (peace be upon him)" in the opening paragraph
+  story-prophet-yusuf.html:74 — "Prophet Yusuf (peace be upon him)" in the opening paragraph
+Recommend adding a visible "(peace be upon him)" on first mention in the adam/ibrahim/musa
+body text for consistency.
+
+[FINDING MINOR] story-prophet-yusuf.html:83 — Prophet Yaqub (also a prophet) is never given
+"(peace be upon him)" anywhere in the page, unlike his son Yusuf on the same page. Cosmetic/
+consistency issue only, not a doctrinal error.
+
+[FINDING MINOR] surah-al-kafirun.html:304 — a Quranic verse ("لا إكراه في الدين" / "There is
+no compulsion in religion", Al-Baqarah 2:256) is wrapped in class="hadith" even though the
+visible text correctly attributes it as Quran ("Allah says elsewhere in the Quran..."). No
+misinformation reaches the reader, but the CSS class is a mislabel worth a code cleanup.
+
+[FINDING MINOR] surah-al-asr.html:261 — a saying of Imam ash-Shafi'i ("If Allah had revealed
+no other surah than this one, it would have been sufficient for people") is also wrapped in
+class="hadith". The text correctly attributes it to Imam ash-Shafi'i, not to the Prophet ﷺ,
+so no fabricated-hadith risk — but it is scholarly athar, not hadith, and the class name is
+misleading in the markup.
+
+[FINDING MINOR] ayat-al-kursi.html:99 — hadith "whoever recites Ayat al-Kursi after every
+obligatory prayer, nothing stands between them and entering Paradise except death" (source:
+An-Nasa'i, Amal al-Yawm wal-Laylah) is presented as flatly authentic. Its authenticity is
+scholarly-disputed (graded da'if by some including adh-Dhahabi; graded sahih by al-Albani in
+Silsilat al-Ahadith as-Sahihah #972). Not fabricated and widely cited, but a stronger site
+might soften the certainty or footnote the grading. Low stakes for a children's site.
+
+HADITH AUTHENTICITY — reviewed every class="hadith" block (10 total) plus quoted Prophetic
+sayings outside that class:
+  ayat-al-kursi.html:332 "أعظم آية..." (greatest verse) — authentic core, Sahih Muslim 810
+    (Ubay ibn Ka'b), wording is a compressed paraphrase of a longer dialogue, not verbatim,
+    but presented with quote marks. Meaning is faithful. MINOR: paraphrase-as-quote.
+  ayat-al-kursi.html:88-89 — Abu Hurairah / thief-is-Shaytan hadith — authentic, Sahih
+    al-Bukhari 2311. Paraphrase is faithful to content and outcome.
+  surah-al-ikhlas.html:275 — "a third of the Quran" hadith — authentic, Sahih al-Bukhari
+    5013-15 (via Sahih Muslim also). Faithful paraphrase.
+  surah-al-ikhlas.html:89 — man who loved reciting Al-Ikhlas "because it describes
+    Ar-Rahman" — authentic, Sahih al-Bukhari 774. Faithful paraphrase.
+  surah-al-falaq.html:289 / surah-an-nas.html:301 — Muawwidhatayn revealed together hadith —
+    authentic, Sahih Muslim 814. Faithful paraphrase.
+  surah-al-kawthar.html:261 — "Al-Kawthar is a river" hadith — authentic, Sahih Muslim 400.
+    Faithful paraphrase.
+  surah-fatiha.html:316 — "no prayer without reciting Al-Fatiha" — authentic, Sahih
+    al-Bukhari 756 / Sahih Muslim 394. Faithful paraphrase.
+  surah-an-nasr.html:261 — "Subhanaka Allahumma..." dua after An-Nasr's revelation —
+    authentic, Sahih al-Bukhari 4967 / Sahih Muslim 484, correctly tied to Aisha's report and
+    to the ruku/sujud context.
+  surah-quraysh.html:274 — "whoever wakes up safe, healthy, with food for the day..." —
+    authentic (hasan), Sunan at-Tirmidhi 2346, graded hasan by al-Albani. Faithful paraphrase.
+  surah-al-kafirun.html:70 — "Al-Kafirun equals a quarter of the Quran" — commonly cited
+    (Musnad Ahmad / at-Tirmidhi), graded sahih by al-Albani in Sahih al-Jami, disputed by
+    some earlier critics. Widely accepted; acceptable for this audience.
+  surah-al-kafirun.html:101 — "recite Al-Kafirun before sleep, protection from shirk" —
+    authentic (hasan/sahih), Sunan Abi Dawud 5055, graded sahih by al-Albani.
+  surah-al-maun.html:319 — "I and the one who cares for an orphan..." — authentic, Sahih
+    al-Bukhari 5304, correctly includes the "two fingers" gesture detail.
+No fabricated hadith found. No hadith misattributed to the wrong narrator/source. All
+"quotes" are reasonable paraphrases of authentic content, not invented wording — flagged the
+one (ayat-al-kursi.html:332) that compresses a dialogue hadith into a single declarative
+line while still using quotation marks.
+
+AQEEDAH — reviewed all statements about Allah's attributes:
+  ayat-al-kursi.html:69,203 — "Kursi means throne or footstool... so enormous the heavens
+    and earth fit inside it" — standard Sunni tafsir (Ibn Kathir, via Ibn Abbas), no
+    anthropomorphism; never claims Allah "sits" on it or has a body. CORRECT.
+  surah-al-ikhlas.html — "لم يلد ولم يولد" -> "He does not give birth, nor was He born" and
+    "ولم يكن له كفواً أحد" -> "there is none comparable to Him" (surah-al-ikhlas.html:149,162)
+    — theologically sound, matches tanzih (transcendence), no drift between Arabic and
+    English. CORRECT.
+  story-prophet-ibrahim.html:112,144,169 — the star/moon/sun episode (Quran 6:76-79) is
+    retold with Ibrahim provisionally saying "this is my lord" then rejecting each as it
+    sets, concluding "only Allah... deserves worship" (story-prophet-ibrahim.html:178). This
+    mirrors the Quran's own literary structure and the mainstream Sunni position that Ibrahim
+    was reasoning dialectically with his people rather than genuinely disbelieving (prophetic
+    ismah preserved) — standard framing for children's retellings, not flagged as an error.
+
+AGE-APPROPRIATENESS:
+  story-prophet-nuh.html:135,144 — the flood is described ("water covered the whole earth,"
+    "Ark landed on Mount Judi") without depicting the drowning of disbelievers explicitly —
+    an appropriate deliberate deferral for young children. CORRECT.
+  surah-al-kafirun.html — the "trade offer" story and the surah's rejection of syncretism is
+    framed as "firm but never rude," explicitly notes the surah insults no one, and gives
+    kids a script ("No thank you, I do not do that") — good age-appropriate adab modeling.
+    CORRECT.
+  No Al-Masad-style curse content in current scope (no surah-al-masad page exists yet).
+
+TRANSLATION SPOT-CHECK (data-ar vs English) — surah-al-kafirun verse-by-verse translations
+(lines 124-189), surah-al-ikhlas verse-by-verse (110-162), surah-al-falaq/an-nas
+verse-by-verse (108-186) all checked meaning-for-meaning against Arabic; no theological drift
+found in the sampled explanation paragraphs either.
+
+SUMMARY: No CRITICAL or MAJOR findings. Scripture (Arabic text, verse numbering, hadith
+attribution, aqeedah statements) verified sound across all 11 Quran pages and 5 story pages.
+5 MINOR findings, all cosmetic/consistency (missing visible honorifics on 3 story pages,
+one prophet never honorified, two class="hadith" mislabels, one hadith-authenticity nuance
+worth a soft footnote).
+
+[DONE] Full findings returned to caller.

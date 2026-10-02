@@ -36,6 +36,8 @@ NEGATIVE = (
     "text, writing, calligraphy, arabic letters, latin letters, numbers, watermark, "
     "signature, photorealistic, photograph, 3d render, cgi, horror, scary, gore, "
     "rainbow, rainbows, prismatic arc, "
+    "kaaba, mosque, minaret, dome with a finial, shrine, temple, religious building, "
+    "star and crescent emblem, religious symbol, flag, banner with an emblem, "
     "blurry, low quality"
 )
 
@@ -66,10 +68,10 @@ PLATES = {
             "sky, a new world at sunrise",
     },
     "prophet-ibrahim": {
-        "cover": "the Kaaba as a simple stone cube in a desert valley beneath a sky of golden stars "
-                 "and a crescent moon",
-        1: "a small stone dwelling in a quiet desert valley at dawn, date palms, distant hills, "
-           "soft rose and gold light",
+        "cover": "a wide desert horizon at first light, the last few stars fading in a deep violet "
+                 "sky, the sun's first rays rising gold over the dunes",
+        1: "the mouth of a quiet cave in a rocky desert hillside at dawn, date palms below, "
+           "distant hills, soft rose and gold light, sheltered and still",
         2: "an enormous night sky crowded with golden stars above dark desert dunes, "
            "the Milky Way arching over",
         3: "a full silver moon high over a dark blue desert, long shadows on the dunes, "
@@ -82,14 +84,15 @@ PLATES = {
            "instead of orange, calm and strange",
         7: "flames turning into a blooming garden, fire becoming roses and green leaves, "
            "turquoise and gold, flowers opening where the fire was",
-        8: "the Kaaba as a simple stone cube under a starry night sky, open desert ground, "
-           "lanterns on the sand, no crowd",
+        8: "a building site in an open desert valley at dusk, squared blocks of pale cut stone "
+           "stacked ready, a level foundation line marked on the ground, wooden mallets and a "
+           "coil of rope, lanterns on the sand, nothing yet built",
     },
     "prophet-musa": {
         "cover": "a great sea parted into two towering walls of turquoise water with a dry sand path "
                  "running between them",
-        1: "the river Nile at night, tall papyrus reeds along the bank, the silhouette of an Egyptian "
-           "palace far off, stars on the water",
+        1: "the river Nile at night, tall papyrus reeds crowding the bank, still dark water, "
+           "stars reflected on the surface, no buildings on the horizon",
         2: "a small woven basket floating among river reeds on calm water, morning light, "
            "lotus flowers and dragonflies",
         3: "an Egyptian palace courtyard with painted lotus columns, a still reflecting pool, "
