@@ -10,104 +10,442 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="stories.css">
+    <link rel="stylesheet" href="stories.css?v=20261001">
 </head>
 <body>
     <!-- Floating Decorations -->
     <div class="floating-decorations">
-        <span class="floating-star" style="top: 10%; left: 5%;">⭐</span>
-        <span class="floating-star" style="top: 20%; right: 10%;">✨</span>
-        <span class="floating-lantern" style="top: 40%; left: 8%;">🏮</span>
-        <span class="floating-star" style="top: 60%; right: 5%;">⭐</span>
-        <span class="floating-cloud" style="top: 15%; right: 20%;">☁️</span>
+        <span class="floating-star" style="top: 10%; left: 5%;" aria-hidden="true">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;" aria-hidden="true">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;" aria-hidden="true">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;" aria-hidden="true">⭐</span>
+        <span class="floating-cloud" style="top: 15%; right: 20%;" aria-hidden="true">☁️</span>
     </div>
 
     <!-- Header -->
     <header>
         <nav class="navbar">
             <div class="logo">
-                <span class="crescent">☪</span>
-                <h1>Islamic Kids</h1>
+                <span class="crescent" aria-hidden="true">☪</span>
+                <span class="logo-text" data-ar="أطفال الإسلام">Islamic Kids</span>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="stories.html">Stories</a></li>
-                <li><a href="quran.html" class="active">Quran</a></li>
-                <li><a href="index.html#learn">Learn</a></li>
-            </ul>
+            <div class="nav-cluster">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="stories.html" data-ar="القصص">Stories</a></li>
+                    <li><a href="quran.html" class="active" data-ar="القرآن">Quran</a></li>
+                    <li><a href="index.html#learn" data-ar="تعلّم">Learn</a></li>
+                </ul>
+                <button class="bedtime-btn" type="button" aria-pressed="false" aria-label="Bedtime reading mode" title="Bedtime reading mode" data-ar="وضع القراءة الليلية">🌙</button>
+                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
+            </div>
         </nav>
     </header>
 
     <!-- Hero -->
     <section class="stories-hero">
-        <h1>📖 Learn the Quran</h1>
-        <p>Beautiful surahs and verses, explained just for you!</p>
+        <h1 data-ar="📖 تعلّم القرآن">📖 Learn the Quran</h1>
+        <p data-ar="سور وآيات جميلة، مشروحة خصيصاً لك!">Beautiful surahs and verses, explained just for you!</p>
+    </section>
+
+    <!-- Progress -->
+    <section class="progress-strip">
+        <div class="progress-strip-inner">
+            <p class="progress-count" id="progressCount"
+               data-ar-template="حفظت {done} من {total} سور">You have memorized {done} of {total} surahs</p>
+            <a class="resume-link" id="resumeLink" href="#" hidden
+               data-ar="تابع من حيث توقفت ←">Pick up where you left off →</a>
+        </div>
     </section>
 
     <!-- Grid -->
     <section class="stories-grid-section">
         <div class="stories-container">
 
-            <a href="surah-fatiha.html" class="story-card-link">
+            <a href="surah-fatiha.html" class="story-card-link surah-progress" data-surah="surah-fatiha.html">
                 <div class="story-select-card">
-                    <div class="story-thumbnail">📖</div>
+                    <div class="story-thumbnail" aria-hidden="true">📖</div>
                     <div class="story-info">
-                        <h3>Surah Al-Fatiha — The Opening</h3>
-                        <p>The very first chapter of the Quran, which we recite in every single prayer.</p>
-                        <div class="story-meta">
+                        <h3 data-ar="سورة الفاتحة — فاتحة الكتاب">Surah Al-Fatiha — The Opening</h3>
+                        <p data-ar="أول سورة في القرآن، ونقرأها في كل صلاة.">The very first chapter of the Quran, which we recite in every single prayer.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٧ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
                             <span>📿 7 Verses</span>
                             <span>🕌 Makki</span>
                             <span>🎯 Quiz</span>
                             <span>🎬 Video</span>
                         </div>
-                        <button class="start-story-btn">Start Learning →</button>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
                     </div>
                 </div>
             </a>
 
-            <a href="ayat-al-kursi.html" class="story-card-link">
-                <div class="story-select-card featured">
-                    <div class="story-thumbnail">🪑</div>
-                    <div class="story-info">
-                        <h3>Ayat al-Kursi — The Verse of the Throne</h3>
-                        <p>The greatest verse in the whole Quran! Learn it piece by piece and say it before you sleep.</p>
-                        <div class="story-meta">
-                            <span>✨ Greatest Verse</span>
-                            <span>📿 Al-Baqarah 255</span>
-                            <span>🎯 Quiz</span>
-                            <span>🎬 Video</span>
-                        </div>
-                        <button class="start-story-btn">Start Learning →</button>
-                    </div>
-                </div>
-            </a>
 
-            <a href="surah-al-ikhlas.html" class="story-card-link">
-                <div class="story-select-card featured">
-                    <div class="story-thumbnail">💎</div>
+            <a href="surah-al-ikhlas.html" class="story-card-link surah-progress" data-surah="surah-al-ikhlas.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">💎</div>
                     <div class="story-info">
-                        <h3>Surah Al-Ikhlas — The Oneness of Allah</h3>
-                        <p>Only 4 short verses, but the Prophet ﷺ said it is worth a third of the Quran!</p>
-                        <div class="story-meta">
+                        <h3 data-ar="سورة الإخلاص — توحيد الله">Surah Al-Ikhlas — The Oneness of Allah</h3>
+                        <p data-ar="أربع آيات قصيرة فقط، وقال النبي ﷺ إنها تعدل ثلث القرآن!">Only 4 short verses, but the Prophet ﷺ said it is worth a third of the Quran!</p>
+                        <div class="story-meta" data-ar="<span>📿 ٤ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
                             <span>📿 4 Verses</span>
                             <span>🕌 Makki</span>
                             <span>🎯 Quiz</span>
                             <span>🎬 Video</span>
                         </div>
-                        <button class="start-story-btn">Start Learning →</button>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-al-falaq.html" class="story-card-link surah-progress" data-surah="surah-al-falaq.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🌅</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة الفلق — الصبح">Surah Al-Falaq — The Daybreak</h3>
+                        <p data-ar="درع صغير تحمله معك! اسأل الله ربّ الفلق أن يحفظك.">A little shield you can carry! Ask Allah, the Lord of the daybreak, to keep you safe.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٥ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 5 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-an-nas.html" class="story-card-link surah-progress" data-surah="surah-an-nas.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🤍</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة الناس">Surah An-Nas — Mankind</h3>
+                        <p data-ar="آخر سورة في القرآن، تحمي قلبك من الوسواس الخفي.">The very last surah of the Quran, which protects your heart from sneaky whispers.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٦ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 6 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-al-kawthar.html" class="story-card-link surah-progress" data-surah="surah-al-kawthar.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🌊</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة الكوثر — الخير الكثير">Surah Al-Kawthar — The Abundance</h3>
+                        <p data-ar="أقصر سورة في القرآن كله، وقصة نهر في الجنة.">The shortest surah in the whole Quran, and the story of a river in Paradise.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٣ آيات</span> <span>🏆 أقصر سورة</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 3 Verses</span>
+                            <span>🏆 Shortest Surah</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-al-asr.html" class="story-card-link surah-progress" data-surah="surah-al-asr.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">⏳</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة العصر — الزمن">Surah Al-Asr — Time</h3>
+                        <p data-ar="ثلاث آيات صغيرة تحمل وصفة الحياة السعيدة الناجحة كاملة.">Three tiny verses that hold the whole recipe for a happy and successful life.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٣ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 3 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-an-nasr.html" class="story-card-link surah-progress" data-surah="surah-an-nasr.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🕊️</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة النصر — نصر الله">Surah An-Nasr — Divine Support</h3>
+                        <p data-ar="يوم فتحت مكة أبوابها، وماذا فعل النبي ﷺ بنصره.">The day Makkah opened its gates, and what the Prophet ﷺ did with his victory.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٣ آيات</span> <span>🕌 مدنية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 3 Verses</span>
+                            <span>🕌 Madani</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-al-kafirun.html" class="story-card-link surah-progress" data-surah="surah-al-kafirun.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🤝</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة الكافرون">Surah Al-Kafirun — The Disbelievers</h3>
+                        <p data-ar="كيف تكون لطيفاً مع الجميع وأنت متمسك بما تؤمن به.">How to be kind to everyone while holding on tightly to what you believe.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٦ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 6 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-al-maun.html" class="story-card-link surah-progress" data-surah="surah-al-maun.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🤲</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة الماعون — المعروف الصغير">Surah Al-Maun — Small Kindnesses</h3>
+                        <p data-ar="رعاية اليتيم، وإطعام الجائع، ومشاركة الأشياء الصغيرة كل يوم.">Caring for orphans, feeding the hungry, and sharing the little everyday things.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٧ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 7 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-quraysh.html" class="story-card-link surah-progress" data-surah="surah-quraysh.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🐫</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة قريش">Surah Quraysh — The Quraysh</h3>
+                        <p data-ar="قوافل الإبل، ورحلتا الشتاء والصيف، وشكر الله على الطعام والأمان.">Camel caravans, winter and summer journeys, and thanking Allah for food and safety.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٤ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 4 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-al-masad.html" class="story-card-link surah-progress" data-surah="surah-al-masad.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🪢</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة المسد">Surah Al-Masad — The Palm Fibre</h3>
+                        <p data-ar="ما تملكه لا يهمّ، وإنما يهمّ ما تختاره — والله يدافع عن نبيه.">What you own does not matter, what you choose does — and Allah defends His Prophet.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٥ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 5 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-al-fil.html" class="story-card-link surah-progress" data-surah="surah-al-fil.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🐘</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة الفيل">Surah Al-Fil — The Elephant</h3>
+                        <p data-ar="جيش بالفيلة جاء ليهدم الكعبة، فأوقفه الله بطير صغير.">An army with elephants came to destroy the Kaaba, and Allah stopped it with small birds.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٥ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 5 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-az-zalzalah.html" class="story-card-link surah-progress" data-surah="surah-az-zalzalah.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🌍</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة الزلزلة">Surah Az-Zalzalah — The Earthquake</h3>
+                        <p data-ar="يوم تتكلّم الأرض وتحكي كل ما جرى عليها — ولا تضيع ذرّة خير.">The day the earth speaks and tells everything that happened on it — and not an atom of good is lost.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٨ آيات</span> <span>🕌 مدنية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 8 Verses</span>
+                            <span>🕌 Madani</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-ad-duha.html" class="story-card-link surah-progress" data-surah="surah-ad-duha.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🌅</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة الضحى">Surah Ad-Duha — The Morning Light</h3>
+                        <p data-ar="نزلت حين اشتدّت وحشة النبي ﷺ: ما ودّعك ربك، والصباح آتٍ.">Revealed when the Prophet ﷺ felt most alone: your Lord has not left you, and the morning is coming.</p>
+                        <div class="story-meta" data-ar="<span>📿 ١١ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 11 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-ash-sharh.html" class="story-card-link surah-progress" data-surah="surah-ash-sharh.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">💚</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة الشرح">Surah Ash-Sharh — The Opening Up</h3>
+                        <p data-ar="حِملٌ ثقيل يُوضع، ووعدٌ يقوله الله مرتين: إن مع العسر يسراً.">A heavy weight lifted off, and one promise Allah says twice: with hardship comes ease.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٨ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 8 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-at-tin.html" class="story-card-link surah-progress" data-surah="surah-at-tin.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🫒</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة التين">Surah At-Tin — The Fig</h3>
+                        <p data-ar="قسمٌ بالتين والزيتون، وأجمل ما تسمعه عن نفسك: خُلقت في أحسن تقويم.">An oath by the fig and the olive, and the best thing you will hear about yourself: made in the finest form.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٨ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 8 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-al-humazah.html" class="story-card-link surah-progress" data-surah="surah-al-humazah.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🗣️</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة الهمزة">Surah Al-Humazah — The Slanderer</h3>
+                        <p data-ar="سورة كاملة عن السخرية من الناس والوقيعة فيهم — ولماذا تصل الكلمة إلى القلب.">A whole surah about mocking people and talking behind their backs — and why words reach the heart.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٩ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 9 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-at-takathur.html" class="story-card-link surah-progress" data-surah="surah-at-takathur.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">📦</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة التكاثر">Surah At-Takathur — Wanting More</h3>
+                        <p data-ar="طلب المزيد حتى ينتهي العمر، وسؤالٌ ينتظر في الختام: ماذا صنعت بما أُعطيت؟">Chasing more and more until life runs out, and the question waiting at the end: what did you do with what you were given?</p>
+                        <div class="story-meta" data-ar="<span>📿 ٨ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 8 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-al-qariah.html" class="story-card-link surah-progress" data-surah="surah-al-qariah.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">⚖️</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة القارعة">Surah Al-Qari'ah — The Striking Hour</h3>
+                        <p data-ar="جبالٌ خفيفة كالصوف، وموازين تزن الكلمة الطيبة. فلعملك وزن.">Mountains light as wool, and scales that still weigh a kind word. What you do has weight.</p>
+                        <div class="story-meta" data-ar="<span>📿 ١١ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 11 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-al-adiyat.html" class="story-card-link surah-progress" data-surah="surah-al-adiyat.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🐎</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة العاديات">Surah Al-Adiyat — The Racing Horses</h3>
+                        <p data-ar="خمس آيات من عَدْو الخيل والشرر، ثم سؤال هادئ: لماذا ننسى الشكر؟">Five verses of galloping hooves and sparks, then a quiet question: why do we forget to say thank you?</p>
+                        <div class="story-meta" data-ar="<span>📿 ١١ آيات</span> <span>🕌 مكية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 11 Verses</span>
+                            <span>🕌 Makki</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="surah-al-bayyinah.html" class="story-card-link surah-progress" data-surah="surah-al-bayyinah.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">📖</div>
+                    <div class="story-info">
+                        <h3 data-ar="سورة البينة">Surah Al-Bayyinah — The Clear Proof</h3>
+                        <p data-ar="الدين كله في آية: إخلاصٌ وصلاةٌ وزكاة — وخاتمةٌ رضي الله فيها عنهم ورضوا عنه.">The whole religion in one verse: mean it, pray, give — and an ending where Allah is pleased with them and they with Him.</p>
+                        <div class="story-meta" data-ar="<span>📿 ٨ آيات</span> <span>🕌 مدنية</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>📿 8 Verses</span>
+                            <span>🕌 Madani</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
+                    </div>
+                </div>
+            </a>
+
+            <a href="ayat-al-kursi.html" class="story-card-link surah-progress" data-surah="ayat-al-kursi.html">
+                <div class="story-select-card">
+                    <div class="story-thumbnail" aria-hidden="true">🪑</div>
+                    <div class="story-info">
+                        <h3 data-ar="آية الكرسي — أعظم آية في القرآن">Ayat al-Kursi — The Verse of the Throne</h3>
+                        <p data-ar="أعظم آية في القرآن كله! تعلّمها جزءاً جزءاً واقرأها قبل النوم.">The greatest verse in the whole Quran! Learn it piece by piece and say it before you sleep.</p>
+                        <div class="story-meta" data-ar="<span>✨ أعظم آية</span> <span>📿 البقرة ٢٥٥</span> <span>🎯 اختبار</span> <span>🎬 فيديو</span>">
+                            <span>✨ Greatest Verse</span>
+                            <span>📿 Al-Baqarah 255</span>
+                            <span>🎯 Quiz</span>
+                            <span>🎬 Video</span>
+                        </div>
+                        <button class="start-story-btn" data-ar="ابدأ التعلّم ←">Start Learning →</button>
                     </div>
                 </div>
             </a>
 
             <div class="story-select-card">
-                <div class="story-thumbnail">🌅</div>
+                <div class="story-thumbnail" aria-hidden="true">🐘</div>
                 <div class="story-info">
-                    <h3>More Surahs Coming Soon!</h3>
-                    <p>Surah Al-Falaq, An-Nas, Al-Kawthar, and Al-Asr are on their way, in shaa Allah.</p>
-                    <div class="story-meta">
+                    <h3 data-ar="سور أخرى قريباً!">More Surahs Coming Soon!</h3>
+                    <p data-ar="سور الهمزة والتكاثر والقارعة والعاديات في الطريق، إن شاء الله.">Surah Al-Humazah, At-Takathur, Al-Qari'ah and Al-Adiyat are on their way, in shaa Allah.</p>
+                    <div class="story-meta" data-ar="<span>🚧 قيد الإعداد</span>">
                         <span>🚧 In Progress</span>
                     </div>
                 </div>
@@ -119,10 +457,13 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <p>🤲 May Allah make it easy for you to learn and memorize His words!</p>
-            <p class="footer-subtitle">🌙 Islamic Kids - Learning Islam with Love ✨</p>
+            <p data-ar="🤲 يسّر الله لك تعلّم كلامه وحفظه!">🤲 May Allah make it easy for you to learn and memorize His words!</p>
+            <p class="footer-subtitle" data-ar="🌙 أطفال الإسلام - نتعلّم ديننا بالحب ✨">🌙 Islamic Kids - Learning Islam with Love ✨</p>
         </div>
     </footer>
 
+    <script src="bilingual.js"></script>
+    <script src="bedtime.js"></script>
+    <script src="quran-progress.js"></script>
 </body>
 </html>

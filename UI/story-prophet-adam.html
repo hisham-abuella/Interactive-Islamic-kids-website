@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="stories.css">
+    <link rel="stylesheet" href="stories.css?v=20261001">
     <link rel="stylesheet" href="interactive-story.css">
     <style>
         html[lang="ar"] body {
@@ -21,38 +21,38 @@
 <body>
     <!-- Floating Decorations -->
     <div class="floating-decorations">
-        <span class="floating-star" style="top: 10%; left: 5%;">⭐</span>
-        <span class="floating-star" style="top: 20%; right: 10%;">✨</span>
-        <span class="floating-lantern" style="top: 40%; left: 8%;">🏮</span>
-        <span class="floating-star" style="top: 60%; right: 5%;">⭐</span>
+        <span class="floating-star" style="top: 10%; left: 5%;" aria-hidden="true">⭐</span>
+        <span class="floating-star" style="top: 20%; right: 10%;" aria-hidden="true">✨</span>
+        <span class="floating-lantern" style="top: 40%; left: 8%;" aria-hidden="true">🏮</span>
+        <span class="floating-star" style="top: 60%; right: 5%;" aria-hidden="true">⭐</span>
     </div>
 
     <!-- Header -->
     <header>
         <nav class="navbar">
             <div class="logo">
-                <span class="crescent">☪</span>
-                <h1>Islamic Kids</h1>
+                <span class="crescent" aria-hidden="true">☪</span>
+                <span class="logo-text" data-ar="أطفال الإسلام">Islamic Kids</span>
             </div>
             <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
                 <span></span><span></span><span></span>
             </button>
-            <ul class="nav-links">
-                <li><a href="index.html" data-i18n="navHome">Home</a></li>
-                <li><a href="stories.html" class="active" data-i18n="navStories">Stories</a></li>
-                <li><a href="quran.html" data-i18n="navQuran">Quran</a></li>
-                <li><a href="index.html#learn" data-i18n="navLearn">Learn</a></li>
-            </ul>
-            <!-- Language Toggle -->
-            <div class="lang-toggle">
-                <button class="lang-toggle-btn" onclick="window.i18n.toggleLanguage()" title="Switch Language">AR</button>
+            <div class="nav-cluster">
+                <ul class="nav-links">
+                    <li><a href="index.html" data-ar="الرئيسية">Home</a></li>
+                    <li><a href="stories.html" class="active" data-ar="القصص">Stories</a></li>
+                    <li><a href="quran.html" data-ar="القرآن">Quran</a></li>
+                    <li><a href="index.html#learn" data-ar="تعلّم">Learn</a></li>
+                </ul>
+                <button class="bedtime-btn" type="button" aria-pressed="false" aria-label="Bedtime reading mode" title="Bedtime reading mode" data-ar="وضع القراءة الليلية">🌙</button>
+                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
             </div>
         </nav>
     </header>
 
     <!-- Stars Counter -->
     <div class="stars-counter" id="starsCounter">
-        <span class="star-icon">⭐</span>
+        <span class="star-icon" aria-hidden="true">⭐</span>
         <span class="star-count" id="starCount">0</span>
     </div>
 
@@ -67,24 +67,24 @@
 
             <!-- Story Header -->
             <div class="story-header">
-                <div class="story-icon animated-icon">🌍</div>
-                <h1 class="story-title" data-i18n="storyTitle">Prophet Adam - The First Human</h1>
+                <div class="story-icon animated-icon" aria-hidden="true">🌍</div>
+                <h1 class="story-title" data-i18n="storyTitle">Prophet Adam (peace be upon him) - The First Human</h1>
                 <p class="story-subtitle" data-i18n="storySubtitle">An Interactive Adventure</p>
             </div>
 
             <!-- Progress Bar -->
             <div class="progress-container">
                 <div class="progress-bar" id="progressBar"></div>
-                <span class="progress-text">0% Complete</span>
+                <span class="progress-text" data-ar="٪٠ مكتمل">0% Complete</span>
             </div>
 
             <!-- Story Content -->
             <div class="story-content" id="storyContent">
 
                 <!-- Scene 1: Creation -->
-                <div class="story-scene interactive-scene" data-scene="1">
-                    <div class="scene-illustration">
-                        <span class="main-emoji animated-bounce">🏺</span>
+                <div class="story-scene interactive-scene has-plate" data-scene="1" data-mood="earth">
+                    <div class="scene-illustration" aria-hidden="true">
+                        <img class="scene-plate" src="images/stories/prophet-adam/scene-1.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene1Title">A Special Creation</h2>
@@ -108,12 +108,9 @@
                 </div>
 
                 <!-- Scene 2: The Soul -->
-                <div class="story-scene interactive-scene" data-scene="2">
-                    <div class="scene-illustration">
-                        <div class="creation-animation">
-                            <span class="clay-figure">🧍</span>
-                            <span class="soul-sparkle">✨</span>
-                        </div>
+                <div class="story-scene interactive-scene has-plate" data-scene="2" data-mood="dawn">
+                    <div class="scene-illustration" aria-hidden="true">
+                        <img class="scene-plate" src="images/stories/prophet-adam/scene-2.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene2Title">The Gift of Life</h2>
@@ -124,11 +121,11 @@
                             <p class="choice-question" data-i18n="scene2Question">What was the first thing Adam said?</p>
                             <div class="choice-options">
                                 <button class="choice-btn" data-answer="alhamdulillah" data-correct="true">
-                                    <span class="choice-emoji">🤲</span>
+                                    <span class="choice-emoji" aria-hidden="true">🤲</span>
                                     <span data-i18n="scene2AnswerCorrect">Alhamdulillah</span>
                                 </button>
                                 <button class="choice-btn" data-answer="hello" data-correct="false">
-                                    <span class="choice-emoji">👋</span>
+                                    <span class="choice-emoji" aria-hidden="true">👋</span>
                                     <span data-i18n="scene2AnswerWrong">Hello</span>
                                 </button>
                             </div>
@@ -139,9 +136,9 @@
                 </div>
 
                 <!-- Scene 3: Angels Prostrate -->
-                <div class="story-scene interactive-scene" data-scene="3">
-                    <div class="scene-illustration">
-                        <span class="main-emoji angel-glow">👼</span>
+                <div class="story-scene interactive-scene has-plate" data-scene="3" data-mood="gold">
+                    <div class="scene-illustration" aria-hidden="true">
+                        <img class="scene-plate" src="images/stories/prophet-adam/scene-3.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene3Title">The Angels Bow Down</h2>
@@ -162,9 +159,9 @@
                 </div>
 
                 <!-- Scene 4: Iblis Refuses -->
-                <div class="story-scene interactive-scene" data-scene="4">
-                    <div class="scene-illustration">
-                        <span class="main-emoji">😠</span>
+                <div class="story-scene interactive-scene has-plate" data-scene="4" data-mood="gold">
+                    <div class="scene-illustration" aria-hidden="true">
+                        <img class="scene-plate" src="images/stories/prophet-adam/scene-4.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene4Title">One Who Refused</h2>
@@ -185,9 +182,9 @@
                 </div>
 
                 <!-- Scene 5: Knowledge -->
-                <div class="story-scene interactive-scene" data-scene="5">
-                    <div class="scene-illustration">
-                        <span class="main-emoji book-glow">📚</span>
+                <div class="story-scene interactive-scene has-plate" data-scene="5" data-mood="garden">
+                    <div class="scene-illustration" aria-hidden="true">
+                        <img class="scene-plate" src="images/stories/prophet-adam/scene-5.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene5Title">Adam Learns Names</h2>
@@ -219,9 +216,9 @@
                 </div>
 
                 <!-- Scene 6: Hawa -->
-                <div class="story-scene interactive-scene" data-scene="6">
-                    <div class="scene-illustration">
-                        <span class="main-emoji love-glow">👫</span>
+                <div class="story-scene interactive-scene has-plate" data-scene="6" data-mood="garden">
+                    <div class="scene-illustration" aria-hidden="true">
+                        <img class="scene-plate" src="images/stories/prophet-adam/scene-6.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene6Title">A Companion for Adam</h2>
@@ -247,9 +244,9 @@
                 </div>
 
                 <!-- Scene 7: The Forbidden Tree -->
-                <div class="story-scene interactive-scene" data-scene="7">
-                    <div class="scene-illustration">
-                        <span class="main-emoji tree-forbidden">🌲</span>
+                <div class="story-scene interactive-scene has-plate" data-scene="7" data-mood="earth">
+                    <div class="scene-illustration" aria-hidden="true">
+                        <img class="scene-plate" src="images/stories/prophet-adam/scene-7.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene7Title">One Rule</h2>
@@ -259,11 +256,11 @@
                             <p class="choice-question" data-i18n="scene7Question">Why do you think Allah gave them this rule?</p>
                             <div class="choice-options">
                                 <button class="choice-btn" data-answer="test" data-correct="true">
-                                    <span class="choice-emoji">📝</span>
+                                    <span class="choice-emoji" aria-hidden="true">📝</span>
                                     <span data-i18n="scene7AnswerCorrect">To test their obedience</span>
                                 </button>
                                 <button class="choice-btn" data-answer="mean" data-correct="false">
-                                    <span class="choice-emoji">😢</span>
+                                    <span class="choice-emoji" aria-hidden="true">😢</span>
                                     <span data-i18n="scene7AnswerWrong">To be mean</span>
                                 </button>
                             </div>
@@ -274,9 +271,9 @@
                 </div>
 
                 <!-- Scene 8: The Mistake -->
-                <div class="story-scene interactive-scene" data-scene="8">
-                    <div class="scene-illustration">
-                        <span class="main-emoji sad-emoji">😢</span>
+                <div class="story-scene interactive-scene has-plate" data-scene="8" data-mood="dawn">
+                    <div class="scene-illustration" aria-hidden="true">
+                        <img class="scene-plate" src="images/stories/prophet-adam/scene-8.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene8Title">A Mistake</h2>
@@ -301,9 +298,9 @@
                 </div>
 
                 <!-- Scene 9: Repentance -->
-                <div class="story-scene interactive-scene" data-scene="9">
-                    <div class="scene-illustration">
-                        <span class="main-emoji prayer-glow">🤲</span>
+                <div class="story-scene interactive-scene has-plate" data-scene="9" data-mood="dawn">
+                    <div class="scene-illustration" aria-hidden="true">
+                        <img class="scene-plate" src="images/stories/prophet-adam/scene-9.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene9Title">Asking for Forgiveness</h2>
@@ -320,9 +317,9 @@
                 </div>
 
                 <!-- Scene 10: Life on Earth -->
-                <div class="story-scene interactive-scene" data-scene="10">
-                    <div class="scene-illustration">
-                        <span class="main-emoji earth-spin">🌍</span>
+                <div class="story-scene interactive-scene has-plate" data-scene="10" data-mood="garden">
+                    <div class="scene-illustration" aria-hidden="true">
+                        <img class="scene-plate" src="images/stories/prophet-adam/scene-10.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="scene-text">
                         <h2 data-i18n="scene10Title">A New Home on Earth</h2>
@@ -372,7 +369,7 @@
                 <!-- Dua Box -->
                 <div class="dua-box">
                     <h3>🤲 <span data-i18n="duaTitle">Adam's Dua for Forgiveness</span></h3>
-                    <p class="arabic-text">رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ</p>
+                    <p class="arabic-text" lang="ar">رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ</p>
                     <p class="dua-translation" data-i18n="duaTranslation">"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers."</p>
                     <p class="dua-note" data-i18n="duaNote">Say this dua when you make a mistake and want Allah's forgiveness!</p>
 
@@ -392,36 +389,36 @@
                 </div>
 
                 <div class="quiz-card" data-question="1">
-                    <div class="question-number" data-i18n-template="questionOf" data-num="1" data-total="3">Question 1 of 3</div>
+                    <div class="question-number" data-i18n-template="questionOf" data-num="1" data-total="3" data-ar="السؤال ١ من ٣">Question 1 of 3</div>
                     <p class="quiz-question" data-i18n="q1Question">What was Adam created from?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false" data-i18n="q1Option1">Light</button>
-                        <button class="quiz-option" data-correct="true" data-i18n="q1Option2">Clay</button>
                         <button class="quiz-option" data-correct="false" data-i18n="q1Option3">Fire</button>
                         <button class="quiz-option" data-correct="false" data-i18n="q1Option4">Water</button>
+                        <button class="quiz-option" data-correct="true" data-i18n="q1Option2">Clay</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="2">
-                    <div class="question-number" data-i18n-template="questionOf" data-num="2" data-total="3">Question 2 of 3</div>
+                    <div class="question-number" data-i18n-template="questionOf" data-num="2" data-total="3" data-ar="السؤال ٢ من ٣">Question 2 of 3</div>
                     <p class="quiz-question" data-i18n="q2Question">Who refused to bow to Adam?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false" data-i18n="q2Option1">The angels</button>
-                        <button class="quiz-option" data-correct="false" data-i18n="q2Option2">Hawa</button>
                         <button class="quiz-option" data-correct="true" data-i18n="q2Option3">Iblis (Shaytan)</button>
+                        <button class="quiz-option" data-correct="false" data-i18n="q2Option2">Hawa</button>
                         <button class="quiz-option" data-correct="false" data-i18n="q2Option4">The animals</button>
                     </div>
                     <div class="quiz-feedback"></div>
                 </div>
 
                 <div class="quiz-card hidden" data-question="3">
-                    <div class="question-number" data-i18n-template="questionOf" data-num="3" data-total="3">Question 3 of 3</div>
+                    <div class="question-number" data-i18n-template="questionOf" data-num="3" data-total="3" data-ar="السؤال ٣ من ٣">Question 3 of 3</div>
                     <p class="quiz-question" data-i18n="q3Question">What happened when Adam asked Allah for forgiveness?</p>
                     <div class="quiz-options">
                         <button class="quiz-option" data-correct="false" data-i18n="q3Option1">Allah was angry</button>
-                        <button class="quiz-option" data-correct="true" data-i18n="q3Option2">Allah forgave him</button>
                         <button class="quiz-option" data-correct="false" data-i18n="q3Option3">Nothing happened</button>
+                        <button class="quiz-option" data-correct="true" data-i18n="q3Option2">Allah forgave him</button>
                         <button class="quiz-option" data-correct="false" data-i18n="q3Option4">Adam had to wait</button>
                     </div>
                     <div class="quiz-feedback"></div>
@@ -429,9 +426,9 @@
 
                 <div class="quiz-results hidden" id="quizResults">
                     <div class="results-content">
-                        <div class="results-icon">🎉</div>
+                        <div class="results-icon" aria-hidden="true">🎉</div>
                         <h2 data-i18n="resultsTitle">Amazing Job!</h2>
-                        <p class="results-score"><span data-i18n-template="resultsScore" data-score="0" data-total="3">You got <span id="scoreDisplay">0</span> out of 3 correct!</span></p>
+                        <p class="results-score"><span data-i18n-template="resultsScore" data-score="0" data-total="3" data-ar="أجبت <span id=&quot;scoreDisplay&quot;>0</span> من ٣ إجابات صحيحة!">You got <span id="scoreDisplay">0</span> out of 3 correct!</span></p>
                         <div class="final-stars">
                             <p><span data-i18n="totalStarsEarned">Total Stars Earned:</span> <span id="totalStars">0</span> ⭐</p>
                         </div>
@@ -443,8 +440,8 @@
             <div class="video-section hidden" id="videoSection">
                 <div class="video-unlock">
                     <div class="unlock-animation">
-                        <span class="unlock-lantern">🏮</span>
-                        <span class="unlock-stars">✨</span>
+                        <span class="unlock-lantern" aria-hidden="true">🏮</span>
+                        <span class="unlock-stars" aria-hidden="true">✨</span>
                     </div>
                     <h2>🎬 <span data-i18n="videoUnlock">Bonus Video Unlocked!</span></h2>
                     <p data-i18n="videoSubtitle">Watch this beautiful story about Prophet Adam!</p>
@@ -523,5 +520,7 @@
         });
     </script>
 
+    <script src="bilingual.js"></script>
+    <script src="bedtime.js"></script>
 </body>
 </html>

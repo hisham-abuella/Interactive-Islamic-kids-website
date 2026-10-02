@@ -7,12 +7,23 @@
 - [x] Prophet Ibrahim
 - [x] Prophet Nuh
 - [x] Prophet Yusuf
-- [x] Prophet Musa (scripts written; ElevenLabs audio not generated yet)
+- [x] Prophet Musa (audio generated 2026-09-05, EN + AR)
 
 ### Surahs / Verses
 - [x] Surah Al-Fatiha (no voice narration yet)
 - [x] Ayat al-Kursi - Al-Baqarah 255 (no voice narration yet)
 - [x] Surah Al-Ikhlas (112) (no voice narration yet)
+- [x] Surah Al-Falaq (113) (no voice narration yet)
+- [x] Surah An-Nas (114) (no voice narration yet)
+- [x] Surah Al-Kawthar (108) (no voice narration yet)
+- [x] Surah Al-Asr (103) (no voice narration yet)
+- [x] Surah An-Nasr (110) (no voice narration yet)
+- [x] Surah Al-Kafirun (109) (no voice narration yet)
+- [x] Surah Al-Maun (107) (no voice narration yet)
+- [x] Surah Quraysh (106) (no voice narration yet)
+- [x] Surah Al-Masad (111)
+- [x] Surah Al-Fil (105)
+- [x] Surah Az-Zalzalah (99)
 
 ---
 
@@ -41,25 +52,26 @@
 ## Planned Surahs (Short Surahs - Juz Amma)
 
 ### Phase 1 - Most Common (Kids learn these first)
-- [ ] Surah Al-Falaq (113) - 5 verses - The Daybreak
-- [ ] Surah An-Nas (114) - 6 verses - Mankind
-- [ ] Surah Al-Kawthar (108) - 3 verses - Abundance (shortest surah)
-- [ ] Surah Al-Asr (103) - 3 verses - Time
+- [x] Surah Al-Falaq (113) - 5 verses - The Daybreak
+- [x] Surah An-Nas (114) - 6 verses - Mankind
+- [x] Surah Al-Kawthar (108) - 3 verses - Abundance (shortest surah)
+- [x] Surah Al-Asr (103) - 3 verses - Time
 
 ### Phase 2 - Short & Essential
-- [ ] Surah An-Nasr (110) - 3 verses - Divine Support
-- [ ] Surah Al-Masad (111) - 5 verses - The Palm Fiber
-- [ ] Surah Al-Kafirun (109) - 6 verses - The Disbelievers
-- [ ] Surah Al-Maun (107) - 7 verses - Small Kindnesses
-- [ ] Surah Quraysh (106) - 4 verses - The Quraysh
+- [x] Surah An-Nasr (110) - 3 verses - Divine Support
+- [x] Surah Al-Masad (111) - 5 verses - The Palm Fiber
+- [x] Surah Al-Kafirun (109) - 6 verses - The Disbelievers
+- [x] Surah Al-Maun (107) - 7 verses - Small Kindnesses
+- [x] Surah Quraysh (106) - 4 verses - The Quraysh
 
 ### Phase 3 - Slightly Longer
-- [ ] Surah Al-Fil (105) - 5 verses - The Elephant
+- [x] Surah Al-Fil (105)
+- [x] Surah Az-Zalzalah (99) - 5 verses - The Elephant
 - [ ] Surah Al-Humazah (104) - 9 verses - The Backbiter
 - [ ] Surah At-Takathur (102) - 8 verses - Competition in Worldly Increase
 - [ ] Surah Al-Qari'ah (101) - 11 verses - The Striking Hour
 - [ ] Surah Al-Adiyat (100) - 11 verses - The War Horses
-- [ ] Surah Az-Zalzalah (99) - 8 verses - The Earthquake
+- [x] Surah Az-Zalzalah (99) - 8 verses - The Earthquake
 - [ ] Surah Al-Bayyinah (98) - 8 verses - The Clear Evidence
 - [ ] Surah At-Tin (95) - 8 verses - The Fig
 - [ ] Surah Ash-Sharh (94) - 8 verses - The Relief
@@ -110,8 +122,8 @@
 ---
 
 ## Pending Audio Generation
-- [ ] prophet-musa (EN + AR) - 20 slides each, run `generate-audio-elevenlabs.js prophet-musa en|ar`
-- [ ] surah-fatiha, ayat-al-kursi, surah-al-ikhlas - no narration system on surah pages yet
+- [x] prophet-musa (EN + AR) - generated 2026-09-05
+- [x] All 12 surah pages - per-verse narration generated 2026-09-05 (EN + AR, 122 files)
 
 ---
 

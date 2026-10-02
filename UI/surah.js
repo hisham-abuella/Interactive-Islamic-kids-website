@@ -3,7 +3,55 @@
 document.addEventListener('DOMContentLoaded', function() {
     initializeQuiz();
     initializeAnimations();
+    initStagePicker();
 });
+
+// --- Training wheels -------------------------------------------------
+// Read shows everything, Practice drops the transliteration, Recite leaves
+// only the Arabic with the meaning one tap away. Remembered per surah, so a
+// child who has moved on does not land back on Read every night.
+function initStagePicker() {
+    var section = document.querySelector('.verses-section');
+    var picker = document.querySelector('.stage-picker');
+    if (!section || !picker) return;
+
+    var key = 'ik-stage-' + (location.pathname.split('/').pop() || 'surah');
+
+    // A reveal button per verse, for Recite stage
+    document.querySelectorAll('.verse-card .verse-content').forEach(function (content) {
+        if (content.querySelector('.verse-reveal')) return;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'verse-reveal';
+        btn.textContent = 'Show meaning';
+        btn.setAttribute('data-ar', 'أظهر المعنى');
+        btn.addEventListener('click', function () {
+            content.closest('.verse-card').classList.add('revealed');
+        });
+        content.appendChild(btn);
+    });
+
+    function apply(stage) {
+        section.setAttribute('data-stage', stage);
+        picker.querySelectorAll('.stage-btn').forEach(function (b) {
+            b.setAttribute('aria-pressed', String(b.getAttribute('data-stage') === stage));
+        });
+        document.querySelectorAll('.verse-card').forEach(function (c) {
+            c.classList.remove('revealed');
+        });
+        try { localStorage.setItem(key, stage); } catch (e) {}
+    }
+
+    picker.querySelectorAll('.stage-btn').forEach(function (b) {
+        b.addEventListener('click', function () {
+            apply(b.getAttribute('data-stage'));
+        });
+    });
+
+    var saved = 'read';
+    try { saved = localStorage.getItem(key) || 'read'; } catch (e) {}
+    apply(saved);
+}
 
 // Quiz functionality
 let score = 0;
@@ -107,7 +155,11 @@ function showNextQuestion(currentIndex, totalCards) {
         if (quizResults) {
             quizResults.classList.remove('hidden');
             if (scoreDisplay) {
-                scoreDisplay.textContent = score;
+                // The Arabic copy uses Arabic-Indic numerals, so a Western digit
+                // here reads as "أجبت 3 من ٤". Match the surrounding text.
+                scoreDisplay.textContent = document.documentElement.lang === 'ar'
+                    ? String(score).replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d])
+                    : score;
             }
             createConfetti(quizResults);
             quizResults.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -188,7 +240,15 @@ function initializeAnimations() {
         });
     }, observerOptions);
 
-    // Observe verse cards
+    // Cards are visible by default. We only hide them to animate them in, and only
+    // when we can be sure something will bring them back: IntersectionObserver is
+    // supported and the reader has not asked for reduced motion. Otherwise the page
+    // stays fully readable - which is what happens when it is printed, when JS is
+    // off, or on a browser without the observer.
+    const canAnimate = 'IntersectionObserver' in window &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!canAnimate) return;
+
     document.querySelectorAll('.verse-card, .fact-card, .tip-card').forEach(card => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(30px)';
