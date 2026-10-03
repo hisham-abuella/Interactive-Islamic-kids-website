@@ -19,10 +19,14 @@ def load(path, name):
 
 
 template = load(os.path.join(HERE, 'surah-page-template.py'), 'surah_page_template')
+plates = load(os.path.join(HERE, 'place-surah-plates.py'), 'place_surah_plates')
 
 for name in sys.argv[1:]:
     mod = load(os.path.join(HERE, 'specs', name + '.py'), name)
     out = os.path.join(UI, mod.SPEC['slug'] + '.html')
     with open(out, 'w', encoding='utf-8') as fh:
         fh.write(template.page(mod.SPEC))
+    # The template knows nothing of the plates; put them back on every rebuild.
+    if mod.SPEC['slug'] in plates.PLATES:
+        plates.place(mod.SPEC['slug'])
     print('wrote %s (%d bytes)' % (os.path.relpath(out, UI), os.path.getsize(out)))

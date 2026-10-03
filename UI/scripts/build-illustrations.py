@@ -10,8 +10,10 @@ story pages does not have to send the prompts anywhere.
     python3 scripts/build-illustrations.py prophet-nuh:4    # one plate
     python3 scripts/build-illustrations.py --force …        # redo existing
     python3 scripts/build-illustrations.py --list           # prompts only
+    python3 scripts/build-illustrations.py --surahs …       # surah plates instead
 
 Output: images/stories/<story>/<cover|scene-N>.webp
+        images/surahs/<slug>/verse-N.webp   (with --surahs)
 
 The engine writes a ~1.1 MB PNG; that is far too heavy to put eight of on a
 page, so each plate is resized and converted to WebP with Pillow and lands
@@ -30,6 +32,7 @@ from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).parent))
 from specs.illustrations import NEGATIVE, PLATES, STYLE, all_plates  # noqa: E402
+from specs import surah_plates  # noqa: E402
 
 CLI = "/opt/homebrew/bin/draw-things-cli"
 MODEL = "z_image_turbo_1.0_q8p.ckpt"
@@ -47,6 +50,7 @@ QUALITY = 72
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT_ROOT = ROOT / "images" / "stories"
+SURAH_OUT_ROOT = ROOT / "images" / "surahs"
 
 
 def seed_for(story: str, key) -> int:
@@ -90,17 +94,23 @@ def main() -> int:
     ap.add_argument("targets", nargs="*", help="story id, or story:scene / story:cover")
     ap.add_argument("--force", action="store_true", help="re-render plates that already exist")
     ap.add_argument("--list", action="store_true", help="print prompts and exit")
+    ap.add_argument("--surahs", action="store_true", help="the surah plates, not the stories")
     args = ap.parse_args()
 
+    if args.surahs:
+        plates, out_root, source = surah_plates.PLATES, SURAH_OUT_ROOT, surah_plates.all_plates()
+    else:
+        plates, out_root, source = PLATES, OUT_ROOT, all_plates()
+
     wanted = []
-    for story, key, prompt in all_plates():
+    for story, key, prompt in source:
         tag = f"{story}:{key}"
         if args.targets and story not in args.targets and tag not in args.targets:
             continue
         wanted.append((story, key, prompt))
 
     if args.targets and not wanted:
-        print(f"Nothing matched {args.targets}. Stories: {', '.join(PLATES)}")
+        print(f"Nothing matched {args.targets}. Known: {', '.join(plates)}")
         return 1
 
     if args.list:
@@ -114,8 +124,11 @@ def main() -> int:
 
     made = skipped = failed = 0
     for i, (story, key, prompt) in enumerate(wanted, 1):
-        name = "cover" if key == "cover" else f"scene-{key}"
-        dest = OUT_ROOT / story / f"{name}.webp"
+        if args.surahs:
+            name = f"verse-{key}"
+        else:
+            name = "cover" if key == "cover" else f"scene-{key}"
+        dest = out_root / story / f"{name}.webp"
         if dest.exists() and not args.force:
             skipped += 1
             continue

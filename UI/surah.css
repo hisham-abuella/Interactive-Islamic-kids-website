@@ -1057,3 +1057,75 @@ html[lang="ar"] .parent-note {
     border-color: var(--gold-light);
     color: var(--ink);
 }
+
+/* ===== Surah plates =====
+   One illuminated picture above each group of verses, so scrolling the verses
+   tells the surah as a picture story. Placed by scripts/place-surah-plates.py. */
+.verse-plate {
+    margin: 0.5rem 0 1.25rem;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    box-shadow: var(--shadow-sm);
+    aspect-ratio: 16 / 9;
+    background: var(--parchment-deep);
+}
+
+.verse-plate img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+/* Al-Fatiha and Al-Ikhlas: the real text typeset inside a painted frame.
+   The engine only painted the border; every letter here is live text. */
+.calligraphy-panel {
+    position: relative;
+    width: min(520px, 100%);
+    aspect-ratio: 3 / 4;
+    margin: 0.5rem auto 1.75rem;
+    background: url("images/surahs/illuminated-frame.webp") center / 100% 100% no-repeat;
+    filter: drop-shadow(0 10px 24px rgba(60, 40, 10, 0.22));
+}
+
+.calligraphy-panel .panel-text {
+    position: absolute;
+    inset: 13.5% 17% 12.5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    /* The frame is a painting on parchment in every theme, so the ink on it
+       stays dark even when the page around it goes to bedtime colours. */
+    color: #2A1D0C;
+}
+
+.calligraphy-panel .panel-title {
+    font-family: 'Aref Ruqaa', 'Amiri', serif;
+    font-weight: 700;
+    color: #1F3A93;
+    font-size: clamp(1.3rem, 5vw, 2.1rem);
+    line-height: 1.3;
+    padding: 0.05em 1em 0.2em;
+    border-block: 2px solid var(--gold);
+}
+
+.calligraphy-panel p {
+    margin: 0;
+    font-family: 'Amiri Quran', 'Amiri', serif;
+    font-size: clamp(0.95rem, 3.3vw, 1.35rem);
+    line-height: 2.3;
+}
+
+.calligraphy-panel .panel-bismillah {
+    display: block;
+    margin-bottom: 0.4em;
+}
+
+.calligraphy-panel .ayah-mark {
+    color: var(--gold-ink);
+}
