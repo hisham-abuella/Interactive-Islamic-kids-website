@@ -17,6 +17,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from specs.illustrations import PLATES  # noqa: E402
+from specs import surah_plates  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -140,19 +141,61 @@ def main() -> int:
         if 'alt=""' not in attrs:
             problems.append(f"stories.html: cover {src_attr} must have an empty alt")
 
+    checked += check_surahs(problems)
+
     if problems:
         print("Illustration problems:\n")
         for p in problems:
             print(f"  {p}")
         return 1
 
-    total = sum(f.stat().st_size for f in (ROOT / "images" / "stories").rglob("*.webp"))
+    total = sum(f.stat().st_size for f in (ROOT / "images").rglob("*.webp"))
     print(
         f"All {checked} plates present, decorative, lazy-loaded and within "
         f"{MAX_KB} KB each.\nTotal art on disk: {total / 1024 / 1024:.1f} MB "
-        f"across {len(PLATES)} stories."
+        f"across {len(PLATES)} stories and {len(surah_plates.PLATES)} surah pages."
     )
     return 0
+
+
+VERSE_PLATE_RE = re.compile(
+    r'<figure class="verse-plate"><img src="([^"]+)"([^>]*)></figure>\s*'
+    r'(?:<!-- /surah-plate -->\s*)?<div class="verse-card" data-verse="(\d+)">'
+)
+
+
+def check_surahs(problems: list) -> int:
+    """Each surah plate sits directly above the verse card the spec names.
+
+    The same cached-stylesheet trap as the stories applies: the plate carries
+    width="960", so a page served with an old surah.css shows it at full size
+    on a phone. Hence the ?v= check.
+    """
+    checked = 0
+    for slug, plates in surah_plates.PLATES.items():
+        page = ROOT / f"{slug}.html"
+        src = page.read_text()
+        if 'href="surah.css?v=' not in src:
+            problems.append(f"{page.name}: surah.css is linked without a ?v=")
+        wired = {int(v): (img, attrs) for img, attrs, v in VERSE_PLATE_RE.findall(src)}
+        if src.count('class="verse-plate"') != len(wired):
+            problems.append(f"{page.name}: a plate is not directly above a verse card")
+        if set(wired) != set(plates):
+            problems.append(
+                f"{page.name}: plates above verses {sorted(wired)} do not match the spec {sorted(plates)}"
+            )
+        for v, (img, attrs) in sorted(wired.items()):
+            if img != f"images/surahs/{slug}/verse-{v}.webp":
+                problems.append(f"{page.name}: verse {v} shows {img}")
+            if 'alt=""' not in attrs or 'loading="lazy"' not in attrs:
+                problems.append(f"{page.name}: verse {v} plate must be alt=\"\" and lazy-loaded")
+            checked += check_file(img, page.name, problems)
+    for slug in ("surah-fatiha", "surah-al-ikhlas"):
+        if 'class="calligraphy-panel"' not in (ROOT / f"{slug}.html").read_text():
+            problems.append(f"{slug}.html: the calligraphy panel is missing")
+    if not (ROOT / "images" / "surahs" / "illuminated-frame.webp").exists():
+        problems.append("images/surahs/illuminated-frame.webp does not exist")
+    return checked
 
 
 def check_file(rel: str, page: str, problems: list) -> int:

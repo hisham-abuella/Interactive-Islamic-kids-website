@@ -348,6 +348,30 @@ Carried over from the previous version of this file. Completed items are kept fo
       drew twelve, then nine. Both Yusuf plates are now composed so they never claim a number —
       a scattered field of stars with the sun and moon as the two forms that matter, and the
       text beside them carries the count. Do not "fix" this by asking for eleven again.
+- [x] ~~**Surah plates**~~ — built 2026-10-03, finished 2026-10-08. **68 plates** across 19 surah
+      pages and Ayat al-Kursi, one above each group of verses, so scrolling the verses tells the
+      surah in pictures. Spec `scripts/specs/surah_plates.py`, rendered with
+      `build-illustrations.py --surahs`, placed by `scripts/place-surah-plates.py` (idempotent;
+      `build-surah.py` calls it, so a rebuilt page keeps its plates). Rules on top of the story
+      ones: nothing depicts Allah, the Throne or Kursi, or the unseen; verses about the Fire,
+      the graves and the Scales get no plate; Ayat al-Kursi is shown through the heavens and
+      the earth with no chair in it. **Al-Fatiha and Al-Ikhlas have no pictures** — they get
+      an illuminated frame (`images/surahs/illuminated-frame.webp`, border only) with the real
+      text typeset inside in Amiri Quran; Al-Ikhlas because any picture risks reading as a
+      likeness. Every plate was checked at full size, not on a contact sheet — at 640px wide
+      the leaks are invisible. What leaked, so the next batch can avoid it:
+      (1) **Small people in busy landscapes.** A 10px robed figure under a tree, a swimmer in
+      a river. Busy scenes with open ground invite them; close, filled compositions (a deer at
+      a lake, kneeling camels beside bales) do not. Riders came back on every moving caravan.
+      (2) **Fake script** in any sky or above any arch. Re-prompt; the negative does not stop it.
+      (3) **Rugs render as photographs** in perspective. "A Persian miniature, flat and frontal
+      with no perspective" fixed it. An arched tiled niche with a hanging lamp also invites
+      fake calligraphy above the arch; a plain courtyard does not.
+      (4) **Similes are taken literally.** "Tracks spreading like the fingers of a hand" drew
+      hands. Describe the shape, never the comparison.
+      `surah.css` is now linked with `?v=20261008` for the same cached-stylesheet reason as
+      the stories, and `verify-illustrations.py` checks every surah plate sits directly above
+      its verse card, is decorative and lazy, and that the `?v=` is there.
       Rainbows were removed at the owner's request (Adam 9, Nuh cover, Nuh 7) and `rainbow` is
       in the negative prompt, so a re-render will not bring them back.
       **No sacred site and no religious emblem in any plate** — owner's instruction, 2026-10-02,

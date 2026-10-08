@@ -162,7 +162,7 @@ def page(spec):
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="surah.css">
+    <link rel="stylesheet" href="surah.css?v=20261008">
 </head>
 <body>
     <!-- Floating Decorations -->

@@ -56,7 +56,7 @@ PLATES = {
         1: "great wooden city gates thrown wide open at sunrise, light pouring through, "
            "palm trees on either side",
         2: 'a flat manuscript miniature painting of many trails of camel hoofprints in the sand converging from every direction toward a great open city gate, an empty landscape with no animals and nobody in it',
-        3: 'a flat manuscript miniature painting of a prayer mat and a string of prayer beads resting on a patterned carpet in soft dusk light, seen from above, calm and quiet',
+        3: 'a Persian miniature painting, flat and frontal with no perspective, of a small patterned rug laid inside a tall arched niche of blue tiles at dusk, a string of prayer beads resting on it, a lamp hanging above',
     },
     "surah-al-kafirun": {
         1: 'a flat manuscript miniature painting of two unpaved sandy footpaths parting at a fork in a desert valley in a Y shape, each winding toward its own distant hill',
@@ -66,7 +66,7 @@ PLATES = {
     "surah-al-maun": {
         1: "a shut wooden door in a mud-brick wall at dusk, a small empty bowl on the step "
            "outside it",
-        4: 'a flat manuscript miniature painting of a rolled-up prayer mat left forgotten in the dust in the corner of an empty room, a shaft of light falling on it',
+        4: 'a Persian miniature painting, flat and frontal with no perspective, of a rolled-up rug lying forgotten in the dusty corner of a bare room with a plain arched doorway, cobwebs, a single shaft of light',
         7: "an open doorway of a warm home in morning light, a cooking pot, a water jug and "
            "a small salt jar set out on the doorstep ready to lend",
     },
@@ -129,8 +129,8 @@ PLATES = {
     },
     "surah-al-bayyinah": {
         1: 'a flat manuscript miniature painting of two closed rolled parchment scrolls with gold end caps resting on a carved wooden stand in a niche, lit by a soft shaft of sunlight',
-        4: 'a flat manuscript miniature painting of one unpaved sandy desert track that splits into many separate sandy tracks fanning out across the dunes, seen from above',
-        5: 'a flat manuscript miniature painting of a prayer mat laid on a tiled floor beside a bowl full of grain set aside for charity, warm light',
+        4: 'a Persian miniature painting, flat and frontal with no perspective, of a wide desert plain seen from a hilltop, one sandy caravan track that branches at a single point into several separate sandy tracks spreading out across the plain toward different distant hills',
+        5: 'a Persian miniature painting, flat and frontal with no perspective, of a small patterned rug on the plain clay floor of a sunny courtyard, a clay bowl of grain for charity set beside it, potted plants and a fig tree, plain walls',
         7: "a lush garden with clear rivers flowing beneath the trees, fruit and flowers, "
            "golden light",
     },
@@ -146,7 +146,7 @@ PLATES = {
         1: "a narrow rocky canyon opening out into a wide sunlit green valley",
         2: "a camel resting at ease, its heavy load of bundles set down on the sand beside it",
         5: "a steep rocky climb leading up to a clear spring and a green date palm at the top",
-        7: 'a flat manuscript miniature painting of a prayer mat laid on a flat clay rooftop in evening light, potted plants at the edge, a calm sky',
+        7: 'a Persian miniature painting, flat and frontal with no perspective, of a small patterned rug on a flat clay rooftop at evening, potted plants along the parapet, palm trees and a rose and gold sky beyond',
     },
     "surah-at-tin": {
         1: "a fig tree and an olive tree side by side, heavy with ripe figs and olives",
