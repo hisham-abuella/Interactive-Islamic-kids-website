@@ -368,7 +368,9 @@ Carried over from the previous version of this file. Completed items are kept fo
       with no perspective" fixed it. An arched tiled niche with a hanging lamp also invites
       fake calligraphy above the arch; a plain courtyard does not.
       (4) **Similes are taken literally.** "Tracks spreading like the fingers of a hand" drew
-      hands. Describe the shape, never the comparison.
+      hands, and "a rose and gold sky" painted a rose in the sky. Describe the shape or the
+      colour plainly, never through a comparison. An-Nasr 3 also left its arched niche: with a
+      hanging lamp it read as a mihrab, too close to the no-mosque rule.
       `surah.css` is now linked with `?v=20261008` for the same cached-stylesheet reason as
       the stories, and `verify-illustrations.py` checks every surah plate sits directly above
       its verse card, is decorative and lazy, and that the `?v=` is there.

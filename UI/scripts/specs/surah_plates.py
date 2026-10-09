@@ -56,7 +56,7 @@ PLATES = {
         1: "great wooden city gates thrown wide open at sunrise, light pouring through, "
            "palm trees on either side",
         2: 'a flat manuscript miniature painting of many trails of camel hoofprints in the sand converging from every direction toward a great open city gate, an empty landscape with no animals and nobody in it',
-        3: 'a Persian miniature painting, flat and frontal with no perspective, of a small patterned rug laid inside a tall arched niche of blue tiles at dusk, a string of prayer beads resting on it, a lamp hanging above',
+        3: 'a Persian miniature painting, flat and frontal with no perspective, of a small patterned rug on the clay floor of a quiet courtyard at dusk, a string of prayer beads resting on it, potted plants and a date palm, plain walls, a deep blue evening sky with a few stars',
     },
     "surah-al-kafirun": {
         1: 'a flat manuscript miniature painting of two unpaved sandy footpaths parting at a fork in a desert valley in a Y shape, each winding toward its own distant hill',
