@@ -37,6 +37,21 @@ export $(cat .env | xargs) && node generate-audio-elevenlabs.js prophet-adam en
 
 See `.claude/skills/generate-audio.md` for full documentation.
 
+### Local narration in Hisham's voice (Fish S2-Pro) — current
+All story slides and surah verses, both languages, are narrated locally with the
+`s2pro-hisham` clone — the same engine, reference recording and Whisper QA as the
+personal website's articles (`~/Work/Whisper-audio/bakeoff/narrate.py`). No API key.
+
+```bash
+cd UI
+uv run --project ~/Work/Whisper-audio/bakeoff python scripts/narrate-s2pro.py --stage /tmp/stage --lang en
+uv run --project ~/Work/Whisper-audio/bakeoff python scripts/narrate-s2pro.py --stage /tmp/stage --lang en --install
+```
+
+It renders into the staging folder (resumable; `--only <page ids>`, `--units slide-3,verse-2`,
+`--force`), writes `qa-<lang>.json` with what Whisper heard for every piece, then `--install`
+copies the mp3s over `audio/`. Fish S2-Pro is licensed non-commercial only.
+
 ## Development
 
 ### Run locally

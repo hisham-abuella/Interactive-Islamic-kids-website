@@ -49,6 +49,22 @@ export $(cat .env | xargs) && node generate-audio-elevenlabs.js prophet-adam ar
 export $(cat .env | xargs) && node generate-audio-elevenlabs.js prophet-adam
 ```
 
+## Option: Hisham's own voice, locally (Fish S2-Pro)
+
+No API key, no quota. Narrates every story slide and surah verse with Whisper QA into a
+staging folder, then installs over `audio/`:
+
+```bash
+cd UI
+uv run --project ~/Work/Whisper-audio/bakeoff python scripts/narrate-s2pro.py --stage /tmp/stage --lang en
+uv run --project ~/Work/Whisper-audio/bakeoff python scripts/narrate-s2pro.py --stage /tmp/stage --lang en --flagged --tries 8
+uv run --project ~/Work/Whisper-audio/bakeoff python scripts/narrate-s2pro.py --stage /tmp/stage --lang en --install
+```
+
+English is live in this voice since 2026-10-20. Arabic is rendered but **not installed**: the
+clone softens ق ص ط ض in Quran text, so the Arabic stays on ElevenLabs until the owner
+approves it by ear.
+
 ## Output
 
 Audio files are saved to:
