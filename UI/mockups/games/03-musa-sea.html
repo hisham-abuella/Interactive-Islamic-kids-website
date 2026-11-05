@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<!--
+  GAME MOCKUP 03 - The Path Through the Sea (prototype, not linked from the hub)
+  Learning goal: After playing, the child can say that when the believers were trapped and afraid, Musa
+  trusted that Allah was with him, and that we can answer fear with trust in Allah ("Allah is with us").
+  Core loop: carry a lantern step by step and walk with the believers along the dry path that Allah opened;
+  at moments of fear the child chooses a trusting answer, and the lantern shines brighter (never counted).
+  Story source: UI/story-prophet-musa.html; every quotation and the dua are copied from that page.
+  No prophet is drawn and the child never controls Musa: the sea parts by Allah's command (narrated, not
+  triggered by the child), and the child carries a lantern and walks with the believers, never leading them.
+  Allah's words are given only as indirect speech (scholar gate 1, 2026-11-03).
+  People appear only as a row of small dots.
+  ART NOTE: all visuals are placeholders pending the graphics redesign; see the ART block.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Path Through the Sea - game prototype - Islamic Kids</title>
+<link rel="icon" href="data:,">
+<style>
+/* ---- Illuminated Page tokens (copied from UI/styles.css so this mockup stands alone) ---- */
+:root{
+  --ink:#14383A; --turquoise:#17877F; --turquoise-deep:#0F6B65; --cobalt:#24508C;
+  --gold:#C08A2E; --gold-light:#E0B75C; --gold-text:#8A6220; --gold-pale:#F3E4C4;
+  --parchment:#FBF6EA; --parchment-deep:#F3E9D6; --rule:rgba(192,138,46,.32); --rule-strong:rgba(192,138,46,.6);
+  --card:#FFFDF8; --gold-ink:#7A5518; --gold-wash:#F7EDD8; --cobalt-deep:#1B3C6B; --cobalt-mid:#5A79B0;
+  --cobalt-pale:#C9D8EC; --cobalt-wash:#E7EDF6; --slate-500:#5C7370;
+  --radius-lg:20px; --radius-xl:28px; --radius-full:50px;
+  --shadow-sm:0 2px 8px rgba(20,56,58,.06); --shadow-md:0 8px 24px rgba(20,56,58,.09);
+  --shadow-lg:0 16px 40px rgba(20,56,58,.12); --shadow-teal:0 8px 24px rgba(23,135,127,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Nunito','Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--parchment);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+[dir=rtl] body{font-family:'Noto Sans Arabic','Geeza Pro','Tahoma',system-ui,sans-serif}
+button{font:inherit;color:inherit}
+:focus-visible{outline:4px solid var(--cobalt);outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* top bar */
+.gbar{position:relative;z-index:60;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;padding:.5rem 1rem;background:var(--turquoise-deep);border-bottom:2px solid var(--gold);color:#fff}
+.gbar h1{font-family:'Baloo 2','Nunito',sans-serif;font-size:clamp(1.05rem,2.6vw,1.45rem);font-weight:800;flex:1;min-width:10rem;line-height:1.2}
+.gbar .proto{font-size:.72rem;font-weight:800;background:var(--gold-light);color:var(--ink);border-radius:var(--radius-full);padding:.1rem .55rem;margin-inline-start:.4rem;vertical-align:middle}
+.gbar .back{color:#fff;text-decoration:none;font-weight:800;min-height:48px;display:inline-flex;align-items:center;padding:0 .6rem;border-radius:12px}
+.gbar .back:hover{background:rgba(255,255,255,.12)}
+.tools{display:flex;gap:.4rem;flex-wrap:wrap}
+.gbtn{min-width:48px;min-height:48px;border-radius:14px;border:2px solid rgba(255,255,255,.55);background:rgba(255,255,255,.12);color:#fff;font-weight:800;cursor:pointer;padding:0 .55rem;font-size:1.05rem}
+.gbtn[aria-pressed=false]{opacity:.6}
+.gbtn:active{transform:scale(.94)}
+
+/* stage + scene */
+main#stage{flex:1;width:100%;max-width:1100px;margin:0 auto;padding:.8rem 1rem 1rem;display:flex;flex-direction:column;gap:.8rem}
+.scene{position:relative;border-radius:var(--radius-xl);overflow:hidden;border:3px solid var(--gold);box-shadow:var(--shadow-lg);width:100%;aspect-ratio:16/10;min-height:320px;max-height:68vh;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.scene svg.bg{position:absolute;inset:0;width:100%;height:100%}
+.phase-tag{position:absolute;top:.6rem;inset-inline-start:.6rem;z-index:5;background:rgba(255,253,248,.92);border:2px solid var(--rule-strong);border-radius:var(--radius-full);padding:.15rem .8rem;font-weight:800;font-size:.95rem}
+
+/* narration strip */
+.narr{display:flex;gap:.7rem;align-items:center;background:var(--card);border:2px solid var(--rule-strong);border-radius:var(--radius-lg);padding:.6rem .8rem;font-size:clamp(1.02rem,2.4vw,1.2rem);font-weight:700;box-shadow:var(--shadow-sm);min-height:72px}
+.narr p{flex:1}
+.speak{flex:none;width:52px;height:52px;border-radius:50%;border:2px solid var(--rule-strong);background:var(--gold-wash);cursor:pointer;font-size:1.4rem}
+.speak[hidden]{display:none}
+
+/* controls */
+.row{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center;align-items:center}
+.btn{min-height:56px;padding:.55rem 1.3rem;border-radius:var(--radius-full);border:none;background:linear-gradient(135deg,var(--turquoise),var(--turquoise-deep));color:#fff;font-weight:800;font-size:1.08rem;cursor:pointer;box-shadow:var(--shadow-teal);transition:transform .12s ease}
+.btn:active{transform:scale(.94)}
+.btn.gold{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--ink);box-shadow:0 8px 24px rgba(192,138,46,.25)}
+.btn.ghost{background:var(--card);color:var(--ink);border:2px solid var(--rule-strong);box-shadow:none}
+.btn[disabled]{opacity:.45;cursor:default}
+.choices{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center}
+.choice{min-height:64px;min-width:9rem;max-width:22rem;padding:.6rem 1rem;border-radius:var(--radius-lg);border:3px solid var(--rule-strong);background:var(--card);font-weight:800;font-size:1.05rem;cursor:pointer;box-shadow:var(--shadow-md);transition:transform .12s ease}
+.choice:hover{border-color:var(--gold)}
+.choice:active{transform:scale(.95)}
+.choice .ic{font-size:1.6rem;display:block;line-height:1.2}
+.panel{background:var(--card);border:2px solid var(--rule-strong);border-radius:var(--radius-lg);padding:.8rem;box-shadow:var(--shadow-sm)}
+.panel[hidden],.choices[hidden],.row[hidden]{display:none}
+
+/* hold-to-do ring button */
+.hold{position:relative;min-width:72px;min-height:72px;border-radius:50%;border:3px solid var(--gold);background:var(--gold-wash);cursor:pointer;font-size:1.8rem;touch-action:none}
+.hold .ring{position:absolute;inset:-7px;border-radius:50%;background:conic-gradient(var(--turquoise) calc(var(--p,0)*1turn),transparent 0);-webkit-mask:radial-gradient(circle,transparent 62%,#000 63%);mask:radial-gradient(circle,transparent 62%,#000 63%);pointer-events:none}
+
+/* draggables */
+.drag{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.drag.dragging{cursor:grabbing;z-index:40;position:relative;filter:drop-shadow(0 10px 10px rgba(0,0,0,.25));transition:none!important}
+.drag.selected{outline:4px dashed var(--gold);outline-offset:4px}
+.drag.back-home{transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.drop-hot{box-shadow:0 0 0 5px var(--gold-light),0 0 28px var(--gold-light)!important}
+.drop-hint{animation:hintPulse 1.4s ease-in-out infinite}
+@keyframes hintPulse{50%{box-shadow:0 0 0 5px rgba(224,183,92,.7)}}
+
+/* overlays */
+.overlay{position:fixed;inset:0;background:rgba(20,56,58,.55);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem}
+.overlay[hidden]{display:none}
+.card{background:var(--card);border:3px solid var(--gold);border-radius:var(--radius-xl);padding:1.3rem 1.4rem;max-width:580px;width:100%;text-align:center;box-shadow:var(--shadow-lg);animation:pop .35s ease;max-height:92vh;overflow:auto}
+.card h2{font-family:'Baloo 2','Nunito',sans-serif;font-size:1.5rem;margin-bottom:.4rem}
+.card p{margin:.4rem 0;font-size:1.1rem}
+.pause-tag{display:inline-block;background:var(--cobalt-wash);color:var(--cobalt-deep);border-radius:var(--radius-full);padding:.15rem .9rem;font-weight:800;margin-bottom:.4rem}
+.hint{color:var(--slate-500);font-size:.98rem!important}
+.scripture{font-family:'Amiri','Scheherazade New','Noto Naskh Arabic','Geeza Pro',serif;font-size:clamp(1.4rem,3.6vw,1.9rem);direction:rtl;color:var(--cobalt-deep);line-height:2.1;margin:.4rem 0}
+.duabox{background:var(--cobalt-wash);border:2px solid var(--cobalt-pale);border-radius:var(--radius-lg);padding:.7rem 1rem;margin:.6rem 0}
+.ending-art{font-size:3rem;line-height:1.2}
+.tier{min-height:48px;cursor:pointer;display:flex;gap:.5rem;align-items:center;justify-content:center;margin-top:.6rem;font-weight:700;color:var(--slate-500)}
+.tier input{width:28px;height:28px}
+
+/* gentle juice */
+.spark{position:fixed;width:9px;height:9px;border-radius:50%;background:var(--gold-light);box-shadow:0 0 8px var(--gold-light);pointer-events:none;z-index:70;animation:spark .75s ease-out forwards}
+@keyframes spark{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+@keyframes pop{from{transform:scale(.88);opacity:0}}
+.wobble{animation:wobble .45s ease}
+@keyframes wobble{25%{transform:translateX(-5px) rotate(-2deg)}75%{transform:translateX(5px) rotate(2deg)}}
+.bounce{animation:bounce .45s ease}
+@keyframes bounce{40%{transform:scale(1.1)}70%{transform:scale(.98)}}
+.narr p.bounce{animation:nudge .4s ease}
+@keyframes nudge{40%{transform:translateY(-3px)}}
+.glow{animation:glowA 1.2s ease}
+@keyframes glowA{40%{filter:drop-shadow(0 0 14px var(--gold-light)) brightness(1.15)}}
+
+/* bedtime: same interaction, softer feel */
+body.bedtime main#stage,body.bedtime .narr{filter:brightness(.82) saturate(.75)}
+body.bedtime .spark{display:none}
+body.bedtime .drop-hint{animation:none}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+@media (max-width:600px){
+  .scene{aspect-ratio:4/5;max-height:62vh}
+  .gbar h1{order:-1;flex-basis:100%}
+}
+/* bilingual pairs inside templates: show only the active language */
+[dir=rtl] .l-en,[dir=ltr] .l-ar{display:none}
+
+/* ========== ART / SCENE STYLES (placeholder; swap freely - logic only uses ids and classes) ========== */
+.scene{background:#1B3C6B;aspect-ratio:auto;min-height:260px;max-height:none;padding:2.8rem .6rem 1rem;color:#fff;display:flex;flex-direction:column;gap:.4rem;justify-content:center}
+.sea{height:42px;border-radius:12px;background:#5A79B0;transition:height 1.6s ease,opacity 1.6s}
+.parted .sea{height:70px;background:repeating-linear-gradient(90deg,#5A79B0 0 18px,#7f9bcf 18px 20px)}
+#track{display:flex;gap:.35rem;justify-content:space-between;align-items:center;padding:.4rem;border-radius:12px;background:#5A79B0;transition:background 1.6s}
+.parted #track{background:#d8c79c}
+.step{flex:1;min-width:48px;height:64px;border-radius:12px;border:2px dashed rgba(255,255,255,.6);background:transparent;display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#14383A}
+.parted .step{border-color:#8A6220}
+.step.next{background:rgba(224,183,92,.45)}
+.step.walked{background:rgba(255,253,248,.45)}
+.shore{font-weight:800;font-size:.9rem;opacity:.9}
+#lantern{width:56px;height:56px;border-radius:50%;background:#E0B75C;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 0 calc(8px + var(--g,0)*10px) calc(2px + var(--g,0)*4px) #ffe9a8}
+.people{font-size:1rem;letter-spacing:2px;color:#fff;white-space:nowrap}
+.quote{background:var(--cobalt-wash);border:2px solid var(--cobalt-pale);text-align:center;font-size:1.15rem;font-weight:700}
+.quote .who{display:block;font-size:.95rem;color:var(--slate-500)}
+</style>
+</head>
+<body>
+<header class="gbar">
+  <a class="back" href="../../story-prophet-musa.html" data-ar="→ القصة">← Story</a>
+  <h1><span data-ar="الطريق في البحر">The Path Through the Sea</span><span class="proto" data-ar="نموذج تجريبي">Prototype</span></h1>
+  <div class="tools" role="toolbar" aria-label="Game settings" data-ar-label="إعدادات اللعبة">
+    <button class="gbtn" id="voiceBtn" type="button" aria-pressed="false" aria-label="Read instructions aloud automatically" data-ar-label="قراءة التعليمات تلقائياً" title="Read aloud">🗣️</button>
+    <button class="gbtn" id="soundBtn" type="button" aria-pressed="true" aria-label="Soft chimes on or off" data-ar-label="تشغيل الأصوات الهادئة أو إيقافها" title="Chimes">🔔</button>
+    <button class="gbtn" id="bedBtn" type="button" aria-pressed="false" aria-label="Bedtime mode: calmer and dimmer" data-ar-label="وضع النوم: أهدأ وأخفت" title="Bedtime">🌙</button>
+    <button class="gbtn" id="langBtn" type="button" lang="ar">عربي</button>
+  </div>
+</header>
+
+<main id="stage">
+  <div class="scene" id="scene">
+    <span class="phase-tag" id="phaseTag" style="color:var(--ink)"></span>
+    <div class="sea" aria-hidden="true"></div>
+    <div id="track" aria-label="The path across the sea" data-ar-label="الطريق عبر البحر"></div>
+    <div class="sea" aria-hidden="true"></div>
+  </div>
+  <div class="narr" role="status" aria-live="polite">
+  <p id="narrText"></p>
+  <button class="speak" id="speakBtn" type="button" aria-label="Read this aloud" data-ar-label="اقرأ هذا بصوت عالٍ">🔊</button>
+</div>
+
+  <div class="panel quote" id="qCry" hidden><span class="who" data-ar="صاح الناس:">The people cried:</span><span class="l-en">"They have caught us!"</span><span class="l-ar" lang="ar">&quot;لقد أدركونا!&quot;</span></div>
+  <div class="panel quote" id="qTrust" hidden><span class="who" data-ar="لكن موسى قال بهدوء:">But Musa said calmly:</span><span class="l-en">"No! My Lord is with me, and He will guide me."</span><span class="l-ar" lang="ar">&quot;كلا! إن معي ربي سيهدين.&quot;</span></div>
+  <div class="panel quote" id="qStrike" hidden><span data-ar="أمر الله موسى أن يضرب البحر بعصاه.">Allah told Musa to strike the sea with his staff.</span></div>
+  <div class="choices" id="choices" hidden></div>
+  <div class="row" id="ctl" hidden>
+    <button class="btn gold" id="watchBtn" type="button" hidden data-ar="🌊 استمع إلى ما حدث">🌊 Hear what happened</button>
+    <button class="btn" id="stepBtn" type="button" hidden data-ar="👣 خطوة إلى الأمام">👣 Step forward</button>
+  </div>
+</main>
+<div class="overlay" id="pause" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="pauseQ">
+    <span class="pause-tag" data-ar="⏸ لحظة حوار مع الوالدين">⏸ Parent pause</span>
+    <p class="hint" data-ar="توقّفا قليلاً واسألا معاً:">Stop for a moment and ask together:</p>
+    <h2 id="pauseQ"></h2>
+    <p class="hint" id="pauseHint"></p>
+    <button class="btn gold" id="pauseGo" type="button" data-ar="تحدّثنا، لنكمل ▶">We talked, carry on ▶</button>
+  </div>
+</div>
+<div class="overlay" id="ending" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="endTitle">
+    <div class="ending-art" id="endArt" aria-hidden="true"></div>
+    <h2 id="endTitle"></h2>
+    <p id="endBody"></p>
+    <div id="endExtra"></div>
+    <div class="row" style="margin-top:.8rem">
+      <button class="btn gold" id="againBtn" type="button" data-ar="🔁 لنلعب معاً مرة أخرى">🔁 Play together again</button>
+      <a class="btn ghost" href="../../story-prophet-musa.html" style="text-decoration:none;display:inline-flex;align-items:center" data-ar="📖 العودة إلى القصة">📖 Back to the story</a>
+    </div>
+    <label class="tier" id="tierWrap"><input type="checkbox" id="tierBox"> <span id="tierLabel"></span></label>
+  </div>
+</div>
+
+<script>
+/* ---------- shared mockup kit (inlined in every game so each file stands alone) ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const G = { lang: 'en', sound: true, voice: false, bedtime: false, hooks: [], narr: null, pauseCur: null, endCur: null, sel: null, tier: false };
+try { if (localStorage.getItem('islamicKidsLang') === 'ar') G.lang = 'ar'; } catch (e) { /* private mode */ }
+
+const wait = ms => new Promise(r => setTimeout(r, ms));
+/* animation-only waits shrink when the user asked for less motion */
+const anim = ms => wait(RM ? Math.min(ms, 120) : (G.bedtime ? ms * 1.25 : ms));
+const t = o => (o == null ? '' : typeof o === 'string' ? o : (o[G.lang] != null ? o[G.lang] : o.en));
+const num = n => (G.lang === 'ar' ? String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]) : String(n));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const onLang = f => G.hooks.push(f);
+const isRTL = () => G.lang === 'ar';
+
+function applyLang() {
+  const ar = G.lang === 'ar';
+  document.documentElement.lang = G.lang;
+  document.documentElement.dir = ar ? 'rtl' : 'ltr';
+  $$('[data-ar]').forEach(el => {
+    if (el.dataset.en === undefined) el.dataset.en = el.innerHTML;
+    el.innerHTML = ar ? el.dataset.ar : el.dataset.en;
+  });
+  $$('[data-ar-label]').forEach(el => {
+    if (el.dataset.enLabel === undefined) el.dataset.enLabel = el.getAttribute('aria-label') || '';
+    el.setAttribute('aria-label', ar ? el.dataset.arLabel : el.dataset.enLabel);
+  });
+  const lb = $('#langBtn');
+  if (lb) { lb.textContent = ar ? 'English' : 'عربي'; lb.lang = ar ? 'en' : 'ar'; lb.setAttribute('aria-label', ar ? 'Switch to English' : 'التبديل إلى العربية'); }
+  if (G.narr) $('#narrText').textContent = t(G.narr);
+  if (G.pauseCur) { $('#pauseQ').textContent = t(G.pauseCur.q); $('#pauseHint').textContent = t(G.pauseCur.hint); }
+  if (G.endCur) renderEnding();
+  G.hooks.forEach(f => f());
+}
+
+/* ---- narration: the strip under the scene, optionally spoken (never scripture) ---- */
+function say(o) { G.narr = o; const el = $('#narrText'); el.textContent = t(o); el.classList.remove('bounce'); void el.offsetWidth; el.classList.add('bounce'); if (G.voice) speakText(t(o)); }
+function speakText(txt) {
+  if (!('speechSynthesis' in window) || !txt) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(txt.replace(/\p{Extended_Pictographic}|️/gu, ''));
+  u.lang = G.lang === 'ar' ? 'ar-SA' : 'en-GB'; u.rate = G.bedtime ? 0.8 : 0.9;
+  speechSynthesis.speak(u);
+}
+
+/* ---- soft Web Audio chimes (sine bells; no music). Scholar ruling 2026-11-03: until the owner decides on
+   instruments, every cue is one soft tone or a two-note chime; no arpeggios or melodic runs. ---- */
+let AC = null;
+function ac() {
+  if (!AC) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; AC = new C(); }
+  if (AC.state === 'suspended') AC.resume();
+  return AC;
+}
+function tone(a, f, at, dur, vol) {
+  const o = a.createOscillator(), g = a.createGain();
+  o.type = 'sine'; o.frequency.value = f;
+  g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(vol, at + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+  o.connect(g).connect(a.destination); o.start(at); o.stop(at + dur + 0.05);
+}
+function chime(kind) {
+  if (!G.sound) return; const a = ac(); if (!a) return;
+  const n = a.currentTime, v = G.bedtime ? 0.04 : 0.08;
+  if (kind === 'tap') tone(a, 880, n, 0.12, v * 0.45);
+  else if (kind === 'good') { tone(a, 659, n, 0.4, v); tone(a, 988, n + 0.09, 0.5, v * 0.8); }
+  else if (kind === 'soft') tone(a, 392, n, 0.45, v * 0.6);
+  else if (kind === 'thud') tone(a, 220, n, 0.16, v * 0.9);
+  else if (kind === 'done') { tone(a, 523, n, 0.9, v * 0.7); tone(a, 784, n + 0.2, 1.1, v * 0.6); }
+}
+
+/* ---- sparse, soft sparkles ---- */
+function sparkle(el, n = 8) {
+  if (RM || G.bedtime || !el) return;
+  const r = el.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement('span'); s.className = 'spark';
+    const ang = (Math.PI * 2 * i) / n + Math.random() * 0.4, d = 30 + Math.random() * 30;
+    s.style.left = x + 'px'; s.style.top = y + 'px';
+    s.style.setProperty('--dx', Math.cos(ang) * d + 'px'); s.style.setProperty('--dy', Math.sin(ang) * d + 'px');
+    document.body.appendChild(s); setTimeout(() => s.remove(), 800);
+  }
+}
+function fx(el, cls) { if (!el) return; el.classList.remove(cls); void el.getBoundingClientRect(); el.classList.add(cls); setTimeout(() => el.classList.remove(cls), 600); }
+
+/* ---- parent pause point (a question to talk about, never graded) ---- */
+function pausePoint(q, hint) {
+  return new Promise(res => {
+    G.pauseCur = { q, hint };
+    $('#pauseQ').textContent = t(q); $('#pauseHint').textContent = t(hint);
+    $('#pause').hidden = false; chime('soft');
+    const b = $('#pauseGo'); setTimeout(() => b.focus(), 50);
+    if (G.voice) speakText(t(q));
+    b.onclick = () => { $('#pause').hidden = true; G.pauseCur = null; chime('tap'); res(); };
+  });
+}
+
+/* ---- calm ending ---- */
+function showEnding(o) { G.endCur = o; renderEnding(); $('#ending').hidden = false; chime('done'); setTimeout(() => $('#againBtn').focus(), 60); }
+function renderEnding() {
+  const o = G.endCur; if (!o) return;
+  $('#endArt').textContent = o.art || '🌙';
+  $('#endTitle').textContent = t(o.title); $('#endBody').textContent = t(o.body);
+  $('#endExtra').innerHTML = o.extra ? o.extra() : '';
+  const tw = $('#tierWrap');
+  if (o.tier) { tw.hidden = false; $('#tierLabel').textContent = t(o.tier); $('#tierBox').checked = G.tier; } else tw.hidden = true;
+}
+function wireEnding(restart) {
+  $('#againBtn').onclick = () => { G.tier = $('#tierBox').checked; $('#ending').hidden = true; G.endCur = null; chime('tap'); restart(); };
+}
+
+/* ---- drag with generous snap zones; tap-to-select + tap-target as the keyboard / no-drag path ---- */
+function rectHit(x, y, el, pad) { const r = el.getBoundingClientRect(); return x >= r.left - pad && x <= r.right + pad && y >= r.top - pad && y <= r.bottom + pad; }
+function findTarget(x, y, targets, pad = 28) {
+  let best = null, bd = 1e9;
+  targets.forEach(tg => { if (!rectHit(x, y, tg, pad)) return; const r = tg.getBoundingClientRect(); const d = Math.hypot(x - (r.left + r.width / 2), y - (r.top + r.height / 2)); if (d < bd) { bd = d; best = tg; } });
+  return best;
+}
+function clearSel() { if (G.sel) { G.sel.el.classList.remove('selected'); G.sel.el.setAttribute('aria-pressed', 'false'); G.sel.opts.targets().forEach(x => x.classList.remove('drop-hint')); } G.sel = null; }
+function draggable(el, opts) {
+  el.classList.add('drag'); el.setAttribute('role', 'button'); el.tabIndex = 0; el.setAttribute('aria-pressed', 'false');
+  let sx = 0, sy = 0, pid = null, dragging = false, hot = null;
+  const reset = () => { el.classList.remove('dragging'); el.style.transform = ''; if (hot) hot.classList.remove('drop-hot'); hot = null; };
+  el.addEventListener('pointerdown', e => {
+    if (el.dataset.locked) return; pid = e.pointerId; sx = e.clientX; sy = e.clientY; dragging = false;
+    try { el.setPointerCapture(pid); } catch (_) {}
+    ac();
+  });
+  el.addEventListener('pointermove', e => {
+    if (e.pointerId !== pid) return;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    if (!dragging && Math.hypot(dx, dy) > 8) { dragging = true; clearSel(); el.classList.add('dragging'); chime('tap'); opts.onPick && opts.onPick(el); }
+    if (dragging) {
+      el.style.transform = `translate(${dx}px,${dy}px) scale(1.08)`;
+      const tg = findTarget(e.clientX, e.clientY, opts.targets());
+      if (tg !== hot) { if (hot) hot.classList.remove('drop-hot'); hot = tg; if (hot) hot.classList.add('drop-hot'); }
+    }
+  });
+  const up = e => {
+    if (e.pointerId !== pid) return; pid = null;
+    if (!dragging) { reset(); select(); return; }
+    const tg = e.type === 'pointerup' ? findTarget(e.clientX, e.clientY, opts.targets()) : null;
+    reset();
+    if (tg) opts.onDrop(el, tg); else { el.classList.add('back-home'); setTimeout(() => el.classList.remove('back-home'), 400); opts.onMiss && opts.onMiss(el); }
+  };
+  el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); } });
+  function select() {
+    if (el.dataset.locked) return;
+    if (G.sel && G.sel.el === el) { clearSel(); return; }
+    clearSel(); G.sel = { el, opts }; el.classList.add('selected'); el.setAttribute('aria-pressed', 'true'); chime('tap');
+    opts.targets().forEach(x => x.classList.add('drop-hint'));
+    opts.onSelect && opts.onSelect(el);
+  }
+}
+/* a drop target: click / Enter places the selected item there */
+function dropTarget(tg) {
+  if (!tg.matches('button')) { tg.tabIndex = 0; tg.setAttribute('role', 'button'); tg.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tg.click(); } }); }
+  tg.addEventListener('click', () => {
+    if (!G.sel || !G.sel.opts.targets().includes(tg)) return;
+    const { el, opts } = G.sel; clearSel(); opts.onDrop(el, tg);
+  });
+}
+
+/* ---- press-and-hold (patience as a mechanic: progress keeps if you let go) ---- */
+function holdButton(btn, ms, onTick, onDone) {
+  let p = 0, timer = null, last = 0;
+  const set = v => { p = v; btn.style.setProperty('--p', p); };
+  const step = now => { if (!timer) return; const dt = now - last; last = now; set(Math.min(1, p + dt / ms)); onTick && onTick(p); if (p >= 1) { stop(); onDone(); return; } timer = requestAnimationFrame(step); };
+  const start = e => { if (btn.disabled || p >= 1) return; e && e.preventDefault(); ac(); last = performance.now(); timer = requestAnimationFrame(step); btn.classList.add('holding'); };
+  const stop = () => { if (timer) cancelAnimationFrame(timer); timer = null; btn.classList.remove('holding'); };
+  btn.addEventListener('pointerdown', start); ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => btn.addEventListener(ev, stop));
+  btn.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) start(e); });
+  btn.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') stop(); });
+  btn.addEventListener('contextmenu', e => e.preventDefault());
+  return { reset: () => { stop(); set(0); }, get: () => p };
+}
+
+/* ---- choice helper: show buttons, resolve with the chosen id ---- */
+function ask(container, options) {
+  return new Promise(res => {
+    container.innerHTML = ''; container.hidden = false;
+    const btns = shuffle(options).map(o => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'choice'; b.__o = o;
+      b.addEventListener('click', () => { chime('tap'); container.hidden = true; G.hooks = G.hooks.filter(h => h !== hk); res(o.id); });
+      container.appendChild(b); return b;
+    });
+    const hk = () => btns.forEach(b => { const o = b.__o; b.innerHTML = (o.ic ? `<span class="ic" aria-hidden="true">${o.ic}</span>` : '') + t(o.label); });
+    hk(); G.hooks.push(hk);
+    setTimeout(() => btns[0] && btns[0].focus({ preventScroll: true }), 30);
+  });
+}
+
+/* ---- toolbar ---- */
+function initShell() {
+  $('#langBtn').addEventListener('click', () => { G.lang = G.lang === 'ar' ? 'en' : 'ar'; if ('speechSynthesis' in window) speechSynthesis.cancel(); applyLang(); chime('tap'); });
+  const tog = (id, key, after) => $(id).addEventListener('click', e => { G[key] = !G[key]; e.currentTarget.setAttribute('aria-pressed', String(G[key])); after && after(); chime('tap'); });
+  tog('#soundBtn', 'sound');
+  tog('#voiceBtn', 'voice', () => { if (G.voice && G.narr) speakText(t(G.narr)); if (!G.voice && 'speechSynthesis' in window) speechSynthesis.cancel(); });
+  tog('#bedBtn', 'bedtime', () => document.body.classList.toggle('bedtime', G.bedtime));
+  if (!('speechSynthesis' in window)) { $('#voiceBtn').hidden = true; $('#speakBtn').hidden = true; }
+  $('#speakBtn').addEventListener('click', () => speakText(t(G.narr)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') clearSel(); });
+  applyLang();
+}
+const times = n => (G.lang === 'ar' ? (n === 1 ? 'مرة واحدة' : n === 2 ? 'مرتين' : `${num(n)} مرات`) : (n === 1 ? 'once' : n === 2 ? 'twice' : `${n} times`));
+
+/* ======================= ART (placeholder assets - swap for real art later) ======================= */
+const ART = { lantern: '🏮', people: '• • • • •', shoreStart: { en: 'Egypt side', ar: 'جهة مصر' }, shoreEnd: { en: 'Safe shore', ar: 'الشاطئ الآمن' } };
+/* ======================= CONTENT (follows UI/story-prophet-musa.html) ======================= */
+const L = {
+  p1: { en: '1 · Trapped at the sea', ar: '١ · محاصرون عند البحر' }, p2: { en: '2 · The dry path', ar: '٢ · الطريق اليابس' }, p3: { en: '3 · Safe!', ar: '٣ · في أمان!' },
+  intro: { en: "Allah told Prophet Musa to lead the believers out of Egypt at night. Now there is a huge sea in front of them, and Pharaoh's army is coming behind. The people are frightened.", ar: 'أمر الله النبيَّ موسى عليه السلام أن يقود المؤمنين خارج مصر ليلاً. والآن أمامهم بحر ضخم، وجيش فرعون قادم من خلفهم. الناس خائفون.' },
+  askCry: { en: 'What is the best answer to fear like this?', ar: 'ما أفضل جواب لخوف كهذا؟' },
+  optTrust: { en: 'Allah is with us, He will guide us', ar: 'الله معنا، وسيهدينا' },
+  optRun: { en: 'Run back the way we came', ar: 'نركض عائدين من حيث جئنا' },
+  run: { en: 'Running back would lead straight to the army. There is a better answer, the one Musa gave. Let us choose again.', ar: 'الرجوع يقودنا مباشرة إلى الجيش. هناك جواب أفضل، وهو جواب موسى. لنختر مرة أخرى.' },
+  trust: { en: "Yes! Musa said: 'My Lord is with me, He will guide me.' Trusting Allah is the brave answer.", ar: 'نعم! قال موسى إن ربه معه وسيهديه. الثقة بالله هي الجواب الشجاع.' },
+  strike: { en: 'Then Allah told Musa to strike the sea with his staff. Press the button to hear what happened.', ar: 'ثم أمر الله موسى أن يضرب البحر بعصاه. اضغط الزر لتسمع ما حدث.' },
+  parted: { en: 'Musa obeyed Allah and struck the sea with his staff, and by Allah\'s command the sea split into two mighty walls with a dry path in the middle! Carry a lantern and walk with the believers, following the path Allah opened: drag it, or press "Step forward".', ar: 'أطاع موسى ربه وضرب البحر بعصاه، فانشق البحر بأمر الله إلى جدارين عظيمين وبينهما طريق يابس! احمل فانوساً وامشِ مع المؤمنين على الطريق الذي فتحه الله: اسحبه، أو اضغط "خطوة إلى الأمام".' },
+  onward: { en: 'We walk on together, along the path Allah opened. Keep going.', ar: 'نمشي معاً على الطريق الذي فتحه الله. واصل السير.' },
+  dragNext: { en: 'Move the lantern to the next glowing step.', ar: 'حرّك الفانوس إلى الخطوة المضيئة التالية.' },
+  safe: { en: 'The believers walked safely across! Then the walls of water came back down. Allah had saved the believers, just as He promised.', ar: 'عبر المؤمنون بأمان! ثم عادت جدران الماء. لقد أنقذ الله المؤمنين كما وعد.' },
+  pauseQ: { en: 'When have you felt scared? What can you say to yourself to remember that Allah is with you?', ar: 'متى شعرت بالخوف؟ ماذا يمكنك أن تقول لنفسك لتتذكر أن الله معك؟' },
+  pauseH: { en: 'Idea: say "Allah is with me", take a slow breath, then do the next brave step.', ar: 'فكرة: قل "الله معي"، وتنفّس ببطء، ثم اخطُ الخطوة الشجاعة التالية.' },
+  endT: { en: 'Allah always makes a way', ar: 'الله يجعل دائماً مخرجاً' },
+  endB: { en: 'You walked with the believers along the dry path Allah opened, and answered every fear with trust. When you feel trapped, remember: Allah is with you.', ar: 'مشيت مع المؤمنين على الطريق اليابس الذي فتحه الله، وأجبت كل خوف بالثقة. حين تشعر أنك محاصر، تذكّر: الله معك.' },
+  tier: { en: 'Next time: a longer path with one more brave moment', ar: 'في المرة القادمة: طريق أطول ولحظة شجاعة إضافية' }
+};
+const FEARS = [
+  { q: { en: 'The walls of water are SO tall! Some people feel scared. What shall we do?', ar: 'جدران الماء عالية جداً! بعض الناس خائفون. ماذا نفعل؟' },
+    good: { ic: '🤲', label: { en: 'Walk on calmly, Allah made this path safe', ar: 'نمشي بهدوء، فالله جعل هذا الطريق آمناً' } },
+    bad: { ic: '🏃', label: { en: 'Push and run past everyone', ar: 'ندفع الناس ونركض' } },
+    why: { en: 'Pushing could hurt someone. Allah made the path safe and dry, so we can walk calmly and help each other. Let us choose again.', ar: 'الدفع قد يؤذي أحداً. جعل الله الطريق آمناً يابساً، فنستطيع أن نمشي بهدوء ويساعد بعضنا بعضاً. لنختر مرة أخرى.' } },
+  { q: { en: 'The sound of chariots behind us! Someone shouts, "Go back!" What shall we do?', ar: 'صوت العربات خلفنا! أحدهم يصيح: "ارجعوا!" ماذا نفعل؟' },
+    good: { ic: '👣', label: { en: 'Keep going forward, Allah is with us', ar: 'نتقدم إلى الأمام، الله معنا' } },
+    bad: { ic: '↩️', label: { en: 'Turn back to Egypt', ar: 'نعود إلى مصر' } },
+    why: { en: 'Going back means walking towards the army. Allah opened this path for the believers. Let us keep trusting Him and choose again.', ar: 'الرجوع يعني السير نحو الجيش. فتح الله هذا الطريق للمؤمنين. لنستمر في الثقة به ونختر مرة أخرى.' } },
+  { q: { en: 'A little child is tired and has slowed down. What shall we do?', ar: 'طفل صغير تعب وأبطأ في سيره. ماذا نفعل؟' },
+    good: { ic: '🤝', label: { en: 'Help them along, nobody is left behind', ar: 'نساعده، فلا أحد يبقى وحده' } },
+    bad: { ic: '💨', label: { en: 'Hurry ahead without them', ar: 'نسرع ونتركه' } },
+    why: { en: 'Brave people are kind too. Allah is with all of us, so we help the tired ones across. Let us choose again.', ar: 'الشجعان رحماء أيضاً. الله معنا جميعاً، فنساعد المتعبين على العبور. لنختر مرة أخرى.' } }
+];
+/* ======================= LOGIC ======================= */
+const S = {};
+function reset() {
+  Object.assign(S, { n: G.tier ? 11 : 8, pos: 0, lights: 0, phase: L.p1, busy: false, open: false });
+  S.fearAt = G.tier ? { 3: 0, 6: 1, 9: 2 } : { 3: 0, 6: 1 };
+  $('#scene').classList.remove('parted'); ['#qCry', '#qTrust', '#qStrike', '#ctl', '#watchBtn', '#stepBtn'].forEach(s => ($(s).hidden = true));
+  render(); intro();
+}
+async function intro() {
+  say(L.intro); await wait(2500);
+  $('#qCry').hidden = false; say(L.askCry);
+  for (;;) {
+    const c = await ask($('#choices'), [{ id: 'trust', ic: '🤲', label: L.optTrust }, { id: 'run', ic: '🏃', label: L.optRun }]);
+    if (c === 'trust') break;
+    chime('soft'); say(L.run); await wait(2600);
+  }
+  chime('good'); S.lights++; render(); $('#qTrust').hidden = false; say(L.trust); await wait(3000);
+  $('#qCry').hidden = true; $('#qTrust').hidden = true; $('#qStrike').hidden = false; say(L.strike);
+  $('#ctl').hidden = false; $('#watchBtn').hidden = false; $('#watchBtn').focus({ preventScroll: true });
+}
+$('#watchBtn').addEventListener('click', async () => {
+  $('#watchBtn').hidden = true; chime('soft'); $('#scene').classList.add('parted'); await anim(1600);
+  $('#qStrike').hidden = true; S.open = true; S.phase = L.p2; render(); say(L.parted);
+  $('#stepBtn').hidden = false; $('#stepBtn').focus({ preventScroll: true });
+});
+$('#stepBtn').addEventListener('click', () => advance());
+async function advance() {
+  if (!S.open || S.busy || S.pos >= S.n - 1) return;
+  S.busy = true; S.pos++; chime('tap'); render(); fx($('#lantern'), 'bounce');
+  const f = S.fearAt[S.pos];
+  if (f !== undefined) await fear(FEARS[f]);
+  else say(L.onward);
+  S.busy = false;
+  if (S.pos >= S.n - 1) return arrive();
+}
+async function fear(F) {
+  $('#stepBtn').hidden = true; say(F.q);
+  for (;;) {
+    const c = await ask($('#choices'), [{ id: 'good', ...F.good }, { id: 'bad', ...F.bad }]);
+    if (c === 'good') break;
+    chime('soft'); S.dim = true; render(); say(F.why); await wait(2800); S.dim = false; render(); say(F.q);
+  }
+  chime('good'); S.lights++; render(); sparkle($('#lantern'), 10);
+  say({ en: 'The lantern shines brighter. ' + L.onward.en, ar: 'أضاء الفانوس أكثر. ' + L.onward.ar });
+  $('#stepBtn').hidden = false; $('#stepBtn').focus({ preventScroll: true });
+}
+async function arrive() {
+  S.open = false; S.phase = L.p3; $('#stepBtn').hidden = true; render(); chime('soft'); say(L.safe); /* no triumph cue over the waters closing */
+  $('#scene').classList.remove('parted'); await wait(3500);
+  await pausePoint(L.pauseQ, L.pauseH);
+  showEnding({ art: '🌅🏮', title: L.endT, body: L.endB, extra: () => $('#duaTpl').innerHTML, tier: L.tier });
+}
+/* ======================= RENDER (placeholder; replace with real art) ======================= */
+function render() {
+  $('#phaseTag').textContent = t(S.phase);
+  const tr = $('#track'); tr.innerHTML = '';
+  for (let i = 0; i < S.n; i++) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'step'; b.dataset.i = i;
+    b.setAttribute('aria-label', i === 0 ? t(ART.shoreStart) : i === S.n - 1 ? t(ART.shoreEnd) : t({ en: `Step ${i}`, ar: `الخطوة ${num(i)}` }));
+    if (i < S.pos) { b.classList.add('walked'); b.innerHTML = `<span class="people" aria-hidden="true">${i === S.pos - 1 ? ART.people : ''}</span>`; }
+    if (S.open && i === S.pos + 1) b.classList.add('next');
+    if (i === 0 && S.pos === 0) b.insertAdjacentHTML('beforeend', `<span class="shore">${t(ART.shoreStart)}</span>`);
+    if (i === S.n - 1 && S.pos !== i) b.insertAdjacentHTML('beforeend', `<span class="shore">${t(ART.shoreEnd)}</span>`);
+    if (i === S.pos) {
+      const l = document.createElement('div'); l.id = 'lantern'; l.textContent = ART.lantern; l.setAttribute('aria-label', t({ en: 'The lantern', ar: 'الفانوس' }));
+      l.style.setProperty('--g', S.dim ? 0 : Math.min(S.lights, 4));
+      b.textContent = ''; b.appendChild(l);
+      draggable(l, { targets: () => (S.open && !S.busy ? [$$('.step')[S.pos + 1]].filter(Boolean) : []), onDrop: () => advance(), onMiss: () => S.open && say(L.dragNext) });
+    }
+    dropTarget(b); tr.appendChild(b);
+  }
+  /* trust is never counted (scholar ruling): S.lights only sets how warmly the lantern glows */
+}
+onLang(render);
+wireEnding(reset);
+reset(); initShell();
+</script>
+<template id="duaTpl">
+  <div class="duabox">
+    <p class="scripture" lang="ar">رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي</p>
+    <p><span class="l-en">"My Lord, open my chest for me, and make my task easy for me."</span><span class="l-ar" lang="ar">&quot;ربّ اشرح لي صدري ويسّر لي أمري&quot;</span></p>
+    <p class="hint"><span class="l-en">Prophet Musa said this dua before facing Pharaoh. Say it before something hard — like a test or speaking in class!</span><span class="l-ar" lang="ar">دعا النبي موسى بهذا الدعاء قبل أن يواجه فرعون. قله أنت قبل أي أمر صعب - مثل الامتحان أو التحدث أمام الصف!</span></p>
+  </div>
+</template>
+</body>
+</html>

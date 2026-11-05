@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!--
+  GAME MOCKUP 03 - The Path Through the Sea (prototype, not linked from the hub)
+  Learning goal: After playing, the child can say that when the believers were trapped and afraid, Musa
+  trusted that Allah was with him, and that we can answer fear with trust in Allah ("Allah is with us").
+  Core loop: carry a lantern step by step and walk with the believers along the dry path that Allah opened;
+  at moments of fear the child chooses a trusting answer, and the lantern shines brighter (never counted).
+  Story source: UI/story-prophet-musa.html; every quotation and the dua are copied from that page.
+  No prophet is drawn and the child never controls Musa: the sea parts by Allah's command (narrated, not
+  triggered by the child), and the child carries a lantern and walks with the believers, never leading them.
+  Allah's words are given only as indirect speech (scholar gate 1, 2026-11-03).
+  People appear only as a row of small dots.
+  ART NOTE: all visuals are placeholders pending the graphics redesign; see the ART block.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Path Through the Sea - game prototype - Islamic Kids</title>
+<style>
+{{COMMON_CSS}}
+/* ========== ART / SCENE STYLES (placeholder; swap freely - logic only uses ids and classes) ========== */
+.scene{background:#1B3C6B;aspect-ratio:auto;min-height:260px;max-height:none;padding:2.8rem .6rem 1rem;color:#fff;display:flex;flex-direction:column;gap:.4rem;justify-content:center}
+.sea{height:42px;border-radius:12px;background:#5A79B0;transition:height 1.6s ease,opacity 1.6s}
+.parted .sea{height:70px;background:repeating-linear-gradient(90deg,#5A79B0 0 18px,#7f9bcf 18px 20px)}
+#track{display:flex;gap:.35rem;justify-content:space-between;align-items:center;padding:.4rem;border-radius:12px;background:#5A79B0;transition:background 1.6s}
+.parted #track{background:#d8c79c}
+.step{flex:1;min-width:48px;height:64px;border-radius:12px;border:2px dashed rgba(255,255,255,.6);background:transparent;display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:#14383A}
+.parted .step{border-color:#8A6220}
+.step.next{background:rgba(224,183,92,.45)}
+.step.walked{background:rgba(255,253,248,.45)}
+.shore{font-weight:800;font-size:.9rem;opacity:.9}
+#lantern{width:56px;height:56px;border-radius:50%;background:#E0B75C;display:flex;align-items:center;justify-content:center;font-size:1.6rem;box-shadow:0 0 calc(8px + var(--g,0)*10px) calc(2px + var(--g,0)*4px) #ffe9a8}
+.people{font-size:1rem;letter-spacing:2px;color:#fff;white-space:nowrap}
+.quote{background:var(--cobalt-wash);border:2px solid var(--cobalt-pale);text-align:center;font-size:1.15rem;font-weight:700}
+.quote .who{display:block;font-size:.95rem;color:var(--slate-500)}
+</style>
+</head>
+<body>
+{{TOP}}
+<main id="stage">
+  <div class="scene" id="scene">
+    <span class="phase-tag" id="phaseTag" style="color:var(--ink)"></span>
+    <div class="sea" aria-hidden="true"></div>
+    <div id="track" aria-label="The path across the sea" data-ar-label="الطريق عبر البحر"></div>
+    <div class="sea" aria-hidden="true"></div>
+  </div>
+  {{NARR}}
+  <div class="panel quote" id="qCry" hidden><span class="who" data-ar="صاح الناس:">The people cried:</span>{{T:MUSA_CRY}}</div>
+  <div class="panel quote" id="qTrust" hidden><span class="who" data-ar="لكن موسى قال بهدوء:">But Musa said calmly:</span>{{T:MUSA_TRUST}}</div>
+  <div class="panel quote" id="qStrike" hidden><span data-ar="أمر الله موسى أن يضرب البحر بعصاه.">Allah told Musa to strike the sea with his staff.</span></div>
+  <div class="choices" id="choices" hidden></div>
+  <div class="row" id="ctl" hidden>
+    <button class="btn gold" id="watchBtn" type="button" hidden data-ar="🌊 استمع إلى ما حدث">🌊 Hear what happened</button>
+    <button class="btn" id="stepBtn" type="button" hidden data-ar="👣 خطوة إلى الأمام">👣 Step forward</button>
+  </div>
+</main>
+{{BOTTOM}}
+<script>
+{{COMMON_JS}}
+/* ======================= ART (placeholder assets - swap for real art later) ======================= */
+const ART = { lantern: '🏮', people: '• • • • •', shoreStart: { en: 'Egypt side', ar: 'جهة مصر' }, shoreEnd: { en: 'Safe shore', ar: 'الشاطئ الآمن' } };
+/* ======================= CONTENT (follows UI/story-prophet-musa.html) ======================= */
+const L = {
+  p1: { en: '1 · Trapped at the sea', ar: '١ · محاصرون عند البحر' }, p2: { en: '2 · The dry path', ar: '٢ · الطريق اليابس' }, p3: { en: '3 · Safe!', ar: '٣ · في أمان!' },
+  intro: { en: "Allah told Prophet Musa to lead the believers out of Egypt at night. Now there is a huge sea in front of them, and Pharaoh's army is coming behind. The people are frightened.", ar: 'أمر الله النبيَّ موسى عليه السلام أن يقود المؤمنين خارج مصر ليلاً. والآن أمامهم بحر ضخم، وجيش فرعون قادم من خلفهم. الناس خائفون.' },
+  askCry: { en: 'What is the best answer to fear like this?', ar: 'ما أفضل جواب لخوف كهذا؟' },
+  optTrust: { en: 'Allah is with us, He will guide us', ar: 'الله معنا، وسيهدينا' },
+  optRun: { en: 'Run back the way we came', ar: 'نركض عائدين من حيث جئنا' },
+  run: { en: 'Running back would lead straight to the army. There is a better answer, the one Musa gave. Let us choose again.', ar: 'الرجوع يقودنا مباشرة إلى الجيش. هناك جواب أفضل، وهو جواب موسى. لنختر مرة أخرى.' },
+  trust: { en: "Yes! Musa said: 'My Lord is with me, He will guide me.' Trusting Allah is the brave answer.", ar: 'نعم! قال موسى إن ربه معه وسيهديه. الثقة بالله هي الجواب الشجاع.' },
+  strike: { en: 'Then Allah told Musa to strike the sea with his staff. Press the button to hear what happened.', ar: 'ثم أمر الله موسى أن يضرب البحر بعصاه. اضغط الزر لتسمع ما حدث.' },
+  parted: { en: 'Musa obeyed Allah and struck the sea with his staff, and by Allah\'s command the sea split into two mighty walls with a dry path in the middle! Carry a lantern and walk with the believers, following the path Allah opened: drag it, or press "Step forward".', ar: 'أطاع موسى ربه وضرب البحر بعصاه، فانشق البحر بأمر الله إلى جدارين عظيمين وبينهما طريق يابس! احمل فانوساً وامشِ مع المؤمنين على الطريق الذي فتحه الله: اسحبه، أو اضغط "خطوة إلى الأمام".' },
+  onward: { en: 'We walk on together, along the path Allah opened. Keep going.', ar: 'نمشي معاً على الطريق الذي فتحه الله. واصل السير.' },
+  dragNext: { en: 'Move the lantern to the next glowing step.', ar: 'حرّك الفانوس إلى الخطوة المضيئة التالية.' },
+  safe: { en: 'The believers walked safely across! Then the walls of water came back down. Allah had saved the believers, just as He promised.', ar: 'عبر المؤمنون بأمان! ثم عادت جدران الماء. لقد أنقذ الله المؤمنين كما وعد.' },
+  pauseQ: { en: 'When have you felt scared? What can you say to yourself to remember that Allah is with you?', ar: 'متى شعرت بالخوف؟ ماذا يمكنك أن تقول لنفسك لتتذكر أن الله معك؟' },
+  pauseH: { en: 'Idea: say "Allah is with me", take a slow breath, then do the next brave step.', ar: 'فكرة: قل "الله معي"، وتنفّس ببطء، ثم اخطُ الخطوة الشجاعة التالية.' },
+  endT: { en: 'Allah always makes a way', ar: 'الله يجعل دائماً مخرجاً' },
+  endB: { en: 'You walked with the believers along the dry path Allah opened, and answered every fear with trust. When you feel trapped, remember: Allah is with you.', ar: 'مشيت مع المؤمنين على الطريق اليابس الذي فتحه الله، وأجبت كل خوف بالثقة. حين تشعر أنك محاصر، تذكّر: الله معك.' },
+  tier: { en: 'Next time: a longer path with one more brave moment', ar: 'في المرة القادمة: طريق أطول ولحظة شجاعة إضافية' }
+};
+const FEARS = [
+  { q: { en: 'The walls of water are SO tall! Some people feel scared. What shall we do?', ar: 'جدران الماء عالية جداً! بعض الناس خائفون. ماذا نفعل؟' },
+    good: { ic: '🤲', label: { en: 'Walk on calmly, Allah made this path safe', ar: 'نمشي بهدوء، فالله جعل هذا الطريق آمناً' } },
+    bad: { ic: '🏃', label: { en: 'Push and run past everyone', ar: 'ندفع الناس ونركض' } },
+    why: { en: 'Pushing could hurt someone. Allah made the path safe and dry, so we can walk calmly and help each other. Let us choose again.', ar: 'الدفع قد يؤذي أحداً. جعل الله الطريق آمناً يابساً، فنستطيع أن نمشي بهدوء ويساعد بعضنا بعضاً. لنختر مرة أخرى.' } },
+  { q: { en: 'The sound of chariots behind us! Someone shouts, "Go back!" What shall we do?', ar: 'صوت العربات خلفنا! أحدهم يصيح: "ارجعوا!" ماذا نفعل؟' },
+    good: { ic: '👣', label: { en: 'Keep going forward, Allah is with us', ar: 'نتقدم إلى الأمام، الله معنا' } },
+    bad: { ic: '↩️', label: { en: 'Turn back to Egypt', ar: 'نعود إلى مصر' } },
+    why: { en: 'Going back means walking towards the army. Allah opened this path for the believers. Let us keep trusting Him and choose again.', ar: 'الرجوع يعني السير نحو الجيش. فتح الله هذا الطريق للمؤمنين. لنستمر في الثقة به ونختر مرة أخرى.' } },
+  { q: { en: 'A little child is tired and has slowed down. What shall we do?', ar: 'طفل صغير تعب وأبطأ في سيره. ماذا نفعل؟' },
+    good: { ic: '🤝', label: { en: 'Help them along, nobody is left behind', ar: 'نساعده، فلا أحد يبقى وحده' } },
+    bad: { ic: '💨', label: { en: 'Hurry ahead without them', ar: 'نسرع ونتركه' } },
+    why: { en: 'Brave people are kind too. Allah is with all of us, so we help the tired ones across. Let us choose again.', ar: 'الشجعان رحماء أيضاً. الله معنا جميعاً، فنساعد المتعبين على العبور. لنختر مرة أخرى.' } }
+];
+/* ======================= LOGIC ======================= */
+const S = {};
+function reset() {
+  Object.assign(S, { n: G.tier ? 11 : 8, pos: 0, lights: 0, phase: L.p1, busy: false, open: false });
+  S.fearAt = G.tier ? { 3: 0, 6: 1, 9: 2 } : { 3: 0, 6: 1 };
+  $('#scene').classList.remove('parted'); ['#qCry', '#qTrust', '#qStrike', '#ctl', '#watchBtn', '#stepBtn'].forEach(s => ($(s).hidden = true));
+  render(); intro();
+}
+async function intro() {
+  say(L.intro); await wait(2500);
+  $('#qCry').hidden = false; say(L.askCry);
+  for (;;) {
+    const c = await ask($('#choices'), [{ id: 'trust', ic: '🤲', label: L.optTrust }, { id: 'run', ic: '🏃', label: L.optRun }]);
+    if (c === 'trust') break;
+    chime('soft'); say(L.run); await wait(2600);
+  }
+  chime('good'); S.lights++; render(); $('#qTrust').hidden = false; say(L.trust); await wait(3000);
+  $('#qCry').hidden = true; $('#qTrust').hidden = true; $('#qStrike').hidden = false; say(L.strike);
+  $('#ctl').hidden = false; $('#watchBtn').hidden = false; $('#watchBtn').focus({ preventScroll: true });
+}
+$('#watchBtn').addEventListener('click', async () => {
+  $('#watchBtn').hidden = true; chime('soft'); $('#scene').classList.add('parted'); await anim(1600);
+  $('#qStrike').hidden = true; S.open = true; S.phase = L.p2; render(); say(L.parted);
+  $('#stepBtn').hidden = false; $('#stepBtn').focus({ preventScroll: true });
+});
+$('#stepBtn').addEventListener('click', () => advance());
+async function advance() {
+  if (!S.open || S.busy || S.pos >= S.n - 1) return;
+  S.busy = true; S.pos++; chime('tap'); render(); fx($('#lantern'), 'bounce');
+  const f = S.fearAt[S.pos];
+  if (f !== undefined) await fear(FEARS[f]);
+  else say(L.onward);
+  S.busy = false;
+  if (S.pos >= S.n - 1) return arrive();
+}
+async function fear(F) {
+  $('#stepBtn').hidden = true; say(F.q);
+  for (;;) {
+    const c = await ask($('#choices'), [{ id: 'good', ...F.good }, { id: 'bad', ...F.bad }]);
+    if (c === 'good') break;
+    chime('soft'); S.dim = true; render(); say(F.why); await wait(2800); S.dim = false; render(); say(F.q);
+  }
+  chime('good'); S.lights++; render(); sparkle($('#lantern'), 10);
+  say({ en: 'The lantern shines brighter. ' + L.onward.en, ar: 'أضاء الفانوس أكثر. ' + L.onward.ar });
+  $('#stepBtn').hidden = false; $('#stepBtn').focus({ preventScroll: true });
+}
+async function arrive() {
+  S.open = false; S.phase = L.p3; $('#stepBtn').hidden = true; render(); chime('soft'); say(L.safe); /* no triumph cue over the waters closing */
+  $('#scene').classList.remove('parted'); await wait(3500);
+  await pausePoint(L.pauseQ, L.pauseH);
+  showEnding({ art: '🌅🏮', title: L.endT, body: L.endB, extra: () => $('#duaTpl').innerHTML, tier: L.tier });
+}
+/* ======================= RENDER (placeholder; replace with real art) ======================= */
+function render() {
+  $('#phaseTag').textContent = t(S.phase);
+  const tr = $('#track'); tr.innerHTML = '';
+  for (let i = 0; i < S.n; i++) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'step'; b.dataset.i = i;
+    b.setAttribute('aria-label', i === 0 ? t(ART.shoreStart) : i === S.n - 1 ? t(ART.shoreEnd) : t({ en: `Step ${i}`, ar: `الخطوة ${num(i)}` }));
+    if (i < S.pos) { b.classList.add('walked'); b.innerHTML = `<span class="people" aria-hidden="true">${i === S.pos - 1 ? ART.people : ''}</span>`; }
+    if (S.open && i === S.pos + 1) b.classList.add('next');
+    if (i === 0 && S.pos === 0) b.insertAdjacentHTML('beforeend', `<span class="shore">${t(ART.shoreStart)}</span>`);
+    if (i === S.n - 1 && S.pos !== i) b.insertAdjacentHTML('beforeend', `<span class="shore">${t(ART.shoreEnd)}</span>`);
+    if (i === S.pos) {
+      const l = document.createElement('div'); l.id = 'lantern'; l.textContent = ART.lantern; l.setAttribute('aria-label', t({ en: 'The lantern', ar: 'الفانوس' }));
+      l.style.setProperty('--g', S.dim ? 0 : Math.min(S.lights, 4));
+      b.textContent = ''; b.appendChild(l);
+      draggable(l, { targets: () => (S.open && !S.busy ? [$$('.step')[S.pos + 1]].filter(Boolean) : []), onDrop: () => advance(), onMiss: () => S.open && say(L.dragNext) });
+    }
+    dropTarget(b); tr.appendChild(b);
+  }
+  /* trust is never counted (scholar ruling): S.lights only sets how warmly the lantern glows */
+}
+onLang(render);
+wireEnding(reset);
+reset(); initShell();
+</script>
+<template id="duaTpl">
+  <div class="duabox">
+    <p class="scripture" lang="ar">{{S:MUSA_DUA}}</p>
+    <p>{{T:MUSA_TR}}</p>
+    <p class="hint">{{T:MUSA_HEAD}}</p>
+  </div>
+</template>
+</body>
+</html>

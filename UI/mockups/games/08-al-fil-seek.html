@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<!--
+  MOCKUP 08 - Al-Fil: Find it in the picture (prototype, not a production page)
+  Learning goal: After playing, the child can retell Surat Al-Fil in order (the army with elephants, the plan that lost its way, the flocks of birds, the stones of baked clay, the eaten straw) and say that Allah protected His House.
+  Core loop: hear an ayah's meaning, find and tap the thing it describes in the scene, and watch the scene change as that ayah comes true; a wrong tap names what was tapped and gives a hint.
+  Scripture and explanations: copied character-for-character from UI/surah-al-fil.html. Plates reused from UI/images/surahs/surah-al-fil/.
+  Depiction: no people at all - the army is shown only by its tents, banners, map and elephants. No prophet, Companion or angel appears.
+  Scholar gate 1 (2026-11-03): the child FINDS each thing; Allah's acts then play out with narration that names Him
+  ("Allah sent flock after flock", "Allah sent the stones"). Stones fall only onto tents and sand, never onto the
+  elephants, with no flash or impact sound; the camp then fades quietly. The Kaaba is a plain hand-drawn SVG with a
+  plain gold band (no writing); it is not interactive until the last step and never gets a "wrong" sound or a miss.
+  Sound: one fixed two-note chime, no rising runs, until the owner rules on instruments.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al-Fil: Find it in the picture - game mockup</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body.gm { margin: 0; min-height: 100vh; background: var(--parchment); color: var(--ink);
+    font-family: 'Baloo 2', 'Nunito', system-ui, sans-serif; line-height: 1.5; }
+  html[lang="ar"] body.gm { font-family: 'Amiri', 'Geeza Pro', 'Noto Naskh Arabic', 'Nunito', serif; }
+  .quran { font-family: 'Amiri Quran', 'Amiri', 'Geeza Pro', 'Noto Naskh Arabic', serif; direction: rtl; unicode-bidi: isolate; }
+  .gbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+    padding: .5rem 1rem; background: var(--turquoise-deep); color: #fff; border-bottom: 2px solid var(--gold); }
+  .gbar h1 { flex: 1; margin: 0; font-size: 1.2rem; line-height: 1.2; }
+  .mock-tag { font-size: .75rem; font-weight: 700; background: var(--gold-pale); color: var(--gold-ink-strong);
+    border-radius: 999px; padding: .1rem .6rem; margin-inline-start: .5rem; vertical-align: middle; }
+  .gbtn { min-height: 48px; min-width: 48px; border-radius: 999px; border: 2px solid var(--gold); background: var(--card);
+    color: var(--ink); font: inherit; font-weight: 700; padding: .35rem 1rem; cursor: pointer; transition: transform .12s ease; touch-action: manipulation; }
+  .gbtn:active { transform: scale(.94); }
+  .gbtn.primary { background: linear-gradient(var(--turquoise), var(--turquoise-deep)); color: #fff; border-color: var(--gold-light); }
+  .gbtn[aria-pressed="true"] { background: var(--gold-pale); }
+  .gbar .gbtn { background: transparent; color: #fff; border-color: rgba(255,255,255,.55); }
+  .gbar .gbtn[aria-pressed="true"] { background: rgba(255,255,255,.18); }
+  .icon-btn { border-radius: 50%; padding: 0; font-size: 1.2rem; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+  .card { background: var(--card); border: 1.5px solid var(--rule-strong); border-radius: var(--radius-xl); padding: 1.1rem 1.25rem; box-shadow: var(--shadow-md); }
+  h2 { margin: .1rem 0 .5rem; font-size: 1.45rem; color: var(--turquoise-deep); }
+  .lead { font-size: 1.1rem; margin: 0 0 .8rem; }
+  .row { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; }
+
+  .layout { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); gap: 1rem; align-items: start; }
+  @media (max-width: 820px) { .layout { grid-template-columns: 1fr; } }
+
+  /* --- the scene --- */
+  .scene-box { position: relative; border-radius: var(--radius-xl); overflow: hidden; border: 3px solid var(--gold); box-shadow: var(--shadow-lg); background: #f3e4c4; }
+  #scene { display: block; width: 100%; height: auto; touch-action: manipulation; cursor: pointer; }
+  .spot { cursor: pointer; outline: none; }
+  .spot .hit { fill: transparent; }
+  .spot:focus-visible .hit { stroke: #E0B75C; stroke-width: 5; stroke-dasharray: 10 6; }
+  .spot.shimmer > :not(.hit) { animation: shimmer 1.2s ease-in-out 3; }
+  @keyframes shimmer { 50% { filter: drop-shadow(0 0 10px #ffd27a) brightness(1.25); } }
+  .spot.found > :not(.hit) { filter: drop-shadow(0 0 8px #ffd27a); }
+  .spot.gone { opacity: .12; pointer-events: none; transition: opacity 1.2s ease; }
+  .spot[hidden], .straw[hidden] { display: none; }
+  .flock { transition: transform 1.4s cubic-bezier(.3,.9,.4,1); }
+  .stone-drop { transition: transform 1s cubic-bezier(.5,0,.9,.6), opacity 1s; }
+  .ripple { fill: none; stroke: #fff; stroke-width: 4; opacity: .9; animation: ripple .6s ease-out forwards; pointer-events: none; }
+  @keyframes ripple { to { r: 46; opacity: 0; } }
+  .kaaba-glow { opacity: 0; transition: opacity 1.5s ease; }
+  .protected .kaaba-glow { opacity: 1; }
+  .plan-arrow, .plan-tangle { transition: opacity .8s ease; }
+  .tangled .plan-arrow { opacity: 0; }
+  .plan-tangle { opacity: 0; }
+  .tangled .plan-tangle { opacity: 1; }
+
+  /* --- ayah panel --- */
+  .step-tag { font-size: .9rem; font-weight: 800; color: var(--gold-ink); }
+  .pips { display: flex; gap: .35rem; margin: .3rem 0 .6rem; }
+  .pip { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--gold); }
+  .pip.done { background: var(--gold); }
+  .pip.now { box-shadow: 0 0 0 3px var(--gold-pale); }
+  .ayah { font-size: 1.85rem; line-height: 1.9; text-align: center; color: var(--cobalt-deep); margin: .4rem 0; }
+  .meaning { text-align: center; font-style: italic; margin: 0 0 .6rem; }
+  html[lang="ar"] .meaning { display: none; }
+  .find { font-size: 1.2rem; font-weight: 800; background: var(--gold-wash); border: 1.5px solid var(--rule); border-radius: var(--radius-lg); padding: .6rem .85rem; margin: .4rem 0; }
+  .count { font-weight: 800; color: var(--turquoise-deep); }
+  .say { min-height: 2.6em; font-size: 1.05rem; margin: .4rem 0; }
+  .explain { border-inline-start: 4px solid var(--gold); padding-inline-start: .8rem; margin: .6rem 0; }
+  .plate { width: 100%; border-radius: var(--radius-lg); border: 2px solid var(--gold); display: block; }
+  .note { font-size: .88rem; color: var(--slate-500); }
+
+  .pause { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 1rem; background: rgba(12, 39, 51, .6); }
+  .pause[hidden] { display: none; }
+  .pause-card { max-width: 540px; background: var(--card); border: 2px solid var(--gold); border-radius: var(--radius-xl); padding: 1.5rem; box-shadow: var(--shadow-lg); text-align: center; }
+  .pp-tag { display: inline-block; font-size: .85rem; font-weight: 800; color: var(--gold-ink); background: var(--gold-wash); border-radius: 999px; padding: .15rem .75rem; }
+  .pause-card .q { font-size: 1.3rem; font-weight: 800; margin: .6rem 0 1rem; }
+
+  body.bedtime { background: #10262c; color: #e9e2cf; }
+  body.bedtime .card { background: #173238; color: #e9e2cf; border-color: rgba(224,183,92,.35); }
+  body.bedtime .find { background: #1d3b41; }
+  body.bedtime h2, body.bedtime .ayah { color: var(--gold-light); }
+  body.bedtime .gbtn:not(.primary) { background: #1d3b41; color: #e9e2cf; }
+  body.bedtime #scene { filter: brightness(.72) saturate(.8); }
+  @media (prefers-reduced-motion: reduce) { .flock, .stone-drop, .spot.gone { transition: none; } .spot.shimmer > :not(.hit) { animation: none; filter: drop-shadow(0 0 10px #ffd27a); } }
+</style>
+</head>
+<body class="gm">
+<header class="gbar">
+  <h1><span data-t="title"></span><span class="mock-tag" data-t="mock"></span></h1>
+  <button class="gbtn" id="bedBtn" type="button" aria-pressed="false" data-t-aria="bedtime">🌙</button>
+  <button class="gbtn" id="sndBtn" type="button" aria-pressed="true" data-t-aria="sound">🔔</button>
+  <button class="gbtn" id="langBtn" type="button" lang="ar">عربي</button>
+</header>
+
+<main class="wrap">
+  <div class="layout">
+    <div class="scene-box">
+      <svg id="scene" viewBox="0 0 1000 600" role="group" data-t-aria="sceneLabel">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2E5FA0"/><stop offset=".7" stop-color="#8DB6D8"/><stop offset="1" stop-color="#E9D7B0"/></linearGradient>
+          <linearGradient id="sand" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E2C48E"/><stop offset="1" stop-color="#C99D5C"/></linearGradient>
+          <radialGradient id="glow"><stop offset="0" stop-color="#FFE7A8" stop-opacity=".95"/><stop offset="1" stop-color="#FFE7A8" stop-opacity="0"/></radialGradient>
+          <g id="elephantArt">
+            <ellipse cx="0" cy="0" rx="70" ry="46" fill="#3E7FB5" stroke="#1B3C6B" stroke-width="3"/>
+            <rect x="-55" y="25" width="22" height="48" rx="8" fill="#3E7FB5" stroke="#1B3C6B" stroke-width="3"/>
+            <rect x="-18" y="28" width="22" height="46" rx="8" fill="#3E7FB5" stroke="#1B3C6B" stroke-width="3"/>
+            <rect x="22" y="28" width="22" height="46" rx="8" fill="#3E7FB5" stroke="#1B3C6B" stroke-width="3"/>
+            <circle cx="-78" cy="-20" r="34" fill="#3E7FB5" stroke="#1B3C6B" stroke-width="3"/>
+            <path d="M-70 -48 q-40 0 -40 30 q0 28 32 30" fill="#4D93C8" stroke="#1B3C6B" stroke-width="3"/>
+            <path d="M-104 -6 q-20 30 -10 70 q4 12 14 6" fill="none" stroke="#1B3C6B" stroke-width="16" stroke-linecap="round"/>
+            <path d="M-104 -6 q-20 30 -10 70 q4 12 14 6" fill="none" stroke="#3E7FB5" stroke-width="10" stroke-linecap="round"/>
+            <path d="M-96 8 q-10 12 -30 10" fill="none" stroke="#FBF6EA" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="-88" cy="-28" r="3.5" fill="#14383A"/>
+            <path d="M-30 -44 h60 l10 30 h-80z" fill="#C08A2E" stroke="#8A6220" stroke-width="2"/>
+            <path d="M-20 -36 l20 -6 l20 6 l-20 6z" fill="#17877F"/>
+          </g>
+          <g id="birdArt"><path d="M-12 0 q6 -8 12 0 q6 -8 12 0" fill="none" stroke="#1B3C6B" stroke-width="3.5" stroke-linecap="round"/></g>
+          <g id="tuftArt">
+            <path d="M-20 0 q4 -30 -6 -44 M-8 0 q0 -34 10 -48 M4 0 q6 -26 20 -36 M14 0 q10 -16 26 -18 M-14 0 q-12 -18 -28 -20" fill="none" stroke="#9C7A3C" stroke-width="4" stroke-linecap="round"/>
+            <ellipse cx="0" cy="2" rx="30" ry="6" fill="#B89150"/>
+          </g>
+        </defs>
+
+        <rect width="1000" height="600" fill="url(#sky)"/>
+        <!-- sun (distractor) -->
+        <g class="spot" data-id="sun" tabindex="0" role="button">
+          <circle class="hit" cx="880" cy="80" r="52"/>
+          <circle cx="880" cy="80" r="36" fill="#F7D774"/>
+        </g>
+        <!-- mountains of Makkah (distractor) -->
+        <g class="spot" data-id="mountains" tabindex="0" role="button">
+          <path d="M0 380 L0 250 L70 190 L140 260 L210 175 L300 270 L380 230 L450 380 Z" fill="#B07A45" stroke="#7D5530" stroke-width="2"/>
+          <path d="M70 190 L95 230 L120 215 M210 175 L240 220 L265 205" fill="none" stroke="#D4A46A" stroke-width="4"/>
+          <rect class="hit" x="0" y="175" width="440" height="80"/>
+        </g>
+        <rect y="370" width="1000" height="230" fill="url(#sand)"/>
+        <path d="M0 400 q250 -30 500 0 t500 0" fill="none" stroke="#D9B577" stroke-width="3" opacity=".6"/>
+
+        <!-- the Kaaba, in its valley -->
+        <g class="spot" data-id="kaaba" tabindex="0" role="button" id="kaabaG">
+          <circle class="kaaba-glow" cx="175" cy="335" r="120" fill="url(#glow)"/>
+          <circle class="hit" cx="175" cy="335" r="60"/>
+          <path d="M130 310 L200 300 L220 312 L150 322 Z" fill="#2A2A2A"/>
+          <path d="M150 322 L220 312 L220 375 L150 388 Z" fill="#111"/>
+          <path d="M130 310 L150 322 L150 388 L130 374 Z" fill="#222"/>
+          <path d="M150 336 L220 326 L220 333 L150 343 Z M130 324 L150 336 L150 343 L130 331 Z" fill="#C08A2E"/>
+        </g>
+
+        <!-- distractors: palms, well, rocks -->
+        <g class="spot" data-id="palm" tabindex="0" role="button">
+          <circle class="hit" cx="345" cy="370" r="48"/>
+          <path d="M345 440 q-6 -50 4 -90" stroke="#7D5530" stroke-width="9" fill="none"/>
+          <path d="M349 350 q-40 -10 -60 12 M349 350 q-30 -34 -56 -26 M349 350 q10 -40 40 -42 M349 350 q40 -10 56 14 M349 350 q-4 -40 -20 -50" stroke="#2F7D57" stroke-width="10" fill="none" stroke-linecap="round"/>
+        </g>
+        <g class="spot" data-id="palm" tabindex="0" role="button">
+          <circle class="hit" cx="425" cy="352" r="44"/>
+          <path d="M425 420 q4 -44 -2 -76" stroke="#7D5530" stroke-width="8" fill="none"/>
+          <path d="M423 344 q-36 -8 -52 12 M423 344 q-24 -30 -48 -22 M423 344 q10 -34 36 -36 M423 344 q36 -6 50 14" stroke="#2F7D57" stroke-width="9" fill="none" stroke-linecap="round"/>
+        </g>
+        <g class="spot" data-id="well" tabindex="0" role="button">
+          <circle class="hit" cx="250" cy="505" r="48"/>
+          <ellipse cx="250" cy="490" rx="40" ry="12" fill="#5C4A36"/>
+          <path d="M210 490 v34 q40 16 80 0 v-34" fill="#A98B66" stroke="#6E5A40" stroke-width="3"/>
+          <path d="M218 478 v-40 h64 v40" fill="none" stroke="#6E5A40" stroke-width="5"/>
+        </g>
+        <g class="spot" data-id="rock" tabindex="0" role="button">
+          <circle class="hit" cx="80" cy="520" r="44"/>
+          <path d="M45 540 q10 -40 40 -42 q34 4 36 42 z" fill="#9A8C7A" stroke="#6F6354" stroke-width="3"/>
+        </g>
+
+        <!-- the army's camp: tents and banners (no people are drawn) -->
+        <g id="camp">
+          <g class="spot army" data-id="tent" tabindex="0" role="button">
+            <circle class="hit" cx="575" cy="420" r="50"/>
+            <path d="M530 460 L575 380 L620 460 Z" fill="#E7DCC6" stroke="#8A6220" stroke-width="3"/>
+            <path d="M575 380 L575 460" stroke="#8A6220" stroke-width="2"/>
+            <path d="M575 380 v-30 l26 8 l-26 8" fill="#A23B2A" stroke="#7a2a1e" stroke-width="2"/>
+          </g>
+          <g class="spot army" data-id="tent" tabindex="0" role="button">
+            <circle class="hit" cx="665" cy="455" r="48"/>
+            <path d="M625 492 L665 420 L705 492 Z" fill="#DCCFB4" stroke="#8A6220" stroke-width="3"/>
+            <path d="M665 420 v-28 l24 8 l-24 8" fill="#A23B2A" stroke="#7a2a1e" stroke-width="2"/>
+          </g>
+          <!-- their plan: a map with an arrow pointing at the Kaaba -->
+          <g class="spot army" data-id="plan" tabindex="0" role="button" id="planG">
+            <circle class="hit" cx="470" cy="520" r="52"/>
+            <path d="M420 495 h100 v55 h-100 z" fill="#F6EBCF" stroke="#8A6220" stroke-width="3"/>
+            <circle cx="420" cy="522" r="10" fill="#E9D9B2" stroke="#8A6220" stroke-width="3"/>
+            <circle cx="520" cy="522" r="10" fill="#E9D9B2" stroke="#8A6220" stroke-width="3"/>
+            <path class="plan-arrow" d="M505 535 L445 512 M445 512 l12 -2 M445 512 l7 10" stroke="#A23B2A" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path class="plan-tangle" d="M440 520 c10 -20 30 10 18 18 c-12 8 -20 -22 2 -24 c22 -2 10 30 30 20 c16 -8 0 -24 14 -20" stroke="#A23B2A" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </g>
+          <!-- elephants: one big one and two in the distance -->
+          <g class="spot army elephant" data-id="elephant" tabindex="0" role="button" data-big="1">
+            <circle class="hit" cx="820" cy="450" r="80"/>
+            <use href="#elephantArt" transform="translate(830 440) scale(1)"/>
+          </g>
+          <g class="spot army elephant" data-id="elephant" tabindex="0" role="button">
+            <circle class="hit" cx="935" cy="378" r="44"/>
+            <use href="#elephantArt" transform="translate(945 378) scale(.42)"/>
+          </g>
+          <g class="spot army elephant" data-id="elephant" tabindex="0" role="button">
+            <circle class="hit" cx="735" cy="372" r="42"/>
+            <use href="#elephantArt" transform="translate(742 372) scale(.36)"/>
+          </g>
+        </g>
+
+        <!-- what remains: straw (shown at ayah 5) -->
+        <g id="strawLayer"></g>
+        <!-- flocks and their stones (built by script so their places vary each game) -->
+        <g id="skyLayer"></g>
+        <g id="fx"></g>
+      </svg>
+    </div>
+
+    <section class="card" id="panel" aria-live="polite">
+      <!-- intro -->
+      <div id="intro">
+        <h2 data-t="introTitle"></h2>
+        <p class="lead" data-t="introLead"></p>
+        <p class="note" data-t="tierLabel"></p>
+        <div class="row" id="tierPick" role="group">
+          <button class="gbtn" type="button" data-tier="small" aria-pressed="true" data-t="tierSmall"></button>
+          <button class="gbtn" type="button" data-tier="sharp" aria-pressed="false" data-t="tierSharp"></button>
+        </div>
+        <p style="margin-top:1rem"><button class="gbtn primary" id="startBtn" type="button" data-t="start"></button></p>
+      </div>
+      <!-- step -->
+      <div id="step" hidden>
+        <div class="step-tag" id="stepTag"></div>
+        <div class="pips" id="pips" aria-hidden="true"></div>
+        <p class="ayah quran" lang="ar" id="ayah"></p>
+        <p class="meaning" id="meaning"></p>
+        <div class="row"><button class="gbtn icon-btn" id="hearBtn" type="button" data-t-aria="hear">🔊</button>
+          <span class="note" data-t="hearNote"></span></div>
+        <p class="find" id="find"></p>
+        <p class="say" id="say"></p>
+        <div id="reveal" hidden>
+          <p class="explain" id="explain"></p>
+          <img class="plate" id="plate" alt="" width="960" height="540">
+          <p style="margin-top:.8rem"><button class="gbtn primary" id="nextBtn" type="button"></button></p>
+        </div>
+      </div>
+      <!-- end -->
+      <div id="end" hidden>
+        <h2 data-t="endTitle"></h2>
+        <p class="lead" data-t="endLead"></p>
+        <div class="quran ayah" lang="ar" id="fullSurah" style="font-size:1.45rem"></div>
+        <p class="lead"><strong data-t="finishWith"></strong> <span id="recap"></span></p>
+        <div class="row"><button class="gbtn primary" id="againBtn" type="button" data-t="again"></button></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="pause" id="pause" hidden role="dialog" aria-modal="true" aria-labelledby="pauseQ">
+  <div class="pause-card">
+    <span class="pp-tag" data-t="pauseTag"></span>
+    <p class="q" id="pauseQ"></p>
+    <p data-t="pauseSub"></p>
+    <div class="row" style="justify-content:center">
+      <button class="gbtn icon-btn" id="pauseRead" type="button" data-t-aria="readToMe">🔊</button>
+      <button class="gbtn primary" id="pauseGo" type="button" data-t="pauseGo"></button>
+    </div>
+  </div>
+</div>
+
+<script src="../../surah-narration.js"></script>
+<script>
+(function () {
+  'use strict';
+  /* ---------- copied from UI/surah-al-fil.html (ayah, translation, explanation EN/AR) ---------- */
+  var AYAT = [
+    { ar: 'أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ', en: '"Have you not seen how your Lord dealt with the companions of the elephant?"',
+      exEn: 'Allah begins with a question — <em>have you not seen?</em> — as if to say: look at this, everyone knows it happened. <strong>Ashab al-fil</strong> means "the people of the elephant", the army that came to destroy the Kaaba.',
+      exAr: 'يبدأ الله بسؤال — <em>ألم تر؟</em> — وكأنه يقول: انظر إلى هذا، فالجميع يعلم أنه حدث. و<strong>أصحاب الفيل</strong> هم الجيش الذي جاء ليهدم الكعبة.' },
+    { ar: 'أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ', en: '"Did He not make their plan go astray?"',
+      exEn: 'They had a careful plan, and Allah simply made it <strong>lose its way</strong>. All that preparation, and it came to nothing at all.',
+      exAr: 'كان لديهم خطة محكمة، فجعلها الله <strong>تضلّ طريقها</strong>. كل ذلك الاستعداد ثم لم يبق منه شيء.' },
+    { ar: 'وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ', en: '"And He sent against them birds in flocks."',
+      exEn: '<em>Ababeel</em> means <strong>flock after flock</strong> — wave upon wave of birds filling the sky. Not soldiers. Birds.',
+      exAr: '<em>أبابيل</em> تعني <strong>جماعات متتابعة</strong> — موجة بعد موجة من الطير تملأ السماء. لا جنوداً، بل طيراً.' },
+    { ar: 'تَرْمِيهِمْ بِحِجَارَةٍ مِنْ سِجِّيلٍ', en: '"Striking them with stones of baked clay."',
+      exEn: 'Each bird carried small stones of hard baked clay. Small stones — but sent by Allah, and that is what made them unstoppable.',
+      exAr: 'كان كل طائر يحمل حجارة صغيرة من طين متحجّر. حجارة صغيرة، لكنها من عند الله، ولهذا لم يستطع أحد ردّها.' },
+    { ar: 'فَجَعَلَهُمْ كَعَصْفٍ مَأْكُولٍ', en: '"And He made them like eaten straw."',
+      exEn: 'A picture a child can see: <strong>chewed-up straw</strong>, the dry leftovers in a field after animals have eaten. The mighty army ended up looking like that.',
+      exAr: 'صورة يراها الطفل بعينه: <strong>تبن ممضوغ</strong>، بقايا يابسة في الحقل بعدما أكلت منه الدواب. هكذا صار ذلك الجيش الجبار.' }
+  ];
+  /* from the page's "For the grown-up reading" box and its "Allah Protects His House" card */
+  var ASK = { en: 'The biggest army was stopped by the smallest birds. What does that tell you about Allah?', ar: 'أضخم جيش أوقفته أصغر الطيور. فماذا يعلّمك هذا عن الله؟' };
+  var RECAP = { en: 'Nothing is too big for Allah, and nothing you have is too small for Him to use.', ar: 'لا شيء أكبر على الله، ولا شيء عندك أصغر من أن يستعمله.' };
+  var PROTECT = { en: '<strong>Allah Protects His House.</strong> The army never arrived, and the Kaaba stood safe.', ar: '<strong>الله يحمي بيته.</strong> لم يصل الجيش، وبقيت الكعبة آمنة.' };
+
+  var T = {
+    title: { en: 'Surat Al-Fil: find it in the picture', ar: 'سورة الفيل: ابحث في الصورة' },
+    mock: { en: 'Mockup', ar: 'نموذج تجريبي' },
+    bedtime: { en: 'Bedtime mode', ar: 'وضع النوم الهادئ' },
+    sound: { en: 'Sound and voice', ar: 'الصوت' },
+    readToMe: { en: 'Read this to me', ar: 'اقرأ لي' },
+    sceneLabel: { en: 'The valley of Makkah: tap the things the ayah describes', ar: 'وادي مكة: المس ما تصفه الآية' },
+    introTitle: { en: 'The army that never arrived', ar: 'الجيش الذي لم يصل' },
+    introLead: { en: 'A huge army marched on Makkah with elephants to knock down the Kaaba. Listen to each ayah, then find what it talks about in the picture. Your taps find each part of the story.',
+                 ar: 'زحف جيش ضخم إلى مكة ومعه الفيلة ليهدم الكعبة. استمع إلى كل آية، ثم ابحث في الصورة عمّا تتحدث عنه. لمساتك تجد كل جزء من القصة.' },
+    tierLabel: { en: 'Grown-up: choose the finder', ar: 'للكبير: اختر نوع الباحث' },
+    tierSmall: { en: 'Little finder', ar: 'باحث صغير' },
+    tierSharp: { en: 'Sharp eyes (find more)', ar: 'عيون حادّة (ابحث عن أكثر)' },
+    start: { en: 'Start ✨', ar: 'ابدأ ✨' },
+    ayahOf: { en: 'Ayah {n} of 5', ar: 'الآية {n} من ٥' },
+    lastStep: { en: 'And the Kaaba?', ar: 'والكعبة؟' },
+    hear: { en: 'Hear the meaning of this ayah', ar: 'استمع إلى معنى هذه الآية' },
+    hearNote: { en: 'Hear what it means', ar: 'استمع إلى معناها' },
+    found: { en: 'Found {a} of {b}', ar: 'وجدت {a} من {b}' },
+    next: { en: 'Next ayah →', ar: 'الآية التالية ←' },
+    toKaaba: { en: 'And the Kaaba? →', ar: 'والكعبة؟ ←' },
+    toEnd: { en: 'Finish the story', ar: 'أكمل القصة' },
+    pauseTag: { en: 'For the grown-up · pause and talk', ar: 'للكبير · توقّفا وتحدّثا' },
+    pauseSub: { en: 'Ask, listen to the answer, then find the last thing together.', ar: 'اسأل، واستمع إلى الجواب، ثم ابحثا معاً عن آخر شيء.' },
+    pauseGo: { en: 'We talked — carry on', ar: 'تحدّثنا — لنكمل' },
+    endTitle: { en: 'The House was kept safe', ar: 'بقي البيت آمناً' },
+    endLead: { en: 'You found the whole surah in the picture. Now say it together, ayah by ayah:', ar: 'وجدت السورة كلها في الصورة. والآن اقرآها معاً، آية بعد آية:' },
+    finishWith: { en: 'Finish with:', ar: 'اختم بهذه:' },
+    again: { en: 'Play together again', ar: 'لنلعب معاً مرة أخرى' },
+    thatIs: { en: 'That is {x}.', ar: 'هذه {x}.' },
+    notHere: { en: 'Not there.', ar: 'ليس هنا.' },
+    kaabaLater: { en: 'That is the Kaaba, Allah\'s House. We will visit it at the end.', ar: 'هذه الكعبة، بيت الله. سنزورها في النهاية.' },
+    names: {
+      en: { sun: 'the sun', mountains: 'the mountains around Makkah', kaaba: 'the Kaaba', palm: 'a palm tree', well: 'a well', rock: 'a rock',
+            tent: 'one of the army\'s tents', plan: 'the army\'s map', elephant: 'an elephant', flock: 'a flock of birds', stone: 'a small stone', straw: 'dry straw' },
+      ar: { sun: 'الشمس', mountains: 'جبال مكة', kaaba: 'الكعبة', palm: 'نخلة', well: 'بئر', rock: 'صخرة',
+            tent: 'خيمة من خيام الجيش', plan: 'خريطة الجيش', elephant: 'فيل', flock: 'سرب من الطيور', stone: 'حجر صغير', straw: 'تبن يابس' }
+    }
+  };
+  /* one step per ayah, plus the closing find */
+  var STEPS = [
+    { target: 'elephant', need: { small: 1, sharp: 3 },
+      find: { en: { small: 'The army came with elephants. <b>Find the elephant!</b>', sharp: 'The army came with elephants. <b>Find all 3 elephants!</b>' },
+              ar: { small: 'جاء الجيش ومعه الفيلة. <b>ابحث عن الفيل!</b>', sharp: 'جاء الجيش ومعه الفيلة. <b>ابحث عن الفيلة الثلاثة!</b>' } },
+      hint: { en: 'Look for something big with a long trunk.', ar: 'ابحث عن شيء كبير له خرطوم طويل.' },
+      got: { en: 'The people of the elephant! They came to knock down the Kaaba.', ar: 'أصحاب الفيل! جاؤوا ليهدموا الكعبة.' } },
+    { target: 'plan', need: { small: 1, sharp: 1 },
+      find: { en: { small: 'They had a careful plan. <b>Find their plan</b> — the map with an arrow pointing at the Kaaba.' },
+              ar: { small: 'كانت لهم خطة محكمة. <b>ابحث عن خطتهم</b> — الخريطة التي فيها سهم يشير إلى الكعبة.' } },
+      hint: { en: 'Look on the sand, near the tents.', ar: 'انظر على الرمل قرب الخيام.' },
+      got: { en: 'Look — the arrow got all tangled. Their plan lost its way!', ar: 'انظر — تشابك السهم. ضلّت خطتهم طريقها!' } },
+    { target: 'flock', need: { small: 3, sharp: 3 },
+      find: { en: { small: 'Far away, tiny birds are coming. <b>Find each flock</b> — flock after flock!' },
+              ar: { small: 'من بعيد تأتي طيور صغيرة. <b>ابحث عن كل سرب</b> — سرباً بعد سرب!' } },
+      hint: { en: 'Look at the sky just above the mountains: tiny dark specks.', ar: 'انظر إلى السماء فوق الجبال: نقاط صغيرة داكنة.' },
+      got: { en: 'Allah sent flock after flock of birds, filling the sky. Not soldiers. Birds.', ar: 'أرسل الله طيراً سرباً بعد سرب، تملأ السماء. لا جنوداً، بل طيراً.' } },
+    { target: 'stone', need: { small: 3, sharp: 3 },
+      find: { en: { small: 'Each bird carries small stones. <b>Find the stones under every flock.</b>' },
+              ar: { small: 'كل طائر يحمل حجارة صغيرة. <b>ابحث عن الحجارة تحت كل سرب.</b>' } },
+      hint: { en: 'Look just under the birds.', ar: 'انظر تحت الطيور مباشرة.' },
+      got: { en: 'Allah sent the stones. Small stones, but sent by Allah.', ar: 'أرسل الله الحجارة. حجارة صغيرة، لكنها من عند الله.' } },
+    { target: 'straw', need: { small: 1, sharp: 3 },
+      find: { en: { small: 'Where the camp stood, there is only dry straw now. <b>Find the straw.</b>', sharp: 'Where the camp stood, there is only dry straw now. <b>Find 3 bundles of straw.</b>' },
+              ar: { small: 'حيث كان المعسكر لم يبق إلا تبن يابس. <b>ابحث عن التبن.</b>', sharp: 'حيث كان المعسكر لم يبق إلا تبن يابس. <b>ابحث عن ثلاث حزم من التبن.</b>' } },
+      hint: { en: 'Look where the tents used to be.', ar: 'انظر حيث كانت الخيام.' },
+      got: { en: 'The mighty army, like chewed-up straw.', ar: 'الجيش الجبار صار كالتبن الممضوغ.' } },
+    { target: 'kaaba', need: { small: 1, sharp: 1 }, final: true,
+      find: { en: { small: 'And the Kaaba? <b>Find it</b> — is it safe?' }, ar: { small: 'والكعبة؟ <b>ابحث عنها</b> — هل هي آمنة؟' } },
+      hint: { en: 'Look for the black cube with a gold band, by the mountains.', ar: 'ابحث عن البناء المكعّب الأسود ذي الحزام الذهبي قرب الجبال.' },
+      got: { en: 'Safe! Allah protected His House.', ar: 'آمنة! لقد حمى الله بيته.' } }
+  ];
+
+  /* ---------- kit ---------- */
+  var LKEY = 'islamicKidsLang' /* the site's own language key, as games 01-05 read it */, SKEY = 'mockupGames.sound';
+  var lang = localStorage.getItem(LKEY) === 'ar' ? 'ar' : 'en';
+  var soundOn = localStorage.getItem(SKEY) !== 'off';
+  var reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function calm() { return reduceMQ.matches || document.body.classList.contains('bedtime'); }
+  function t(k, vars) { var v = T[k]; var s = v ? v[lang] : k; if (vars) Object.keys(vars).forEach(function (n) { s = s.replace('{' + n + '}', vars[n]); }); return s; }
+  function digits(n) { return lang === 'ar' ? String(n).replace(/[0-9]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'[d]; }) : String(n); }
+  function $(id) { return document.getElementById(id); }
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  function el(name, attrs) { var e = document.createElementNS(SVGNS, name); Object.keys(attrs || {}).forEach(function (k) { e.setAttribute(k, attrs[k]); }); return e; }
+  var actx = null;
+  function tone(freq, dur, vol, type) {
+    if (!soundOn) return;
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      var now = actx.currentTime, o = actx.createOscillator(), g = actx.createGain();
+      o.type = type || 'sine'; o.frequency.value = freq;
+      var v = (vol || 0.12) * (document.body.classList.contains('bedtime') ? 0.5 : 1);
+      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(v, now + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, now + (dur || 0.5));
+      o.connect(g); g.connect(actx.destination); o.start(now); o.stop(now + (dur || 0.5) + 0.05);
+    } catch (e) { /* fine */ }
+  }
+  /* one fixed two-note chime (no melody, no rising run) until the owner rules on instruments */
+  function chime() { tone(659.25, 0.6, 0.1); setTimeout(function () { tone(987.77, 0.5, 0.05); }, 140); }
+  function softNo() { tone(246.94, 0.3, 0.06, 'triangle'); }
+  var current = null;
+  function stopVoice() { if (current) { current.pause(); current = null; } if ('speechSynthesis' in window) speechSynthesis.cancel(); }
+  function speak(html) {
+    if (!soundOn || !('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(String(html).replace(/<[^>]+>/g, '')); u.lang = lang === 'ar' ? 'ar-SA' : 'en-GB'; u.rate = 0.92; speechSynthesis.speak(u);
+  }
+  /* No recitation (scholar ruling 2026-11-04, Part 2 A): the Arabic verse files recited the ayah and
+     were removed. While SurahNarration.arVerseAudio is false (one flag, in UI/surah-narration.js),
+     Arabic mode requests no verse file and shows a short "coming soon" note instead. */
+  var AR_VERSE_AUDIO = !!(window.SurahNarration && window.SurahNarration.arVerseAudio);
+  var SOON_NOTE = 'السرد بالعربية قريباً · Arabic narration is coming soon';
+  function arSoon() { return lang === 'ar' && !AR_VERSE_AUDIO; }
+  /* speech synthesis reads the explanation only (never the ayah or its translation) */
+  function playVerse(i) {
+    stopVoice(); if (!soundOn) return;
+    var fb = function () { speak(lang === 'ar' ? AYAT[i].exAr : AYAT[i].exEn); };
+    if (arSoon()) { fb(); return; }
+    var a = new Audio('../../audio/surah-al-fil/' + lang + '/verse-' + (i + 1) + '.mp3'); current = a;
+    a.addEventListener('error', fb); a.play().catch(fb);
+  }
+
+  /* ---------- state ---------- */
+  var tier = 'small', stepI = -1, got = 0, misses = 0, busy = false;
+  /* alternative places for the far-away flocks, so each game looks a little different */
+  var FLOCK_SETS = [
+    [[90, 160], [250, 140], [400, 175]],
+    [[60, 135], [200, 165], [330, 125]],
+    [[150, 150], [300, 120], [420, 160]]
+  ];
+  /* where the flocks settle: their stones (dropping 300 units) land on the tents and the open sand only,
+     never on the elephants (big one around x 740-900, small ones near x 735 and 935) */
+  var FLOCK_DEST = [[500, 90], [578, 70], [665, 105]];
+
+  function buildSky() {
+    var sky = $('skyLayer'); sky.innerHTML = '';
+    var set = FLOCK_SETS[Math.floor(Math.random() * FLOCK_SETS.length)];
+    set.forEach(function (p, k) {
+      var g = el('g', { 'class': 'spot flock', 'data-id': 'flock', 'data-k': k, tabindex: '0', role: 'button' });
+      g.style.transform = 'translate(' + p[0] + 'px, ' + p[1] + 'px) scale(.45)';
+      g.appendChild(el('circle', { 'class': 'hit', cx: 0, cy: 0, r: 100 }));
+      [[-40, -10], [0, -26], [40, -8], [-18, 18], [22, 16]].forEach(function (b) {
+        var u = el('use', { href: '#birdArt', transform: 'translate(' + b[0] + ' ' + b[1] + ') scale(1.6)' }); g.appendChild(u);
+      });
+      var stones = el('g', { 'class': 'spot stones', 'data-id': 'stone', 'data-k': k, tabindex: '-1', role: 'button' });
+      stones.setAttribute('hidden', '');
+      stones.appendChild(el('circle', { 'class': 'hit', cx: 0, cy: 50, r: 46 }));
+      [[-22, 46], [0, 54], [22, 44]].forEach(function (s) { stones.appendChild(el('circle', { 'class': 'stone-drop', cx: s[0], cy: s[1], r: 7, fill: '#A0522D', stroke: '#5E3418', 'stroke-width': 2 })); });
+      g.appendChild(stones);
+      sky.appendChild(g);
+    });
+  }
+  function buildStraw() {
+    var layer = $('strawLayer'); layer.innerHTML = '';
+    [[575, 450], [680, 485], [820, 470], [500, 545]].forEach(function (p, k) {
+      var g = el('g', { 'class': 'spot straw', 'data-id': 'straw', 'data-k': k, tabindex: '-1', role: 'button', transform: 'translate(' + p[0] + ' ' + p[1] + ')' });
+      g.setAttribute('hidden', '');
+      g.appendChild(el('circle', { 'class': 'hit', cx: 0, cy: -16, r: 46 }));
+      g.appendChild(el('use', { href: '#tuftArt' }));
+      layer.appendChild(g);
+    });
+  }
+
+  function labelSpots() {
+    document.querySelectorAll('#scene .spot').forEach(function (s) {
+      var n = T.names[lang][s.dataset.id] || s.dataset.id;
+      s.setAttribute('aria-label', n.split(' — ')[0]);
+    });
+  }
+
+  function resetScene() {
+    document.querySelectorAll('#scene .spot').forEach(function (s) { s.classList.remove('found', 'gone', 'shimmer'); });
+    $('planG').classList.remove('tangled');
+    $('kaabaG').classList.remove('protected'); $('kaabaG').setAttribute('tabindex', '-1');
+    buildSky(); buildStraw(); labelSpots();
+  }
+
+  function start() {
+    resetScene();
+    $('intro').hidden = true; $('end').hidden = true; $('step').hidden = false;
+    stepI = -1; nextStep();
+  }
+
+  function pipHTML() {
+    var h = '';
+    for (var i = 0; i < STEPS.length; i++) h += '<span class="pip' + (i < stepI ? ' done' : '') + (i === stepI ? ' now' : '') + '"></span>';
+    return h;
+  }
+  function need() { var s = STEPS[stepI]; return s.need[tier]; }
+  function findText() { var f = STEPS[stepI].find[lang]; return f[tier] || f.small; }
+
+  function renderStep() {
+    var s = STEPS[stepI];
+    $('stepTag').textContent = s.final ? t('lastStep') : t('ayahOf', { n: digits(stepI + 1) });
+    $('pips').innerHTML = pipHTML();
+    if (s.final) { $('ayah').hidden = true; $('meaning').hidden = true; $('hearBtn').parentNode.hidden = true; }
+    else {
+      $('ayah').hidden = false; $('meaning').hidden = false; $('hearBtn').parentNode.hidden = false;
+      $('ayah').textContent = AYAT[stepI].ar; $('meaning').textContent = AYAT[stepI].en;
+    }
+    $('find').innerHTML = findText() + (need() > 1 ? ' <span class="count">' + t('found', { a: digits(got), b: digits(need()) }) + '</span>' : '');
+  }
+
+  function nextStep() {
+    stepI++; got = 0; misses = 0; busy = false;
+    $('reveal').hidden = true; $('say').innerHTML = '';
+    var s = STEPS[stepI];
+    /* the scene moves on with the story */
+    if (s.final) $('kaabaG').setAttribute('tabindex', '0');
+    if (s.target === 'flock') document.querySelectorAll('.flock').forEach(function (f) { f.setAttribute('tabindex', '0'); });
+    if (s.target === 'straw') {
+      document.querySelectorAll('#camp .spot').forEach(function (a) { a.classList.add('gone'); a.setAttribute('tabindex', '-1'); });
+      document.querySelectorAll('.straw').forEach(function (g, k) { if (k < 4) { g.removeAttribute('hidden'); g.setAttribute('tabindex', '0'); } });
+      document.querySelectorAll('.flock').forEach(function (f) { f.classList.add('gone'); });
+    }
+    renderStep();
+    if (!s.final) playVerse(stepI); else speak(findText());
+  }
+
+  function ripple(x, y) {
+    if (calm()) return;
+    var c = el('circle', { 'class': 'ripple', cx: x, cy: y, r: 8 }); $('fx').appendChild(c);
+    setTimeout(function () { c.remove(); }, 650);
+  }
+  function svgPoint(evt) {
+    var svg = $('scene'), pt = svg.createSVGPoint(); pt.x = evt.clientX; pt.y = evt.clientY;
+    var m = svg.getScreenCTM(); return m ? pt.matrixTransform(m.inverse()) : { x: 500, y: 300 };
+  }
+
+  function handleTap(spot, evt) {
+    if (busy || stepI < 0 || $('step').hidden || !$('pause').hidden) return;
+    var s = STEPS[stepI];
+    var p = evt && evt.clientX ? svgPoint(evt) : null;
+    /* the Kaaba is never a "wrong" answer: no sound, no miss, just a gentle line until the last step */
+    if (spot && spot.dataset.id === 'kaaba' && s.target !== 'kaaba') { $('say').innerHTML = t('kaabaLater'); return; }
+    if (p) ripple(p.x, p.y);
+    if (spot && spot.dataset.id === s.target && !spot.classList.contains('found')) {
+      /* stones only count once their flock has arrived; that is always true at step 4 */
+      spot.classList.add('found');
+      got++; chime();
+      react(s.target, spot);
+      if (got >= need()) { complete(); } else { renderStep(); $('say').innerHTML = s.got[lang]; }
+      return;
+    }
+    misses++; softNo();
+    var name = spot ? (T.names[lang][spot.dataset.id] || '') : '';
+    var msg = (spot ? t('thatIs', { x: name }) : t('notHere')) + ' ' + s.hint[lang];
+    $('say').innerHTML = msg;
+    if (misses >= 3) shimmerTargets();
+  }
+
+  function shimmerTargets() {
+    var s = STEPS[stepI];
+    document.querySelectorAll('#scene .spot[data-id="' + s.target + '"]:not(.found):not([hidden])').forEach(function (g) {
+      g.classList.remove('shimmer'); void g.getBoundingClientRect(); g.classList.add('shimmer');
+    });
+  }
+
+  /* the world answers each find. Finding only marks the thing (it glows); Allah's acts (the flocks coming in, the
+     stones falling) play out afterwards, in complete(), with narration that names Allah. */
+  function react(target, spot) {
+    if (target === 'plan') $('planG').classList.add('tangled');
+    if (target === 'kaaba') $('kaabaG').classList.add('protected');
+  }
+  function playOut(target) {
+    if (target === 'flock') {
+      document.querySelectorAll('.flock').forEach(function (f) {
+        var d = FLOCK_DEST[+f.dataset.k];
+        f.style.transform = 'translate(' + d[0] + 'px, ' + d[1] + 'px) scale(1)';
+        var st = f.querySelector('.stones'); st.removeAttribute('hidden'); st.setAttribute('tabindex', '0');
+      });
+    }
+    if (target === 'stone') {
+      /* they fall onto the tents and sand and simply fade: no flash, no impact sound */
+      document.querySelectorAll('.stone-drop').forEach(function (c, i) {
+        setTimeout(function () { c.style.transform = 'translate(' + ((i % 3) * 6 - 6) + 'px, 300px)'; c.style.opacity = '0'; }, calm() ? 0 : (i % 3) * 120);
+      });
+    }
+  }
+
+  function complete() {
+    var s = STEPS[stepI];
+    busy = true;
+    playOut(s.target);
+    renderStep();
+    $('say').innerHTML = '<strong>' + s.got[lang] + '</strong>';
+    speak(s.got[lang]);
+    if (s.final) {
+      $('explain').innerHTML = PROTECT[lang];
+      $('plate').hidden = true;
+      $('nextBtn').textContent = t('toEnd');
+    } else {
+      $('explain').innerHTML = lang === 'ar' ? AYAT[stepI].exAr : AYAT[stepI].exEn;
+      $('plate').hidden = false;
+      $('plate').src = '../../images/surahs/surah-al-fil/verse-' + (stepI + 1) + '.webp';
+      $('nextBtn').textContent = stepI === AYAT.length - 1 ? t('toKaaba') : t('next');
+    }
+    $('reveal').hidden = false;
+    $('nextBtn').focus({ preventScroll: true });
+  }
+
+  function onNext() {
+    if (STEPS[stepI].final) return finish();
+    if (stepI === AYAT.length - 1) { showPause(); return; } /* pause before the closing find */
+    nextStep();
+  }
+  function showPause() { $('pauseQ').textContent = ASK[lang]; $('pause').hidden = false; $('pauseGo').focus(); tone(659.25, 1.2, 0.06); }
+  function hidePause() { $('pause').hidden = true; nextStep(); }
+
+  function finish() {
+    $('step').hidden = true; $('end').hidden = false;
+    $('fullSurah').innerHTML = AYAT.map(function (a) { return '<div>' + a.ar + '</div>'; }).join('');
+    $('recap').textContent = RECAP[lang];
+    chime();
+    $('againBtn').focus();
+  }
+
+  /* ---------- input ---------- */
+  $('scene').addEventListener('click', function (e) {
+    var spot = e.target.closest('.spot');
+    if (spot && (spot.classList.contains('gone') || spot.hasAttribute('hidden'))) spot = null;
+    /* a stone inside a flock: the stone wins */
+    handleTap(spot, e);
+  });
+  $('scene').addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var spot = e.target.closest('.spot'); if (!spot) return;
+    e.preventDefault(); handleTap(spot, null);
+  });
+
+  function pressGroup(btn) { $('tierPick').querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); }); }
+  $('tierPick').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; tier = b.dataset.tier; pressGroup(b); tone(587, 0.2, 0.05); });
+  $('startBtn').addEventListener('click', start);
+  $('againBtn').addEventListener('click', start);
+  $('nextBtn').addEventListener('click', onNext);
+  $('hearBtn').addEventListener('click', function () { if (stepI >= 0 && stepI < AYAT.length) playVerse(stepI); });
+  $('pauseGo').addEventListener('click', hidePause);
+  $('pauseRead').addEventListener('click', function () { speak(ASK[lang]); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('pause').hidden) hidePause(); });
+
+  function applyLang() {
+    document.documentElement.lang = lang; document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-t]').forEach(function (n) { n.innerHTML = t(n.dataset.t); });
+    document.querySelectorAll('[data-t-aria]').forEach(function (n) { n.setAttribute('aria-label', t(n.dataset.tAria)); });
+    var lb = $('langBtn'); lb.textContent = lang === 'ar' ? 'English' : 'عربي'; lb.setAttribute('lang', lang === 'ar' ? 'en' : 'ar');
+    lb.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'التبديل إلى العربية');
+    labelSpots();
+    if (!$('step').hidden && stepI >= 0) {
+      renderStep();
+      if (!$('reveal').hidden) { busy = false; got = need(); complete(); }
+    }
+    if (!$('end').hidden) finish();
+    if (!$('pause').hidden) $('pauseQ').textContent = ASK[lang];
+  }
+  $('langBtn').addEventListener('click', function () { lang = lang === 'ar' ? 'en' : 'ar'; localStorage.setItem(LKEY, lang); stopVoice(); applyLang(); });
+  function applySound() { var b = $('sndBtn'); b.textContent = soundOn ? '🔔' : '🔕'; b.setAttribute('aria-pressed', String(soundOn)); }
+  $('sndBtn').addEventListener('click', function () { soundOn = !soundOn; localStorage.setItem(SKEY, soundOn ? 'on' : 'off'); if (!soundOn) stopVoice(); applySound(); });
+  $('bedBtn').addEventListener('click', function () { var on = document.body.classList.toggle('bedtime'); this.setAttribute('aria-pressed', String(on)); });
+
+  resetScene(); applySound(); applyLang();
+})();
+</script>
+</body>
+</html>

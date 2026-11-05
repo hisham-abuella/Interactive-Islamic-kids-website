@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<!--
+  MOCKUP 06 - My Learning Garden / حديقة ما تعلّمت (prototype, not a production page)
+  Renamed from "The Deeds Garden" (scholar gate 1, 2026-11-03): it tracks stories read and surahs learned, not
+  deeds; the record of deeds belongs to Allah. The file name is kept so existing links still resolve.
+  Learning goal: After playing, the child can walk a parent around their garden and, for each plant or lantern, say what that story or surah taught them.
+  Core loop: finish a story or surah -> a plant grows or a lantern lights in the courtyard -> tap it to recall what was learned and talk about it with the grown-up.
+  Progress is simulated with the demo panel and stored ONLY under the mockup key localStorage["mockup.learningGarden.v1"]. Nothing ever wilts or decays; there are no streaks.
+  Scripture: each surah's first ayah is copied verbatim from that surah's page. Recap lines and parent questions come from
+  each page's "For the grown-up reading" box; the scholar had four rewritten (Al-Bayyinah, Az-Zalzalah, Al-Adiyat,
+  At-Takathur) so they stand alone and say "Allah knows" rather than "Allah noticed".
+  ART: placeholder only (graphics redesign pending). All visuals live in the ASSETS block in the script; game logic does not touch markup directly.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Learning Garden - game mockup</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body.gm { margin: 0; min-height: 100vh; background: var(--parchment); color: var(--ink); font-family: 'Baloo 2', 'Nunito', system-ui, sans-serif; line-height: 1.5; }
+  html[lang="ar"] body.gm { font-family: 'Amiri', 'Geeza Pro', 'Noto Naskh Arabic', 'Nunito', serif; }
+  .quran { font-family: 'Amiri Quran', 'Amiri', 'Geeza Pro', 'Noto Naskh Arabic', serif; direction: rtl; unicode-bidi: isolate; }
+  .gbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; padding: .5rem 1rem; background: var(--turquoise-deep); color: #fff; border-bottom: 2px solid var(--gold); }
+  .gbar h1 { flex: 1; margin: 0; font-size: 1.2rem; }
+  .mock-tag { font-size: .75rem; font-weight: 700; background: var(--gold-pale); color: var(--gold-ink-strong); border-radius: 999px; padding: .1rem .6rem; margin-inline-start: .5rem; }
+  .gbtn { min-height: 48px; min-width: 48px; border-radius: 999px; border: 2px solid var(--gold); background: var(--card); color: var(--ink); font: inherit; font-weight: 700; padding: .35rem 1rem; cursor: pointer; touch-action: manipulation; }
+  .gbtn:active { transform: scale(.95); }
+  .gbtn.primary { background: var(--turquoise-deep); color: #fff; }
+  .gbar .gbtn { background: transparent; color: #fff; border-color: rgba(255,255,255,.55); }
+  .gbar .gbtn[aria-pressed="true"] { background: rgba(255,255,255,.18); }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 1rem; }
+  .row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+  h2 { margin: .2rem 0 .5rem; color: var(--turquoise-deep); }
+  .card { background: var(--card); border: 1.5px solid var(--rule-strong); border-radius: var(--radius-xl); padding: 1rem 1.2rem; box-shadow: var(--shadow-sm); margin-bottom: 1rem; }
+
+  /* ===== placeholder scene styling (to be replaced by the graphics redesign) ===== */
+  .courtyard { border: 3px solid var(--gold); border-radius: var(--radius-xl); background: #1b3d45; color: #f3e4c4; padding: 1rem; transition: filter 1s ease; }
+  .courtyard.night { filter: brightness(.55); }
+  .arches { display: grid; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: .4rem; margin-bottom: 1rem; }
+  .beds { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .6rem; }
+  .item { min-height: 64px; border-radius: 16px; border: 2px dashed rgba(224,183,92,.4); background: rgba(255,255,255,.04); color: inherit; font: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .15rem; padding: .3rem; }
+  .item.has { border-style: solid; border-color: var(--gold-light); }
+  .item.fresh { animation: grow .8s ease; }
+  @keyframes grow { 0% { transform: scale(.7); } 60% { transform: scale(1.1); } 100% { transform: none; } }
+  .bed { min-height: 130px; }
+  .art { font-size: 2rem; line-height: 1; }
+  .bed .art { font-size: 2.6rem; }
+  .lbl { font-size: .8rem; text-align: center; }
+  .lamp { width: 26px; height: 34px; border-radius: 8px 8px 12px 12px; border: 2px solid #C08A2E; background: #2B4F55; }
+  .lamp.s1 { background: #F6D27A; box-shadow: 0 0 12px #F6D27A; }
+  .lamp.s2 { background: #FFE9A8; box-shadow: 0 0 18px 4px #FFD27A; }
+  .fountain { text-align: center; margin: .8rem 0 0; opacity: .8; }
+  /* ===== end placeholder scene styling ===== */
+
+  .recall { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 1rem; background: rgba(12,39,51,.6); }
+  .recall[hidden] { display: none; }
+  .recall-card { max-width: 560px; width: 100%; background: var(--card); border: 2px solid var(--gold); border-radius: var(--radius-xl); padding: 1.3rem; }
+  .recall-card .quran { font-size: 1.6rem; text-align: center; color: var(--cobalt-deep); line-height: 1.9; }
+  .pp { border: 2px solid var(--gold); border-radius: 16px; padding: .6rem .9rem; margin: .7rem 0; background: var(--gold-wash); }
+  .pp-tag { font-size: .85rem; font-weight: 800; color: var(--gold-ink); }
+  .demo { border: 2px dashed #8a3b2a; }
+  .demo h2 { color: #8a3b2a; font-size: 1.1rem; }
+  .demo .gbtn { min-height: 48px; font-size: .9rem; }
+  .say { min-height: 2.4em; font-size: 1.1rem; font-weight: 700; margin: .6rem 0; }
+  /* hub preview */
+  .hub { background: var(--parchment-deep); border-radius: var(--radius-xl); padding: 1rem; }
+  .hub-card { max-width: 340px; background: var(--card); border: 2px solid var(--gold); border-radius: var(--radius-lg); padding: 1rem; box-shadow: var(--shadow-md); }
+  .hub-mini { background: #1b3d45; border-radius: 12px; padding: .5rem; font-size: 1.4rem; min-height: 48px; letter-spacing: .1em; }
+  body.bedtime { background: #10262c; color: #e9e2cf; }
+  body.bedtime .card, body.bedtime .recall-card { background: #173238; color: #e9e2cf; }
+  body.bedtime .gbtn:not(.primary) { background: #1d3b41; color: #e9e2cf; }
+  @media (prefers-reduced-motion: reduce) { .item.fresh { animation: none; } .courtyard { transition: none; } }
+</style>
+</head>
+<body class="gm">
+<header class="gbar">
+  <h1><span data-t="title"></span><span class="mock-tag" data-t="mock"></span></h1>
+  <button class="gbtn" id="bedBtn" type="button" aria-pressed="false" data-t-aria="bedtime">🌙</button>
+  <button class="gbtn" id="sndBtn" type="button" aria-pressed="true" data-t-aria="sound">🔔</button>
+  <button class="gbtn" id="langBtn" type="button" lang="ar">عربي</button>
+</header>
+<main class="wrap">
+  <section class="card">
+    <h2 data-t="introTitle"></h2>
+    <p data-t="introLead"></p>
+    <div class="row">
+      <button class="gbtn primary" id="tourBtn" type="button" data-t="tour"></button>
+      <button class="gbtn" id="nightBtn" type="button" data-t="goodnight"></button>
+    </div>
+    <p class="say" id="say" aria-live="polite"></p>
+  </section>
+
+  <section class="courtyard" id="courtyard" aria-labelledby="cyTitle">
+    <h2 id="cyTitle" style="color:var(--gold-light)" data-t="lanternsTitle"></h2>
+    <div class="arches" id="arches"></div>
+    <h2 style="color:var(--gold-light)" data-t="bedsTitle"></h2>
+    <div class="beds" id="beds"></div>
+    <p class="fountain" aria-hidden="true">⛲</p>
+  </section>
+
+  <section class="card demo" style="margin-top:1rem">
+    <h2 data-t="demoTitle"></h2>
+    <p data-t="demoLead"></p>
+    <div class="row" id="demoStories"></div>
+    <div class="row" id="demoSurahs" style="margin-top:.5rem"></div>
+    <div class="row" style="margin-top:.5rem">
+      <button class="gbtn" id="fillBtn" type="button" data-t="fillAll"></button>
+      <button class="gbtn" id="resetBtn" type="button" data-t="reset"></button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 data-t="hubTitle"></h2>
+    <p data-t="hubLead"></p>
+    <div class="hub"><div class="hub-card">
+      <strong data-t="hubCardTitle"></strong>
+      <div class="hub-mini" id="hubMini" aria-hidden="true"></div>
+      <p id="hubCount"></p>
+      <button class="gbtn primary" type="button" data-t="hubVisit" onclick="window.scrollTo({top:0})"></button>
+    </div></div>
+  </section>
+</main>
+
+<div class="recall" id="recall" hidden role="dialog" aria-modal="true" aria-labelledby="rTitle">
+  <div class="recall-card">
+    <h2 id="rTitle"></h2>
+    <div id="rBody"></div>
+    <div class="row" style="justify-content:flex-end">
+      <button class="gbtn" id="rRead" type="button" data-t-aria="readToMe">🔊</button>
+      <button class="gbtn" id="rNext" type="button" data-t="tourNext" hidden></button>
+      <button class="gbtn primary" id="rClose" type="button" data-t="close"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  /* ================= DATA (content; copied from the site) ================= */
+  /* Surahs in mushaf order: first ayah, recap and parent question copied from each page. */
+  var SURAHS = [
+  {
+    "id": "surah-fatiha",
+    "en": "Surah Al-Fatiha",
+    "ar": "سورة الفاتحة",
+    "icon": "📖",
+    "ayah": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+    "recEn": "We say this surah in every prayer — that is why we learn it first.",
+    "recAr": "نقرأ هذه السورة في كل صلاة، ولهذا نتعلّمها أولاً.",
+    "askEn": "Which line are we asking Allah for something in?",
+    "askAr": "أي آية نطلب فيها من الله شيئاً؟"
+  },
+  {
+    "id": "ayat-al-kursi",
+    "en": "Ayat al-Kursi",
+    "ar": "آية الكرسي",
+    "icon": "✴️",
+    "ayah": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ",
+    "recEn": "The greatest verse in the Quran — say it before you sleep tonight.",
+    "recAr": "أعظم آية في القرآن، اقرأها قبل نومك الليلة.",
+    "askEn": "Which part shows you how big Allah is?",
+    "askAr": "أي جزء يريك عظمة الله؟"
+  },
+  {
+    "id": "surah-ad-duha",
+    "en": "Surah Ad-Duha",
+    "ar": "سورة الضحى",
+    "icon": "🌅",
+    "ayah": "وَالضُّحَىٰ",
+    "recEn": "Allah did not forget you then, and He has not forgotten you now.",
+    "recAr": "لم ينسك الله حينها، ولم ينسك الآن.",
+    "askEn": "When was a time you felt sad, and something good came right after?",
+    "askAr": "متى شعرت بالحزن ثم جاءك بعده خير مباشرة؟"
+  },
+  {
+    "id": "surah-ash-sharh",
+    "en": "Surah Ash-Sharh",
+    "ar": "سورة الشرح",
+    "icon": "💚",
+    "ayah": "أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ",
+    "recEn": "Allah promised twice: the ease is coming with it, not long after it.",
+    "recAr": "وعد الله مرتين: اليسر قادم معه، لا بعده بزمن طويل.",
+    "askEn": "What is one hard thing you finished, that felt easier once you had started?",
+    "askAr": "ما الأمر الصعب الذي أنجزته، فوجدته أهون بعد أن بدأت؟"
+  },
+  {
+    "id": "surah-at-tin",
+    "en": "Surah At-Tin",
+    "ar": "سورة التين",
+    "icon": "🫒",
+    "ayah": "وَالتِّينِ وَالزَّيْتُونِ",
+    "recEn": "You were made beautifully. Believing and doing good is how you stay that way.",
+    "recAr": "خُلقت في أحسن صورة. وبالإيمان والعمل الصالح تبقى كذلك.",
+    "askEn": "Allah made you in the finest form — what is one good thing you can do with it today?",
+    "askAr": "خلقك الله في أحسن تقويم — فما الخير الذي تصنعه بها اليوم؟"
+  },
+  {
+    "id": "surah-al-bayyinah",
+    "en": "Surah Al-Bayyinah",
+    "ar": "سورة البينة",
+    "icon": "📖",
+    "ayah": "لَمْ يَكُنِ الَّذِينَ كَفَرُوا مِنْ أَهْلِ الْكِتَابِ وَالْمُشْرِكِينَ مُنْفَكِّينَ حَتَّىٰ تَأْتِيَهُمُ الْبَيِّنَةُ",
+    "recEn": "Verse 5 tells us to worship Allah sincerely: doing good for Allah alone, not to be seen by people.",
+    "recAr": "الآية الخامسة تأمرنا أن نعبد الله مخلصين: نفعل الخير لله وحده، لا ليرانا الناس.",
+    "askEn": "If nobody ever knew about a good thing you did, would you still want to do it?",
+    "askAr": "لو لم يعلم أحد أبداً بالخير الذي تفعله، أكنت تحب أن تفعله؟"
+  },
+  {
+    "id": "surah-az-zalzalah",
+    "en": "Surah Az-Zalzalah",
+    "ar": "سورة الزلزلة",
+    "icon": "🌍",
+    "ayah": "إِذَا زُلْزِلَتِ الْأَرْضُ زِلْزَالَهَا",
+    "recEn": "Allah knows every good thing you do. Not one atom of good is ever lost.",
+    "recAr": "الله يعلم كل خير تفعله. ولا تضيع ذرّة خير أبداً.",
+    "askEn": "What is one tiny good thing you did today that nobody else noticed?",
+    "askAr": "ما الخير الصغير الذي فعلته اليوم ولم ينتبه له أحد؟"
+  },
+  {
+    "id": "surah-al-adiyat",
+    "en": "Surah Al-Adiyat",
+    "ar": "سورة العاديات",
+    "icon": "🐎",
+    "ayah": "وَالْعَادِيَاتِ ضَبْحًا",
+    "recEn": "This surah reminds us not to be ungrateful to Allah. Noticing His gifts, even small ones, is a way of saying thank you.",
+    "recAr": "تذكّرنا هذه السورة ألا نكون جاحدين لنعم الله. والانتباه إلى نعمه، ولو كانت صغيرة، طريقة لشكره.",
+    "askEn": "Can you name three good things from today, even small ones?",
+    "askAr": "أتستطيع أن تذكر ثلاثة أمور طيبة من يومك، ولو كانت صغيرة؟"
+  },
+  {
+    "id": "surah-al-qariah",
+    "en": "Surah Al-Qari'ah",
+    "ar": "سورة القارعة",
+    "icon": "⚖️",
+    "ayah": "الْقَارِعَةُ",
+    "recEn": "Mountains will weigh nothing that Day. A kind word will weigh something.",
+    "recAr": "الجبال لا تزن شيئاً يومئذ. والكلمة الطيبة تزن.",
+    "askEn": "If your good deeds today went on a scale, what would you put on it?",
+    "askAr": "لو وُضعت حسناتك اليوم في ميزان، فماذا كنت ستضع فيه؟"
+  },
+  {
+    "id": "surah-at-takathur",
+    "en": "Surah At-Takathur",
+    "ar": "سورة التكاثر",
+    "icon": "📦",
+    "ayah": "أَلْهَاكُمُ التَّكَاثُرُ",
+    "recEn": "This surah reminds us that we will be asked about Allah's blessings. Everything we have is a gift from Allah, worth saying alhamdulillah for.",
+    "recAr": "تذكّرنا هذه السورة أننا سنُسأل عن النعيم. وكل ما عندنا نعمة من الله تستحق أن نقول عليها الحمد لله.",
+    "askEn": "What is something you already have that you would really miss if it were gone?",
+    "askAr": "ما الشيء الذي عندك الآن وستفتقده حقاً لو ذهب؟"
+  },
+  {
+    "id": "surah-al-asr",
+    "en": "Surah Al-Asr",
+    "ar": "سورة العصر",
+    "icon": "⏳",
+    "ayah": "وَالْعَصْرِ",
+    "recEn": "Believe, do good, tell the truth, be patient — four things, every day.",
+    "recAr": "إيمان وعمل صالح وحق وصبر — أربعة أمور، كل يوم.",
+    "askEn": "What is one good thing you did with your time today?",
+    "askAr": "ما الخير الذي فعلته بوقتك اليوم؟"
+  },
+  {
+    "id": "surah-al-humazah",
+    "en": "Surah Al-Humazah",
+    "ar": "سورة الهمزة",
+    "icon": "🗣️",
+    "ayah": "وَيْلٌ لِكُلِّ هُمَزَةٍ لُمَزَةٍ",
+    "recEn": "Your words reach people's hearts. That is why Allah gave them a whole surah.",
+    "recAr": "كلامك يصل إلى قلوب الناس. ولذلك أفرد الله له سورة كاملة.",
+    "askEn": "Has anyone ever called you a name that stayed with you? How did it feel?",
+    "askAr": "هل ناداك أحد يوماً بلقب بقي في نفسك؟ كيف كان شعورك؟"
+  },
+  {
+    "id": "surah-al-fil",
+    "en": "Surah Al-Fil",
+    "ar": "سورة الفيل",
+    "icon": "🐘",
+    "ayah": "أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ",
+    "recEn": "Nothing is too big for Allah, and nothing you have is too small for Him to use.",
+    "recAr": "لا شيء أكبر على الله، ولا شيء عندك أصغر من أن يستعمله.",
+    "askEn": "The biggest army was stopped by the smallest birds. What does that tell you about Allah?",
+    "askAr": "أضخم جيش أوقفته أصغر الطيور. فماذا يعلّمك هذا عن الله؟"
+  },
+  {
+    "id": "surah-quraysh",
+    "en": "Surah Quraysh",
+    "ar": "سورة قريش",
+    "icon": "🐫",
+    "ayah": "لِإِيلَافِ قُرَيْشٍ",
+    "recEn": "Food and safety — the two gifts we forget to notice.",
+    "recAr": "الطعام والأمان، نعمتان ننسى أن ننتبه لهما.",
+    "askEn": "Did you eat today? Do you feel safe here? Who gave you both?",
+    "askAr": "هل أكلت اليوم؟ هل تشعر بالأمان؟ من أعطاك الاثنين؟"
+  },
+  {
+    "id": "surah-al-maun",
+    "en": "Surah Al-Maun",
+    "ar": "سورة الماعون",
+    "icon": "🤲",
+    "ayah": "أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ",
+    "recEn": "Prayer should make us kinder — that is the test in this surah.",
+    "recAr": "الصلاة تجعلنا أرحم، وهذا هو الميزان في هذه السورة.",
+    "askEn": "Who could you share something small with tomorrow?",
+    "askAr": "من تستطيع أن تشاركه شيئاً صغيراً غداً؟"
+  },
+  {
+    "id": "surah-al-kawthar",
+    "en": "Surah Al-Kawthar",
+    "ar": "سورة الكوثر",
+    "icon": "🌊",
+    "ayah": "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ",
+    "recEn": "When someone is unkind, count your blessings instead of answering back.",
+    "recAr": "حين يسيء إليك أحد، عُدّ نعمك بدل أن تردّ عليه.",
+    "askEn": "What is one thing Allah has given you that you are thankful for?",
+    "askAr": "ما شيء أعطاك الله إياه وتشكره عليه؟"
+  },
+  {
+    "id": "surah-al-kafirun",
+    "en": "Surah Al-Kafirun",
+    "ar": "سورة الكافرون",
+    "icon": "🤝",
+    "ayah": "قُلْ يَا أَيُّهَا الْكَافِرُونَ",
+    "recEn": "Be firm about what you believe, and gentle with people.",
+    "recAr": "كن ثابتاً على ما تؤمن به، ولطيفاً مع الناس.",
+    "askEn": "How can you say no to a friend without being unkind?",
+    "askAr": "كيف تقول لا لصديقك دون أن تجرحه؟"
+  },
+  {
+    "id": "surah-an-nasr",
+    "en": "Surah An-Nasr",
+    "ar": "سورة النصر",
+    "icon": "🕊️",
+    "ayah": "إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ",
+    "recEn": "When you win, thank Allah before you tell anyone else.",
+    "recAr": "حين تفوز، اشكر الله قبل أن تخبر أحداً.",
+    "askEn": "What do you say first when something good happens to you?",
+    "askAr": "ماذا تقول أولاً حين يحدث لك خير؟"
+  },
+  {
+    "id": "surah-al-masad",
+    "en": "Surah Al-Masad",
+    "ar": "سورة المسد",
+    "icon": "🪢",
+    "ayah": "تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ",
+    "recEn": "What you own does not matter — what you choose does.",
+    "recAr": "ما تملكه لا يهمّ، وإنما يهمّ ما تختاره.",
+    "askEn": "Abu Lahab was rich, and he was family of the Prophet ﷺ. So why did none of that help him?",
+    "askAr": "أبو لهب كان غنياً ومن أهل النبي ﷺ. فلماذا لم ينفعه ذلك؟"
+  },
+  {
+    "id": "surah-al-ikhlas",
+    "en": "Surah Al-Ikhlas",
+    "ar": "سورة الإخلاص",
+    "icon": "💎",
+    "ayah": "قُلْ هُوَ اللَّهُ أَحَدٌ",
+    "recEn": "Four short verses that answer the biggest question: who is Allah?",
+    "recAr": "أربع آيات قصيرة تجيب عن أعظم سؤال: من هو الله؟",
+    "askEn": "Can you tell me one thing this surah says about Allah?",
+    "askAr": "هل تخبرني بشيء واحد تقوله هذه السورة عن الله؟"
+  },
+  {
+    "id": "surah-al-falaq",
+    "en": "Surah Al-Falaq",
+    "ar": "سورة الفلق",
+    "icon": "🌅",
+    "ayah": "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ",
+    "recEn": "We ask Allah — not anything else — to keep us safe.",
+    "recAr": "نسأل الله وحده أن يحفظنا، لا أحداً سواه.",
+    "askEn": "What do you say when you see something you like that belongs to someone else?",
+    "askAr": "ماذا تقول حين ترى شيئاً جميلاً عند غيرك؟"
+  },
+  {
+    "id": "surah-an-nas",
+    "en": "Surah An-Nas",
+    "ar": "سورة الناس",
+    "icon": "🤍",
+    "ayah": "قُلْ أَعُوذُ بِرَبِّ النَّاسِ",
+    "recEn": "The last surah of the Quran, and it guards your heart.",
+    "recAr": "آخر سورة في القرآن، وهي تحمي قلبك.",
+    "askEn": "What should you say when a bad idea pops into your head?",
+    "askAr": "ماذا تقول إذا جاءتك فكرة سيئة؟"
+  }
+];
+  /* Stories: lesson lines copied from each story page's lesson list; the "remember" line paraphrases the story page. */
+  var STORIES = [
+    { id: 'prophet-adam', en: 'Prophet Adam', ar: 'النبي آدم', plant: 'tree',
+      remember: { en: 'Allah taught Adam the names of everything.', ar: 'علّم الله آدم أسماء كل شيء.' },
+      lesson: { en: 'When we make mistakes, ask Allah for forgiveness', ar: 'عندما نخطئ، نستغفر الله' },
+      ask: { en: 'What do we say when we have made a mistake?', ar: 'ماذا نقول حين نخطئ؟' } },
+    { id: 'prophet-nuh', en: 'Prophet Nuh', ar: 'النبي نوح', plant: 'palm',
+      remember: { en: 'Allah told Prophet Nuh to build the ark, and it came to rest safely on Mount Judi.', ar: 'أمر الله النبي نوحاً أن يبني السفينة، فاستقرت بسلام على جبل الجودي.' },
+      lesson: { en: 'Be patient and never give up doing good', ar: 'اصبر ولا تيأس من فعل الخير' },
+      ask: { en: 'What is something good you kept doing even when it was hard?', ar: 'ما الخير الذي واصلت فعله حتى حين كان صعباً؟' } },
+    { id: 'prophet-ibrahim', en: 'Prophet Ibrahim', ar: 'النبي إبراهيم', plant: 'flowers',
+      remember: { en: 'Allah commanded the fire to be cool and safe for Ibrahim, and he came out unharmed.', ar: 'أمر الله النار أن تكون باردة آمنة لإبراهيم، فخرج منها سالماً.' },
+      lesson: { en: 'Think, and follow the truth', ar: 'فكّر واتّبع الحق' },
+      ask: { en: 'Ibrahim looked at the moon and the sun. What did he work out?', ar: 'نظر إبراهيم إلى القمر والشمس. إلى ماذا توصّل؟' } },
+    { id: 'prophet-musa', en: 'Prophet Musa', ar: 'النبي موسى', plant: 'reeds',
+      remember: { en: 'Musa\'s mother put him in a basket and let the River Nile carry him.', ar: 'وضعت أمّ موسى ابنها في سلّة وتركت نهر النيل يحمله.' },
+      lesson: { en: 'Trust Allah\'s plan, even when it looks scary', ar: 'ثق بتدبير الله، حتى حين يبدو مخيفاً' },
+      ask: { en: 'How do you think Musa\'s mother felt when she let the basket go?', ar: 'بماذا تظن أن أمّ موسى شعرت حين تركت السلّة؟' } },
+    { id: 'prophet-yusuf', en: 'Prophet Yusuf', ar: 'النبي يوسف', plant: 'wheat',
+      remember: { en: 'Yusuf told the King there would be seven good years with lots of food, then seven hard years.', ar: 'فأخبر الملك أن هناك سبع سنوات خير وطعام كثير، ثم سبع سنوات شدة وقلة.' },
+      lesson: { en: 'Always forgive others, even when they hurt you', ar: 'سامح الآخرين دائماً، حتى حين يؤذونك' },
+      ask: { en: 'Why do you think Yusuf forgave his brothers?', ar: 'لماذا تظن أن يوسف سامح إخوته؟' } }
+  ];
+  var MAX_PLANT = 3, MAX_LAMP = 2; /* plant: 0 seed, 1 sprout (started), 2 grown (finished), 3 in bloom (quiz/game done); lamp: 0 unlit, 1 lit (read), 2 golden (memorised) */
+
+  var T = {
+    title: { en: 'My Learning Garden', ar: 'حديقة ما تعلّمت' },
+    mock: { en: 'Mockup', ar: 'نموذج تجريبي' },
+    bedtime: { en: 'Bedtime mode', ar: 'وضع النوم الهادئ' },
+    sound: { en: 'Sound and voice', ar: 'الصوت' },
+    readToMe: { en: 'Read this to me', ar: 'اقرأ لي' },
+    introTitle: { en: 'Your courtyard remembers', ar: 'فناؤك يتذكّر' },
+    introLead: { en: 'Every story you finish plants something in the garden. Every surah you learn lights a lantern in the arches. Tap anything that has grown or is glowing, and tell your grown-up what you remember. Nothing here ever wilts.',
+                 ar: 'كل قصة تُنهيها تزرع شيئاً في الحديقة، وكل سورة تتعلّمها تُضيء فانوساً في الأقواس. المس أي شيء نبت أو أضاء، وأخبر الكبير بما تتذكّره. لا شيء هنا يذبل أبداً.' },
+    tour: { en: '🚶 Show a grown-up around', ar: '🚶 خذ الكبير في جولة' },
+    tourNext: { en: 'Next →', ar: 'التالي ←' },
+    goodnight: { en: '🌙 Goodnight, garden', ar: '🌙 تصبحين على خير يا حديقة' },
+    goodnightSay: { en: 'Goodnight, garden. It will be right here tomorrow, just as you left it.', ar: 'تصبحين على خير يا حديقة. ستكونين هنا غداً كما تركناك تماماً.' },
+    wake: { en: '☀️ Wake the garden', ar: '☀️ أيقظ الحديقة' },
+    lanternsTitle: { en: 'Lanterns of the surahs', ar: 'فوانيس السور' },
+    bedsTitle: { en: 'Garden of the stories', ar: 'حديقة القصص' },
+    close: { en: 'Back to the garden', ar: 'العودة إلى الحديقة' },
+    ppTag: { en: 'For the grown-up · ask', ar: 'للكبير · اسأل' },
+    remember: { en: 'Do you remember?', ar: 'هل تتذكّر؟' },
+    lessonIs: { en: 'What it taught us:', ar: 'ماذا علّمتنا:' },
+    firstAyah: { en: 'It begins:', ar: 'تبدأ هكذا:' },
+    seed: { en: 'This seed is waiting for the story of {x}. Read it together and watch it sprout.', ar: 'هذه البذرة تنتظر قصة {x}. اقرآها معاً وانظرا كيف تنبت.' },
+    unlit: { en: 'This lantern is waiting for {x}. Learn it together and it will light up.', ar: 'هذا الفانوس ينتظر {x}. تعلّماها معاً فيضيء.' },
+    stageP: { en: ['a seed', 'a sprout', 'grown', 'in bloom'], ar: ['بذرة', 'نبتة صغيرة', 'كبرت', 'مزهرة'] },
+    stageL: { en: ['unlit', 'lit', 'golden'], ar: ['مطفأ', 'مضيء', 'ذهبي'] },
+    stageNoteP: { en: ['', 'You started this story.', 'You finished this story.', 'You finished the story and its game.'], ar: ['', 'بدأت هذه القصة.', 'أنهيت هذه القصة.', 'أنهيت القصة ولعبتها.'] },
+    stageNoteL: { en: ['', 'You read this surah together.', 'You learned this surah by heart!'], ar: ['', 'قرأتما هذه السورة معاً.', 'حفظت هذه السورة!'] },
+    grew: { en: 'Look — something grew!', ar: 'انظر — نبت شيء جديد!' },
+    lit: { en: 'A lantern lit up!', ar: 'أضاء فانوس!' },
+    tourEmpty: { en: 'Nothing has grown yet. Read a story together first!', ar: 'لم ينبت شيء بعد. اقرآ قصة معاً أولاً!' },
+    demoTitle: { en: 'Demo controls (mockup only)', ar: 'أزرار التجربة (للنموذج فقط)' },
+    demoLead: { en: 'On the real site these change when a story or surah is finished. Here, tap to simulate progress. Saved only under a mockup key.', ar: 'في الموقع الحقيقي تتغيّر هذه حين تنتهي قصة أو سورة. هنا المسها لتجربة التقدّم. تُحفظ تحت مفتاح للنموذج فقط.' },
+    fillAll: { en: 'Grow everything', ar: 'أنبت كل شيء' },
+    reset: { en: 'Reset the mockup', ar: 'إعادة النموذج' },
+    hubTitle: { en: 'How it would sit on the hub', ar: 'كيف ستظهر في الصفحة الرئيسية' },
+    hubLead: { en: 'A small card on the home page shows the garden at a glance. No numbers to beat, no "days in a row" — just something to look at and visit.', ar: 'بطاقة صغيرة في الصفحة الرئيسية تُظهر الحديقة بنظرة واحدة. لا أرقام للتنافس ولا «أيام متتالية» — شيء جميل للنظر والزيارة فقط.' },
+    hubCardTitle: { en: '🌿 Your garden', ar: '🌿 حديقتك' },
+    hubVisit: { en: 'Visit your garden', ar: 'زُر حديقتك' },
+    hubCount: { en: '{p} plants growing · {l} lanterns glowing', ar: '{p} نباتات تنمو · {l} فوانيس مضيئة' }
+  };
+
+  /* ================= ASSETS (placeholder art: swap this block for the redesign) ================= */
+  var ASSETS = {
+    plantArt: function (kind, stage) {
+      if (stage === 0) return '<span class="art" aria-hidden="true">🟫</span>';
+      if (stage === 1) return '<span class="art" aria-hidden="true">🌱</span>';
+      var grown = { tree: '🌳', palm: '🌴', flowers: '🌷', reeds: '🌾', wheat: '🌾' }[kind] || '🌿';
+      return '<span class="art" aria-hidden="true">' + grown + (stage === 3 ? '✨' : '') + '</span>';
+    },
+    lampArt: function (stage, icon) { return '<span class="lamp s' + stage + '" aria-hidden="true"></span><span aria-hidden="true">' + (stage ? icon : '') + '</span>'; },
+    hubMini: function (st) {
+      return STORIES.map(function (s, i) { return st.p[i] ? (st.p[i] > 1 ? '🌿' : '🌱') : '·'; }).join('') + ' ' + SURAHS.filter(function (s, i) { return st.l[i]; }).map(function () { return '🏮'; }).join('');
+    }
+  };
+
+  /* ================= kit ================= */
+  var LKEY = 'islamicKidsLang' /* the site's own language key, as games 01-05 read it */, SKEY = 'mockupGames.sound', GKEY = 'mockup.learningGarden.v1';
+  var lang = localStorage.getItem(LKEY) === 'ar' ? 'ar' : 'en';
+  var soundOn = localStorage.getItem(SKEY) !== 'off';
+  var reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function calm() { return reduceMQ.matches || document.body.classList.contains('bedtime'); }
+  function t(k, vars) { var v = T[k]; var s = v ? v[lang] : k; if (vars && typeof s === 'string') Object.keys(vars).forEach(function (n) { s = s.replace('{' + n + '}', vars[n]); }); return s; }
+  function digits(n) { return lang === 'ar' ? String(n).replace(/[0-9]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'[d]; }) : String(n); }
+  function $(id) { return document.getElementById(id); }
+  var actx = null;
+  function tone(freq, dur, vol) {
+    if (!soundOn) return;
+    try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); var now = actx.currentTime, o = actx.createOscillator(), g = actx.createGain();
+      o.frequency.value = freq; g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime((vol || 0.1) * (document.body.classList.contains('bedtime') ? 0.5 : 1), now + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + dur); o.connect(g); g.connect(actx.destination); o.start(now); o.stop(now + dur + 0.05); } catch (e) { /* fine */ }
+  }
+  function speak(text) { if (!soundOn || !('speechSynthesis' in window)) return; speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(String(text).replace(/<[^>]+>/g, '')); u.lang = lang === 'ar' ? 'ar-SA' : 'en-GB'; u.rate = 0.92; speechSynthesis.speak(u); }
+
+  /* ================= LOGIC (state only; no markup) ================= */
+  function blank() { return { v: 1, p: STORIES.map(function () { return 0; }), l: SURAHS.map(function () { return 0; }) }; }
+  function load() { try { var s = JSON.parse(localStorage.getItem(GKEY)); if (s && s.v === 1 && s.p.length === STORIES.length && s.l.length === SURAHS.length) return s; } catch (e) { /* fall through */ } return blank(); }
+  var state = load();
+  function save() { localStorage.setItem(GKEY, JSON.stringify(state)); }
+  function grow(kind, i) { /* progress only ever goes up (wraps in the demo so it can be replayed) */
+    if (kind === 'p') state.p[i] = state.p[i] >= MAX_PLANT ? 0 : state.p[i] + 1;
+    else state.l[i] = state.l[i] >= MAX_LAMP ? 0 : state.l[i] + 1;
+    save(); return kind === 'p' ? state.p[i] : state.l[i];
+  }
+  function grownItems() {
+    var out = [];
+    STORIES.forEach(function (s, i) { if (state.p[i] > 0) out.push(['p', i]); });
+    SURAHS.forEach(function (s, i) { if (state.l[i] > 0) out.push(['l', i]); });
+    return out;
+  }
+  function counts() { return { p: state.p.filter(Boolean).length, l: state.l.filter(Boolean).length }; }
+
+  /* ================= RENDER ================= */
+  var fresh = null;
+  function render() {
+    $('beds').innerHTML = STORIES.map(function (s, i) {
+      var st = state.p[i];
+      return '<button class="item bed' + (st ? ' has' : '') + (fresh === 'p' + i ? ' fresh' : '') + '" type="button" data-k="p" data-i="' + i + '" aria-label="' + s[lang] + ': ' + T.stageP[lang][st] + '">' +
+        ASSETS.plantArt(s.plant, st) + '<span class="lbl">' + s[lang] + '</span></button>';
+    }).join('');
+    $('arches').innerHTML = SURAHS.map(function (s, i) {
+      var st = state.l[i];
+      return '<button class="item' + (st ? ' has' : '') + (fresh === 'l' + i ? ' fresh' : '') + '" type="button" data-k="l" data-i="' + i + '" aria-label="' + s[lang] + ': ' + T.stageL[lang][st] + '">' +
+        ASSETS.lampArt(st, s.icon) + '<span class="lbl">' + s[lang].replace(/^(Surah |سورة )/, '') + '</span></button>';
+    }).join('');
+    $('demoStories').innerHTML = STORIES.map(function (s, i) { return '<button class="gbtn" type="button" data-demo="p" data-i="' + i + '">+ ' + s[lang] + ' (' + digits(state.p[i]) + '/' + digits(MAX_PLANT) + ')</button>'; }).join('');
+    $('demoSurahs').innerHTML = SURAHS.map(function (s, i) { return '<button class="gbtn" type="button" data-demo="l" data-i="' + i + '">+ ' + s[lang].replace(/^(Surah |سورة )/, '') + ' (' + digits(state.l[i]) + ')</button>'; }).join('');
+    var c = counts();
+    $('hubMini').textContent = ASSETS.hubMini(state);
+    $('hubCount').textContent = t('hubCount', { p: digits(c.p), l: digits(c.l) });
+    fresh = null;
+  }
+
+  function recallHTML(kind, i) {
+    if (kind === 'p') {
+      var s = STORIES[i], st = state.p[i];
+      if (!st) return { title: s[lang], body: '<p>' + t('seed', { x: s[lang] }) + '</p>', speak: t('seed', { x: s[lang] }) };
+      return { title: s[lang] + ' · ' + T.stageP[lang][st],
+        body: '<p>' + T.stageNoteP[lang][st] + '</p><p><strong>' + t('remember') + '</strong> ' + s.remember[lang] + '</p><p><strong>' + t('lessonIs') + '</strong> ' + s.lesson[lang] + '</p>' +
+              '<div class="pp"><span class="pp-tag">' + t('ppTag') + '</span><p style="margin:.2rem 0 0;font-weight:800">' + s.ask[lang] + '</p></div>',
+        speak: s.remember[lang] + ' ' + s.ask[lang] };
+    }
+    var q = SURAHS[i], ls = state.l[i];
+    var ask = lang === 'ar' ? q.askAr : q.askEn, rec = lang === 'ar' ? q.recAr : q.recEn;
+    if (!ls) return { title: q[lang], body: '<p>' + t('unlit', { x: q[lang] }) + '</p>', speak: t('unlit', { x: q[lang] }) };
+    return { title: q.icon + ' ' + q[lang] + ' · ' + T.stageL[lang][ls],
+      body: '<p>' + T.stageNoteL[lang][ls] + '</p><p><strong>' + t('firstAyah') + '</strong></p><p class="quran" lang="ar">' + q.ayah + '</p><p>' + rec + '</p>' +
+            '<div class="pp"><span class="pp-tag">' + t('ppTag') + '</span><p style="margin:.2rem 0 0;font-weight:800">' + ask + '</p></div>',
+      speak: rec + ' ' + ask };
+  }
+  var open = null, tour = null, lastFocus = null;
+  function openRecall(kind, i) {
+    open = [kind, i]; var r = recallHTML(kind, i);
+    $('rTitle').textContent = r.title; $('rBody').innerHTML = r.body; $('recall').hidden = false;
+    $('rNext').hidden = !tour; $('rRead').dataset.text = r.speak;
+    tone(kind === 'p' ? 523.25 : 783.99, 0.7, 0.08);
+    (tour ? $('rNext') : $('rClose')).focus();
+  }
+  function closeRecall() { $('recall').hidden = true; open = null; tour = null; if (lastFocus) lastFocus.focus(); }
+
+  /* ================= INPUT ================= */
+  document.addEventListener('click', function (e) {
+    var it = e.target.closest('.item');
+    if (it) { lastFocus = it; tour = null; openRecall(it.dataset.k, +it.dataset.i); return; }
+    var d = e.target.closest('[data-demo]');
+    if (d) {
+      var k = d.dataset.demo, i = +d.dataset.i, st = grow(k, i);
+      fresh = st ? k + i : null; render();
+      if (st) { $('say').textContent = k === 'p' ? t('grew') : t('lit'); [0, 1].forEach(function (n) { setTimeout(function () { tone(659.25 * (n ? 1.5 : 1), 0.6, 0.08); }, n * 120); }); }
+      var again = document.querySelector('[data-demo="' + k + '"][data-i="' + i + '"]'); if (again) again.focus();
+    }
+  });
+  $('rClose').addEventListener('click', closeRecall);
+  $('rRead').addEventListener('click', function () { speak(this.dataset.text || ''); });
+  $('rNext').addEventListener('click', function () {
+    if (!tour) return; tour.i++;
+    if (tour.i >= tour.list.length) { closeRecall(); return; }
+    openRecall(tour.list[tour.i][0], tour.list[tour.i][1]);
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('recall').hidden) closeRecall(); });
+  $('tourBtn').addEventListener('click', function () {
+    var list = grownItems(); lastFocus = this;
+    if (!list.length) { $('say').textContent = t('tourEmpty'); speak(t('tourEmpty')); return; }
+    tour = { list: list, i: 0 }; openRecall(list[0][0], list[0][1]);
+  });
+  $('nightBtn').addEventListener('click', function () {
+    var night = $('courtyard').classList.toggle('night');
+    this.innerHTML = night ? t('wake') : t('goodnight');
+    if (night) { $('say').textContent = t('goodnightSay'); speak(t('goodnightSay')); tone(392, 1.4, 0.06); } else $('say').textContent = '';
+  });
+  $('fillBtn').addEventListener('click', function () { state.p = state.p.map(function () { return MAX_PLANT; }); state.l = state.l.map(function () { return MAX_LAMP; }); save(); render(); tone(880, 0.8, 0.08); });
+  $('resetBtn').addEventListener('click', function () { state = blank(); localStorage.removeItem(GKEY); render(); });
+
+  function applyLang() {
+    document.documentElement.lang = lang; document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-t]').forEach(function (n) { n.innerHTML = t(n.dataset.t); });
+    document.querySelectorAll('[data-t-aria]').forEach(function (n) { n.setAttribute('aria-label', t(n.dataset.tAria)); });
+    if ($('courtyard').classList.contains('night')) $('nightBtn').innerHTML = t('wake');
+    var lb = $('langBtn'); lb.textContent = lang === 'ar' ? 'English' : 'عربي'; lb.setAttribute('lang', lang === 'ar' ? 'en' : 'ar');
+    lb.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'التبديل إلى العربية');
+    render(); if (open) openRecall(open[0], open[1]);
+  }
+  $('langBtn').addEventListener('click', function () { lang = lang === 'ar' ? 'en' : 'ar'; localStorage.setItem(LKEY, lang); applyLang(); });
+  function applySound() { var b = $('sndBtn'); b.textContent = soundOn ? '🔔' : '🔕'; b.setAttribute('aria-pressed', String(soundOn)); }
+  $('sndBtn').addEventListener('click', function () { soundOn = !soundOn; localStorage.setItem(SKEY, soundOn ? 'on' : 'off'); if (!soundOn && 'speechSynthesis' in window) speechSynthesis.cancel(); applySound(); });
+  $('bedBtn').addEventListener('click', function () { var on = document.body.classList.toggle('bedtime'); this.setAttribute('aria-pressed', String(on)); });
+  applySound(); applyLang();
+})();
+</script>
+</body>
+</html>

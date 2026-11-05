@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!--
+  GAME 01 - Nuh and the Ark. Painted flagship (2026-11-04). Lives at UI/games/nuh-ark.html (built from this file by
+  UI/mockups/games/_src/build.py); linked from the end of the Nuh story ("Play together"), not from the hub.
+  Learning goal: After playing, the child can say that Prophet Nuh kept building the ark patiently, trusting Allah,
+  even when people laughed, and that we keep doing good when others mock it.
+  Core loop: drag a plank to the ark and hold the mallet to fix it while mocking words drift by (keep going);
+  then bring the animals to the ramp two by two; the rain comes, the ark floats, and by Allah's command it rests on Judi.
+  Gate-1 fixes kept: no dove or olive leaf (11:44 only), no human figures (the mockers are two tents and their
+  lantern-lights), patience is never counted, "Prophet Nuh" at first mention, two-note chimes, no music.
+  Art: UI/images/games/nuh/ (prompts and seeds: UI/scripts/specs/games/nuh.py, claudeteam/reviews/game-nuh-art.md).
+  Engine: painted DOM planes + DOM HUD, with one PixiJS canvas for rain, water shimmer and motes
+  (claudeteam/reviews/game-engine-choice-2026-11-04.md). The dua is copied from the story page by _src/build.py.
+  The previous CSS-shape mockup is kept as mockups/games/01-nuh-ark-v1.html.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14383A">
+<title>Nuh and the Ark - Islamic Kids</title>
+<link rel="preload" href="../images/games/nuh/plate-dry-land.webp" as="image" media="(min-aspect-ratio: 4/5)">
+<link rel="preload" href="../images/games/nuh/plate-dry-port.webp" as="image" media="(max-aspect-ratio: 4/5)">
+<link rel="stylesheet" href="nuh/nuh.css">
+</head>
+<body>
+<div id="app" class="phase-build">
+  <!-- ================= the world: painted planes, props and the atmosphere canvas ================= -->
+  <div id="viewport" aria-hidden="false">
+    <div id="world" role="group" aria-label="The valley where the ark is built" data-ar-label="الوادي الذي تُبنى فيه السفينة">
+      <div class="plates" aria-hidden="true">
+        <img class="plate p-dry on" data-state="dry" alt="" decoding="async">
+        <img class="plate p-flood" data-state="flood" alt="" decoding="async">
+        <img class="plate p-judi" data-state="judi" alt="" decoding="async">
+      </div>
+      <div class="dim" aria-hidden="true"></div>
+      <!-- the mockers are never drawn: only the lantern-lights by their tents (painted into the plate) -->
+      <span class="lantern l1" aria-hidden="true"></span><span class="lantern l2" aria-hidden="true"></span>
+      <div class="arkglow" aria-hidden="true"></div>
+
+      <div id="ark" role="button" tabindex="0" aria-label="The ark" data-ar-label="السفينة">
+        <img class="ark-frame" src="../images/games/nuh/ark-frame.webp" alt="" draggable="false">
+        <img class="ark-whole" src="../images/games/nuh/ark-whole.webp" alt="" draggable="false">
+        <span class="ark-row-hint" aria-hidden="true"></span>
+        <img class="loose" src="../images/games/nuh/plank.webp" alt="" draggable="false" hidden>
+        <span class="win w0" aria-hidden="true"></span><span class="win w1" aria-hidden="true"></span><span class="win w2" aria-hidden="true"></span>
+      </div>
+      <img id="ramp" src="../images/games/nuh/plank.webp" alt="" draggable="false" hidden>
+      <div id="rampSpot" role="button" tabindex="-1" hidden aria-label="The ramp into the ark" data-ar-label="المنحدر إلى السفينة"></div>
+
+      <div id="pile" aria-hidden="true"><img src="../images/games/nuh/timber-pile.webp" alt="" draggable="false"></div>
+      <img id="plank" class="piece" src="../images/games/nuh/plank.webp" alt="" draggable="false"
+           role="button" tabindex="0" aria-label="A wooden plank. Drag it to the ark, or press Enter and then choose the ark." data-ar-label="لوح خشبي. اسحبه إلى السفينة، أو اضغط Enter ثم اختر السفينة.">
+      <button id="mallet" type="button" hidden aria-label="Hold to hammer the plank firm" data-ar-label="اضغط مطوّلاً لتثبيت اللوح">
+        <img src="../images/games/nuh/mallet.webp" alt="" draggable="false"><svg class="ring" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46"/></svg>
+      </button>
+      <div id="herd"></div>
+      <div id="taunts" aria-live="polite"></div>
+      <canvas id="atmos" aria-hidden="true"></canvas>
+      <img class="reeds r1" src="../images/games/nuh/reeds.webp" alt="" aria-hidden="true" draggable="false">
+      <img class="reeds r2" src="../images/games/nuh/reeds.webp" alt="" aria-hidden="true" draggable="false">
+    </div>
+  </div>
+  <div class="cssrain" aria-hidden="true"></div>
+
+  <!-- gold-ruled frame with girih corners (one line ornament, no text) -->
+  <svg class="frame" aria-hidden="true" preserveAspectRatio="none">
+    <rect class="f1" x="10" y="10" width="0" height="0" rx="16"/><rect class="f2" x="16" y="16" width="0" height="0" rx="12"/>
+  </svg>
+  <svg class="corner c-ts" viewBox="0 0 80 80" aria-hidden="true"><use href="#girih"/></svg>
+  <svg class="corner c-te" viewBox="0 0 80 80" aria-hidden="true"><use href="#girih"/></svg>
+  <svg class="corner c-bs" viewBox="0 0 80 80" aria-hidden="true"><use href="#girih"/></svg>
+  <svg class="corner c-be" viewBox="0 0 80 80" aria-hidden="true"><use href="#girih"/></svg>
+
+  <!-- ================= HUD ================= -->
+  <header class="hud-top">
+    <a class="tbtn back" href="../story-prophet-nuh.html" aria-label="Back to the story" data-ar-label="العودة إلى القصة">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="dirarrow" d="M15 5l-7 7 7 7"/></svg><span data-ar="القصة">Story</span>
+    </a>
+    <div class="beads" id="beads" role="img" aria-label="" ></div>
+    <div class="tools" role="toolbar" aria-label="Game settings" data-ar-label="إعدادات اللعبة">
+      <button class="tbtn icon" id="soundBtn" type="button" aria-pressed="true" aria-label="Sounds on" data-ar-label="الأصوات">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="on-only" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="off-only" d="M17 9l5 6M22 9l-5 6"/></svg>
+      </button>
+      <button class="tbtn icon" id="bedBtn" type="button" aria-pressed="false" aria-label="Bedtime mode: darker and quieter" data-ar-label="وضع النوم: أهدأ وأغمق">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      </button>
+      <button class="tbtn lang" id="langBtn" type="button" lang="ar">عربي</button>
+    </div>
+  </header>
+
+  <div class="ribbon" role="status" aria-live="polite">
+    <button class="listen" id="listenBtn" type="button" hidden aria-label="Listen to Baba read this part" data-ar-label="استمع إلى هذا الجزء بصوت بابا">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>
+    </button>
+    <p id="say"></p>
+  </div>
+
+  <div class="choices" id="choices" hidden></div>
+  <div class="actrow" id="actRow" hidden><button class="btn gold" id="actBtn" type="button"></button></div>
+
+  <!-- parent pause: a parchment page beside the still scene -->
+  <div class="sheet" id="pause" hidden>
+    <div class="page" role="dialog" aria-modal="true" aria-labelledby="pauseQ">
+      <svg class="star8" viewBox="0 0 40 40" aria-hidden="true"><use href="#star8"/></svg>
+      <p class="kicker" data-ar="لحظة حوار مع الوالدين">Parent pause</p>
+      <p class="sub" data-ar="توقّفا قليلاً واسألا معاً:">Stop for a moment and ask together:</p>
+      <h2 id="pauseQ"></h2>
+      <p class="idea" id="pauseHint"></p>
+      <button class="btn gold" id="pauseGo" type="button"><span data-ar="تحدّثنا، لنكمل">We talked, carry on</span></button>
+    </div>
+  </div>
+
+  <!-- the calm reward moment and ending -->
+  <div class="reward" id="reward" aria-hidden="true">
+    <div class="lamp"></div>
+    <!-- a solid ivory medallion behind the gold lines, so no sky shows through the centre (scholar gate 3, 2026-11-04) -->
+    <svg class="shamsa" viewBox="-100 -100 200 200"><circle class="disc" r="94"/><g id="shamsaG"></g></svg>
+  </div>
+  <div class="sheet end" id="ending" hidden>
+    <div class="page" role="dialog" aria-modal="true" aria-labelledby="endTitle">
+      <svg class="star8" viewBox="0 0 40 40" aria-hidden="true"><use href="#star8"/></svg>
+      <h2 id="endTitle" data-ar="في أمان، برحمة الله">Safe, by Allah's mercy</h2>
+      <p id="endBody"></p>
+      <div class="cartouche">
+        <p class="kicker" data-ar="{{R:NUH_HEAD:ar}}">{{R:NUH_HEAD:en}}</p>
+        <p class="dua" lang="ar" dir="rtl">{{S:NUH_DUA}}</p>
+        <p class="dua-tr" data-ar="{{R:NUH_TR:ar}}">{{R:NUH_TR:en}}</p>
+      </div>
+      <div class="endrow">
+        <button class="btn gold" id="againBtn" type="button"><span data-ar="لنلعب معاً مرة أخرى">Play together again</span></button>
+        <a class="btn ghost" href="../story-prophet-nuh.html"><span data-ar="العودة إلى القصة">Back to the story</span></a>
+      </div>
+      <label class="tier"><input type="checkbox" id="tierBox"> <span data-ar="في المرة القادمة: حيوانات أكثر (٨ أزواج)">Next time: more animals (8 pairs)</span></label>
+    </div>
+  </div>
+  <p class="sr-only" id="srNote" aria-live="polite"></p>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="girih" fill="none" stroke-width="1.6">
+      <path d="M8 8h64M8 8v64" />
+      <path d="M8 30 L30 8 M8 52 L52 8" opacity=".55"/>
+      <path d="M22 22 l8 -10 l8 10 l-8 10z M22 22 l-10 8 l10 8 l10 -8z" />
+      <circle cx="30" cy="30" r="3.2" />
+    </g>
+    <g id="star8" fill="none" stroke-width="1.4">
+      <rect x="8" y="8" width="24" height="24"/><rect x="8" y="8" width="24" height="24" transform="rotate(45 20 20)"/>
+      <circle cx="20" cy="20" r="4"/>
+    </g>
+  </defs>
+</svg>
+<script src="../vendor/pixi/pixi.min.js" defer></script>
+<script src="nuh/nuh.js" defer></script>
+</body>
+</html>

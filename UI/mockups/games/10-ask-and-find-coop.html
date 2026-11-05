@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<!--
+  MOCKUP 10 - Ask and Find, together (prototype, not a production page)
+  Learning goal: After playing, the child can link key objects and moments to the right story or surah on the site (the ark, the box on the Nile, the well, the elephant...) and describe one in their own words.
+  Core loop: one player gives a clue (the grown-up reads a clue card; the child describes a secret picture), the other finds it in the card grid; every find lights one lantern on the TEAM chain. Turns swap. Never competitive.
+  Content: every clue paraphrases a story or surah page already on the site (source noted per item). No scripture is quoted in this game.
+  ART: placeholder emoji only (graphics redesign pending). All visuals live in the ASSETS block; the game logic only deals with item ids.
+  Depiction: objects only. No prophet, Companion or angel is shown. The Kaaba card uses a plain hand-drawn SVG with a
+  plain gold band (no writing), never an emoji or generated image.
+  Scholar gate 1 (2026-11-03): the Biblical dove-and-olive-leaf card is replaced by Mount Judi (11:44); the fire card
+  says "cool and safe" (21:69); the Kaaba card says its foundations were raised stone by stone (2:127); the dream card
+  carries a parent line on the bow of respect; the sea card names Allah; a wrong tap is tone-free and never wobbles
+  the Kaaba card. Sound: one two-note chime, no rising runs, until the owner rules on instruments.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ask and Find, together - game mockup</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body.gm { margin: 0; min-height: 100vh; background: var(--parchment); color: var(--ink); font-family: 'Baloo 2', 'Nunito', system-ui, sans-serif; line-height: 1.5; }
+  html[lang="ar"] body.gm { font-family: 'Amiri', 'Geeza Pro', 'Noto Naskh Arabic', 'Nunito', serif; }
+  .gbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; padding: .5rem 1rem; background: var(--turquoise-deep); color: #fff; border-bottom: 2px solid var(--gold); }
+  .gbar h1 { flex: 1; margin: 0; font-size: 1.2rem; }
+  .mock-tag { font-size: .75rem; font-weight: 700; background: var(--gold-pale); color: var(--gold-ink-strong); border-radius: 999px; padding: .1rem .6rem; margin-inline-start: .5rem; }
+  .gbtn { min-height: 48px; min-width: 48px; border-radius: 999px; border: 2px solid var(--gold); background: var(--card); color: var(--ink); font: inherit; font-weight: 700; padding: .35rem 1rem; cursor: pointer; touch-action: manipulation; }
+  .gbtn:active { transform: scale(.95); }
+  .gbtn.primary { background: var(--turquoise-deep); color: #fff; }
+  .gbtn[aria-pressed="true"] { background: var(--gold-pale); }
+  .gbar .gbtn { background: transparent; color: #fff; border-color: rgba(255,255,255,.55); }
+  .gbar .gbtn[aria-pressed="true"] { background: rgba(255,255,255,.18); }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 1rem; }
+  .row { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; }
+  h2 { margin: .2rem 0 .5rem; color: var(--turquoise-deep); }
+  .card { background: var(--card); border: 1.5px solid var(--rule-strong); border-radius: var(--radius-xl); padding: 1rem 1.2rem; box-shadow: var(--shadow-sm); margin-bottom: 1rem; }
+
+  /* team chain */
+  .team { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; margin-bottom: .8rem; }
+  .team .lbl { font-weight: 800; margin-inline-end: .3rem; }
+  .bead { width: 30px; height: 40px; border-radius: 8px 8px 14px 14px; border: 2px solid var(--gold); background: #2B4F55; transition: background .5s, box-shadow .5s; }
+  .bead.on { background: #F6D27A; box-shadow: 0 0 14px #F6D27A; }
+
+  /* clue card */
+  .clue { border: 2px solid var(--gold); border-radius: var(--radius-xl); background: var(--gold-wash); padding: 1rem 1.2rem; margin-bottom: 1rem; transition: transform .5s ease; }
+  .clue.flip { transform: rotate(180deg); }
+  .who { font-weight: 800; color: var(--gold-ink); font-size: .95rem; }
+  .clue .text { font-size: 1.35rem; font-weight: 800; margin: .3rem 0 .6rem; }
+  .clue .hint { font-size: 1.1rem; }
+  .secret { font-size: 5rem; text-align: center; line-height: 1.1; }
+  .say { min-height: 2.4em; font-size: 1.1rem; font-weight: 700; margin: .4rem 0; }
+
+  /* grid of cards */
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; }
+  .fcard { min-height: 110px; border-radius: 18px; border: 2px solid var(--rule-strong); background: var(--card); font: inherit; color: inherit; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .2rem; padding: .4rem; }
+  .fcard .art { font-size: 2.6rem; line-height: 1; }
+  .fcard .nm { font-size: .9rem; text-align: center; }
+  .fcard.found { border-color: var(--gold); background: #FFF6DC; box-shadow: 0 0 0 3px var(--gold-light); cursor: default; }
+  .fcard.nudge { animation: nudge .5s ease; }
+  @keyframes nudge { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+  .fcard.yes { animation: yes .6s ease; }
+  @keyframes yes { 50% { transform: scale(1.08); } }
+  .grid.covered .fcard { pointer-events: none; opacity: .35; }
+
+  .overlay { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 1rem; background: rgba(12,39,51,.65); }
+  .overlay[hidden] { display: none; }
+  .ov-card { max-width: 540px; width: 100%; background: var(--card); border: 2px solid var(--gold); border-radius: var(--radius-xl); padding: 1.3rem; text-align: center; }
+  .pp-tag { font-size: .85rem; font-weight: 800; color: var(--gold-ink); background: var(--gold-wash); border-radius: 999px; padding: .15rem .7rem; }
+  .ov-card .q { font-size: 1.3rem; font-weight: 800; margin: .6rem 0 1rem; }
+  .found-list { list-style: none; padding: 0; display: grid; gap: .4rem; text-align: start; }
+  .found-list li { background: var(--gold-wash); border-radius: 12px; padding: .4rem .7rem; }
+
+  body.bedtime { background: #10262c; color: #e9e2cf; }
+  body.bedtime .card, body.bedtime .ov-card, body.bedtime .fcard { background: #173238; color: #e9e2cf; }
+  body.bedtime .clue, body.bedtime .found-list li { background: #1d3b41; }
+  body.bedtime .gbtn:not(.primary) { background: #1d3b41; color: #e9e2cf; }
+  @media (prefers-reduced-motion: reduce) { .clue { transition: none; } .fcard.nudge, .fcard.yes { animation: none; } }
+  @media (max-width: 420px) { .fcard .art { font-size: 2rem; } }
+</style>
+</head>
+<body class="gm">
+<header class="gbar">
+  <h1><span data-t="title"></span><span class="mock-tag" data-t="mock"></span></h1>
+  <button class="gbtn" id="bedBtn" type="button" aria-pressed="false" data-t-aria="bedtime">🌙</button>
+  <button class="gbtn" id="sndBtn" type="button" aria-pressed="true" data-t-aria="sound">🔔</button>
+  <button class="gbtn" id="langBtn" type="button" lang="ar">عربي</button>
+</header>
+<main class="wrap">
+  <section class="card" id="setup">
+    <h2 data-t="introTitle"></h2>
+    <p data-t="introLead"></p>
+    <p style="font-weight:800" data-t="sizeLabel"></p>
+    <div class="row" id="sizePick" role="group">
+      <button class="gbtn" type="button" data-size="6" aria-pressed="false" data-t="size6"></button>
+      <button class="gbtn" type="button" data-size="9" aria-pressed="true" data-t="size9"></button>
+    </div>
+    <p style="font-weight:800;margin-top:.8rem" data-t="seatLabel"></p>
+    <div class="row" id="seatPick" role="group">
+      <button class="gbtn" type="button" data-seat="side" aria-pressed="true" data-t="seatSide"></button>
+      <button class="gbtn" type="button" data-seat="across" aria-pressed="false" data-t="seatAcross"></button>
+    </div>
+    <p style="margin-top:1rem"><button class="gbtn primary" id="startBtn" type="button" data-t="start"></button></p>
+  </section>
+
+  <section id="play" hidden>
+    <div class="team" aria-live="polite"><span class="lbl" data-t="teamLbl"></span><span id="beads" class="row"></span></div>
+    <div class="clue" id="clue"></div>
+    <p class="say" id="say" aria-live="polite"></p>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="card" id="end" hidden>
+    <h2 data-t="endTitle"></h2>
+    <p data-t="endLead"></p>
+    <ul class="found-list" id="foundList"></ul>
+    <p style="margin-top:1rem"><button class="gbtn primary" id="againBtn" type="button" data-t="again"></button></p>
+  </section>
+</main>
+
+<div class="overlay" id="overlay" hidden role="dialog" aria-modal="true" aria-labelledby="ovQ">
+  <div class="ov-card">
+    <span class="pp-tag" id="ovTag"></span>
+    <p class="q" id="ovQ"></p>
+    <p id="ovSub"></p>
+    <button class="gbtn primary" id="ovGo" type="button"></button>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  /* ================= DATA: clues paraphrase site pages (source per item) ================= */
+  var ITEMS = [
+    { id: 'ark', src: 'story-prophet-nuh', story: { en: 'Prophet Nuh', ar: 'النبي نوح' }, name: { en: 'The ark', ar: 'السفينة' },
+      clue: { en: 'Prophet Nuh built this big boat, and the animals came aboard two by two.', ar: 'بنى النبي نوح هذه السفينة الكبيرة، وصعدت إليها الحيوانات زوجين زوجين.' },
+      hint: { en: 'It is made of wood, and it floated safely on the flood.', ar: 'مصنوعة من الخشب، وجرت بأمان فوق الطوفان.' } },
+    { id: 'judi', src: 'story-prophet-nuh', story: { en: 'Prophet Nuh', ar: 'النبي نوح' }, name: { en: 'Mount Judi', ar: 'جبل الجودي' },
+      clue: { en: 'When the water went down, the ark came to rest on this mountain.', ar: 'حين انحسر الماء استقرت السفينة على هذا الجبل.' },
+      hint: { en: 'It is high and rocky, and its name is Judi.', ar: 'عالٍ صخري، واسمه الجودي.' } },
+    { id: 'basket', src: 'story-prophet-musa', story: { en: 'Prophet Musa', ar: 'النبي موسى' }, name: { en: 'The box on the river', ar: 'التابوت على النهر' },
+      clue: { en: 'Musa\'s mother put her baby in this and let the River Nile carry him.', ar: 'وضعت أمّ موسى طفلها فيه وتركت نهر النيل يحمله.' },
+      hint: { en: 'It floats on the water, with a baby safe inside.', ar: 'يطفو على الماء، وفيه طفل في أمان.' } },
+    { id: 'staff', src: 'story-prophet-musa', story: { en: 'Prophet Musa', ar: 'النبي موسى' }, name: { en: 'The staff', ar: 'العصا' },
+      clue: { en: 'Allah told Musa to throw this down, and it turned into a real, moving snake.', ar: 'أمر الله موسى أن يُلقي هذه، فصارت حيّة حقيقية تتحرك.' },
+      hint: { en: 'It is a long wooden stick.', ar: 'إنها عصا طويلة من خشب.' } },
+    { id: 'sea', src: 'story-prophet-musa', story: { en: 'Prophet Musa', ar: 'النبي موسى' }, name: { en: 'The sea', ar: 'البحر' },
+      clue: { en: 'Musa\'s people were trapped beside this — then Allah split it open to make a dry path.', ar: 'حوصر قوم موسى عنده، ثم شقّه الله فصار فيه طريق يابس.' },
+      hint: { en: 'Waves, lots of water.', ar: 'أمواج وماء كثير.' } },
+    { id: 'moon', src: 'story-prophet-ibrahim', story: { en: 'Prophet Ibrahim', ar: 'النبي إبراهيم' }, name: { en: 'The moon', ar: 'القمر' },
+      clue: { en: 'Ibrahim saw this big and bright in the night sky — but when morning came it disappeared, so it could not be his Lord.', ar: 'رأى إبراهيم هذا كبيراً منيراً في سماء الليل، لكنه غاب حين جاء الصباح، فلا يمكن أن يكون ربّه.' },
+      hint: { en: 'It shines at night, and sometimes looks like a thin smile.', ar: 'يضيء في الليل، ويبدو أحياناً كابتسامة رفيعة.' } },
+    { id: 'fire', src: 'story-prophet-ibrahim', story: { en: 'Prophet Ibrahim', ar: 'النبي إبراهيم' }, name: { en: 'The fire that became cool', ar: 'النار التي صارت باردة' },
+      clue: { en: 'Allah commanded this to be cool and safe, and Ibrahim came out unharmed.', ar: 'أمرها الله أن تكون باردة آمنة، فخرج منها إبراهيم سالماً.' },
+      hint: { en: 'It is usually very hot!', ar: 'عادةً تكون شديدة الحرارة!' } },
+    { id: 'kaaba', src: 'story-prophet-ibrahim', story: { en: 'Prophet Ibrahim', ar: 'النبي إبراهيم' }, name: { en: 'The Kaaba', ar: 'الكعبة' },
+      clue: { en: 'Ibrahim and his son Ismail raised its foundations together, stone by stone — the first house of worship for Allah.', ar: 'رفع إبراهيم وابنه إسماعيل قواعدها معاً حجراً حجراً — أول بيت لعبادة الله.' },
+      hint: { en: 'Its shape is a cube.', ar: 'شكلها مكعّب.' } },
+    { id: 'stars', src: 'story-prophet-yusuf', story: { en: 'Prophet Yusuf', ar: 'النبي يوسف' }, name: { en: 'Eleven stars, the sun and the moon', ar: 'أحد عشر كوكباً والشمس والقمر' },
+      clue: { en: 'Yusuf dreamed of eleven of these, with the sun and the moon, all bowing down to him.', ar: 'رأى يوسف في منامه أحد عشر من هذه، ومعها الشمس والقمر، ساجدة له.' },
+      hint: { en: 'Look for many stars together. (For the grown-up: it was a bow of respect, allowed in their time. In Islam we prostrate only to Allah.)', ar: 'ابحث عن نجوم كثيرة معاً. (للكبير: كان سجود تحية واحترام، وكان مباحاً في زمانهم. وفي الإسلام لا نسجد إلا لله.)' } },
+    { id: 'well', src: 'story-prophet-yusuf', story: { en: 'Prophet Yusuf', ar: 'النبي يوسف' }, name: { en: 'The well', ar: 'البئر' },
+      clue: { en: 'Yusuf\'s jealous brothers left him down inside this.', ar: 'تركه إخوته الحاسدون في داخلها.' },
+      hint: { en: 'It is deep, with water at the bottom.', ar: 'إنها عميقة، وفي قاعها ماء.' } },
+    { id: 'wheat', src: 'story-prophet-yusuf', story: { en: 'Prophet Yusuf', ar: 'النبي يوسف' }, name: { en: 'The harvest', ar: 'الحصاد' },
+      clue: { en: 'Yusuf told the King there would be seven good years with lots of food from fields like these.', ar: 'أخبر يوسف الملك أن سبع سنوات خير ستأتي، فيها طعام كثير من حقول كهذه.' },
+      hint: { en: 'Bread is made from it.', ar: 'يُصنع منه الخبز.' } },
+    { id: 'elephant', src: 'surah-al-fil', story: { en: 'Surah Al-Fil', ar: 'سورة الفيل' }, name: { en: 'The elephant', ar: 'الفيل' },
+      clue: { en: 'An army marched on Makkah with these huge animals to knock down the Kaaba.', ar: 'زحف جيش إلى مكة بهذه الحيوانات الضخمة ليهدم الكعبة.' },
+      hint: { en: 'It has a long trunk.', ar: 'له خرطوم طويل.' } },
+    { id: 'birds', src: 'surah-al-fil', story: { en: 'Surah Al-Fil', ar: 'سورة الفيل' }, name: { en: 'Flocks of birds', ar: 'أسراب الطير' },
+      clue: { en: 'Allah sent these flock after flock, each one carrying small stones.', ar: 'أرسلها الله جماعات متتابعة، يحمل كل واحد منها حجارة صغيرة.' },
+      hint: { en: 'They fly.', ar: 'إنها تطير.' } },
+    { id: 'olive', src: 'surah-at-tin', story: { en: 'Surah At-Tin', ar: 'سورة التين' }, name: { en: 'The fig and the olive', ar: 'التين والزيتون' },
+      clue: { en: 'A surah begins by swearing by these two fruits.', ar: 'تبدأ سورة بالقسم بهاتين الثمرتين.' },
+      hint: { en: 'One is a fig; the other is small and green, and gives oil.', ar: 'إحداهما التين، والأخرى صغيرة خضراء يُعصر منها الزيت.' } },
+    { id: 'camel', src: 'surah-quraysh', story: { en: 'Surah Quraysh', ar: 'سورة قريش' }, name: { en: 'The caravan camel', ar: 'جمل القافلة' },
+      clue: { en: 'Quraysh made the journey of winter and summer, carrying their goods across the desert on these.', ar: 'كانت قريش ترحل رحلة الشتاء والصيف، تحمل بضاعتها عبر الصحراء على هذه.' },
+      hint: { en: 'It has a hump.', ar: 'له سنام.' } }
+  ];
+  var TURNS = 6, PAUSE_AFTER = 3;
+
+  var T = {
+    title: { en: 'Ask and Find, together', ar: 'اسأل وابحث، معاً' },
+    mock: { en: 'Mockup', ar: 'نموذج تجريبي' },
+    bedtime: { en: 'Bedtime mode', ar: 'وضع النوم الهادئ' },
+    sound: { en: 'Sound and voice', ar: 'الصوت' },
+    readToMe: { en: 'Read this to me', ar: 'اقرأ لي' },
+    introTitle: { en: 'One team, one screen', ar: 'فريق واحد، شاشة واحدة' },
+    introLead: { en: 'Take turns. One of you gives the clue, the other finds the picture. Every find lights a lantern on your team chain — you are always on the same side.', ar: 'تناوبا. أحدكما يعطي الدليل والآخر يبحث عن الصورة. كل اكتشاف يُضيء فانوساً في سلسلة فريقكما — أنتما دائماً في الجهة نفسها.' },
+    sizeLabel: { en: 'How many cards?', ar: 'كم بطاقة؟' },
+    size6: { en: '6 cards (little ones)', ar: '٦ بطاقات (للصغار)' },
+    size9: { en: '9 cards', ar: '٩ بطاقات' },
+    seatLabel: { en: 'Where are you sitting?', ar: 'أين تجلسان؟' },
+    seatSide: { en: 'Side by side', ar: 'جنباً إلى جنب' },
+    seatAcross: { en: 'Across the table (flip the clue)', ar: 'متقابلين (اقلب الدليل)' },
+    start: { en: 'Start ✨', ar: 'ابدأ ✨' },
+    teamLbl: { en: 'Our team:', ar: 'فريقنا:' },
+    gReads: { en: '👤 Grown-up reads the clue · child finds it', ar: '👤 الكبير يقرأ الدليل · الصغير يبحث' },
+    cTells: { en: '🧒 Child\'s turn to give the clue · grown-up finds it', ar: '🧒 دور الصغير ليعطي الدليل · الكبير يبحث' },
+    moreHint: { en: 'Give another hint', ar: 'أعطِ تلميحاً آخر' },
+    hear: { en: '🔊 Read it to me', ar: '🔊 اقرأه لي' },
+    secretCover: { en: 'Grown-up, close your eyes! Child: tap to see your secret picture.', ar: 'أيها الكبير، أغمض عينيك! أيها الصغير: المس لترى صورتك السرّية.' },
+    showMe: { en: '🙈 Show me my picture', ar: '🙈 أرِني صورتي' },
+    secretTell: { en: 'Tell your grown-up about this picture without saying its name. Which story is it from? What happened?', ar: 'أخبر الكبير عن هذه الصورة من دون أن تقول اسمها. من أي قصة هي؟ وماذا حدث؟' },
+    hideIt: { en: 'I\'m ready — hide it', ar: 'أنا جاهز — أخفِها' },
+    findNow: { en: 'Grown-up, open your eyes and find it!', ar: 'أيها الكبير، افتح عينيك وابحث عنها!' },
+    yes: { en: 'Found it! A lantern lights up for the team.', ar: 'وجدتماها! أضاء فانوس للفريق.' },
+    notThat: { en: 'That is {x}, from {s}. Listen to the clue again.', ar: 'هذه {x}، من {s}. استمع إلى الدليل مرة أخرى.' },
+    swap: { en: 'Swap!', ar: 'تبادلا!' },
+    swapToChild: { en: 'Now the child gives the clue, and the grown-up finds it.', ar: 'الآن يعطي الصغير الدليل، والكبير يبحث.' },
+    swapToGrown: { en: 'Now the grown-up reads the clue, and the child finds it.', ar: 'الآن يقرأ الكبير الدليل، والصغير يبحث.' },
+    go: { en: 'Go', ar: 'هيا' },
+    ppTag: { en: 'Pause and talk', ar: 'توقّفا وتحدّثا' },
+    pauseQ: { en: 'Which story have we visited tonight that you like best — and why?', ar: 'أي قصة زرناها الليلة تحبّها أكثر — ولماذا؟' },
+    pauseSub: { en: 'Grown-up: listen to the whole answer, then carry on together.', ar: 'أيها الكبير: استمع إلى الجواب كله، ثم أكملا معاً.' },
+    carryOn: { en: 'We talked — carry on', ar: 'تحدّثنا — لنكمل' },
+    endTitle: { en: 'Our whole chain is glowing!', ar: 'سلسلتنا كلها مضيئة!' },
+    endLead: { en: 'Tonight, together, we found:', ar: 'الليلة وجدنا معاً:' },
+    again: { en: 'Play together again', ar: 'لنلعب معاً مرة أخرى' },
+    from: { en: 'from', ar: 'من' }
+  };
+
+  /* ================= ASSETS (placeholder art: swap this block for the redesign) ================= */
+  var ASSETS = {
+    art: { ark: '⛵', judi: '⛰️', basket: '📦', staff: '🥢', sea: '🌊', moon: '🌙', fire: '🔥', kaaba: '<svg viewBox="0 0 48 48" width="1em" height="1em" style="vertical-align:-.12em"><path d="M8 16 L28 12 L40 16 L20 20Z" fill="#2A2A2A"/><path d="M20 20 L40 16 L40 38 L20 42Z" fill="#111"/><path d="M8 16 L20 20 L20 42 L8 38Z" fill="#222"/><path d="M20 24 L40 20 L40 22.5 L20 26.5Z M8 20 L20 24 L20 26.5 L8 22.5Z" fill="#C08A2E"/></svg>', stars: '⭐✨⭐', well: '🪣', wheat: '🌾', elephant: '🐘', birds: '🐦🐦', olive: '🫒', camel: '🐫' },
+    card: function (it, found) {
+      return '<span class="art" aria-hidden="true">' + (ASSETS.art[it.id] || '?') + '</span><span class="nm">' + it.name[lang] + '</span>';
+    },
+    bead: function (on) { return '<span class="bead' + (on ? ' on' : '') + '"></span>'; },
+    big: function (it) { return '<div class="secret" aria-hidden="true">' + (ASSETS.art[it.id] || '?') + '</div>'; }
+  };
+
+  /* ================= kit ================= */
+  var LKEY = 'islamicKidsLang' /* the site's own language key, as games 01-05 read it */, SKEY = 'mockupGames.sound';
+  var lang = localStorage.getItem(LKEY) === 'ar' ? 'ar' : 'en';
+  var soundOn = localStorage.getItem(SKEY) !== 'off';
+  function t(k, vars) { var v = T[k]; var s = v ? v[lang] : k; if (vars) Object.keys(vars).forEach(function (n) { s = s.replace('{' + n + '}', vars[n]); }); return s; }
+  function $(id) { return document.getElementById(id); }
+  var actx = null;
+  function tone(freq, dur, vol, type) {
+    if (!soundOn) return;
+    try { actx = actx || new (window.AudioContext || window.webkitAudioContext)(); var now = actx.currentTime, o = actx.createOscillator(), g = actx.createGain();
+      o.type = type || 'sine'; o.frequency.value = freq; g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime((vol || 0.1) * (document.body.classList.contains('bedtime') ? 0.5 : 1), now + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + dur); o.connect(g); g.connect(actx.destination); o.start(now); o.stop(now + dur + 0.05); } catch (e) { /* fine */ }
+  }
+  function speak(text) { if (!soundOn || !('speechSynthesis' in window)) return; speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(String(text).replace(/<[^>]+>/g, '')); u.lang = lang === 'ar' ? 'ar-SA' : 'en-GB'; u.rate = 0.92; speechSynthesis.speak(u); }
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+
+  /* ================= LOGIC (pure state) ================= */
+  var G = null, size = 9, seat = 'side';
+  function newGame() {
+    var deck = shuffle(ITEMS.slice()).slice(0, size);
+    return { cards: deck, targets: shuffle(deck.slice()).slice(0, Math.min(TURNS, size)), turn: 0, found: [], hints: 0, phase: 'clue', paused: false };
+  }
+  function giver() { return G.turn % 2 === 0 ? 'grown' : 'child'; }   /* turns swap every find */
+  function target() { return G.targets[G.turn]; }
+  function guess(id) {               /* returns 'yes' | 'no' */
+    if (id === target().id) { G.found.push(id); return 'yes'; }
+    return 'no';
+  }
+  function advance() { G.turn++; G.hints = 0; G.phase = giver() === 'child' ? 'cover' : 'clue'; return G.turn >= G.targets.length; }
+
+  /* ================= RENDER ================= */
+  function renderBeads() { var h = ''; for (var i = 0; i < G.targets.length; i++) h += ASSETS.bead(i < G.found.length); $('beads').innerHTML = h; }
+  function renderGrid() {
+    $('grid').style.gridTemplateColumns = 'repeat(' + (size === 6 ? 2 : 3) + ', minmax(0, 1fr))';
+    $('grid').innerHTML = G.cards.map(function (it) {
+      var f = G.found.indexOf(it.id) >= 0;
+      return '<button class="fcard' + (f ? ' found' : '') + '" type="button" data-id="' + it.id + '"' + (f ? ' aria-disabled="true"' : '') + '>' + ASSETS.card(it, f) + '</button>';
+    }).join('');
+    $('grid').classList.toggle('covered', G.phase === 'cover' || G.phase === 'secret');
+  }
+  function renderClue() {
+    var it = target(), c = $('clue'), h;
+    c.classList.toggle('flip', seat === 'across' && giver() === 'grown');
+    if (giver() === 'grown') {
+      h = '<div class="who">' + t('gReads') + '</div><p class="text">' + it.clue[lang] + '</p>' +
+          (G.hints ? '<p class="hint">💡 ' + it.hint[lang] + '</p>' : '') +
+          '<div class="row"><button class="gbtn" type="button" id="hearBtn">' + t('hear') + '</button>' + (G.hints ? '' : '<button class="gbtn" type="button" id="hintBtn">' + t('moreHint') + '</button>') + '</div>';
+    } else if (G.phase === 'cover') {
+      h = '<div class="who">' + t('cTells') + '</div><p class="text">' + t('secretCover') + '</p><button class="gbtn primary" type="button" id="showBtn">' + t('showMe') + '</button>';
+    } else if (G.phase === 'secret') {
+      h = '<div class="who">' + t('cTells') + '</div>' + ASSETS.big(it) + '<p class="text">' + t('secretTell') + '</p><button class="gbtn primary" type="button" id="hideBtn">' + t('hideIt') + '</button>';
+    } else {
+      h = '<div class="who">' + t('cTells') + '</div><p class="text">' + t('findNow') + '</p>' +
+          (G.hints ? '<p class="hint">💡 ' + it.hint[lang] + '</p>' : '<button class="gbtn" type="button" id="hintBtn">' + t('moreHint') + '</button>');
+    }
+    c.innerHTML = h;
+  }
+  function renderAll() { renderBeads(); renderClue(); renderGrid(); }
+  function showOverlay(tag, q, sub, btn, onGo) {
+    $('ovTag').textContent = tag; $('ovQ').textContent = q; $('ovSub').textContent = sub; $('ovGo').textContent = btn;
+    $('overlay').hidden = false; $('ovGo').focus(); G.paused = true;
+    $('ovGo').onclick = function () { $('overlay').hidden = true; G.paused = false; onGo(); };
+  }
+
+  /* ================= FLOW ================= */
+  function start() {
+    G = newGame();
+    $('setup').hidden = true; $('end').hidden = true; $('play').hidden = false; $('say').textContent = '';
+    renderAll();
+  }
+  function onCard(btn) {
+    if (!G || G.paused || G.phase === 'cover' || G.phase === 'secret' || btn.classList.contains('found')) return;
+    var it = ITEMS.filter(function (x) { return x.id === btn.dataset.id; })[0];
+    if (guess(it.id) === 'yes') {
+      tone(659.25, 0.6, 0.1); setTimeout(function () { tone(987.77, 0.7, 0.07); }, 120);
+      btn.classList.add('yes', 'found');
+      $('say').textContent = t('yes'); renderBeads();
+      var finished = advance();
+      setTimeout(function () {
+        if (finished) return end();
+        var next = function () { $('say').textContent = ''; renderAll(); };
+        if (G.turn === PAUSE_AFTER) {
+          showOverlay(t('ppTag'), t('pauseQ'), t('pauseSub'), t('carryOn'), function () { swapThen(next); });
+        } else swapThen(next);
+      }, 700);
+    } else {
+      /* a wrong tap is tone-free: it just names the card. The Kaaba card never wobbles. */
+      if (it.id !== 'kaaba') { btn.classList.remove('nudge'); void btn.offsetWidth; btn.classList.add('nudge'); }
+      $('say').textContent = t('notThat', { x: it.name[lang], s: it.story[lang] });
+    }
+  }
+  function swapThen(next) {
+    showOverlay(t('swap'), giver() === 'child' ? t('swapToChild') : t('swapToGrown'), '', t('go'), next);
+  }
+  function end() {
+    $('play').hidden = true; $('end').hidden = false;
+    $('foundList').innerHTML = G.targets.map(function (it) { return '<li>' + (ASSETS.art[it.id] || '') + ' <strong>' + it.name[lang] + '</strong> — ' + t('from') + ' ' + it.story[lang] + '</li>'; }).join('');
+    tone(523.25, 0.8, 0.08); setTimeout(function () { tone(783.99, 0.9, 0.06); }, 200);
+    $('againBtn').focus();
+  }
+
+  /* ================= INPUT ================= */
+  document.addEventListener('click', function (e) {
+    var card = e.target.closest('.fcard'); if (card) { onCard(card); return; }
+    var id = e.target.id;
+    if (id === 'hearBtn') speak(target().clue[lang] + (G.hints ? ' ' + target().hint[lang] : ''));
+    if (id === 'hintBtn') { G.hints = 1; renderClue(); tone(880, 0.2, 0.04); if (giver() === 'grown') speak(target().hint[lang]); }
+    if (id === 'showBtn') { G.phase = 'secret'; renderClue(); renderGrid(); }
+    if (id === 'hideBtn') { G.phase = 'find'; renderClue(); renderGrid(); }
+  });
+  function pick(groupId, btn) { $(groupId).querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); }); }
+  $('sizePick').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; size = +b.dataset.size; pick('sizePick', b); });
+  $('seatPick').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; seat = b.dataset.seat; pick('seatPick', b); });
+  $('startBtn').addEventListener('click', start);
+  $('againBtn').addEventListener('click', start);
+
+  function applyLang() {
+    document.documentElement.lang = lang; document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-t]').forEach(function (n) { n.innerHTML = t(n.dataset.t); });
+    document.querySelectorAll('[data-t-aria]').forEach(function (n) { n.setAttribute('aria-label', t(n.dataset.tAria)); });
+    var lb = $('langBtn'); lb.textContent = lang === 'ar' ? 'English' : 'عربي'; lb.setAttribute('lang', lang === 'ar' ? 'en' : 'ar');
+    lb.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'التبديل إلى العربية');
+    if (G && !$('play').hidden) renderAll();
+    if (G && !$('end').hidden) end();
+  }
+  $('langBtn').addEventListener('click', function () { lang = lang === 'ar' ? 'en' : 'ar'; localStorage.setItem(LKEY, lang); applyLang(); });
+  function applySound() { var b = $('sndBtn'); b.textContent = soundOn ? '🔔' : '🔕'; b.setAttribute('aria-pressed', String(soundOn)); }
+  $('sndBtn').addEventListener('click', function () { soundOn = !soundOn; localStorage.setItem(SKEY, soundOn ? 'on' : 'off'); if (!soundOn && 'speechSynthesis' in window) speechSynthesis.cancel(); applySound(); });
+  $('bedBtn').addEventListener('click', function () { var on = document.body.classList.toggle('bedtime'); this.setAttribute('aria-pressed', String(on)); });
+  applySound(); applyLang();
+})();
+</script>
+</body>
+</html>

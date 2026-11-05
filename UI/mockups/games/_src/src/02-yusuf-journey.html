@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<!--
+  GAME MOCKUP 02 - Yusuf's Journey (prototype, not linked from the hub)
+  Learning goal: After playing, the child can retell Yusuf's journey in order (well, caravan, Egypt, prison,
+  the king's dream, reunion) and say that Yusuf was patient through hard times and forgave his brothers.
+  Core loop: drag each picture card onto the next stepping stone of the path; a correct step tells that part
+  of the story, a wrong one floats back with a hint; at the end the child chooses how to meet the brothers.
+  Story source: UI/story-prophet-yusuf.html. No prophet is drawn; brothers appear only as their grain sacks.
+  Scholar gate 1 (2026-11-03): no quiz on what a prophet did. Yusuf's kindness and forgiveness are narrated;
+  wrong options exist only in the child's own 'Your turn' choice.
+  TODO-SCRIPTURE: 12:92 (la tathriba alaykum al-yawm) is approved for this game, but only after it is added to
+  UI/story-prophet-yusuf.html through verify-scripture.py. Then copy it (never retype) into L.brothersTold,
+  at the moment Yusuf makes himself known.
+  ART NOTE: all visuals are placeholders (emoji + plain shapes) pending the graphics redesign; see the ART block.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yusuf's Journey - game prototype - Islamic Kids</title>
+<style>
+{{COMMON_CSS}}
+/* ========== ART / SCENE STYLES (placeholder; swap freely - logic only uses ids and classes) ========== */
+.scene{background:var(--gold-wash);aspect-ratio:auto;min-height:0;max-height:none;padding:2.6rem .8rem 1rem}
+#path{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;align-items:center}
+.stone{width:96px;height:96px;border-radius:50%;border:3px dashed var(--rule-strong);background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2rem;line-height:1.1;text-align:center;padding:.2rem}
+.stone small{font-size:.68rem;font-weight:700}
+.stone.done{border-style:solid;border-color:var(--turquoise);background:#e3f3f1}
+.stone.next{border-color:var(--gold);background:var(--gold-pale)}
+.arrow{font-size:1.4rem;color:var(--gold-text)}
+[dir=rtl] .arrow{transform:scaleX(-1)}
+#tray{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center}
+.pcard{width:104px;min-height:104px;border-radius:16px;border:3px solid var(--rule-strong);background:var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:2.2rem;line-height:1.1;text-align:center;padding:.3rem;box-shadow:var(--shadow-md)}
+.pcard small{font-size:.78rem;font-weight:800}
+.icons-only .pcard small{display:none}
+.mini{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;align-items:center}
+.tok{width:64px;height:64px;border-radius:14px;border:3px solid var(--rule-strong);background:var(--card);font-size:2rem;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.tok.full{border-color:var(--turquoise);background:#e3f3f1}
+#store{min-width:150px;min-height:96px;border-radius:16px;border:3px dashed var(--gold);background:var(--card);font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer}
+#tower{display:flex;flex-direction:column-reverse;align-items:center;min-height:200px;justify-content:flex-start}
+.block{width:90px;height:44px;border-radius:8px;border:3px solid var(--cobalt);background:var(--cobalt-pale);margin-top:2px}
+.block.fallen{transform:rotate(25deg) translateY(10px);opacity:.6}
+</style>
+</head>
+<body>
+{{TOP}}
+<main id="stage">
+  <div class="scene" id="scene">
+    <span class="phase-tag" id="phaseTag"></span>
+    <div id="path" aria-label="The path of Yusuf's journey" data-ar-label="طريق رحلة يوسف"></div>
+  </div>
+  {{NARR}}
+  <div class="panel" id="trayPanel"><div id="tray" aria-label="Story cards" data-ar-label="بطاقات القصة"></div></div>
+  <div class="panel mini" id="miniPanel" hidden></div>
+  <div class="choices" id="choices" hidden></div>
+</main>
+{{BOTTOM}}
+<script>
+{{COMMON_JS}}
+/* ======================= ART (placeholder assets - swap for real art later) ======================= */
+const ART = {
+  start: '✨', arrow: '→', sheaf: '🌾', store: '🏚️', sackEmpty: '👜', sackFull: '🎒', block: '', fallen: '',
+  steps: { well: '🕳️', caravan: '🐪', egypt: '🌴', prison: '🔒', dreams: '🌾', reunion: '🏡' }
+};
+/* ======================= CONTENT (follows UI/story-prophet-yusuf.html) ======================= */
+const START = { en: 'The dream: 11 stars, the sun and the moon', ar: 'الرؤيا: أحد عشر كوكباً والشمس والقمر' };
+const STEPS = [
+  { id: 'well', label: { en: 'The deep well', ar: 'البئر العميقة' },
+    told: { en: 'His jealous brothers left Yusuf in a deep, dark well. But Allah was always with him.', ar: 'تركه إخوته الحاسدون في بئر عميقة مظلمة. لكن الله كان معه دائماً.' },
+    hint: { en: 'What happened first, right after the brothers made their bad plan?', ar: 'ماذا حدث أولاً، بعد أن دبّر الإخوة خطتهم السيئة؟' } },
+  { id: 'caravan', label: { en: 'Travellers find him', ar: 'المسافرون يجدونه' },
+    told: { en: 'Some travellers found him in the well and took him to Egypt.', ar: 'وجده بعض المسافرين في البئر وأخذوه إلى مصر.' },
+    hint: { en: 'Who found Yusuf in the well?', ar: 'من وجد يوسف في البئر؟' } },
+  { id: 'egypt', label: { en: 'Growing up in Egypt', ar: 'يكبر في مصر' },
+    told: { en: 'In Egypt, Yusuf grew up wise. He always told the truth and was kind to everyone.', ar: 'في مصر كبر يوسف حكيماً، يقول الحق دائماً ويحسن إلى الجميع.' },
+    hint: { en: 'Where did the travellers take him?', ar: 'إلى أين أخذه المسافرون؟' } },
+  { id: 'prison', label: { en: 'Prison, though innocent', ar: 'السجن ظلماً' },
+    told: { en: 'Some people were unfair to him, and he was put in prison though he did nothing wrong. He stayed patient.', ar: 'أساء إليه بعض الناس فسُجن وهو لم يفعل شيئاً خطأ. وظل صابراً.' },
+    hint: { en: 'Something unfair happened to Yusuf in Egypt. What was it?', ar: 'حدث ليوسف شيء ظالم في مصر. ما هو؟' } },
+  { id: 'dreams', label: { en: "The king's dream explained", ar: 'تفسير رؤيا الملك' },
+    told: { en: "With Allah's help, Yusuf explained the king's dream: seven good years, then seven hard years.", ar: 'بعون الله فسّر يوسف رؤيا الملك: سبع سنوات خير، ثم سبع سنوات شدة.' },
+    hint: { en: 'Whose strange dream did Yusuf explain?', ar: 'رؤيا من العجيبة فسّرها يوسف؟' } },
+  { id: 'reunion', label: { en: 'Family together again', ar: 'اجتماع الأسرة' },
+    told: { en: 'Years later, his brothers came to Egypt looking for food.', ar: 'وبعد سنوات جاء إخوته إلى مصر يطلبون الطعام.' },
+    hint: { en: 'How does the journey end?', ar: 'كيف تنتهي الرحلة؟' } }
+];
+const L = {
+  phase1: { en: '1 · The path', ar: '١ · الطريق' }, phase2: { en: '2 · The brothers come', ar: '٢ · مجيء الإخوة' }, phase3: { en: '3 · Your turn', ar: '٣ · دورك' },
+  intro: { en: "Prophet Yusuf's journey starts with his dream. Drag the picture that comes next onto the glowing stone.", ar: 'تبدأ رحلة النبي يوسف عليه السلام برؤياه. اسحب الصورة التالية إلى الحجر المضيء.' },
+  later: { en: 'Let us fill the path in order, one step at a time: the glowing stone first.', ar: 'لنملأ الطريق بالترتيب، خطوة بعد خطوة: الحجر المضيء أولاً.' },
+  notYet: { en: 'Not yet! That part comes later.', ar: 'ليس بعد! هذا الجزء يأتي لاحقاً.' },
+  next: { en: 'Which picture comes next?', ar: 'أي صورة تأتي بعد ذلك؟' },
+  store: { en: 'Storehouse', ar: 'المخزن' },
+  storeAsk: { en: 'In the good years Yusuf saved food so no one would go hungry later. Drag the 7 sheaves of wheat into the storehouse.', ar: 'في سنوات الخير ادّخر يوسف الطعام لئلا يجوع أحد فيما بعد. اسحب حزم القمح السبع إلى المخزن.' },
+  storeDone: { en: 'The storehouse is full! When the hard years came, there was food for everyone.', ar: 'امتلأ المخزن! ولما جاءت سنوات الشدة كان هناك طعام للجميع.' },
+  /* narrated, never quizzed (scholar ruling): no option ever says a prophet did wrong */
+  brothersTold: { en: 'The brothers who left Yusuf in the well have come, hungry, with empty sacks. They did not know him, but he knew them. Yusuf was kind: he gave them food. Later, when they knew who he was, he forgave them. Tap each sack to fill it with grain.', ar: 'جاء الإخوة الذين تركوا يوسف في البئر، جائعين وأكياسهم فارغة. لم يعرفوه، لكنه عرفهم. فأحسن إليهم يوسف وأعطاهم الطعام. وبعد ذلك، حين عرفوا من هو، سامحهم. المس كل كيس لتملأه بالقمح.' },
+  sack: { en: 'Sack', ar: 'كيس' },
+  sacksDone: { en: 'Every sack is full. His whole family came to live in Egypt, and his dream came true.', ar: 'امتلأت الأكياس كلها. وجاءت أسرته كلها لتعيش في مصر، وتحققت رؤياه.' },
+  pauseQ: { en: 'If someone had hurt you, what would you feel like doing? What did Yusuf choose, and why?', ar: 'لو آذاك أحد، ماذا ستشعر أنك تريد أن تفعل؟ وماذا اختار يوسف، ولماذا؟' },
+  pauseH: { en: 'Idea: Yusuf trusted Allah\'s plan, and forgiving let the whole family be together again.', ar: 'فكرة: وثق يوسف بتدبير الله، وبالمسامحة اجتمعت الأسرة كلها من جديد.' },
+  turnAsk: { en: 'Your turn! Your little brother knocks over your block tower by accident and says "Sorry!" What will you do?', ar: 'دورك الآن! أوقع أخوك الصغير برج المكعبات بغير قصد وقال: "آسف!" ماذا ستفعل؟' },
+  optFix: { en: 'Forgive him and build it again together', ar: 'أسامحه ونبنيه معاً من جديد' },
+  optCross: { en: 'Stay cross with him', ar: 'أبقى غاضباً منه' },
+  cross: { en: 'Feeling cross for a moment is okay. But staying cross keeps the tower broken and both of you sad. Yusuf forgave something much bigger. Shall we choose again?', ar: 'لا بأس أن تغضب لحظة. لكن البقاء غاضباً يُبقي البرج مهدوماً ويحزنكما معاً. لقد سامح يوسف ما هو أكبر بكثير. هل نختار مرة أخرى؟' },
+  build: { en: 'Lovely! Tap the blocks to build the tower again, together.', ar: 'رائع! المس المكعبات لتبنيا البرج معاً من جديد.' },
+  built: { en: 'The tower is back, and so are the smiles.', ar: 'عاد البرج، وعادت الابتسامات.' },
+  endT: { en: 'Patience, then forgiveness', ar: 'صبرٌ ثم مسامحة' },
+  endB: { en: 'You walked the whole path with Yusuf: the well, the travellers, Egypt, prison, the king\'s dream and the reunion. He was patient in hard times, and when he could have been angry, he forgave.', ar: 'مشيت الطريق كله مع يوسف: البئر، والمسافرين، ومصر، والسجن، ورؤيا الملك، واجتماع الأسرة. صبر في الشدة، وحين كان يستطيع أن يغضب، سامح.' },
+  tier: { en: 'Next time: pictures only, no words on the cards', ar: 'في المرة القادمة: صور فقط بلا كلمات على البطاقات' }
+};
+/* ======================= LOGIC ======================= */
+const S = {};
+function reset() {
+  Object.assign(S, { step: 0, misses: 0, sheaves: 0, sacks: 0, blocks: 0, phase: L.phase1 });
+  document.body.classList.toggle('icons-only', G.tier);
+  $('#trayPanel').hidden = false; $('#miniPanel').hidden = true; $('#choices').hidden = true;
+  renderPath(); renderTray(); renderPhase(); say(L.intro);
+}
+function dropCard(card, stone) {
+  const i = +stone.dataset.i;
+  if (i !== S.step) { chime('soft'); fx(stone, 'wobble'); say(L.later); return; }
+  const want = STEPS[S.step];
+  if (card.dataset.id !== want.id) {
+    S.misses++; chime('soft'); fx(card, 'wobble');
+    say({ en: L.notYet.en + ' ' + want.hint.en, ar: L.notYet.ar + ' ' + want.hint.ar });
+    if (S.misses >= 2) $(`.pcard[data-id="${want.id}"]`).classList.add('drop-hint');
+    return;
+  }
+  S.misses = 0; card.remove(); S.step++; chime('good'); renderPath(); sparkle($$('.stone')[i + 1], 8);
+  say(want.told);
+  if (want.id === 'dreams') return setTimeout(storeFood, 2200);
+  if (want.id === 'reunion') return setTimeout(brothers, 2200);
+  setTimeout(() => { if (G.narr === want.told) say({ en: want.told.en + ' ' + L.next.en, ar: want.told.ar + ' ' + L.next.ar }); }, 2500);
+}
+function storeFood() {
+  $('#trayPanel').hidden = true; renderStore(); say(L.storeAsk);
+}
+function sheafIn(tok) {
+  tok.remove(); S.sheaves++; chime('good'); fx($('#store'), 'bounce'); renderStoreCount();
+  if (S.sheaves >= 7) { say(L.storeDone); setTimeout(() => { $('#miniPanel').hidden = true; $('#trayPanel').hidden = false; say(L.next); }, 2600); }
+}
+async function brothers() {
+  S.phase = L.phase2; renderPhase(); $('#trayPanel').hidden = true; say(L.brothersTold);
+  renderSacks(true);
+}
+async function sackFilled(b) {
+  if (b.classList.contains('full')) return;
+  b.classList.add('full'); b.textContent = ART.sackFull; S.sacks++; chime('good'); sparkle(b, 5);
+  if (S.sacks < 10) return;
+  say(L.sacksDone); await wait(2600);
+  await pausePoint(L.pauseQ, L.pauseH);
+  yourTurn();
+}
+async function yourTurn() {
+  S.phase = L.phase3; renderPhase(); renderTower(false); say(L.turnAsk);
+  for (;;) {
+    const c = await ask($('#choices'), [{ id: 'fix', ic: '🤝', label: L.optFix }, { id: 'cross', ic: '😤', label: L.optCross }]);
+    if (c === 'fix') break;
+    chime('soft'); say(L.cross); await wait(2500);
+  }
+  chime('good'); renderTower(true); say(L.build);
+}
+function blockUp(b) {
+  if (!b.classList.contains('fallen')) return;
+  b.classList.remove('fallen'); S.blocks++; chime('tap'); fx(b, 'bounce');
+  if (S.blocks >= 4) { chime('good'); sparkle($('#tower'), 10); say(L.built); setTimeout(() => showEnding({ art: '✨🏡🌾', title: L.endT, body: L.endB, tier: L.tier }), 2200); }
+}
+/* ======================= RENDER (placeholder; replace with real art) ======================= */
+function renderPhase() { $('#phaseTag').textContent = t(S.phase); }
+function renderPath() {
+  const p = $('#path'); p.innerHTML = '';
+  const st = document.createElement('div'); st.className = 'stone done'; st.innerHTML = `${ART.start}<small>${t(START)}</small>`; p.appendChild(st);
+  STEPS.forEach((s, i) => {
+    const a = document.createElement('span'); a.className = 'arrow'; a.textContent = ART.arrow; a.setAttribute('aria-hidden', 'true'); p.appendChild(a);
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'stone'; b.dataset.i = i;
+    if (i < S.step) { b.classList.add('done'); b.innerHTML = `${ART.steps[s.id]}<small>${t(s.label)}</small>`; b.setAttribute('aria-label', t(s.label)); }
+    else { if (i === S.step) b.classList.add('next'); b.innerHTML = `<small>${num(i + 1)}</small>`; b.setAttribute('aria-label', t({ en: `Empty step ${i + 1}`, ar: `خطوة فارغة ${num(i + 1)}` })); }
+    dropTarget(b); p.appendChild(b);
+  });
+}
+const stoneTargets = () => $$('.stone[data-i]').filter(s => !s.classList.contains('done'));
+function renderTray() {
+  const tr = $('#tray'); tr.innerHTML = '';
+  shuffle(STEPS).forEach(s => {
+    const c = document.createElement('div'); c.className = 'pcard'; c.dataset.id = s.id; c.__s = s;
+    c.innerHTML = `<span aria-hidden="true">${ART.steps[s.id]}</span><small>${t(s.label)}</small>`; c.setAttribute('aria-label', t(s.label));
+    draggable(c, { targets: stoneTargets, onDrop: dropCard }); tr.appendChild(c);
+  });
+}
+function renderStore() {
+  const m = $('#miniPanel'); m.innerHTML = ''; m.hidden = false;
+  for (let i = 0; i < 7; i++) {
+    const s = document.createElement('div'); s.className = 'tok'; s.textContent = ART.sheaf; s.setAttribute('aria-label', t({ en: 'Sheaf of wheat', ar: 'حزمة قمح' }));
+    draggable(s, { targets: () => [$('#store')], onDrop: sheafIn }); m.appendChild(s);
+  }
+  const st = document.createElement('button'); st.type = 'button'; st.id = 'store'; dropTarget(st); m.appendChild(st); renderStoreCount();
+}
+function renderStoreCount() { const st = $('#store'); if (st) st.innerHTML = `<span aria-hidden="true">${ART.store}</span>${t(L.store)} ${num(S.sheaves)}/${num(7)}`; }
+function renderSacks(active) {
+  const m = $('#miniPanel'); m.innerHTML = ''; m.hidden = false;
+  for (let i = 0; i < 10; i++) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'tok'; b.textContent = ART.sackEmpty; b.disabled = !active;
+    b.setAttribute('aria-label', t(L.sack) + ' ' + num(i + 1)); b.addEventListener('click', () => sackFilled(b)); m.appendChild(b);
+  }
+}
+function renderTower(active) {
+  const m = $('#miniPanel'); m.innerHTML = '<div id="tower"></div>'; m.hidden = false; S.blocks = 0;
+  for (let i = 0; i < 4; i++) {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'block fallen'; b.disabled = !active;
+    b.setAttribute('aria-label', t({ en: 'Block', ar: 'مكعب' }) + ' ' + num(i + 1)); b.addEventListener('click', () => blockUp(b)); $('#tower').appendChild(b);
+  }
+}
+onLang(() => {
+  renderPhase(); renderPath();
+  $$('.pcard').forEach(c => { c.querySelector('small').textContent = t(c.__s.label); c.setAttribute('aria-label', t(c.__s.label)); });
+  renderStoreCount();
+});
+wireEnding(reset);
+reset(); initShell();
+</script>
+</body>
+</html>

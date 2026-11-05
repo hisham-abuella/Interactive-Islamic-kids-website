@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<!--
+  GAME MOCKUP 05 - The Garden of Choices (prototype, not linked from the hub)
+  Learning goal: After playing, the child can say that when Adam and Hawa made a mistake they said sorry to
+  Allah straight away and Allah forgave them, and can do the same three steps after their own mistake:
+  own it, say sorry, put it right (and ask Allah's forgiveness).
+  Core loop: round 1, gather fruit in the garden Allah gave and hear the one rule (the tree they were told not
+  to approach), then hear the story of the slip and read Adam's dua together; round 2, look after your own garden,
+  an accident happens, and you choose what to do, fix it, and say sorry.
+  Story source: UI/story-prophet-adam.html; the dua is copied from that page and its translation and note
+  from UI/translations.js. No prophet, angel or Shaytan is drawn, and the child never plays as Adam:
+  in round 1 the child explores and hears the rule. There is no "kept the rule" state and no comparison with
+  Adam (scholar gate 1, 2026-11-03). The slip is narrated, never played. The forbidden tree stays unidentified
+  (no apple, no serpent).
+  ART NOTE: all visuals are placeholders pending the graphics redesign; see the ART block.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Garden of Choices - game prototype - Islamic Kids</title>
+<style>
+{{COMMON_CSS}}
+/* ========== ART / SCENE STYLES (placeholder; swap freely - logic only uses ids and classes) ========== */
+.scene{aspect-ratio:auto;min-height:280px;max-height:none;padding:2.8rem .8rem 1rem;background:#dcefc4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;transition:filter 1.5s,background 1.5s}
+.scene.dim{filter:grayscale(.7) brightness(.8)}
+.scene.earth{background:#efe3c4}
+.grove{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;align-items:flex-end}
+.tree{display:flex;flex-direction:column;align-items:center;gap:.2rem;padding:.3rem;border-radius:16px}
+.tree .trunk{font-size:3rem;line-height:1}
+.tree.rule{border:3px dashed #a33;background:rgba(255,255,255,.55)}
+.tree.rule .sign{font-weight:800;font-size:.85rem;color:#7a1d1d;text-align:center;max-width:9rem}
+.fruit{width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.75);border:2px solid #9fbf6a;font-size:2rem;display:flex;align-items:center;justify-content:center}
+#basket,#potSpot{min-width:150px;min-height:84px;border-radius:18px;border:3px dashed var(--gold);background:var(--card);font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.plant{min-width:84px;min-height:96px;border-radius:16px;border:2px dashed #9fbf6a;background:rgba(255,255,255,.6);font-size:2.4rem;display:flex;align-items:center;justify-content:center}
+.tool{width:72px;height:72px;border-radius:18px;background:var(--cobalt-wash);border:3px solid var(--cobalt);font-size:2.2rem;display:flex;align-items:center;justify-content:center}
+#ball{width:72px;height:72px;border-radius:50%;border:3px solid var(--gold);background:var(--card);font-size:2.4rem;cursor:pointer;transition:transform .6s ease}
+#ball.rolled{transform:translateX(120px) rotate(360deg)}
+[dir=rtl] #ball.rolled{transform:translateX(-120px) rotate(-360deg)}
+.piece{width:60px;height:60px;border-radius:10px;background:#c9824f;border:2px solid #7d4a22;font-size:1.6rem;display:flex;align-items:center;justify-content:center}
+#leaves{font-size:2.4rem}
+</style>
+</head>
+<body>
+{{TOP}}
+<main id="stage">
+  <div class="scene" id="scene">
+    <span class="phase-tag" id="phaseTag"></span>
+    <div id="world" style="display:flex;flex-direction:column;gap:.8rem;align-items:center;width:100%"></div>
+  </div>
+  {{NARR}}
+  <div class="panel" id="duaPanel" hidden style="text-align:center">
+    <p class="hint">{{T:ADAM_TITLE}}</p>
+    <p class="scripture" lang="ar">{{S:ADAM_DUA}}</p>
+    <p>{{T:ADAM_TR}}</p>
+    <p class="hint" id="duaNote" hidden>{{T:ADAM_NOTE}}</p>
+    <p id="forgave" hidden style="font-weight:800;color:var(--turquoise-deep)">{{T:ADAM_FORGAVE}}</p>
+  </div>
+  <div class="choices" id="choices" hidden></div>
+  <div class="row" id="ctl" hidden><button class="btn gold" id="nextBtn" type="button"></button></div>
+</main>
+{{BOTTOM}}
+<script>
+{{COMMON_JS}}
+/* ======================= ART (placeholder assets - swap for real art later) ======================= */
+const ART = {
+  tree: '🌳', ruleTree: '🌳', fruits: ['🍋', '🍇', '🍐', '🍊', '🍒', '🍑'], basket: '🧺',
+  seedling: '🌱', grown: '🌷', can: '🚿', ball: '⚽', pot: '🪴', broken: '💥', piece: '🧱', leaves: '🍃🍃🍃', cloud: '☁️'
+};
+/* ======================= CONTENT (follows UI/story-prophet-adam.html) ======================= */
+const L = {
+  p1: { en: '1 · The garden', ar: '١ · الجنة' }, p2: { en: '2 · Our garden on earth', ar: '٢ · حديقتنا على الأرض' },
+  intro: { en: 'Prophet Adam and Hawa lived in Jannah, a beautiful garden with everything they could want. Allah allowed them all of it, except ONE tree. Drag 5 fruits into the basket.', ar: 'عاش النبي آدم عليه السلام وحواء في الجنة، حديقة جميلة فيها كل ما يريدان. أباح الله لهما كل شيء فيها إلا شجرة واحدة. اسحب ٥ ثمرات إلى السلة.' },
+  rule: { en: 'Do not approach this tree', ar: 'لا تقربا هذه الشجرة' },
+  ruleTap: { en: 'Allah said: do not go near this tree. Everything else in the garden was allowed.', ar: 'قال الله: لا تقربا هذه الشجرة. وكل ما سواها في الجنة مباح.' },
+  got: { en: 'Into the basket! ', ar: 'في السلة! ' },
+  basket: { en: 'Basket', ar: 'السلة' },
+  mistake: { en: 'Shaytan whispered to Adam and Hawa, and they slipped and made a mistake: they ate from the tree Allah had told them not to go near. Straight away, they knew they had done wrong.', ar: 'وسوس الشيطان لآدم وحواء، فأزلّهما الشيطان فأخطآ وأكلا من الشجرة التي نهاهما الله عنها. وعلى الفور عرفا أنهما أخطآ.' },
+  sorry: { en: 'Adam and Hawa turned to Allah and asked His forgiveness: they said sorry to Allah. We call this istighfar. They said this dua. Read it together, then press the button.', ar: 'ندم آدم وحواء، فتوجها إلى الله واستغفرا الله بهذا الدعاء. اقرآه معاً، ثم اضغطا الزر.' },
+  readBtn: { en: '🤲 We read it together', ar: '🤲 قرأناه معاً' },
+  forgiven: { en: 'Allah forgave them! Allah is the Most Merciful. Then Allah sent them to live on earth.', ar: 'غفر الله لهما! الله أرحم الراحمين. ثم أنزلهما الله ليعيشا على الأرض.' },
+  pause1Q: { en: 'Adam and Hawa asked Allah\'s forgiveness straight away. Why is it good to say sorry quickly when we make a mistake?', ar: 'استغفر آدم وحواء الله على الفور. لماذا من الجيد أن نعتذر بسرعة حين نخطئ؟' },
+  pause1H: { en: 'Idea: saying sorry quickly stops a small mistake growing, and Allah loves to forgive.', ar: 'فكرة: الاعتذار السريع يمنع الخطأ الصغير من أن يكبر، والله يحب أن يغفر.' },
+  toEarth: { en: 'Next: our own garden', ar: 'التالي: حديقتنا نحن' },
+  earthIntro: { en: 'Adam and Hawa were sent to live on earth, and all people come from them, including you! Here is your own garden. Drag the watering can to each little plant.', ar: 'أُرسل آدم وحواء للعيش على الأرض، ومنهما جاء كل الناس، وأنت منهم! هذه حديقتك أنت. اسحب المرشّة إلى كل نبتة صغيرة.' },
+  watered: { en: 'It grew! ', ar: 'لقد نمت! ' },
+  play: { en: 'All watered. Time to play: tap the ball!', ar: 'سُقيت كلها. حان وقت اللعب: المس الكرة!' },
+  crash: { en: 'Oh no! The ball knocked over Mama\'s flower pot and it broke. Nobody saw. What will you do?', ar: 'أوه، لا! أوقعت الكرة أصيص أمي فانكسر. لم يرَ أحد. ماذا ستفعل؟' },
+  optTruth: { en: 'Tell the truth and help fix it', ar: 'أقول الحقيقة وأساعد في إصلاحه' },
+  optHide: { en: 'Hide the pieces under the leaves', ar: 'أخبئ القطع تحت الأوراق' },
+  optCat: { en: 'Say the cat did it', ar: 'أقول إن القطة فعلت ذلك' },
+  hide: { en: 'The pieces are hidden, but the garden feels gloomy, and so does your heart. Hiding a mistake makes it heavier. Adam did not hide his mistake; he turned to Allah and asked forgiveness. Let us choose again.', ar: 'اختفت القطع، لكن الحديقة صارت حزينة، وقلبك أيضاً. إخفاء الخطأ يجعله أثقل. لم يُخفِ آدم خطأه، بل استغفر الله. لنختر مرة أخرى.' },
+  cat: { en: 'The cat would be blamed for something it did not do. That is not fair, and it is not true. Let us choose again.', ar: 'ستُلام القطة على شيء لم تفعله. هذا ليس عدلاً، وليس صدقاً. لنختر مرة أخرى.' },
+  truth: { en: 'That is brave! Now let us fix it: drag the pieces back onto the pot.', ar: 'هذه شجاعة! والآن لنصلحه: اسحب القطع إلى مكان الأصيص.' },
+  potSpot: { en: 'Pot', ar: 'الأصيص' },
+  fixed: { en: 'Mended! Now, what will you say to Mama?', ar: 'تم إصلاحه! والآن، ماذا ستقول لأمي؟' },
+  optSorry: { en: 'Sorry, Mama. I will be more careful.', ar: 'آسف يا أمي، سأكون أكثر حذراً.' },
+  optBig: { en: 'It is not a big deal.', ar: 'ليس أمراً مهماً.' },
+  big: { en: 'Mama loved that pot, so it matters to her. A real sorry shows we care. Let us choose again.', ar: 'أمي كانت تحب ذلك الأصيص، فهو مهم لها. الاعتذار الصادق يُظهر أننا نهتم. لنختر مرة أخرى.' },
+  hug: { en: 'Mama smiles and forgives you. And we can ask Allah to forgive us too, like Adam: we say Astaghfirullah.', ar: 'ابتسمت أمي وسامحتك. ونستغفر الله أيضاً كما فعل آدم: نقول أستغفر الله.' },
+  pause2Q: { en: 'When you make a mistake, what are the three steps?', ar: 'حين تخطئ، ما الخطوات الثلاث؟' },
+  pause2H: { en: 'Own it, say sorry, put it right. And ask Allah to forgive us.', ar: 'أعترف به، وأعتذر، وأصلحه. وأستغفر الله.' },
+  endT: { en: 'Allah loves to forgive', ar: 'الله يحب أن يغفر' },
+  endB: { en: 'You learned Adam\'s dua, and when an accident happened you told the truth, fixed it and said sorry.', ar: 'تعلّمت دعاء آدم، وحين وقع الحادث قلت الحقيقة وأصلحت الخطأ واعتذرت.' },
+  tier: { en: 'Next time: talk about a real mistake from this week before you start', ar: 'في المرة القادمة: تحدّثا عن خطأ حقيقي من هذا الأسبوع قبل أن تبدآ' }
+};
+/* ======================= LOGIC ======================= */
+const S = {};
+function reset() {
+  Object.assign(S, { fruit: 0, watered: 0, pieces: 0, phase: L.p1 });
+  $('#scene').className = 'scene'; ['#duaPanel', '#duaNote', '#forgave', '#ctl'].forEach(s => ($(s).hidden = true));
+  renderGarden(); say(L.intro);
+}
+/* the child only hears the rule here: no "kept" praise, no comparison with Adam (scholar ruling) */
+function ruleHeard() { chime('tap'); say(L.ruleTap); }
+function fruitIn(f) {
+  f.remove(); S.fruit++; chime('good'); fx($('#basket'), 'bounce'); renderBasket();
+  say({ en: L.got.en + `${S.fruit}/5`, ar: L.got.ar + `${num(S.fruit)}/${num(5)}` });
+  if (S.fruit >= 5) setTimeout(story, 1500);
+}
+async function story() {
+  $$('#world .fruit').forEach(f => (f.dataset.locked = '1'));
+  say(L.mistake); await wait(2500); $('#scene').classList.add('dim'); chime('soft'); await wait(3500);
+  $('#duaPanel').hidden = false; say(L.sorry);
+  showNext(L.readBtn, async () => {
+    $('#ctl').hidden = true; $('#scene').classList.remove('dim'); $('#forgave').hidden = false; chime('done'); sparkle($('#scene'), 12);
+    say(L.forgiven); await wait(3200);
+    await pausePoint(L.pause1Q, L.pause1H);
+    showNext(L.toEarth, earth);
+  });
+}
+function earth() {
+  $('#ctl').hidden = true; $('#duaPanel').hidden = true; $('#forgave').hidden = true; S.phase = L.p2; $('#scene').classList.add('earth');
+  renderEarth(); say(L.earthIntro);
+}
+function waterPlant(can, plant) {
+  if (plant.dataset.done) { fx(plant, 'bounce'); return; }
+  plant.dataset.done = '1'; plant.textContent = ART.grown; S.watered++; chime('good'); sparkle(plant, 6);
+  say({ en: L.watered.en, ar: L.watered.ar });
+  if (S.watered >= 3) { can.dataset.locked = '1'; say(L.play); renderBall(); }
+}
+async function ballTapped() {
+  const b = $('#ball'); if (b.dataset.done) return; b.dataset.done = '1'; chime('tap'); b.classList.add('rolled');
+  await anim(650); chime('thud'); $('#pot').textContent = ART.broken; fx($('#pot'), 'wobble'); say(L.crash);
+  for (;;) {
+    const c = await ask($('#choices'), [{ id: 'truth', ic: '🙋', label: L.optTruth }, { id: 'hide', ic: '🍃', label: L.optHide }, { id: 'cat', ic: '🐈', label: L.optCat }]);
+    if (c === 'truth') break;
+    chime('soft');
+    if (c === 'hide') { $('#pot').textContent = ART.leaves; $('#scene').classList.add('dim'); }
+    say(L[c]); await wait(3200); $('#scene').classList.remove('dim'); $('#pot').textContent = ART.broken; say(L.crash);
+  }
+  chime('good'); say(L.truth); renderPieces();
+}
+async function pieceIn(p) {
+  p.remove(); S.pieces++; chime('good'); fx($('#potSpot'), 'bounce');
+  if (S.pieces < 3) return;
+  $('#potSpot').textContent = ART.pot; sparkle($('#potSpot'), 8); say(L.fixed);
+  for (;;) {
+    const c = await ask($('#choices'), [{ id: 'sorry', ic: '💛', label: L.optSorry }, { id: 'big', ic: '🤷', label: L.optBig }]);
+    if (c === 'sorry') break;
+    chime('soft'); say(L.big); await wait(2800); say(L.fixed);
+  }
+  chime('done'); say(L.hug); $('#duaPanel').hidden = false; $('#duaNote').hidden = false; await wait(3500);
+  await pausePoint(L.pause2Q, L.pause2H);
+  showEnding({ art: '🌷🪴🌳', title: L.endT, body: L.endB, tier: L.tier });
+}
+/* ======================= RENDER (placeholder; replace with real art) ======================= */
+function showNext(label, fn) { S.nextLabel = label; $('#ctl').hidden = false; const b = $('#nextBtn'); b.textContent = t(label); b.onclick = fn; b.focus({ preventScroll: true }); }
+function renderGarden() {
+  $('#phaseTag').textContent = t(S.phase);
+  const w = $('#world'); w.innerHTML = '<div class="grove" id="grove"></div>';
+  const g = $('#grove'); const fr = shuffle(ART.fruits);
+  [0, 1, 2, 'rule', 3, 4].forEach(k => {
+    const tr = document.createElement('div'); tr.className = 'tree' + (k === 'rule' ? ' rule' : '');
+    tr.innerHTML = `<span class="trunk" aria-hidden="true">${k === 'rule' ? ART.ruleTree : ART.tree}</span>`;
+    if (k === 'rule') {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'sign btn ghost'; b.style.minHeight = '48px'; b.textContent = '🚫 ' + t(L.rule);
+      b.addEventListener('click', ruleHeard); tr.appendChild(b);
+    } else {
+      const f = document.createElement('div'); f.className = 'fruit'; f.textContent = fr[k]; f.setAttribute('aria-label', t({ en: 'Fruit', ar: 'ثمرة' }));
+      draggable(f, { targets: () => [$('#basket')], onDrop: fruitIn, onMiss: () => {} }); tr.appendChild(f);
+      if (k === 0 || k === 3) { const f2 = f.cloneNode(true); f2.textContent = fr[5 - k]; draggable(f2, { targets: () => [$('#basket')], onDrop: fruitIn }); tr.appendChild(f2); }
+    }
+    g.appendChild(tr);
+  });
+  const bk = document.createElement('button'); bk.type = 'button'; bk.id = 'basket'; dropTarget(bk); w.appendChild(bk); renderBasket();
+}
+function renderBasket() { const b = $('#basket'); if (b) b.innerHTML = `<span aria-hidden="true">${ART.basket}</span>${t(L.basket)} ${num(S.fruit)}/${num(5)}`; }
+function renderEarth() {
+  $('#phaseTag').textContent = t(S.phase);
+  const w = $('#world'); w.innerHTML = '<div class="grove" id="beds"></div><div class="grove" id="yard"></div>';
+  for (let i = 0; i < 3; i++) { const p = document.createElement('button'); p.type = 'button'; p.className = 'plant'; p.textContent = ART.seedling; p.setAttribute('aria-label', t({ en: 'Little plant', ar: 'نبتة صغيرة' }) + ' ' + num(i + 1)); dropTarget(p); $('#beds').appendChild(p); }
+  const can = document.createElement('div'); can.className = 'tool'; can.textContent = ART.can; can.setAttribute('aria-label', t({ en: 'Watering can', ar: 'المرشّة' }));
+  draggable(can, { targets: () => $$('.plant:not(#pot)'), onDrop: waterPlant }); $('#yard').appendChild(can);
+  const pot = document.createElement('div'); pot.id = 'pot'; pot.className = 'plant'; pot.textContent = ART.pot; pot.setAttribute('aria-label', t({ en: "Mama's flower pot", ar: 'أصيص أمي' })); $('#yard').appendChild(pot);
+}
+function renderBall() {
+  const b = document.createElement('button'); b.type = 'button'; b.id = 'ball'; b.textContent = ART.ball; b.setAttribute('aria-label', t({ en: 'Ball', ar: 'الكرة' }));
+  b.addEventListener('click', ballTapped); $('#yard').prepend(b); b.focus({ preventScroll: true });
+}
+function renderPieces() {
+  const y = $('#yard'); $('#pot').remove();
+  const spot = document.createElement('button'); spot.type = 'button'; spot.id = 'potSpot'; spot.textContent = t(L.potSpot); dropTarget(spot);
+  for (let i = 0; i < 3; i++) { const p = document.createElement('div'); p.className = 'piece'; p.textContent = ART.piece; p.setAttribute('aria-label', t({ en: 'Piece of the pot', ar: 'قطعة من الأصيص' })); draggable(p, { targets: () => [$('#potSpot')], onDrop: pieceIn }); y.appendChild(p); }
+  y.appendChild(spot);
+}
+onLang(() => {
+  $('#phaseTag').textContent = t(S.phase); renderBasket();
+  const sign = $('.tree.rule .sign'); if (sign) sign.textContent = '🚫 ' + t(L.rule);
+  if (!$('#ctl').hidden && S.nextLabel) $('#nextBtn').textContent = t(S.nextLabel);
+  const ps = $('#potSpot'); if (ps && S.pieces < 3) ps.textContent = t(L.potSpot);
+});
+wireEnding(reset);
+reset(); initShell();
+</script>
+</body>
+</html>

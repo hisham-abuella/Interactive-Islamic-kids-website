@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<!--
+  MOCKUP 09 - Honest Choices (prototype, not a production page)
+  Learning goal: After playing, the child can explain why we tell the truth even when it is hard, share even the small things, and help our parents straight away, and name the ayah or dua each one comes from.
+  Core loop: do something with your hands (throw the ball, move the dates, pour the water), then choose what to do next; the home visibly responds, and any other choice gently rewinds to the right path with an explanation.
+  Sources: every ayah, translation and explanation is copied from a site page (surah-al-asr.html, surah-az-zalzalah.html, story-prophet-nuh.html). Where the most direct source is NOT yet on the site it is marked TODO-SCRIPTURE below, not invented.
+  Scholar gate 1 (2026-11-03): Al-Maun 107:7 is no longer shown on the "keep the dates" path (it would cast the child
+  among those the surah describes); that path uses 99:7 as encouragement. "Oh no!" in Arabic is «أوه، لا!», not «يا إلهي».
+  Sound: one or two soft notes only, no rising runs, until the owner rules on instruments.
+  Depiction: no faces or figures. Mama and Baba are present only as voices, a kitchen door and an armchair.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Honest Choices - game mockup</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body.gm { margin: 0; min-height: 100vh; background: var(--parchment); color: var(--ink); font-family: 'Baloo 2', 'Nunito', system-ui, sans-serif; line-height: 1.5; }
+  html[lang="ar"] body.gm { font-family: 'Amiri', 'Geeza Pro', 'Noto Naskh Arabic', 'Nunito', serif; }
+  .quran { font-family: 'Amiri Quran', 'Amiri', 'Geeza Pro', 'Noto Naskh Arabic', serif; direction: rtl; unicode-bidi: isolate; }
+  .gbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; padding: .5rem 1rem; background: var(--turquoise-deep); color: #fff; border-bottom: 2px solid var(--gold); }
+  .gbar h1 { flex: 1; margin: 0; font-size: 1.2rem; line-height: 1.2; }
+  .mock-tag { font-size: .75rem; font-weight: 700; background: var(--gold-pale); color: var(--gold-ink-strong); border-radius: 999px; padding: .1rem .6rem; margin-inline-start: .5rem; vertical-align: middle; }
+  .gbtn { min-height: 48px; min-width: 48px; border-radius: 999px; border: 2px solid var(--gold); background: var(--card); color: var(--ink); font: inherit; font-weight: 700; padding: .35rem 1rem; cursor: pointer; transition: transform .12s ease; touch-action: manipulation; }
+  .gbtn:active { transform: scale(.94); }
+  .gbtn.primary { background: linear-gradient(var(--turquoise), var(--turquoise-deep)); color: #fff; border-color: var(--gold-light); }
+  .gbtn[aria-pressed="true"] { background: var(--gold-pale); }
+  .gbtn:disabled { opacity: .45; cursor: default; }
+  .gbar .gbtn { background: transparent; color: #fff; border-color: rgba(255,255,255,.55); }
+  .gbar .gbtn[aria-pressed="true"] { background: rgba(255,255,255,.18); }
+  .icon-btn { border-radius: 50%; padding: 0; font-size: 1.2rem; }
+  .wrap { max-width: 900px; margin: 0 auto; padding: 1rem; }
+  .row { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; }
+  h2 { margin: .1rem 0 .4rem; font-size: 1.45rem; color: var(--turquoise-deep); }
+
+  /* --- the home: it brightens and dims with the choices --- */
+  .home { position: relative; border-radius: var(--radius-xl); overflow: hidden; border: 3px solid var(--gold); box-shadow: var(--shadow-lg); }
+  .home svg { display: block; width: 100%; height: auto; }
+  .dim { position: absolute; inset: 0; background: rgba(40, 50, 60, .0); transition: background 1s ease; pointer-events: none; }
+  .home.heavy .dim { background: rgba(40, 50, 60, .38); }
+  .home.warm .dim { background: radial-gradient(ellipse at 50% 30%, rgba(255, 214, 140, .35), transparent 70%); }
+  .shelf-lantern { transition: opacity .8s ease; }
+  .lit .lan-glass { fill: #F6D27A; }
+  .lit .lan-halo { opacity: 1; }
+  .lan-halo { opacity: 0; transition: opacity 1s ease; }
+
+  .stage { margin-top: 1rem; background: var(--card); border: 1.5px solid var(--rule-strong); border-radius: var(--radius-xl); padding: 1.1rem 1.25rem; box-shadow: var(--shadow-md); }
+  .chap { font-size: .9rem; font-weight: 800; color: var(--gold-ink); }
+  .narr { font-size: 1.2rem; margin: .3rem 0 .8rem; }
+  .voice { display: flex; gap: .6rem; align-items: flex-start; background: var(--cobalt-wash); border: 1.5px solid var(--cobalt-pale); border-radius: 18px; padding: .6rem .9rem; margin: .6rem 0; font-size: 1.15rem; }
+  .voice .who { font-weight: 800; color: var(--cobalt-deep); white-space: nowrap; }
+  .voice.pop { animation: pop .4s ease; }
+  @keyframes pop { 0% { transform: scale(.92); opacity: 0; } 100% { transform: none; opacity: 1; } }
+
+  /* activity area */
+  .act { position: relative; min-height: 190px; border-radius: 18px; background: linear-gradient(#F7EDD8, #EADBB9); border: 1.5px dashed var(--rule-strong); padding: .75rem; margin: .5rem 0 1rem; display: flex; align-items: flex-end; justify-content: space-around; gap: .5rem; flex-wrap: wrap; }
+  .obj { background: none; border: none; padding: 0; cursor: pointer; touch-action: none; min-width: 64px; min-height: 64px; display: grid; place-items: center; font: inherit; color: inherit; }
+  .obj svg { display: block; }
+  .ball { transition: transform .8s cubic-bezier(.3,.6,.4,1); }
+  .ball.thrown { transform: translateX(var(--toCup, 220px)) rotate(540deg); }
+  .cup-break { animation: wobble .5s ease; }
+  @keyframes wobble { 30% { transform: rotate(-12deg); } 60% { transform: rotate(8deg); } }
+  .pieces.hidden-under { transform: translateY(40px) scale(.6); opacity: .25; transition: all .9s ease; }
+  .rug { width: 160px; height: 22px; border-radius: 10px; background: repeating-linear-gradient(90deg, #A23B2A 0 14px, #C08A2E 14px 18px); align-self: flex-end; }
+
+  .plates { display: flex; gap: 1rem; justify-content: center; width: 100%; flex-wrap: wrap; }
+  .plate { position: relative; flex: 1 1 200px; max-width: 280px; min-height: 140px; border-radius: 50%; background: radial-gradient(#fff 55%, #E6DCC8 56%, #fff 70%, #D9CFBC 72%); border: 3px solid #D9CFBC; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: .25rem; padding: 1.2rem; }
+  .plate.hot { box-shadow: 0 0 0 4px var(--gold-light); }
+  .plate-label { position: absolute; bottom: -1.8rem; inset-inline: 0; text-align: center; font-weight: 800; font-size: .95rem; }
+  .date { width: 56px; height: 56px; border-radius: 50%; border: none; background: none; cursor: grab; touch-action: none; display: grid; place-items: center; }
+  .date svg { width: 46px; height: 30px; pointer-events: none; }
+  .date.ghost { position: fixed; z-index: 200; pointer-events: none; transform: translate(-50%, -50%) scale(1.2); }
+  .date.lifting { opacity: .3; }
+
+  .glass-wrap { display: flex; align-items: flex-end; gap: 1.2rem; }
+  .glass { position: relative; width: 70px; height: 100px; border: 3px solid #7FA9B5; border-top: none; border-radius: 0 0 16px 16px; background: rgba(255,255,255,.6); overflow: hidden; }
+  .water { position: absolute; bottom: 0; inset-inline: 0; height: 0%; background: linear-gradient(#9fd3e6, #5BA9C6); transition: height .1s linear; }
+  .fill-line { position: absolute; top: 18%; inset-inline: 0; border-top: 2px dashed #7FA9B5; }
+  .tap { width: 90px; height: 60px; }
+  #pourBtn:active { transform: none; }
+  .chair { min-width: 150px; min-height: 120px; border-radius: 18px; }
+  .chair.hot { box-shadow: 0 0 0 4px var(--gold-light); }
+
+  .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: .6rem; }
+  .choice { min-height: 72px; text-align: start; border-radius: 18px; padding: .6rem .9rem; display: flex; gap: .6rem; align-items: center; }
+  .choice .ic { font-size: 1.6rem; flex: none; }
+
+  .result { border-radius: 18px; padding: .9rem 1rem; margin: .6rem 0; }
+  .result.soft { background: #EEF0F2; border: 1.5px solid #C9CFD6; }
+  .result.good { background: var(--gold-wash); border: 1.5px solid var(--gold-light); }
+  .ground { background: var(--cobalt-wash); border: 1.5px solid var(--cobalt-pale); border-radius: 18px; padding: .8rem 1rem; margin: .6rem 0; }
+  .ground .quran { font-size: 1.6rem; line-height: 1.9; text-align: center; color: var(--cobalt-deep); }
+  .ground .tr { text-align: center; font-style: italic; }
+  .ground .src { font-size: .85rem; color: var(--slate-500); text-align: center; }
+  html[lang="ar"] .ground .tr { display: none; }
+  .pp { background: #FFFDF8; border: 2px solid var(--gold); border-radius: 18px; padding: .8rem 1rem; margin: .8rem 0; }
+  .pp-tag { display: inline-block; font-size: .85rem; font-weight: 800; color: var(--gold-ink); background: var(--gold-wash); border-radius: 999px; padding: .1rem .7rem; }
+  .pp .q { font-size: 1.2rem; font-weight: 800; margin: .4rem 0 0; }
+  .ends { list-style: none; padding: 0; display: grid; gap: .5rem; }
+  .ends li { background: var(--gold-wash); border-radius: 14px; padding: .6rem .9rem; font-size: 1.1rem; }
+  .todo { font-size: .8rem; color: #8a3b2a; }
+
+  body.bedtime { background: #10262c; color: #e9e2cf; }
+  body.bedtime .stage { background: #173238; color: #e9e2cf; border-color: rgba(224,183,92,.35); }
+  body.bedtime .act { background: #1d3b41; }
+  body.bedtime .voice, body.bedtime .ground { background: #1d3b41; border-color: rgba(201,216,236,.3); color: #e9e2cf; }
+  body.bedtime .voice .who, body.bedtime .ground .quran, body.bedtime h2 { color: var(--gold-light); }
+  body.bedtime .result.good, body.bedtime .ends li, body.bedtime .pp { background: #23443f; color: #e9e2cf; }
+  body.bedtime .result.soft { background: #2a3a40; color: #e9e2cf; }
+  body.bedtime .gbtn:not(.primary) { background: #1d3b41; color: #e9e2cf; }
+  body.bedtime .home svg { filter: brightness(.7); }
+  @media (prefers-reduced-motion: reduce) { .ball, .pieces.hidden-under, .dim { transition: none; } .voice.pop, .cup-break { animation: none; } }
+</style>
+</head>
+<body class="gm">
+<header class="gbar">
+  <h1><span data-t="title"></span><span class="mock-tag" data-t="mock"></span></h1>
+  <button class="gbtn" id="bedBtn" type="button" aria-pressed="false" data-t-aria="bedtime">🌙</button>
+  <button class="gbtn" id="sndBtn" type="button" aria-pressed="true" data-t-aria="sound">🔔</button>
+  <button class="gbtn" id="langBtn" type="button" lang="ar">عربي</button>
+</header>
+
+<main class="wrap">
+  <div class="home" id="home">
+    <!-- The home: a window, a kitchen door (Mama's voice), an armchair (Baba's), and a shelf of three lanterns, one per choice. -->
+    <svg viewBox="0 0 1000 260" aria-hidden="true">
+      <rect width="1000" height="260" fill="#F3E9D6"/>
+      <rect y="0" width="1000" height="12" fill="#C08A2E" opacity=".5"/>
+      <g opacity=".25" fill="none" stroke="#C08A2E"><path d="M0 40 h1000 M0 80 h1000"/></g>
+      <rect y="200" width="1000" height="60" fill="#D9C39A"/>
+      <!-- window -->
+      <rect x="420" y="40" width="160" height="120" rx="70" fill="#1B3C6B" stroke="#C08A2E" stroke-width="6"/>
+      <circle cx="530" cy="80" r="16" fill="#F7E7B0"/><circle cx="537" cy="75" r="14" fill="#1B3C6B"/>
+      <circle cx="465" cy="70" r="2" fill="#fff"/><circle cx="490" cy="110" r="2" fill="#fff"/><circle cx="555" cy="125" r="2" fill="#fff"/>
+      <path d="M500 40 v120 M420 100 h160" stroke="#C08A2E" stroke-width="4"/>
+      <!-- kitchen door -->
+      <path d="M60 200 V70 q0 -40 50 -40 q50 0 50 40 V200 Z" fill="#8A6220" stroke="#5E4212" stroke-width="4"/>
+      <circle cx="140" cy="140" r="5" fill="#E0B75C"/>
+      <text x="110" y="62" text-anchor="middle" font-size="16" fill="#FBF6EA" font-family="Nunito, sans-serif" id="kitchenTxt">Kitchen</text>
+      <!-- armchair -->
+      <g transform="translate(790 120)">
+        <rect x="0" y="0" width="140" height="70" rx="20" fill="#17877F"/>
+        <rect x="-14" y="30" width="28" height="60" rx="12" fill="#0F6B65"/><rect x="126" y="30" width="28" height="60" rx="12" fill="#0F6B65"/>
+        <rect x="6" y="55" width="128" height="30" rx="10" fill="#1E9B92"/>
+        <rect x="10" y="85" width="10" height="16" fill="#5E4212"/><rect x="120" y="85" width="10" height="16" fill="#5E4212"/>
+      </g>
+      <!-- shelf with three lanterns -->
+      <rect x="220" y="150" width="160" height="8" rx="3" fill="#8A6220"/>
+      <g id="shelf">
+        <g class="shelf-lantern" data-k="0" transform="translate(240 92)"><circle class="lan-halo" cx="15" cy="30" r="30" fill="#FFE7A8" opacity="0"/><path d="M8 10h14l-2 6H10z" fill="#C08A2E"/><path class="lan-glass" d="M9 16h12l5 14-5 22H9L4 30z" fill="#2B4F55" stroke="#C08A2E" stroke-width="2"/><path d="M10 52h10l-2 6h-6z" fill="#C08A2E"/></g>
+        <g class="shelf-lantern" data-k="1" transform="translate(285 92)"><circle class="lan-halo" cx="15" cy="30" r="30" fill="#FFE7A8" opacity="0"/><path d="M8 10h14l-2 6H10z" fill="#C08A2E"/><path class="lan-glass" d="M9 16h12l5 14-5 22H9L4 30z" fill="#2B4F55" stroke="#C08A2E" stroke-width="2"/><path d="M10 52h10l-2 6h-6z" fill="#C08A2E"/></g>
+        <g class="shelf-lantern" data-k="2" transform="translate(330 92)"><circle class="lan-halo" cx="15" cy="30" r="30" fill="#FFE7A8" opacity="0"/><path d="M8 10h14l-2 6H10z" fill="#C08A2E"/><path class="lan-glass" d="M9 16h12l5 14-5 22H9L4 30z" fill="#2B4F55" stroke="#C08A2E" stroke-width="2"/><path d="M10 52h10l-2 6h-6z" fill="#C08A2E"/></g>
+      </g>
+      <!-- the cat, who did not do it -->
+      <g transform="translate(640 168)" id="cat">
+        <ellipse cx="0" cy="20" rx="34" ry="16" fill="#8FA3A0"/><circle cx="-30" cy="6" r="14" fill="#8FA3A0"/>
+        <path d="M-40 -4 l4 -12 l6 9 M-26 -6 l6 -11 l3 11" fill="#8FA3A0"/><path d="M32 18 q22 -6 18 -26" stroke="#8FA3A0" stroke-width="6" fill="none" stroke-linecap="round"/>
+      </g>
+    </svg>
+    <div class="dim"></div>
+  </div>
+
+  <section class="stage" id="stage" aria-live="polite"></section>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  /* ---------- sources, copied from the site ---------- */
+  var SRC = {
+    asr3: { ar: 'إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ',
+            tr: '"Except those who believe, and do righteous deeds, and advise each other to truth, and advise each other to patience."',
+            ex: { en: 'Here is the way out! <em>"Except"</em> — these four things save you: <strong>believe</strong>, <strong>do good</strong>, <strong>tell each other the truth</strong>, and <strong>help each other be patient</strong>. Do these, and your time is never wasted.',
+                  ar: 'وهنا المخرج! <em>&quot;إلا&quot;</em> — أربعة أمور تنجيك: <strong>الإيمان</strong>، و<strong>العمل الصالح</strong>، و<strong>التواصي بالحق</strong>، و<strong>التواصي بالصبر</strong>. افعلها ولن يضيع وقتك أبداً.' },
+            src: { en: 'Surah Al-Asr, ayah 3 — from the Al-Asr page', ar: 'سورة العصر، الآية ٣ — من صفحة سورة العصر' } },
+    zal7: { ar: 'فَمَنْ يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ', tr: '"So whoever does an atom\'s weight of good will see it."',
+            ex: { en: 'It means the glass of water you fetched, the toy you shared, the smile you gave when you did not feel like it — none of it is lost. Not one bit of it.',
+                  ar: 'ومعناها أن كوب الماء الذي أحضرته، واللعبة التي شاركتها، والابتسامة التي ابتسمتها وأنت متعب — لا يضيع منها شيء. ولا ذرة.' },
+            src: { en: 'Surah Az-Zalzalah, ayah 7 — from the Az-Zalzalah page', ar: 'سورة الزلزلة، الآية ٧ — من صفحة سورة الزلزلة' } },
+    nuhDua: { ar: 'رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ', tr: '"My Lord, forgive me and my parents."',
+            ex: { en: 'This is a dua Prophet Nuh made. We can say it too!', ar: 'هذا دعاء دعا به النبي نوح. ونستطيع أن ندعو به نحن أيضاً!' },
+            src: { en: 'Prophet Nuh\'s dua — from the Prophet Nuh story page', ar: 'دعاء النبي نوح — من صفحة قصة النبي نوح' } }
+  };
+  /* Scholar rulings, 2026-11-03 (claudeteam/reviews/game-islamic-review-2026-11-03.md, game 09):
+     TODO-SCRIPTURE (truthfulness): Al-Asr 103:3 is approved as the interim grounding. The direct source, the hadith of
+       Ibn Mas'ud (al-Bukhari 6094, Muslim 2607) "Hold to truthfulness...", is approved but must first be added to a site
+       page with its reference (wording checked against sunnah.com or dorar.net). Then copy it here, never retype.
+     TODO-SCRIPTURE (parents): Al-Isra 17:23-24 is approved for the "later"/"uff" branch and as the closing parents' dua,
+       once it is on a site page through verify-scripture.py. Until then Nuh's dua (71:28, opening) stays, and the
+       "uff" branch explains in plain words only.
+     TODO-SCRIPTURE (sharing): Al-Maun 107:7 is NOT used on the "keep" path (ruled out as a rebuke). The keep path uses
+       99:7 as encouragement. The hadith "None of you truly believes until he loves for his brother..." (al-Bukhari 13,
+       Muslim 45) is approved once it is on a site page. 107:7 may only ever appear on the success path as positive
+       teaching ("Allah wants us to share even small things"). */
+
+  var T = {
+    title: { en: 'Honest Choices', ar: 'اختيارات صادقة' },
+    mock: { en: 'Mockup', ar: 'نموذج تجريبي' },
+    bedtime: { en: 'Bedtime mode', ar: 'وضع النوم الهادئ' },
+    sound: { en: 'Sound and voice', ar: 'الصوت' },
+    readToMe: { en: 'Read this to me', ar: 'اقرأ لي' },
+    kitchen: { en: 'Kitchen', ar: 'المطبخ' },
+    mama: { en: 'Mama:', ar: 'ماما:' },
+    baba: { en: 'Baba:', ar: 'بابا:' },
+    introTitle: { en: 'Three little choices at home', ar: 'ثلاثة اختيارات صغيرة في البيت' },
+    introLead: { en: 'Today you decide what happens. Every good choice lights a lantern on the shelf. If you pick another way, the home will show you what happens — and then you can go back and choose again. Nobody loses here.',
+                 ar: 'اليوم أنت من يقرّر ما يحدث. كل اختيار طيّب يضيء فانوساً على الرفّ. وإن اخترت طريقاً آخر سيُريك البيت ما يحدث، ثم تستطيع أن تعود وتختار من جديد. لا أحد يخسر هنا.' },
+    begin: { en: 'Let\'s begin', ar: 'لنبدأ' },
+    chapterN: { en: 'Choice {n} of 3', ar: 'الاختيار {n} من ٣' },
+    goBack: { en: '↺ Go back and choose again', ar: '↺ عُد واختر من جديد' },
+    next: { en: 'Next choice →', ar: 'الاختيار التالي ←' },
+    toEnd: { en: 'See our lanterns →', ar: 'لنرَ فوانيسنا ←' },
+    ppTag: { en: 'For the grown-up · pause and talk', ar: 'للكبير · توقّفا وتحدّثا' },
+    whereFrom: { en: 'Where this comes from', ar: 'من أين جاء هذا' },
+    /* chapter 1: truth */
+    c1Title: { en: 'The blue cup', ar: 'الكوب الأزرق' },
+    c1Narr: { en: 'You are playing ball in the living room. Mama\'s favourite blue cup is on the little table. Go on — <b>throw the ball!</b>', ar: 'أنت تلعب بالكرة في غرفة الجلوس. وكوب ماما الأزرق المفضّل على الطاولة الصغيرة. هيّا — <b>ارمِ الكرة!</b>' },
+    c1Ball: { en: 'Throw the ball', ar: 'ارمِ الكرة' },
+    c1Crash: { en: 'Oh no! The ball hit the cup, and it broke.', ar: 'أوه، لا! أصابت الكرة الكوب فانكسر.' },
+    c1Voice: { en: 'What was that noise? What happened?', ar: 'ما هذا الصوت؟ ماذا حدث؟' },
+    c1Truth: { en: '"It was me. My ball knocked it over. I\'m sorry, Mama."', ar: '«أنا يا ماما. كرتي أوقعته. أنا آسف.»' },
+    c1Cat: { en: '"The cat did it!"', ar: '«القطة هي التي فعلتها!»' },
+    c1Hide: { en: 'Push the pieces under the rug and say nothing', ar: 'أخفِ القطع تحت السجادة ولا تقل شيئاً' },
+    c1CatRes: { en: 'Mama tells the cat off. The cat creeps away under the chair, sad — it did not do anything. Now there are two problems: a broken cup, and a story that is not true. Your tummy feels twisty.',
+                ar: 'توبّخ ماما القطة، فتختبئ تحت الكرسي حزينة — وهي لم تفعل شيئاً. صارت الآن مشكلتان: كوب مكسور، وكلام غير صحيح. وبطنك يشعر بالانقباض.' },
+    c1HideRes: { en: 'The pieces are under the rug, but they are still sharp. Someone could step on them. And the secret feels heavy, like carrying a stone in your pocket.',
+                 ar: 'القطع تحت السجادة، لكنها ما زالت حادّة، وقد يدوس عليها أحد. والسرّ ثقيل، كأنك تحمل حجراً في جيبك.' },
+    c1Why: { en: 'Telling the truth is hard for a moment. Hiding it stays hard for a long time. Let\'s try the brave way.', ar: 'قول الحق صعب للحظة، أما إخفاؤه فيبقى صعباً وقتاً طويلاً. لنجرّب الطريق الشجاع.' },
+    c1Good: { en: 'Thank you for telling me the truth. Accidents happen. Let\'s mend it together.', ar: 'شكراً لأنك قلت الحق. الحوادث تقع. تعال نُصلحه معاً.' },
+    c1GoodNarr: { en: 'You and Mama glue the cup together. The cracks shine like gold lines. It is still Mama\'s favourite cup — maybe even more now.', ar: 'تلصق أنت وماما الكوب معاً، فتلمع شقوقه كخطوط من ذهب. ما زال كوب ماما المفضّل، وربما صار أحبّ إليها الآن.' },
+    c1Ask: { en: 'Have you ever told the truth when it was hard? How did you feel afterwards?', ar: 'هل قلت الحق يوماً وكان ذلك صعباً؟ بماذا شعرت بعدها؟' },
+    /* chapter 2: sharing */
+    c2Title: { en: 'Four dates', ar: 'أربع تمرات' },
+    c2Narr: { en: 'Your little cousin is visiting. You have four sweet dates. Your cousin\'s plate is empty. <b>Move the dates however you like</b>, then tap "Done".', ar: 'ابن عمّك الصغير في زيارتكم. معك أربع تمرات حلوة، وصحن ابن عمّك فارغ. <b>حرّك التمرات كما تحبّ</b>، ثم المس «انتهيت».' },
+    mine: { en: 'My plate', ar: 'صحني' },
+    cousin: { en: 'Cousin\'s plate', ar: 'صحن ابن عمّي' },
+    c2Done: { en: 'Done', ar: 'انتهيت' },
+    c2KeepRes: { en: 'The dates are sweet… but your cousin is looking at an empty plate, and the room has gone quiet.', ar: 'التمر حلو… لكن ابن عمّك ينظر إلى صحن فارغ، وصارت الغرفة صامتة.' },
+    c2Why: { en: 'Even one small date shared is a good deed, and Allah sees every bit of good. Shall we try again?', ar: 'حتى تمرة صغيرة نتشاركها عمل طيب، والله يرى كل ذرة خير. هل نحاول من جديد؟' },
+    c2Good1: { en: 'You shared {n}! Your cousin\'s face — well, you can imagine it. The room feels warm.', ar: 'شاركت {n}! تخيّل فرحة ابن عمّك. صارت الغرفة دافئة.' },
+    c2GoodAll: { en: 'You gave all four away — so generous! It is fine to keep some for yourself too.', ar: 'أعطيت الأربع كلها — ما أكرمك! ولا بأس أن تُبقي لنفسك بعضها أيضاً.' },
+    c2Ask: { en: 'Who could you share something small with tomorrow?', ar: 'من تستطيع أن تشاركه شيئاً صغيراً غداً؟' },
+    dateLabel: { en: 'A date. Tap to move it to the other plate.', ar: 'تمرة. المسها لتنقلها إلى الصحن الآخر.' },
+    /* chapter 3: parents */
+    c3Title: { en: 'A glass of water', ar: 'كوب ماء' },
+    c3Narr: { en: 'You are building the tallest block tower ever. Baba has come home tired and is resting in his armchair.', ar: 'أنت تبني أعلى برج مكعّبات على الإطلاق. وعاد بابا من العمل متعباً، وهو يستريح في كرسيّه.' },
+    c3Voice: { en: 'Could you bring me a glass of water, please?', ar: 'هل تُحضر لي كوب ماء من فضلك؟' },
+    c3Yes: { en: '"Yes, Baba!" — and go right now', ar: '«حاضر يا بابا!» — واذهب فوراً' },
+    c3Later: { en: '"In a minute…" and keep building', ar: '«بعد دقيقة…» وأكمل البناء' },
+    c3Uff: { en: '"Uff! I\'m busy!"', ar: '«أفّ! أنا مشغول!»' },
+    c3LaterRes: { en: 'The minutes go by. The tower gets taller. Baba is still thirsty, and in the end he gets up slowly to fetch the water himself.', ar: 'تمرّ الدقائق ويعلو البرج، وبابا ما زال عطشان. وفي النهاية يقوم ببطء ليُحضر الماء بنفسه.' },
+    c3UffRes: { en: 'Baba doesn\'t say anything. But that little grumpy word landed on his heart like a pebble.', ar: 'لم يقل بابا شيئاً. لكن تلك الكلمة الصغيرة الضجرة وقعت على قلبه كحصاة.' },
+    c3Why: { en: 'Our parents look after us every single day. Helping them straight away, with a gentle word, is a way of saying thank you.', ar: 'والدانا يرعياننا كل يوم. ومساعدتهما فوراً بكلمة لطيفة طريقة لنقول لهما: شكراً.' },
+    c3Pour: { en: 'Hold to fill the glass', ar: 'اضغط باستمرار لتملأ الكوب' },
+    c3PourHelp: { en: 'Fill the glass up to the dotted line, then carry it to Baba\'s armchair (drag it, or tap "Give it to Baba").', ar: 'املأ الكوب حتى الخط المنقّط، ثم احمله إلى كرسيّ بابا (اسحبه، أو المس «أعطِه لبابا»).' },
+    c3Give: { en: 'Give it to Baba', ar: 'أعطِه لبابا' },
+    c3Chair: { en: 'Baba\'s armchair', ar: 'كرسيّ بابا' },
+    c3Thanks: { en: 'Jazak Allahu khayran! That is exactly what I needed.', ar: 'جزاك الله خيراً! هذا ما كنت أحتاجه تماماً.' },
+    c3GoodNarr: { en: 'And the tower? It waited for you. Towers are good at waiting.', ar: 'والبرج؟ انتظرك. الأبراج تُحسن الانتظار.' },
+    c3Ask: { en: 'What is one thing you could do for Mama or Baba tomorrow, before they even ask?', ar: 'ما الشيء الذي تستطيع أن تفعله لماما أو بابا غداً، قبل أن يطلبا منك؟' },
+    c3Dua: { en: 'Let\'s say Prophet Nuh\'s dua together, for Mama and Baba:', ar: 'لنقل دعاء النبي نوح معاً، لماما وبابا:' },
+    /* end */
+    endTitle: { en: 'Three lanterns are glowing', ar: 'ثلاثة فوانيس مضيئة' },
+    endLead: { en: 'Tonight you chose:', ar: 'اخترت الليلة:' },
+    end1: { en: '🏺 To tell the truth, even when it was hard.', ar: '🏺 أن تقول الحق، حتى حين كان صعباً.' },
+    end2: { en: '🌴 To share, even the small things.', ar: '🌴 أن تشارك، حتى الأشياء الصغيرة.' },
+    end3: { en: '💧 To help Baba straight away.', ar: '💧 أن تساعد بابا فوراً.' },
+    endRecap: { en: 'Believe, do good, tell the truth, be patient — four things, every day.', ar: 'إيمان وعمل صالح وحق وصبر — أربعة أمور، كل يوم.' },
+    again: { en: 'Play together again', ar: 'لنلعب معاً مرة أخرى' }
+  };
+
+  /* ---------- kit ---------- */
+  var LKEY = 'islamicKidsLang' /* the site's own language key, as games 01-05 read it */, SKEY = 'mockupGames.sound';
+  var lang = localStorage.getItem(LKEY) === 'ar' ? 'ar' : 'en';
+  var soundOn = localStorage.getItem(SKEY) !== 'off';
+  var reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function calm() { return reduceMQ.matches || document.body.classList.contains('bedtime'); }
+  function t(k, vars) { var v = T[k]; var s = v ? v[lang] : k; if (vars) Object.keys(vars).forEach(function (n) { s = s.replace('{' + n + '}', vars[n]); }); return s; }
+  function digits(n) { return lang === 'ar' ? String(n).replace(/[0-9]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'[d]; }) : String(n); }
+  function $(id) { return document.getElementById(id); }
+  var actx = null;
+  function tone(freq, dur, vol, type) {
+    if (!soundOn) return;
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      var now = actx.currentTime, o = actx.createOscillator(), g = actx.createGain();
+      o.type = type || 'sine'; o.frequency.value = freq;
+      var v = (vol || 0.12) * (document.body.classList.contains('bedtime') ? 0.5 : 1);
+      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(v, now + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, now + (dur || 0.5));
+      o.connect(g); g.connect(actx.destination); o.start(now); o.stop(now + (dur || 0.5) + 0.05);
+    } catch (e) { /* fine */ }
+  }
+  /* a two-note chime, not a rising run (no melodies until the owner rules on instruments) */
+  function bloom() { tone(659.25, 0.7, 0.1); setTimeout(function () { tone(987.77, 0.8, 0.07); }, 140); }
+  function heavy() { tone(196, 0.6, 0.05, 'triangle'); }
+  function tick(f) { tone(f || 700, 0.12, 0.04); }
+  function speak(html) {
+    if (!soundOn || !('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    var u = new SpeechSynthesisUtterance(String(html).replace(/<[^>]+>/g, '').replace(/&quot;/g, '"')); u.lang = lang === 'ar' ? 'ar-SA' : 'en-GB'; u.rate = 0.92; speechSynthesis.speak(u);
+  }
+  function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+
+  /* ---------- state ---------- */
+  var chapter = -1, phase = 'intro', lit = [false, false, false], extra = {};
+  var stage = $('stage'), home = $('home');
+
+  function setMood(m) { home.classList.remove('heavy', 'warm'); if (m) home.classList.add(m); }
+  function lightLantern(k) {
+    lit[k] = true;
+    var g = document.querySelector('.shelf-lantern[data-k="' + k + '"]'); if (g) g.classList.add('lit');
+    bloom();
+  }
+  function resetLanterns() { lit = [false, false, false]; document.querySelectorAll('.shelf-lantern').forEach(function (g) { g.classList.remove('lit'); }); }
+
+  function voice(who, key) { return '<div class="voice pop"><span class="who">' + t(who) + '</span><span>' + t(key) + '</span><button class="gbtn icon-btn" type="button" data-say="' + key + '" aria-label="' + t('readToMe') + '" style="margin-inline-start:auto">🔊</button></div>'; }
+  function head(n, titleKey) { return '<div class="chap">' + t('chapterN', { n: digits(n) }) + '</div><h2>' + t(titleKey) + '</h2>'; }
+  function groundHTML(s) {
+    return '<div class="ground"><div class="chap">' + t('whereFrom') + '</div><p class="quran" lang="ar">' + s.ar + '</p><p class="tr">' + s.tr + '</p><p>' + s.ex[lang] + '</p><p class="src">' + s.src[lang] + '</p></div>';
+  }
+  function ppHTML(key) { return '<div class="pp"><span class="pp-tag">' + t('ppTag') + '</span><p class="q">' + t(key) + '</p></div>'; }
+  function choiceBtn(id, icon, key) { return '<button class="gbtn choice" type="button" data-choice="' + id + '"><span class="ic" aria-hidden="true">' + icon + '</span><span>' + t(key) + '</span></button>'; }
+
+  /* ---------- SVG bits ---------- */
+  var CUP = '<svg width="70" height="70" viewBox="0 0 70 70" aria-hidden="true"><path d="M12 18h40l-4 40q-1 6-7 6H23q-6 0-7-6z" fill="#24508C" stroke="#1B3C6B" stroke-width="3"/><path d="M52 26q14 0 12 14t-14 10" fill="none" stroke="#1B3C6B" stroke-width="5"/><path d="M18 30h32" stroke="#E0B75C" stroke-width="3"/></svg>';
+  var CUP_GOLD = '<svg width="70" height="70" viewBox="0 0 70 70" aria-hidden="true"><path d="M12 18h40l-4 40q-1 6-7 6H23q-6 0-7-6z" fill="#24508C" stroke="#1B3C6B" stroke-width="3"/><path d="M52 26q14 0 12 14t-14 10" fill="none" stroke="#1B3C6B" stroke-width="5"/><path d="M18 30h32" stroke="#E0B75C" stroke-width="3"/><path d="M22 20l8 14-6 10 10 18M44 22l-6 16 8 8" fill="none" stroke="#E0B75C" stroke-width="3"/></svg>';
+  var PIECES = '<svg width="90" height="50" viewBox="0 0 90 50" aria-hidden="true"><path d="M5 40l14-18 10 20z" fill="#24508C"/><path d="M30 44l12-26 14 24z" fill="#24508C"/><path d="M60 42l8-16 16 12z" fill="#24508C"/><path d="M40 30l6 4" stroke="#E0B75C" stroke-width="3"/></svg>';
+  var BALL = '<svg width="54" height="54" viewBox="0 0 54 54" aria-hidden="true"><circle cx="27" cy="27" r="24" fill="#E0B75C" stroke="#8A6220" stroke-width="3"/><path d="M3 27h48M27 3q-14 24 0 48M27 3q14 24 0 48" fill="none" stroke="#A23B2A" stroke-width="3"/></svg>';
+  var DATE = '<svg viewBox="0 0 46 30" aria-hidden="true"><ellipse cx="23" cy="15" rx="21" ry="12" fill="#7B3F1D" stroke="#4A230F" stroke-width="2"/><path d="M8 12q14 -6 30 0" stroke="#A65A2E" stroke-width="3" fill="none"/></svg>';
+  var TAP = '<svg class="tap" viewBox="0 0 90 60" aria-hidden="true"><rect x="0" y="10" width="60" height="16" rx="6" fill="#8FA3A0"/><rect x="48" y="10" width="16" height="34" rx="6" fill="#8FA3A0"/><rect x="18" y="0" width="22" height="10" rx="4" fill="#5C7370"/></svg>';
+  var CHAIR = '<svg width="130" height="90" viewBox="0 0 160 110" aria-hidden="true"><rect x="10" y="0" width="140" height="70" rx="20" fill="#17877F"/><rect x="-4" y="30" width="28" height="60" rx="12" fill="#0F6B65"/><rect x="136" y="30" width="28" height="60" rx="12" fill="#0F6B65"/><rect x="16" y="55" width="128" height="30" rx="10" fill="#1E9B92"/></svg>';
+  var TOWER = '<svg width="70" height="120" viewBox="0 0 70 120" aria-hidden="true"><rect x="10" y="90" width="50" height="28" fill="#17877F"/><rect x="16" y="62" width="38" height="28" fill="#C08A2E"/><rect x="12" y="34" width="46" height="28" fill="#24508C"/><rect x="20" y="8" width="30" height="26" fill="#A23B2A"/></svg>';
+
+  /* ---------- screens ---------- */
+  function intro() {
+    chapter = -1; phase = 'intro'; setMood(null); resetLanterns();
+    stage.innerHTML = '<h2>' + t('introTitle') + '</h2><p class="narr">' + t('introLead') + '</p><button class="gbtn primary" type="button" id="beginBtn">' + t('begin') + '</button>';
+    $('beginBtn').addEventListener('click', function () { tick(); ch1(); });
+  }
+
+  /* Chapter 1: the truth costs something, and is still right */
+  function ch1(state) {
+    chapter = 0; setMood(null);
+    state = state || 'play';
+    var h = head(1, 'c1Title');
+    if (state === 'play') {
+      h += '<p class="narr">' + t('c1Narr') + '</p><div class="act" id="act1"><button class="obj ball" id="ball" type="button" aria-label="' + t('c1Ball') + '">' + BALL + '</button><div class="rug" aria-hidden="true"></div><div id="cupSpot">' + CUP + '</div></div>';
+      stage.innerHTML = h;
+      $('ball').addEventListener('click', function () {
+        var b = $('ball'), cup = $('cupSpot');
+        var dist = cup.getBoundingClientRect().left - b.getBoundingClientRect().left;
+        b.style.setProperty('--toCup', dist + 'px');
+        b.classList.add('thrown'); tick(520); b.disabled = true;
+        setTimeout(function () { tone(1400, 0.15, 0.05, 'triangle'); tone(1700, 0.2, 0.04, 'triangle'); cup.innerHTML = PIECES; cup.classList.add('cup-break'); ch1('choose'); }, calm() ? 50 : 820);
+      });
+      return;
+    }
+    if (state === 'choose') {
+      var opts = shuffle([choiceBtn('truth', '🗣️', 'c1Truth'), choiceBtn('cat', '🐈', 'c1Cat'), choiceBtn('hide', '🧹', 'c1Hide')]).join('');
+      var act = $('act1') ? $('act1').outerHTML : '';
+      stage.innerHTML = h + act + '<p class="narr">' + t('c1Crash') + '</p>' + voice('mama', 'c1Voice') + '<div class="choices">' + opts + '</div>';
+      speak(t('c1Voice'));
+      return;
+    }
+    if (state === 'cat' || state === 'hide') {
+      setMood('heavy'); heavy();
+      stage.innerHTML = h + '<div class="act">' + (state === 'hide' ? '<div class="rug" aria-hidden="true"></div><div class="pieces hidden-under">' + PIECES + '</div>' : PIECES) + '</div>' +
+        '<div class="result soft"><p>' + t(state === 'cat' ? 'c1CatRes' : 'c1HideRes') + '</p><p><strong>' + t('c1Why') + '</strong></p></div>' +
+        '<button class="gbtn primary" type="button" id="backBtn">' + t('goBack') + '</button>';
+      if (state === 'cat') document.getElementById('cat').style.opacity = '.4';
+      $('backBtn').addEventListener('click', function () { document.getElementById('cat').style.opacity = ''; tick(); ch1('choose'); });
+      $('backBtn').focus();
+      return;
+    }
+    if (state === 'truth') {
+      setMood('warm'); lightLantern(0);
+      stage.innerHTML = h + '<div class="act"><div>' + CUP_GOLD + '</div></div>' + voice('mama', 'c1Good') + '<p class="narr">' + t('c1GoodNarr') + '</p>' +
+        groundHTML(SRC.asr3) + ppHTML('c1Ask') + '<button class="gbtn primary" type="button" id="nextBtn">' + t('next') + '</button>';
+      speak(t('c1Good'));
+      $('nextBtn').addEventListener('click', function () { tick(); ch2(); });
+      return;
+    }
+  }
+
+  /* Chapter 2: sharing is done with your hands - the dates you move ARE the choice */
+  function ch2(state) {
+    chapter = 1; setMood(null); state = state || 'play';
+    var h = head(2, 'c2Title');
+    if (state === 'play') {
+      extra.mine = 4; extra.theirs = 0;
+      stage.innerHTML = h + '<p class="narr">' + t('c2Narr') + '</p><div class="act" style="padding-bottom:2.2rem"><div class="plates">' +
+        '<div class="plate" id="plateMine" data-plate="mine"><span class="plate-label">' + t('mine') + '</span></div>' +
+        '<div class="plate" id="plateTheirs" data-plate="theirs"><span class="plate-label">' + t('cousin') + '</span></div></div></div>' +
+        '<button class="gbtn primary" type="button" id="doneBtn">' + t('c2Done') + '</button>';
+      for (var i = 0; i < 4; i++) addDate($('plateMine'));
+      $('doneBtn').addEventListener('click', function () {
+        var n = $('plateTheirs').querySelectorAll('.date').length;
+        tick(); ch2(n === 0 ? 'keep' : (n === 4 ? 'all' : 'some'));
+        extra.shared = n;
+      });
+      return;
+    }
+    if (state === 'keep') {
+      setMood('heavy'); heavy();
+      stage.innerHTML = h + '<div class="result soft"><p>' + t('c2KeepRes') + '</p><p>' + t('c2Why') + '</p></div>' + groundHTML(SRC.zal7) +
+        '<button class="gbtn primary" type="button" id="backBtn">' + t('goBack') + '</button>';
+      $('backBtn').addEventListener('click', function () { tick(); ch2('play'); }); $('backBtn').focus();
+      return;
+    }
+    setMood('warm'); lightLantern(1);
+    var n = $('plateTheirs') ? $('plateTheirs').querySelectorAll('.date').length : (extra.shared || 1);
+    var msg = state === 'all' ? t('c2GoodAll') : t('c2Good1', { n: digits(n) });
+    stage.innerHTML = h + '<div class="result good"><p>' + msg + '</p></div>' + groundHTML(SRC.zal7) + ppHTML('c2Ask') +
+      '<button class="gbtn primary" type="button" id="nextBtn">' + t('next') + '</button>';
+    speak(msg);
+    $('nextBtn').addEventListener('click', function () { tick(); ch3(); });
+  }
+  function addDate(plate) {
+    var b = document.createElement('button');
+    b.className = 'date'; b.type = 'button'; b.innerHTML = DATE; b.setAttribute('aria-label', t('dateLabel'));
+    plate.appendChild(b);
+  }
+  function moveDate(btn, toPlate) {
+    if (!toPlate || btn.parentNode === toPlate) return;
+    toPlate.appendChild(btn);
+    tick(toPlate.dataset.plate === 'theirs' ? 880 : 600);
+    btn.focus({ preventScroll: true });
+  }
+
+  /* Chapter 3: helping parents - pour and carry with your own hands */
+  function ch3(state) {
+    chapter = 2; setMood(null); state = state || 'choose';
+    var h = head(3, 'c3Title');
+    if (state === 'choose') {
+      var opts = shuffle([choiceBtn('yes', '💧', 'c3Yes'), choiceBtn('later', '⏳', 'c3Later'), choiceBtn('uff', '😤', 'c3Uff')]).join('');
+      stage.innerHTML = h + '<p class="narr">' + t('c3Narr') + '</p><div class="act">' + TOWER + '</div>' + voice('baba', 'c3Voice') + '<div class="choices">' + opts + '</div>';
+      speak(t('c3Voice'));
+      return;
+    }
+    if (state === 'later' || state === 'uff') {
+      setMood('heavy'); heavy();
+      stage.innerHTML = h + '<div class="result soft"><p>' + t(state === 'later' ? 'c3LaterRes' : 'c3UffRes') + '</p><p><strong>' + t('c3Why') + '</strong></p></div>' +
+        '<p class="todo" hidden>TODO-SCHOLAR: Al-Isra 17:23-24 belongs here once it is on a site page.</p>' +
+        '<button class="gbtn primary" type="button" id="backBtn">' + t('goBack') + '</button>';
+      $('backBtn').addEventListener('click', function () { tick(); ch3('choose'); }); $('backBtn').focus();
+      return;
+    }
+    if (state === 'yes') {
+      extra.fill = 0;
+      stage.innerHTML = h + '<p class="narr">' + t('c3PourHelp') + '</p><div class="act">' +
+        '<div class="glass-wrap"><div>' + TAP + '</div><button class="obj" id="glassBtn" type="button" aria-label="' + t('c3Give') + '"><div class="glass" id="glass"><div class="fill-line"></div><div class="water" id="water"></div></div></button></div>' +
+        '<button class="obj chair" id="chair" type="button" aria-label="' + t('c3Chair') + '">' + CHAIR + '</button></div>' +
+        '<div class="row"><button class="gbtn" type="button" id="pourBtn">🚰 ' + t('c3Pour') + '</button><button class="gbtn primary" type="button" id="giveBtn" disabled>' + t('c3Give') + '</button></div>';
+      wirePour();
+      return;
+    }
+    if (state === 'thanks') {
+      setMood('warm'); lightLantern(2);
+      stage.innerHTML = h + voice('baba', 'c3Thanks') + '<p class="narr">' + t('c3GoodNarr') + '</p><p>' + t('c3Dua') + '</p>' + groundHTML(SRC.nuhDua) + ppHTML('c3Ask') +
+        '<button class="gbtn primary" type="button" id="nextBtn">' + t('toEnd') + '</button>';
+      speak(t('c3Thanks'));
+      $('nextBtn').addEventListener('click', function () { tick(); end(); });
+    }
+  }
+  function wirePour() {
+    var pouring = null;
+    var full = function () { return extra.fill >= 80; };
+    var step = function () {
+      extra.fill = Math.min(82, extra.fill + 2);
+      $('water').style.height = extra.fill + '%';
+      if (extra.fill % 10 === 0) tick(300 + extra.fill * 6);
+      if (full()) { stop(); $('giveBtn').disabled = false; tone(1046.5, 0.4, 0.06); }
+    };
+    var startPour = function (e) { if (e) e.preventDefault(); if (pouring || full()) return; pouring = setInterval(step, 60); };
+    var stop = function () { clearInterval(pouring); pouring = null; };
+    var pb = $('pourBtn');
+    /* capture the pointer so a small wobbly finger does not stop the pour by sliding off the button */
+    pb.addEventListener('pointerdown', function (e) { try { pb.setPointerCapture(e.pointerId); } catch (x) { /* fine */ } startPour(e); });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (ev) { pb.addEventListener(ev, stop); });
+    pb.addEventListener('keydown', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); if (!e.repeat) startPour(); } });
+    pb.addEventListener('keyup', function (e) { if (e.key === ' ' || e.key === 'Enter') stop(); });
+    var give = function () { if (!full()) return; tick(); ch3('thanks'); };
+    $('giveBtn').addEventListener('click', give);
+    $('chair').addEventListener('click', give);
+    /* drag the glass onto the chair */
+    var g = $('glassBtn'), drag = null;
+    g.addEventListener('pointerdown', function (e) { if (!full()) return; drag = { x: e.clientX, y: e.clientY }; g.setPointerCapture(e.pointerId); });
+    g.addEventListener('pointermove', function (e) {
+      if (!drag) return;
+      g.style.transform = 'translate(' + (e.clientX - drag.x) + 'px,' + (e.clientY - drag.y) + 'px)';
+      var r = $('chair').getBoundingClientRect();
+      $('chair').classList.toggle('hot', e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom);
+    });
+    g.addEventListener('pointerup', function (e) {
+      if (!drag) return; drag = null;
+      var r = $('chair').getBoundingClientRect();
+      if (e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom) give();
+      else { g.style.transform = ''; }
+    });
+    g.addEventListener('click', function () { if (full()) give(); });
+  }
+
+  function end() {
+    chapter = 3; setMood('warm');
+    stage.innerHTML = '<h2>' + t('endTitle') + '</h2><p class="narr">' + t('endLead') + '</p><ul class="ends"><li>' + t('end1') + '</li><li>' + t('end2') + '</li><li>' + t('end3') + '</li></ul>' +
+      '<p class="narr"><strong>' + t('endRecap') + '</strong></p><button class="gbtn primary" type="button" id="againBtn">' + t('again') + '</button>';
+    $('againBtn').addEventListener('click', function () { tick(); intro(); });
+    $('againBtn').focus();
+  }
+
+  /* ---------- delegated input ---------- */
+  stage.addEventListener('click', function (e) {
+    var say = e.target.closest('[data-say]'); if (say) { speak(t(say.dataset.say)); return; }
+    var c = e.target.closest('[data-choice]');
+    if (c) {
+      tick();
+      var id = c.dataset.choice;
+      if (chapter === 0) ch1(id === 'truth' ? 'truth' : id);
+      else if (chapter === 2) ch3(id);
+      return;
+    }
+    var d = e.target.closest('.date');
+    if (d && !suppress) { var other = d.parentNode.id === 'plateMine' ? $('plateTheirs') : $('plateMine'); moveDate(d, other); }
+  });
+  /* drag dates between plates */
+  var dd = null, suppress = false;
+  stage.addEventListener('pointerdown', function (e) { var d = e.target.closest('.date'); if (!d) return; dd = { el: d, x: e.clientX, y: e.clientY, ghost: null }; });
+  document.addEventListener('pointermove', function (e) {
+    if (!dd) return;
+    if (!dd.ghost && Math.hypot(e.clientX - dd.x, e.clientY - dd.y) > 8) {
+      dd.ghost = dd.el.cloneNode(true); dd.ghost.classList.add('ghost'); document.body.appendChild(dd.ghost); dd.el.classList.add('lifting');
+    }
+    if (dd.ghost) {
+      dd.ghost.style.left = e.clientX + 'px'; dd.ghost.style.top = e.clientY + 'px';
+      document.querySelectorAll('.plate').forEach(function (p) { var r = p.getBoundingClientRect(); p.classList.toggle('hot', e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom); });
+    }
+  });
+  document.addEventListener('pointerup', function (e) {
+    if (!dd) return; var d = dd; dd = null;
+    document.querySelectorAll('.plate').forEach(function (p) { p.classList.remove('hot'); });
+    if (!d.ghost) return;
+    suppress = true; setTimeout(function () { suppress = false; }, 50);
+    d.ghost.remove(); d.el.classList.remove('lifting');
+    var target = null;
+    document.querySelectorAll('.plate').forEach(function (p) { var r = p.getBoundingClientRect(); if (e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom) target = p; });
+    moveDate(d.el, target);
+  });
+
+  /* ---------- chrome ---------- */
+  function rerender() {
+    if (chapter === -1) intro();
+    else if (chapter === 0) ch1(); else if (chapter === 1) ch2(); else if (chapter === 2) ch3(); else end();
+  }
+  function applyLang(redraw) {
+    document.documentElement.lang = lang; document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-t]').forEach(function (n) { n.innerHTML = t(n.dataset.t); });
+    document.querySelectorAll('[data-t-aria]').forEach(function (n) { n.setAttribute('aria-label', t(n.dataset.tAria)); });
+    $('kitchenTxt').textContent = t('kitchen');
+    var lb = $('langBtn'); lb.textContent = lang === 'ar' ? 'English' : 'عربي'; lb.setAttribute('lang', lang === 'ar' ? 'en' : 'ar');
+    lb.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'التبديل إلى العربية');
+    if (redraw) { var keep = lit.slice(); rerender(); keep.forEach(function (on, k) { if (on) { lit[k] = true; document.querySelector('.shelf-lantern[data-k="' + k + '"]').classList.add('lit'); } }); }
+  }
+  $('langBtn').addEventListener('click', function () { lang = lang === 'ar' ? 'en' : 'ar'; localStorage.setItem(LKEY, lang); if ('speechSynthesis' in window) speechSynthesis.cancel(); applyLang(true); });
+  function applySound() { var b = $('sndBtn'); b.textContent = soundOn ? '🔔' : '🔕'; b.setAttribute('aria-pressed', String(soundOn)); }
+  $('sndBtn').addEventListener('click', function () { soundOn = !soundOn; localStorage.setItem(SKEY, soundOn ? 'on' : 'off'); if (!soundOn && 'speechSynthesis' in window) speechSynthesis.cancel(); applySound(); });
+  $('bedBtn').addEventListener('click', function () { var on = document.body.classList.toggle('bedtime'); this.setAttribute('aria-pressed', String(on)); });
+
+  applySound(); applyLang(false); intro();
+})();
+</script>
+</body>
+</html>

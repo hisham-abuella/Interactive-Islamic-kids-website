@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!--
+  GAME MOCKUP 04 - Ibrahim: Stars and Guests (prototype, not linked from the hub)
+  Learning goal: After playing, the child can explain that the star, moon and sun all set, so they are
+  creations and not worthy of worship, and only Allah who made them is; and can name ways Ibrahim welcomed guests.
+  Core loop: round 1, tap a sky light, slide time forward until it sets, then answer a factual question ("did it
+  stay?") and place it in "Created by Allah"; round 2, welcome guests step by step, built only from 51:25-27
+  (return the greeting of peace, hurry to the household, bring the best food, bring it near, invite gently).
+  Story source: UI/story-prophet-ibrahim.html (sky scenes and quotations copied from it). The hospitality round
+  narrates the meaning of 51:24-27 / 11:69 in plain words; no Quran text from it is shown.
+  Scholar gate 1 (2026-11-03): no option affirms shirk, even as a wrong answer; the invented water step is gone;
+  the guests are named as angels who did not eat, and the food is never shown being eaten.
+  No prophet, angel or guest is drawn: the guests are shown only by the mat where the food is set down.
+  ART NOTE: all visuals are placeholders pending the graphics redesign; see the ART block.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ibrahim: Stars and Guests - game prototype - Islamic Kids</title>
+<style>
+{{COMMON_CSS}}
+/* ========== ART / SCENE STYLES (placeholder; swap freely - logic only uses ids and classes) ========== */
+.scene{aspect-ratio:auto;min-height:300px;max-height:none;padding:2.8rem .8rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;transition:background 1.2s}
+.scene.night{background:#1B3C6B;color:#fff}
+.scene.day{background:#9fd3e6}
+.scene.tent{background:var(--parchment-deep)}
+#sky{position:relative;width:100%;height:190px;border-bottom:4px solid #6f7d4e}
+#skyObj{position:absolute;left:50%;top:20px;transform:translate(-50%,calc(var(--set,0)*170px));opacity:calc(1 - var(--set,0)*0.95);width:96px;height:96px;border-radius:50%;border:none;background:transparent;font-size:4rem;cursor:pointer}
+#skyObj[hidden]{display:none}
+#timeWrap{display:flex;align-items:center;gap:.6rem;font-weight:800}
+#time{width:min(320px,60vw);height:48px;accent-color:var(--gold)}
+#frame{display:flex;gap:.6rem;align-items:center;justify-content:center;flex-wrap:wrap}
+#created{min-width:220px;min-height:100px;border-radius:18px;border:3px dashed var(--gold);background:rgba(255,253,248,.92);color:var(--ink);font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;padding:.4rem}
+#created .in{font-size:2.2rem}
+.skytok{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.15);font-size:2.6rem;display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.5)}
+#tentRow{display:flex;gap:1rem;align-items:flex-end;justify-content:center;flex-wrap:wrap}
+#mat{min-width:200px;min-height:84px;border-radius:16px;border:3px dashed var(--cobalt);background:#e8dcc0;font-weight:800;display:flex;align-items:center;justify-content:center;gap:.4rem}
+#far{min-width:110px;min-height:84px;border-radius:16px;border:3px dashed var(--rule-strong);background:transparent;font-weight:700;color:var(--slate-500)}
+#tray{width:100px;height:72px;border-radius:50%;background:var(--gold-light);border:3px solid var(--gold-ink);font-size:2.2rem;display:flex;align-items:center;justify-content:center}
+.quote{background:var(--cobalt-wash);border:2px solid var(--cobalt-pale);text-align:center;font-size:1.12rem;font-weight:700}
+</style>
+</head>
+<body>
+{{TOP}}
+<main id="stage">
+  <div class="scene night" id="scene">
+    <span class="phase-tag" id="phaseTag"></span>
+    <div id="skyArea">
+      <div id="sky"><button id="skyObj" type="button" hidden></button></div>
+    </div>
+    <div id="timeWrap" hidden><label for="time" data-ar="⏳ مرور الوقت">⏳ Time passes</label><input type="range" id="time" min="0" max="100" value="0"></div>
+    <div id="frame" hidden></div>
+    <div id="tentArea" hidden>
+      <div id="tentRow"></div>
+    </div>
+  </div>
+  {{NARR}}
+  <div class="panel quote" id="qFace" hidden>{{T:IBR_FACE}}<br><span style="font-weight:600">{{T:IBR_LEARN}}</span></div>
+  <div class="choices" id="choices" hidden></div>
+  <div class="row" id="ctl" hidden><button class="btn gold" id="nextBtn" type="button"></button></div>
+</main>
+{{BOTTOM}}
+<script>
+{{COMMON_JS}}
+/* ======================= ART (placeholder assets - swap for real art later) ======================= */
+const ART = { star: '⭐', moon: '🌕', sun: '☀️', tray: '🍖', mat: '🧺' };
+/* ======================= CONTENT (sky round follows UI/story-prophet-ibrahim.html) ======================= */
+const SKY = [
+  { id: 'star', scene: 'night', name: { en: 'the star', ar: 'النجم' },
+    show: { en: 'One night, Prophet Ibrahim looked up at a beautiful, bright star. Tap the star.', ar: 'في إحدى الليالي نظر النبي إبراهيم عليه السلام إلى نجم جميل لامع. المس النجم.' },
+    when: { en: 'Night turns to dawn', ar: 'الليل يتحول إلى فجر' } },
+  { id: 'moon', scene: 'night', name: { en: 'the moon', ar: 'القمر' },
+    show: { en: 'Then the moon rose, big and bright! Tap the moon.', ar: 'ثم طلع القمر كبيراً منيراً! المس القمر.' },
+    when: { en: 'Morning comes', ar: 'يأتي الصباح' } },
+  { id: 'sun', scene: 'day', name: { en: 'the sun', ar: 'الشمس' },
+    show: { en: 'When the sun rose, it was the biggest and brightest of all! Tap the sun.', ar: 'ولما أشرقت الشمس كانت أكبرها وأشدها ضياءً! المس الشمس.' },
+    when: { en: 'Evening comes', ar: 'يأتي المساء' } }
+];
+const L = {
+  p1: { en: '1 · The night sky', ar: '١ · سماء الليل' }, p2: { en: '2 · Welcome, guests!', ar: '٢ · أهلاً بالضيوف!' },
+  tapped: { en: 'So beautiful! Now move the time slider and watch what happens to ', ar: 'ما أجمله! والآن حرّك شريط الوقت وشاهد ماذا يحدث لـ' },
+  /* a factual question only (scholar ruling): the child is never offered "yes, it is our Lord" */
+  setAsk: { en: 'It has set. Did it stay with us all the time?', ar: 'لقد غاب. هل بقي معنا طوال الوقت؟' },
+  optNo: { en: 'No, it went away', ar: 'لا، لقد غاب' }, optYes: { en: 'Yes, it stayed', ar: 'نعم، بقي' },
+  yes: { en: 'Look again: it went down and was gone. Let us look once more.', ar: 'انظر مرة أخرى: لقد نزل وغاب. لننظر مرة أخرى.' },
+  no: { en: 'Yes, it went away. Something that goes away cannot be our Lord. Allah never goes away and never sleeps: He is always with us, hearing and seeing. Ibrahim knew it could not be his Lord.', ar: 'نعم، لقد غاب. والشيء الذي يغيب لا يمكن أن يكون ربنا. الله لا يغيب أبداً ولا ينام، وهو معنا دائماً يسمع ويرى. عرف إبراهيم أنه لا يصلح أن يكون ربّه.' },
+  frameAsk: { en: 'Who made the star, the moon and the sun? Drag each one into the frame.', ar: 'من خلق النجم والقمر والشمس؟ اسحب كل واحد منها إلى الإطار.' },
+  created: { en: 'Created by Allah', ar: 'خلقها الله' },
+  frameDone: { en: 'Allah made them all. Only Allah, who never sets, deserves to be worshipped.', ar: 'الله خلقها كلها. والله وحده الذي لا يغيب هو المستحق للعبادة.' },
+  pause1Q: { en: 'The sun is so big and bright. Why can it not be our Lord?', ar: 'الشمس كبيرة جداً ومضيئة. لماذا لا يمكن أن تكون ربنا؟' },
+  pause1H: { en: 'Idea: it sets every evening; Allah made it, and Allah never sets or sleeps.', ar: 'فكرة: إنها تغيب كل مساء؛ الله خلقها، والله لا يغيب ولا ينام.' },
+  toTent: { en: 'Next: Ibrahim at home', ar: 'التالي: إبراهيم في بيته' },
+  tentIntro: { en: 'Ibrahim was known for welcoming guests generously. One day, guests arrived at his tent and greeted him with "Salam!", peace. How do we answer?', ar: 'عُرف إبراهيم بإكرام الضيوف. وفي يوم وصل ضيوف إلى خيمته وقالوا: "سلاماً!" كيف نردّ عليهم؟' },
+  optSalam: { en: 'Wa alaykum as-salam, welcome!', ar: 'وعليكم السلام، أهلاً وسهلاً!' }, optAway: { en: 'Who are you? Go away.', ar: 'من أنتم؟ اذهبوا.' },
+  away: { en: 'Guests are a gift. Ibrahim answered their greeting of peace with peace and welcomed them in. Let us choose again.', ar: 'الضيوف نعمة. ردّ إبراهيم تحيتهم بالسلام ورحّب بهم. لنختر مرة أخرى.' },
+  /* 51:26: he went quietly and quickly to his household */
+  hurry: { en: 'Peace answered with peace! Then Ibrahim went quickly and quietly to his household to get food ready. What shall we bring?', ar: 'ردّ السلام بالسلام! ثم ذهب إبراهيم مسرعاً بهدوء إلى أهله ليجهّز الطعام. أي طعام نقدّم؟' },
+  food: { en: 'What food shall we bring?', ar: 'أي طعام نقدّم؟' },
+  optBest: { en: 'Our best: a fat, roasted calf', ar: 'أفضل ما عندنا: عجل سمين مشويّ' }, optCrust: { en: 'A dry crust of bread', ar: 'قطعة خبز يابسة' },
+  crust: { en: 'That is kind, but Ibrahim gave his guests his very best. Let us choose again.', ar: 'هذا لطيف، لكن إبراهيم قدّم لضيوفه أفضل ما عنده. لنختر مرة أخرى.' },
+  best: { en: 'Yes! Ibrahim brought his very best: a fat, roasted calf. Now drag the tray close to the guests.', ar: 'نعم! جاء إبراهيم بأفضل ما عنده: عجل سمين مشويّ. والآن اسحب الصينية قريباً من الضيوف.' },
+  mat: { en: 'Guests\' mat', ar: 'مجلس الضيوف' }, far: { en: 'Far corner', ar: 'ركن بعيد' },
+  farMsg: { en: 'That is a long way for the guests to reach. Ibrahim brought the food close to them. Try again.', ar: 'هذا بعيد عن الضيوف. قرّب إبراهيم الطعام إليهم. حاول مرة أخرى.' },
+  invite: { en: 'The food is close to them. How shall we invite them to eat?', ar: 'الطعام قريب منهم. كيف ندعوهم إلى الأكل؟' },
+  optPolite: { en: 'Please, won\'t you eat?', ar: 'تفضّلوا، ألا تأكلون؟' }, optRude: { en: 'Eat it now!', ar: 'كُلوا الآن!' },
+  rude: { en: 'Ibrahim spoke to his guests gently and politely. Let us choose again.', ar: 'كان إبراهيم يكلّم ضيوفه بلطف وأدب. لنختر مرة أخرى.' },
+  done: { en: 'A warm welcome: peace answered with peace, hurrying to prepare, the best food, brought close, and a gentle invitation.', ar: 'ترحيب دافئ: ردّ السلام بالسلام، والإسراع في التجهيز، وأفضل الطعام، مقرّباً إليهم، ودعوة لطيفة.' },
+  /* the parent line the scholar requires: the guests were angels, and angels do not eat */
+  angels: { en: 'For the grown-up: these guests were really angels sent by Allah with good news. Angels do not eat, so they did not eat the food. Ibrahim\'s welcome was still the best welcome.', ar: 'للوالدين: كان هؤلاء الضيوف ملائكة أرسلهم الله ببشرى. والملائكة لا يأكلون، فلم يأكلوا من الطعام. ومع ذلك كان ترحيب إبراهيم أكرم ترحيب.' },
+  pause2Q: { en: 'Who visits our home? What could we do to make them feel welcome, like Ibrahim?', ar: 'من يزور بيتنا؟ ماذا نستطيع أن نفعل ليشعروا بالترحيب، كما فعل إبراهيم؟' },
+  pause2H: { en: 'Idea: choose one thing to do for the next guest: greet them, bring water, or share the best snack.', ar: 'فكرة: اختر شيئاً واحداً تفعله للضيف القادم: تحية، أو كوب ماء، أو أطيب ما عندك.' },
+  endT: { en: 'Only Allah, and a generous heart', ar: 'الله وحده، وقلبٌ كريم' },
+  endB: { en: 'You watched the star, the moon and the sun set, and found that only Allah, who made them, deserves worship. Then you learned how Ibrahim welcomed his guests with his very best.', ar: 'شاهدت النجم والقمر والشمس تغيب، وعرفت أن الله وحده الذي خلقها هو المستحق للعبادة. ثم تعلّمت كيف أكرم إبراهيم ضيوفه بأفضل ما عنده.' },
+  tier: { en: 'Next time: ask the child to explain each answer in their own words before tapping', ar: 'في المرة القادمة: اطلب من الطفل أن يشرح كل جواب بكلماته قبل أن يختار' }
+};
+/* ======================= LOGIC ======================= */
+const S = {};
+function reset() {
+  Object.assign(S, { i: 0, placed: 0, phase: L.p1, stage: 'sky' });
+  ['#qFace', '#ctl', '#frame', '#tentArea', '#timeWrap'].forEach(s => ($(s).hidden = true));
+  $('#skyArea').hidden = false; showSky();
+}
+function showSky() {
+  const o = SKY[S.i]; S.tapped = false; setScene(o.scene); $('#time').value = 0; setSet(0);
+  renderSkyObj(); say(o.show);
+}
+function skyTapped() {
+  const o = SKY[S.i]; if (S.tapped) return; S.tapped = true; chime('good'); sparkle($('#skyObj'), 8); fx($('#skyObj'), 'bounce');
+  $('#timeWrap').hidden = false; renderTimeLabel(); say({ en: L.tapped.en + o.name.en + '.', ar: L.tapped.ar + o.name.ar + '.' });
+  setTimeout(() => $('#time').focus({ preventScroll: true }), 50);
+}
+async function timeMoved(v) {
+  setSet(v / 100);
+  if (v < 95 || S.setting) return;
+  S.setting = true; $('#timeWrap').hidden = true; chime('soft'); say(L.setAsk);
+  for (;;) {
+    const c = await ask($('#choices'), [{ id: 'no', ic: '👋', label: L.optNo }, { id: 'yes', ic: '✨', label: L.optYes }]);
+    if (c === 'no') break;
+    chime('soft'); say(L.yes); await wait(3000); say(L.setAsk);
+  }
+  chime('good'); say(L.no); await wait(2000); S.setting = false;
+  S.i++; if (S.i < SKY.length) return showSky();
+  frameRound();
+}
+function frameRound() {
+  $('#skyArea').hidden = true; setScene('night'); renderFrame(); say(L.frameAsk);
+}
+function placed(tok) {
+  tok.remove(); S.placed++; chime('good'); sparkle($('#created'), 8); renderCreated();
+  if (S.placed < 3) return;
+  say(L.frameDone); $('#qFace').hidden = false;
+  setTimeout(async () => {
+    await pausePoint(L.pause1Q, L.pause1H);
+    $('#ctl').hidden = false; $('#nextBtn').textContent = t(L.toTent); $('#nextBtn').onclick = tent; $('#nextBtn').focus({ preventScroll: true });
+  }, 3500);
+}
+async function tent() {
+  $('#ctl').hidden = true; $('#qFace').hidden = true; $('#frame').hidden = true; S.phase = L.p2; S.stage = 'tent'; setScene('tent');
+  $('#tentArea').hidden = false; $('#tentRow').innerHTML = ''; say(L.tentIntro);
+  await askUntil([{ id: 'ok', ic: '🤲', label: L.optSalam }, { id: 'bad', ic: '🚫', label: L.optAway }], L.away, L.tentIntro);
+  food();
+}
+async function food() {
+  say(L.hurry);
+  await askUntil([{ id: 'ok', ic: '🍖', label: L.optBest }, { id: 'bad', ic: '🍞', label: L.optCrust }], L.crust, L.food);
+  say(L.best); renderTray();
+}
+async function trayDrop(el, tg) {
+  if (tg.id === 'far') { chime('soft'); fx(tg, 'wobble'); say(L.farMsg); return; }
+  el.remove(); tg.insertAdjacentHTML('beforeend', `<span aria-hidden="true">${ART.tray}</span>`); chime('good'); sparkle(tg, 8);
+  say(L.invite);
+  await askUntil([{ id: 'ok', ic: '😊', label: L.optPolite }, { id: 'bad', ic: '😠', label: L.optRude }], L.rude, L.invite);
+  chime('good'); say(L.done); await wait(3000);
+  say(L.angels); await wait(4500);
+  await pausePoint(L.pause2Q, L.pause2H);
+  showEnding({ art: '⭐🌙☀️🏕️', title: L.endT, body: L.endB, tier: L.tier });
+}
+async function askUntil(opts, why, again) {
+  for (;;) {
+    const c = await ask($('#choices'), opts.map(o => ({ ...o })));
+    if (c === 'ok') { chime('good'); return; }
+    chime('soft'); say(why); await wait(2800); say(again);
+  }
+}
+/* ======================= RENDER (placeholder; replace with real art) ======================= */
+function setScene(k) { $('#scene').className = 'scene ' + k; $('#phaseTag').textContent = t(S.phase); }
+function setSet(f) { $('#skyObj').style.setProperty('--set', f); }
+function renderSkyObj() { const o = SKY[S.i], b = $('#skyObj'); b.hidden = false; b.textContent = ART[o.id]; b.setAttribute('aria-label', t(o.name)); }
+function renderTimeLabel() { $('#time').setAttribute('aria-valuetext', t(SKY[Math.min(S.i, 2)].when)); }
+function renderFrame() {
+  const f = $('#frame'); f.innerHTML = ''; f.hidden = false;
+  SKY.forEach(o => { const d = document.createElement('div'); d.className = 'skytok'; d.textContent = ART[o.id]; d.__o = o; d.setAttribute('aria-label', t(o.name)); draggable(d, { targets: () => [$('#created')], onDrop: placed }); f.appendChild(d); });
+  const c = document.createElement('button'); c.type = 'button'; c.id = 'created'; dropTarget(c); f.appendChild(c); renderCreated();
+}
+function renderCreated() {
+  const c = $('#created'); if (!c) return;
+  const inFrame = SKY.filter(o => !$$('.skytok').some(d => d.__o === o)).map(o => ART[o.id]).join(' ');
+  c.innerHTML = `<span>${t(L.created)}</span><span class="in" aria-hidden="true">${inFrame}</span>`;
+}
+function renderTray() {
+  const r = $('#tentRow');
+  const far = document.createElement('button'); far.type = 'button'; far.id = 'far'; far.textContent = t(L.far); dropTarget(far);
+  const mat = document.createElement('button'); mat.type = 'button'; mat.id = 'mat'; mat.textContent = t(L.mat); dropTarget(mat);
+  const tray = document.createElement('div'); tray.id = 'tray'; tray.textContent = ART.tray; tray.setAttribute('aria-label', t({ en: 'Tray of food', ar: 'صينية الطعام' }));
+  draggable(tray, { targets: () => [$('#mat'), $('#far')], onDrop: trayDrop });
+  r.prepend(far); r.appendChild(mat); r.appendChild(tray);
+}
+$('#skyObj').addEventListener('click', skyTapped);
+$('#time').addEventListener('input', e => timeMoved(+e.target.value));
+onLang(() => {
+  $('#phaseTag').textContent = t(S.phase); if (S.stage === 'sky' && !$('#skyObj').hidden) $('#skyObj').setAttribute('aria-label', t(SKY[Math.min(S.i, 2)].name));
+  renderTimeLabel(); renderCreated(); if ($('#mat')) $('#mat').firstChild.textContent = t(L.mat); if ($('#far')) $('#far').textContent = t(L.far);
+  $$('.skytok').forEach(d => d.setAttribute('aria-label', t(d.__o.name)));
+  if (!$('#ctl').hidden) $('#nextBtn').textContent = t(L.toTent);
+});
+wireEnding(reset);
+reset(); initShell();
+</script>
+</body>
+</html>

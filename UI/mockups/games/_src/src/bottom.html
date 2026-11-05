@@ -1,0 +1,22 @@
+<div class="overlay" id="pause" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="pauseQ">
+    <span class="pause-tag" data-ar="⏸ لحظة حوار مع الوالدين">⏸ Parent pause</span>
+    <p class="hint" data-ar="توقّفا قليلاً واسألا معاً:">Stop for a moment and ask together:</p>
+    <h2 id="pauseQ"></h2>
+    <p class="hint" id="pauseHint"></p>
+    <button class="btn gold" id="pauseGo" type="button" data-ar="تحدّثنا، لنكمل ▶">We talked, carry on ▶</button>
+  </div>
+</div>
+<div class="overlay" id="ending" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="endTitle">
+    <div class="ending-art" id="endArt" aria-hidden="true"></div>
+    <h2 id="endTitle"></h2>
+    <p id="endBody"></p>
+    <div id="endExtra"></div>
+    <div class="row" style="margin-top:.8rem">
+      <button class="btn gold" id="againBtn" type="button" data-ar="🔁 لنلعب معاً مرة أخرى">🔁 Play together again</button>
+      <a class="btn ghost" href="{{BACK}}" style="text-decoration:none;display:inline-flex;align-items:center" data-ar="📖 العودة إلى القصة">📖 Back to the story</a>
+    </div>
+    <label class="tier" id="tierWrap"><input type="checkbox" id="tierBox"> <span id="tierLabel"></span></label>
+  </div>
+</div>

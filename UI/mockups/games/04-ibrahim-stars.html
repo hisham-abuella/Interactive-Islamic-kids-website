@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<!--
+  GAME MOCKUP 04 - Ibrahim: Stars and Guests (prototype, not linked from the hub)
+  Learning goal: After playing, the child can explain that the star, moon and sun all set, so they are
+  creations and not worthy of worship, and only Allah who made them is; and can name ways Ibrahim welcomed guests.
+  Core loop: round 1, tap a sky light, slide time forward until it sets, then answer a factual question ("did it
+  stay?") and place it in "Created by Allah"; round 2, welcome guests step by step, built only from 51:25-27
+  (return the greeting of peace, hurry to the household, bring the best food, bring it near, invite gently).
+  Story source: UI/story-prophet-ibrahim.html (sky scenes and quotations copied from it). The hospitality round
+  narrates the meaning of 51:24-27 / 11:69 in plain words; no Quran text from it is shown.
+  Scholar gate 1 (2026-11-03): no option affirms shirk, even as a wrong answer; the invented water step is gone;
+  the guests are named as angels who did not eat, and the food is never shown being eaten.
+  No prophet, angel or guest is drawn: the guests are shown only by the mat where the food is set down.
+  ART NOTE: all visuals are placeholders pending the graphics redesign; see the ART block.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ibrahim: Stars and Guests - game prototype - Islamic Kids</title>
+<link rel="icon" href="data:,">
+<style>
+/* ---- Illuminated Page tokens (copied from UI/styles.css so this mockup stands alone) ---- */
+:root{
+  --ink:#14383A; --turquoise:#17877F; --turquoise-deep:#0F6B65; --cobalt:#24508C;
+  --gold:#C08A2E; --gold-light:#E0B75C; --gold-text:#8A6220; --gold-pale:#F3E4C4;
+  --parchment:#FBF6EA; --parchment-deep:#F3E9D6; --rule:rgba(192,138,46,.32); --rule-strong:rgba(192,138,46,.6);
+  --card:#FFFDF8; --gold-ink:#7A5518; --gold-wash:#F7EDD8; --cobalt-deep:#1B3C6B; --cobalt-mid:#5A79B0;
+  --cobalt-pale:#C9D8EC; --cobalt-wash:#E7EDF6; --slate-500:#5C7370;
+  --radius-lg:20px; --radius-xl:28px; --radius-full:50px;
+  --shadow-sm:0 2px 8px rgba(20,56,58,.06); --shadow-md:0 8px 24px rgba(20,56,58,.09);
+  --shadow-lg:0 16px 40px rgba(20,56,58,.12); --shadow-teal:0 8px 24px rgba(23,135,127,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Nunito','Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--parchment);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+[dir=rtl] body{font-family:'Noto Sans Arabic','Geeza Pro','Tahoma',system-ui,sans-serif}
+button{font:inherit;color:inherit}
+:focus-visible{outline:4px solid var(--cobalt);outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* top bar */
+.gbar{position:relative;z-index:60;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;padding:.5rem 1rem;background:var(--turquoise-deep);border-bottom:2px solid var(--gold);color:#fff}
+.gbar h1{font-family:'Baloo 2','Nunito',sans-serif;font-size:clamp(1.05rem,2.6vw,1.45rem);font-weight:800;flex:1;min-width:10rem;line-height:1.2}
+.gbar .proto{font-size:.72rem;font-weight:800;background:var(--gold-light);color:var(--ink);border-radius:var(--radius-full);padding:.1rem .55rem;margin-inline-start:.4rem;vertical-align:middle}
+.gbar .back{color:#fff;text-decoration:none;font-weight:800;min-height:48px;display:inline-flex;align-items:center;padding:0 .6rem;border-radius:12px}
+.gbar .back:hover{background:rgba(255,255,255,.12)}
+.tools{display:flex;gap:.4rem;flex-wrap:wrap}
+.gbtn{min-width:48px;min-height:48px;border-radius:14px;border:2px solid rgba(255,255,255,.55);background:rgba(255,255,255,.12);color:#fff;font-weight:800;cursor:pointer;padding:0 .55rem;font-size:1.05rem}
+.gbtn[aria-pressed=false]{opacity:.6}
+.gbtn:active{transform:scale(.94)}
+
+/* stage + scene */
+main#stage{flex:1;width:100%;max-width:1100px;margin:0 auto;padding:.8rem 1rem 1rem;display:flex;flex-direction:column;gap:.8rem}
+.scene{position:relative;border-radius:var(--radius-xl);overflow:hidden;border:3px solid var(--gold);box-shadow:var(--shadow-lg);width:100%;aspect-ratio:16/10;min-height:320px;max-height:68vh;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.scene svg.bg{position:absolute;inset:0;width:100%;height:100%}
+.phase-tag{position:absolute;top:.6rem;inset-inline-start:.6rem;z-index:5;background:rgba(255,253,248,.92);border:2px solid var(--rule-strong);border-radius:var(--radius-full);padding:.15rem .8rem;font-weight:800;font-size:.95rem}
+
+/* narration strip */
+.narr{display:flex;gap:.7rem;align-items:center;background:var(--card);border:2px solid var(--rule-strong);border-radius:var(--radius-lg);padding:.6rem .8rem;font-size:clamp(1.02rem,2.4vw,1.2rem);font-weight:700;box-shadow:var(--shadow-sm);min-height:72px}
+.narr p{flex:1}
+.speak{flex:none;width:52px;height:52px;border-radius:50%;border:2px solid var(--rule-strong);background:var(--gold-wash);cursor:pointer;font-size:1.4rem}
+.speak[hidden]{display:none}
+
+/* controls */
+.row{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center;align-items:center}
+.btn{min-height:56px;padding:.55rem 1.3rem;border-radius:var(--radius-full);border:none;background:linear-gradient(135deg,var(--turquoise),var(--turquoise-deep));color:#fff;font-weight:800;font-size:1.08rem;cursor:pointer;box-shadow:var(--shadow-teal);transition:transform .12s ease}
+.btn:active{transform:scale(.94)}
+.btn.gold{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--ink);box-shadow:0 8px 24px rgba(192,138,46,.25)}
+.btn.ghost{background:var(--card);color:var(--ink);border:2px solid var(--rule-strong);box-shadow:none}
+.btn[disabled]{opacity:.45;cursor:default}
+.choices{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center}
+.choice{min-height:64px;min-width:9rem;max-width:22rem;padding:.6rem 1rem;border-radius:var(--radius-lg);border:3px solid var(--rule-strong);background:var(--card);font-weight:800;font-size:1.05rem;cursor:pointer;box-shadow:var(--shadow-md);transition:transform .12s ease}
+.choice:hover{border-color:var(--gold)}
+.choice:active{transform:scale(.95)}
+.choice .ic{font-size:1.6rem;display:block;line-height:1.2}
+.panel{background:var(--card);border:2px solid var(--rule-strong);border-radius:var(--radius-lg);padding:.8rem;box-shadow:var(--shadow-sm)}
+.panel[hidden],.choices[hidden],.row[hidden]{display:none}
+
+/* hold-to-do ring button */
+.hold{position:relative;min-width:72px;min-height:72px;border-radius:50%;border:3px solid var(--gold);background:var(--gold-wash);cursor:pointer;font-size:1.8rem;touch-action:none}
+.hold .ring{position:absolute;inset:-7px;border-radius:50%;background:conic-gradient(var(--turquoise) calc(var(--p,0)*1turn),transparent 0);-webkit-mask:radial-gradient(circle,transparent 62%,#000 63%);mask:radial-gradient(circle,transparent 62%,#000 63%);pointer-events:none}
+
+/* draggables */
+.drag{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.drag.dragging{cursor:grabbing;z-index:40;position:relative;filter:drop-shadow(0 10px 10px rgba(0,0,0,.25));transition:none!important}
+.drag.selected{outline:4px dashed var(--gold);outline-offset:4px}
+.drag.back-home{transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.drop-hot{box-shadow:0 0 0 5px var(--gold-light),0 0 28px var(--gold-light)!important}
+.drop-hint{animation:hintPulse 1.4s ease-in-out infinite}
+@keyframes hintPulse{50%{box-shadow:0 0 0 5px rgba(224,183,92,.7)}}
+
+/* overlays */
+.overlay{position:fixed;inset:0;background:rgba(20,56,58,.55);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem}
+.overlay[hidden]{display:none}
+.card{background:var(--card);border:3px solid var(--gold);border-radius:var(--radius-xl);padding:1.3rem 1.4rem;max-width:580px;width:100%;text-align:center;box-shadow:var(--shadow-lg);animation:pop .35s ease;max-height:92vh;overflow:auto}
+.card h2{font-family:'Baloo 2','Nunito',sans-serif;font-size:1.5rem;margin-bottom:.4rem}
+.card p{margin:.4rem 0;font-size:1.1rem}
+.pause-tag{display:inline-block;background:var(--cobalt-wash);color:var(--cobalt-deep);border-radius:var(--radius-full);padding:.15rem .9rem;font-weight:800;margin-bottom:.4rem}
+.hint{color:var(--slate-500);font-size:.98rem!important}
+.scripture{font-family:'Amiri','Scheherazade New','Noto Naskh Arabic','Geeza Pro',serif;font-size:clamp(1.4rem,3.6vw,1.9rem);direction:rtl;color:var(--cobalt-deep);line-height:2.1;margin:.4rem 0}
+.duabox{background:var(--cobalt-wash);border:2px solid var(--cobalt-pale);border-radius:var(--radius-lg);padding:.7rem 1rem;margin:.6rem 0}
+.ending-art{font-size:3rem;line-height:1.2}
+.tier{min-height:48px;cursor:pointer;display:flex;gap:.5rem;align-items:center;justify-content:center;margin-top:.6rem;font-weight:700;color:var(--slate-500)}
+.tier input{width:28px;height:28px}
+
+/* gentle juice */
+.spark{position:fixed;width:9px;height:9px;border-radius:50%;background:var(--gold-light);box-shadow:0 0 8px var(--gold-light);pointer-events:none;z-index:70;animation:spark .75s ease-out forwards}
+@keyframes spark{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+@keyframes pop{from{transform:scale(.88);opacity:0}}
+.wobble{animation:wobble .45s ease}
+@keyframes wobble{25%{transform:translateX(-5px) rotate(-2deg)}75%{transform:translateX(5px) rotate(2deg)}}
+.bounce{animation:bounce .45s ease}
+@keyframes bounce{40%{transform:scale(1.1)}70%{transform:scale(.98)}}
+.narr p.bounce{animation:nudge .4s ease}
+@keyframes nudge{40%{transform:translateY(-3px)}}
+.glow{animation:glowA 1.2s ease}
+@keyframes glowA{40%{filter:drop-shadow(0 0 14px var(--gold-light)) brightness(1.15)}}
+
+/* bedtime: same interaction, softer feel */
+body.bedtime main#stage,body.bedtime .narr{filter:brightness(.82) saturate(.75)}
+body.bedtime .spark{display:none}
+body.bedtime .drop-hint{animation:none}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+@media (max-width:600px){
+  .scene{aspect-ratio:4/5;max-height:62vh}
+  .gbar h1{order:-1;flex-basis:100%}
+}
+/* bilingual pairs inside templates: show only the active language */
+[dir=rtl] .l-en,[dir=ltr] .l-ar{display:none}
+
+/* ========== ART / SCENE STYLES (placeholder; swap freely - logic only uses ids and classes) ========== */
+.scene{aspect-ratio:auto;min-height:300px;max-height:none;padding:2.8rem .8rem 1rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8rem;transition:background 1.2s}
+.scene.night{background:#1B3C6B;color:#fff}
+.scene.day{background:#9fd3e6}
+.scene.tent{background:var(--parchment-deep)}
+#sky{position:relative;width:100%;height:190px;border-bottom:4px solid #6f7d4e}
+#skyObj{position:absolute;left:50%;top:20px;transform:translate(-50%,calc(var(--set,0)*170px));opacity:calc(1 - var(--set,0)*0.95);width:96px;height:96px;border-radius:50%;border:none;background:transparent;font-size:4rem;cursor:pointer}
+#skyObj[hidden]{display:none}
+#timeWrap{display:flex;align-items:center;gap:.6rem;font-weight:800}
+#time{width:min(320px,60vw);height:48px;accent-color:var(--gold)}
+#frame{display:flex;gap:.6rem;align-items:center;justify-content:center;flex-wrap:wrap}
+#created{min-width:220px;min-height:100px;border-radius:18px;border:3px dashed var(--gold);background:rgba(255,253,248,.92);color:var(--ink);font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;padding:.4rem}
+#created .in{font-size:2.2rem}
+.skytok{width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.15);font-size:2.6rem;display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,.5)}
+#tentRow{display:flex;gap:1rem;align-items:flex-end;justify-content:center;flex-wrap:wrap}
+#mat{min-width:200px;min-height:84px;border-radius:16px;border:3px dashed var(--cobalt);background:#e8dcc0;font-weight:800;display:flex;align-items:center;justify-content:center;gap:.4rem}
+#far{min-width:110px;min-height:84px;border-radius:16px;border:3px dashed var(--rule-strong);background:transparent;font-weight:700;color:var(--slate-500)}
+#tray{width:100px;height:72px;border-radius:50%;background:var(--gold-light);border:3px solid var(--gold-ink);font-size:2.2rem;display:flex;align-items:center;justify-content:center}
+.quote{background:var(--cobalt-wash);border:2px solid var(--cobalt-pale);text-align:center;font-size:1.12rem;font-weight:700}
+</style>
+</head>
+<body>
+<header class="gbar">
+  <a class="back" href="../../story-prophet-ibrahim.html" data-ar="→ القصة">← Story</a>
+  <h1><span data-ar="إبراهيم: النجوم والضيوف">Ibrahim: Stars and Guests</span><span class="proto" data-ar="نموذج تجريبي">Prototype</span></h1>
+  <div class="tools" role="toolbar" aria-label="Game settings" data-ar-label="إعدادات اللعبة">
+    <button class="gbtn" id="voiceBtn" type="button" aria-pressed="false" aria-label="Read instructions aloud automatically" data-ar-label="قراءة التعليمات تلقائياً" title="Read aloud">🗣️</button>
+    <button class="gbtn" id="soundBtn" type="button" aria-pressed="true" aria-label="Soft chimes on or off" data-ar-label="تشغيل الأصوات الهادئة أو إيقافها" title="Chimes">🔔</button>
+    <button class="gbtn" id="bedBtn" type="button" aria-pressed="false" aria-label="Bedtime mode: calmer and dimmer" data-ar-label="وضع النوم: أهدأ وأخفت" title="Bedtime">🌙</button>
+    <button class="gbtn" id="langBtn" type="button" lang="ar">عربي</button>
+  </div>
+</header>
+
+<main id="stage">
+  <div class="scene night" id="scene">
+    <span class="phase-tag" id="phaseTag"></span>
+    <div id="skyArea">
+      <div id="sky"><button id="skyObj" type="button" hidden></button></div>
+    </div>
+    <div id="timeWrap" hidden><label for="time" data-ar="⏳ مرور الوقت">⏳ Time passes</label><input type="range" id="time" min="0" max="100" value="0"></div>
+    <div id="frame" hidden></div>
+    <div id="tentArea" hidden>
+      <div id="tentRow"></div>
+    </div>
+  </div>
+  <div class="narr" role="status" aria-live="polite">
+  <p id="narrText"></p>
+  <button class="speak" id="speakBtn" type="button" aria-label="Read this aloud" data-ar-label="اقرأ هذا بصوت عالٍ">🔊</button>
+</div>
+
+  <div class="panel quote" id="qFace" hidden><span class="l-en">"I turn my face to the One who created the heavens and the earth!"</span><span class="l-ar" lang="ar">&quot;إني وجهت وجهي للذي فطر السماوات والأرض&quot;</span><br><span style="font-weight:600"><span class="l-en">Ibrahim understood that only <strong>Allah</strong> - who created the stars, moon, and sun - deserves to be worshipped!</span><span class="l-ar" lang="ar">أدرك إبراهيم أن <strong>الله</strong> وحده - الذي خلق النجوم والقمر والشمس - هو المستحق للعبادة!</span></span></div>
+  <div class="choices" id="choices" hidden></div>
+  <div class="row" id="ctl" hidden><button class="btn gold" id="nextBtn" type="button"></button></div>
+</main>
+<div class="overlay" id="pause" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="pauseQ">
+    <span class="pause-tag" data-ar="⏸ لحظة حوار مع الوالدين">⏸ Parent pause</span>
+    <p class="hint" data-ar="توقّفا قليلاً واسألا معاً:">Stop for a moment and ask together:</p>
+    <h2 id="pauseQ"></h2>
+    <p class="hint" id="pauseHint"></p>
+    <button class="btn gold" id="pauseGo" type="button" data-ar="تحدّثنا، لنكمل ▶">We talked, carry on ▶</button>
+  </div>
+</div>
+<div class="overlay" id="ending" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="endTitle">
+    <div class="ending-art" id="endArt" aria-hidden="true"></div>
+    <h2 id="endTitle"></h2>
+    <p id="endBody"></p>
+    <div id="endExtra"></div>
+    <div class="row" style="margin-top:.8rem">
+      <button class="btn gold" id="againBtn" type="button" data-ar="🔁 لنلعب معاً مرة أخرى">🔁 Play together again</button>
+      <a class="btn ghost" href="../../story-prophet-ibrahim.html" style="text-decoration:none;display:inline-flex;align-items:center" data-ar="📖 العودة إلى القصة">📖 Back to the story</a>
+    </div>
+    <label class="tier" id="tierWrap"><input type="checkbox" id="tierBox"> <span id="tierLabel"></span></label>
+  </div>
+</div>
+
+<script>
+/* ---------- shared mockup kit (inlined in every game so each file stands alone) ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const G = { lang: 'en', sound: true, voice: false, bedtime: false, hooks: [], narr: null, pauseCur: null, endCur: null, sel: null, tier: false };
+try { if (localStorage.getItem('islamicKidsLang') === 'ar') G.lang = 'ar'; } catch (e) { /* private mode */ }
+
+const wait = ms => new Promise(r => setTimeout(r, ms));
+/* animation-only waits shrink when the user asked for less motion */
+const anim = ms => wait(RM ? Math.min(ms, 120) : (G.bedtime ? ms * 1.25 : ms));
+const t = o => (o == null ? '' : typeof o === 'string' ? o : (o[G.lang] != null ? o[G.lang] : o.en));
+const num = n => (G.lang === 'ar' ? String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]) : String(n));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const onLang = f => G.hooks.push(f);
+const isRTL = () => G.lang === 'ar';
+
+function applyLang() {
+  const ar = G.lang === 'ar';
+  document.documentElement.lang = G.lang;
+  document.documentElement.dir = ar ? 'rtl' : 'ltr';
+  $$('[data-ar]').forEach(el => {
+    if (el.dataset.en === undefined) el.dataset.en = el.innerHTML;
+    el.innerHTML = ar ? el.dataset.ar : el.dataset.en;
+  });
+  $$('[data-ar-label]').forEach(el => {
+    if (el.dataset.enLabel === undefined) el.dataset.enLabel = el.getAttribute('aria-label') || '';
+    el.setAttribute('aria-label', ar ? el.dataset.arLabel : el.dataset.enLabel);
+  });
+  const lb = $('#langBtn');
+  if (lb) { lb.textContent = ar ? 'English' : 'عربي'; lb.lang = ar ? 'en' : 'ar'; lb.setAttribute('aria-label', ar ? 'Switch to English' : 'التبديل إلى العربية'); }
+  if (G.narr) $('#narrText').textContent = t(G.narr);
+  if (G.pauseCur) { $('#pauseQ').textContent = t(G.pauseCur.q); $('#pauseHint').textContent = t(G.pauseCur.hint); }
+  if (G.endCur) renderEnding();
+  G.hooks.forEach(f => f());
+}
+
+/* ---- narration: the strip under the scene, optionally spoken (never scripture) ---- */
+function say(o) { G.narr = o; const el = $('#narrText'); el.textContent = t(o); el.classList.remove('bounce'); void el.offsetWidth; el.classList.add('bounce'); if (G.voice) speakText(t(o)); }
+function speakText(txt) {
+  if (!('speechSynthesis' in window) || !txt) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(txt.replace(/\p{Extended_Pictographic}|️/gu, ''));
+  u.lang = G.lang === 'ar' ? 'ar-SA' : 'en-GB'; u.rate = G.bedtime ? 0.8 : 0.9;
+  speechSynthesis.speak(u);
+}
+
+/* ---- soft Web Audio chimes (sine bells; no music). Scholar ruling 2026-11-03: until the owner decides on
+   instruments, every cue is one soft tone or a two-note chime; no arpeggios or melodic runs. ---- */
+let AC = null;
+function ac() {
+  if (!AC) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; AC = new C(); }
+  if (AC.state === 'suspended') AC.resume();
+  return AC;
+}
+function tone(a, f, at, dur, vol) {
+  const o = a.createOscillator(), g = a.createGain();
+  o.type = 'sine'; o.frequency.value = f;
+  g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(vol, at + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+  o.connect(g).connect(a.destination); o.start(at); o.stop(at + dur + 0.05);
+}
+function chime(kind) {
+  if (!G.sound) return; const a = ac(); if (!a) return;
+  const n = a.currentTime, v = G.bedtime ? 0.04 : 0.08;
+  if (kind === 'tap') tone(a, 880, n, 0.12, v * 0.45);
+  else if (kind === 'good') { tone(a, 659, n, 0.4, v); tone(a, 988, n + 0.09, 0.5, v * 0.8); }
+  else if (kind === 'soft') tone(a, 392, n, 0.45, v * 0.6);
+  else if (kind === 'thud') tone(a, 220, n, 0.16, v * 0.9);
+  else if (kind === 'done') { tone(a, 523, n, 0.9, v * 0.7); tone(a, 784, n + 0.2, 1.1, v * 0.6); }
+}
+
+/* ---- sparse, soft sparkles ---- */
+function sparkle(el, n = 8) {
+  if (RM || G.bedtime || !el) return;
+  const r = el.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement('span'); s.className = 'spark';
+    const ang = (Math.PI * 2 * i) / n + Math.random() * 0.4, d = 30 + Math.random() * 30;
+    s.style.left = x + 'px'; s.style.top = y + 'px';
+    s.style.setProperty('--dx', Math.cos(ang) * d + 'px'); s.style.setProperty('--dy', Math.sin(ang) * d + 'px');
+    document.body.appendChild(s); setTimeout(() => s.remove(), 800);
+  }
+}
+function fx(el, cls) { if (!el) return; el.classList.remove(cls); void el.getBoundingClientRect(); el.classList.add(cls); setTimeout(() => el.classList.remove(cls), 600); }
+
+/* ---- parent pause point (a question to talk about, never graded) ---- */
+function pausePoint(q, hint) {
+  return new Promise(res => {
+    G.pauseCur = { q, hint };
+    $('#pauseQ').textContent = t(q); $('#pauseHint').textContent = t(hint);
+    $('#pause').hidden = false; chime('soft');
+    const b = $('#pauseGo'); setTimeout(() => b.focus(), 50);
+    if (G.voice) speakText(t(q));
+    b.onclick = () => { $('#pause').hidden = true; G.pauseCur = null; chime('tap'); res(); };
+  });
+}
+
+/* ---- calm ending ---- */
+function showEnding(o) { G.endCur = o; renderEnding(); $('#ending').hidden = false; chime('done'); setTimeout(() => $('#againBtn').focus(), 60); }
+function renderEnding() {
+  const o = G.endCur; if (!o) return;
+  $('#endArt').textContent = o.art || '🌙';
+  $('#endTitle').textContent = t(o.title); $('#endBody').textContent = t(o.body);
+  $('#endExtra').innerHTML = o.extra ? o.extra() : '';
+  const tw = $('#tierWrap');
+  if (o.tier) { tw.hidden = false; $('#tierLabel').textContent = t(o.tier); $('#tierBox').checked = G.tier; } else tw.hidden = true;
+}
+function wireEnding(restart) {
+  $('#againBtn').onclick = () => { G.tier = $('#tierBox').checked; $('#ending').hidden = true; G.endCur = null; chime('tap'); restart(); };
+}
+
+/* ---- drag with generous snap zones; tap-to-select + tap-target as the keyboard / no-drag path ---- */
+function rectHit(x, y, el, pad) { const r = el.getBoundingClientRect(); return x >= r.left - pad && x <= r.right + pad && y >= r.top - pad && y <= r.bottom + pad; }
+function findTarget(x, y, targets, pad = 28) {
+  let best = null, bd = 1e9;
+  targets.forEach(tg => { if (!rectHit(x, y, tg, pad)) return; const r = tg.getBoundingClientRect(); const d = Math.hypot(x - (r.left + r.width / 2), y - (r.top + r.height / 2)); if (d < bd) { bd = d; best = tg; } });
+  return best;
+}
+function clearSel() { if (G.sel) { G.sel.el.classList.remove('selected'); G.sel.el.setAttribute('aria-pressed', 'false'); G.sel.opts.targets().forEach(x => x.classList.remove('drop-hint')); } G.sel = null; }
+function draggable(el, opts) {
+  el.classList.add('drag'); el.setAttribute('role', 'button'); el.tabIndex = 0; el.setAttribute('aria-pressed', 'false');
+  let sx = 0, sy = 0, pid = null, dragging = false, hot = null;
+  const reset = () => { el.classList.remove('dragging'); el.style.transform = ''; if (hot) hot.classList.remove('drop-hot'); hot = null; };
+  el.addEventListener('pointerdown', e => {
+    if (el.dataset.locked) return; pid = e.pointerId; sx = e.clientX; sy = e.clientY; dragging = false;
+    try { el.setPointerCapture(pid); } catch (_) {}
+    ac();
+  });
+  el.addEventListener('pointermove', e => {
+    if (e.pointerId !== pid) return;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    if (!dragging && Math.hypot(dx, dy) > 8) { dragging = true; clearSel(); el.classList.add('dragging'); chime('tap'); opts.onPick && opts.onPick(el); }
+    if (dragging) {
+      el.style.transform = `translate(${dx}px,${dy}px) scale(1.08)`;
+      const tg = findTarget(e.clientX, e.clientY, opts.targets());
+      if (tg !== hot) { if (hot) hot.classList.remove('drop-hot'); hot = tg; if (hot) hot.classList.add('drop-hot'); }
+    }
+  });
+  const up = e => {
+    if (e.pointerId !== pid) return; pid = null;
+    if (!dragging) { reset(); select(); return; }
+    const tg = e.type === 'pointerup' ? findTarget(e.clientX, e.clientY, opts.targets()) : null;
+    reset();
+    if (tg) opts.onDrop(el, tg); else { el.classList.add('back-home'); setTimeout(() => el.classList.remove('back-home'), 400); opts.onMiss && opts.onMiss(el); }
+  };
+  el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); } });
+  function select() {
+    if (el.dataset.locked) return;
+    if (G.sel && G.sel.el === el) { clearSel(); return; }
+    clearSel(); G.sel = { el, opts }; el.classList.add('selected'); el.setAttribute('aria-pressed', 'true'); chime('tap');
+    opts.targets().forEach(x => x.classList.add('drop-hint'));
+    opts.onSelect && opts.onSelect(el);
+  }
+}
+/* a drop target: click / Enter places the selected item there */
+function dropTarget(tg) {
+  if (!tg.matches('button')) { tg.tabIndex = 0; tg.setAttribute('role', 'button'); tg.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tg.click(); } }); }
+  tg.addEventListener('click', () => {
+    if (!G.sel || !G.sel.opts.targets().includes(tg)) return;
+    const { el, opts } = G.sel; clearSel(); opts.onDrop(el, tg);
+  });
+}
+
+/* ---- press-and-hold (patience as a mechanic: progress keeps if you let go) ---- */
+function holdButton(btn, ms, onTick, onDone) {
+  let p = 0, timer = null, last = 0;
+  const set = v => { p = v; btn.style.setProperty('--p', p); };
+  const step = now => { if (!timer) return; const dt = now - last; last = now; set(Math.min(1, p + dt / ms)); onTick && onTick(p); if (p >= 1) { stop(); onDone(); return; } timer = requestAnimationFrame(step); };
+  const start = e => { if (btn.disabled || p >= 1) return; e && e.preventDefault(); ac(); last = performance.now(); timer = requestAnimationFrame(step); btn.classList.add('holding'); };
+  const stop = () => { if (timer) cancelAnimationFrame(timer); timer = null; btn.classList.remove('holding'); };
+  btn.addEventListener('pointerdown', start); ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => btn.addEventListener(ev, stop));
+  btn.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) start(e); });
+  btn.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') stop(); });
+  btn.addEventListener('contextmenu', e => e.preventDefault());
+  return { reset: () => { stop(); set(0); }, get: () => p };
+}
+
+/* ---- choice helper: show buttons, resolve with the chosen id ---- */
+function ask(container, options) {
+  return new Promise(res => {
+    container.innerHTML = ''; container.hidden = false;
+    const btns = shuffle(options).map(o => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'choice'; b.__o = o;
+      b.addEventListener('click', () => { chime('tap'); container.hidden = true; G.hooks = G.hooks.filter(h => h !== hk); res(o.id); });
+      container.appendChild(b); return b;
+    });
+    const hk = () => btns.forEach(b => { const o = b.__o; b.innerHTML = (o.ic ? `<span class="ic" aria-hidden="true">${o.ic}</span>` : '') + t(o.label); });
+    hk(); G.hooks.push(hk);
+    setTimeout(() => btns[0] && btns[0].focus({ preventScroll: true }), 30);
+  });
+}
+
+/* ---- toolbar ---- */
+function initShell() {
+  $('#langBtn').addEventListener('click', () => { G.lang = G.lang === 'ar' ? 'en' : 'ar'; if ('speechSynthesis' in window) speechSynthesis.cancel(); applyLang(); chime('tap'); });
+  const tog = (id, key, after) => $(id).addEventListener('click', e => { G[key] = !G[key]; e.currentTarget.setAttribute('aria-pressed', String(G[key])); after && after(); chime('tap'); });
+  tog('#soundBtn', 'sound');
+  tog('#voiceBtn', 'voice', () => { if (G.voice && G.narr) speakText(t(G.narr)); if (!G.voice && 'speechSynthesis' in window) speechSynthesis.cancel(); });
+  tog('#bedBtn', 'bedtime', () => document.body.classList.toggle('bedtime', G.bedtime));
+  if (!('speechSynthesis' in window)) { $('#voiceBtn').hidden = true; $('#speakBtn').hidden = true; }
+  $('#speakBtn').addEventListener('click', () => speakText(t(G.narr)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') clearSel(); });
+  applyLang();
+}
+const times = n => (G.lang === 'ar' ? (n === 1 ? 'مرة واحدة' : n === 2 ? 'مرتين' : `${num(n)} مرات`) : (n === 1 ? 'once' : n === 2 ? 'twice' : `${n} times`));
+
+/* ======================= ART (placeholder assets - swap for real art later) ======================= */
+const ART = { star: '⭐', moon: '🌕', sun: '☀️', tray: '🍖', mat: '🧺' };
+/* ======================= CONTENT (sky round follows UI/story-prophet-ibrahim.html) ======================= */
+const SKY = [
+  { id: 'star', scene: 'night', name: { en: 'the star', ar: 'النجم' },
+    show: { en: 'One night, Prophet Ibrahim looked up at a beautiful, bright star. Tap the star.', ar: 'في إحدى الليالي نظر النبي إبراهيم عليه السلام إلى نجم جميل لامع. المس النجم.' },
+    when: { en: 'Night turns to dawn', ar: 'الليل يتحول إلى فجر' } },
+  { id: 'moon', scene: 'night', name: { en: 'the moon', ar: 'القمر' },
+    show: { en: 'Then the moon rose, big and bright! Tap the moon.', ar: 'ثم طلع القمر كبيراً منيراً! المس القمر.' },
+    when: { en: 'Morning comes', ar: 'يأتي الصباح' } },
+  { id: 'sun', scene: 'day', name: { en: 'the sun', ar: 'الشمس' },
+    show: { en: 'When the sun rose, it was the biggest and brightest of all! Tap the sun.', ar: 'ولما أشرقت الشمس كانت أكبرها وأشدها ضياءً! المس الشمس.' },
+    when: { en: 'Evening comes', ar: 'يأتي المساء' } }
+];
+const L = {
+  p1: { en: '1 · The night sky', ar: '١ · سماء الليل' }, p2: { en: '2 · Welcome, guests!', ar: '٢ · أهلاً بالضيوف!' },
+  tapped: { en: 'So beautiful! Now move the time slider and watch what happens to ', ar: 'ما أجمله! والآن حرّك شريط الوقت وشاهد ماذا يحدث لـ' },
+  /* a factual question only (scholar ruling): the child is never offered "yes, it is our Lord" */
+  setAsk: { en: 'It has set. Did it stay with us all the time?', ar: 'لقد غاب. هل بقي معنا طوال الوقت؟' },
+  optNo: { en: 'No, it went away', ar: 'لا، لقد غاب' }, optYes: { en: 'Yes, it stayed', ar: 'نعم، بقي' },
+  yes: { en: 'Look again: it went down and was gone. Let us look once more.', ar: 'انظر مرة أخرى: لقد نزل وغاب. لننظر مرة أخرى.' },
+  no: { en: 'Yes, it went away. Something that goes away cannot be our Lord. Allah never goes away and never sleeps: He is always with us, hearing and seeing. Ibrahim knew it could not be his Lord.', ar: 'نعم، لقد غاب. والشيء الذي يغيب لا يمكن أن يكون ربنا. الله لا يغيب أبداً ولا ينام، وهو معنا دائماً يسمع ويرى. عرف إبراهيم أنه لا يصلح أن يكون ربّه.' },
+  frameAsk: { en: 'Who made the star, the moon and the sun? Drag each one into the frame.', ar: 'من خلق النجم والقمر والشمس؟ اسحب كل واحد منها إلى الإطار.' },
+  created: { en: 'Created by Allah', ar: 'خلقها الله' },
+  frameDone: { en: 'Allah made them all. Only Allah, who never sets, deserves to be worshipped.', ar: 'الله خلقها كلها. والله وحده الذي لا يغيب هو المستحق للعبادة.' },
+  pause1Q: { en: 'The sun is so big and bright. Why can it not be our Lord?', ar: 'الشمس كبيرة جداً ومضيئة. لماذا لا يمكن أن تكون ربنا؟' },
+  pause1H: { en: 'Idea: it sets every evening; Allah made it, and Allah never sets or sleeps.', ar: 'فكرة: إنها تغيب كل مساء؛ الله خلقها، والله لا يغيب ولا ينام.' },
+  toTent: { en: 'Next: Ibrahim at home', ar: 'التالي: إبراهيم في بيته' },
+  tentIntro: { en: 'Ibrahim was known for welcoming guests generously. One day, guests arrived at his tent and greeted him with "Salam!", peace. How do we answer?', ar: 'عُرف إبراهيم بإكرام الضيوف. وفي يوم وصل ضيوف إلى خيمته وقالوا: "سلاماً!" كيف نردّ عليهم؟' },
+  optSalam: { en: 'Wa alaykum as-salam, welcome!', ar: 'وعليكم السلام، أهلاً وسهلاً!' }, optAway: { en: 'Who are you? Go away.', ar: 'من أنتم؟ اذهبوا.' },
+  away: { en: 'Guests are a gift. Ibrahim answered their greeting of peace with peace and welcomed them in. Let us choose again.', ar: 'الضيوف نعمة. ردّ إبراهيم تحيتهم بالسلام ورحّب بهم. لنختر مرة أخرى.' },
+  /* 51:26: he went quietly and quickly to his household */
+  hurry: { en: 'Peace answered with peace! Then Ibrahim went quickly and quietly to his household to get food ready. What shall we bring?', ar: 'ردّ السلام بالسلام! ثم ذهب إبراهيم مسرعاً بهدوء إلى أهله ليجهّز الطعام. أي طعام نقدّم؟' },
+  food: { en: 'What food shall we bring?', ar: 'أي طعام نقدّم؟' },
+  optBest: { en: 'Our best: a fat, roasted calf', ar: 'أفضل ما عندنا: عجل سمين مشويّ' }, optCrust: { en: 'A dry crust of bread', ar: 'قطعة خبز يابسة' },
+  crust: { en: 'That is kind, but Ibrahim gave his guests his very best. Let us choose again.', ar: 'هذا لطيف، لكن إبراهيم قدّم لضيوفه أفضل ما عنده. لنختر مرة أخرى.' },
+  best: { en: 'Yes! Ibrahim brought his very best: a fat, roasted calf. Now drag the tray close to the guests.', ar: 'نعم! جاء إبراهيم بأفضل ما عنده: عجل سمين مشويّ. والآن اسحب الصينية قريباً من الضيوف.' },
+  mat: { en: 'Guests\' mat', ar: 'مجلس الضيوف' }, far: { en: 'Far corner', ar: 'ركن بعيد' },
+  farMsg: { en: 'That is a long way for the guests to reach. Ibrahim brought the food close to them. Try again.', ar: 'هذا بعيد عن الضيوف. قرّب إبراهيم الطعام إليهم. حاول مرة أخرى.' },
+  invite: { en: 'The food is close to them. How shall we invite them to eat?', ar: 'الطعام قريب منهم. كيف ندعوهم إلى الأكل؟' },
+  optPolite: { en: 'Please, won\'t you eat?', ar: 'تفضّلوا، ألا تأكلون؟' }, optRude: { en: 'Eat it now!', ar: 'كُلوا الآن!' },
+  rude: { en: 'Ibrahim spoke to his guests gently and politely. Let us choose again.', ar: 'كان إبراهيم يكلّم ضيوفه بلطف وأدب. لنختر مرة أخرى.' },
+  done: { en: 'A warm welcome: peace answered with peace, hurrying to prepare, the best food, brought close, and a gentle invitation.', ar: 'ترحيب دافئ: ردّ السلام بالسلام، والإسراع في التجهيز، وأفضل الطعام، مقرّباً إليهم، ودعوة لطيفة.' },
+  /* the parent line the scholar requires: the guests were angels, and angels do not eat */
+  angels: { en: 'For the grown-up: these guests were really angels sent by Allah with good news. Angels do not eat, so they did not eat the food. Ibrahim\'s welcome was still the best welcome.', ar: 'للوالدين: كان هؤلاء الضيوف ملائكة أرسلهم الله ببشرى. والملائكة لا يأكلون، فلم يأكلوا من الطعام. ومع ذلك كان ترحيب إبراهيم أكرم ترحيب.' },
+  pause2Q: { en: 'Who visits our home? What could we do to make them feel welcome, like Ibrahim?', ar: 'من يزور بيتنا؟ ماذا نستطيع أن نفعل ليشعروا بالترحيب، كما فعل إبراهيم؟' },
+  pause2H: { en: 'Idea: choose one thing to do for the next guest: greet them, bring water, or share the best snack.', ar: 'فكرة: اختر شيئاً واحداً تفعله للضيف القادم: تحية، أو كوب ماء، أو أطيب ما عندك.' },
+  endT: { en: 'Only Allah, and a generous heart', ar: 'الله وحده، وقلبٌ كريم' },
+  endB: { en: 'You watched the star, the moon and the sun set, and found that only Allah, who made them, deserves worship. Then you learned how Ibrahim welcomed his guests with his very best.', ar: 'شاهدت النجم والقمر والشمس تغيب، وعرفت أن الله وحده الذي خلقها هو المستحق للعبادة. ثم تعلّمت كيف أكرم إبراهيم ضيوفه بأفضل ما عنده.' },
+  tier: { en: 'Next time: ask the child to explain each answer in their own words before tapping', ar: 'في المرة القادمة: اطلب من الطفل أن يشرح كل جواب بكلماته قبل أن يختار' }
+};
+/* ======================= LOGIC ======================= */
+const S = {};
+function reset() {
+  Object.assign(S, { i: 0, placed: 0, phase: L.p1, stage: 'sky' });
+  ['#qFace', '#ctl', '#frame', '#tentArea', '#timeWrap'].forEach(s => ($(s).hidden = true));
+  $('#skyArea').hidden = false; showSky();
+}
+function showSky() {
+  const o = SKY[S.i]; S.tapped = false; setScene(o.scene); $('#time').value = 0; setSet(0);
+  renderSkyObj(); say(o.show);
+}
+function skyTapped() {
+  const o = SKY[S.i]; if (S.tapped) return; S.tapped = true; chime('good'); sparkle($('#skyObj'), 8); fx($('#skyObj'), 'bounce');
+  $('#timeWrap').hidden = false; renderTimeLabel(); say({ en: L.tapped.en + o.name.en + '.', ar: L.tapped.ar + o.name.ar + '.' });
+  setTimeout(() => $('#time').focus({ preventScroll: true }), 50);
+}
+async function timeMoved(v) {
+  setSet(v / 100);
+  if (v < 95 || S.setting) return;
+  S.setting = true; $('#timeWrap').hidden = true; chime('soft'); say(L.setAsk);
+  for (;;) {
+    const c = await ask($('#choices'), [{ id: 'no', ic: '👋', label: L.optNo }, { id: 'yes', ic: '✨', label: L.optYes }]);
+    if (c === 'no') break;
+    chime('soft'); say(L.yes); await wait(3000); say(L.setAsk);
+  }
+  chime('good'); say(L.no); await wait(2000); S.setting = false;
+  S.i++; if (S.i < SKY.length) return showSky();
+  frameRound();
+}
+function frameRound() {
+  $('#skyArea').hidden = true; setScene('night'); renderFrame(); say(L.frameAsk);
+}
+function placed(tok) {
+  tok.remove(); S.placed++; chime('good'); sparkle($('#created'), 8); renderCreated();
+  if (S.placed < 3) return;
+  say(L.frameDone); $('#qFace').hidden = false;
+  setTimeout(async () => {
+    await pausePoint(L.pause1Q, L.pause1H);
+    $('#ctl').hidden = false; $('#nextBtn').textContent = t(L.toTent); $('#nextBtn').onclick = tent; $('#nextBtn').focus({ preventScroll: true });
+  }, 3500);
+}
+async function tent() {
+  $('#ctl').hidden = true; $('#qFace').hidden = true; $('#frame').hidden = true; S.phase = L.p2; S.stage = 'tent'; setScene('tent');
+  $('#tentArea').hidden = false; $('#tentRow').innerHTML = ''; say(L.tentIntro);
+  await askUntil([{ id: 'ok', ic: '🤲', label: L.optSalam }, { id: 'bad', ic: '🚫', label: L.optAway }], L.away, L.tentIntro);
+  food();
+}
+async function food() {
+  say(L.hurry);
+  await askUntil([{ id: 'ok', ic: '🍖', label: L.optBest }, { id: 'bad', ic: '🍞', label: L.optCrust }], L.crust, L.food);
+  say(L.best); renderTray();
+}
+async function trayDrop(el, tg) {
+  if (tg.id === 'far') { chime('soft'); fx(tg, 'wobble'); say(L.farMsg); return; }
+  el.remove(); tg.insertAdjacentHTML('beforeend', `<span aria-hidden="true">${ART.tray}</span>`); chime('good'); sparkle(tg, 8);
+  say(L.invite);
+  await askUntil([{ id: 'ok', ic: '😊', label: L.optPolite }, { id: 'bad', ic: '😠', label: L.optRude }], L.rude, L.invite);
+  chime('good'); say(L.done); await wait(3000);
+  say(L.angels); await wait(4500);
+  await pausePoint(L.pause2Q, L.pause2H);
+  showEnding({ art: '⭐🌙☀️🏕️', title: L.endT, body: L.endB, tier: L.tier });
+}
+async function askUntil(opts, why, again) {
+  for (;;) {
+    const c = await ask($('#choices'), opts.map(o => ({ ...o })));
+    if (c === 'ok') { chime('good'); return; }
+    chime('soft'); say(why); await wait(2800); say(again);
+  }
+}
+/* ======================= RENDER (placeholder; replace with real art) ======================= */
+function setScene(k) { $('#scene').className = 'scene ' + k; $('#phaseTag').textContent = t(S.phase); }
+function setSet(f) { $('#skyObj').style.setProperty('--set', f); }
+function renderSkyObj() { const o = SKY[S.i], b = $('#skyObj'); b.hidden = false; b.textContent = ART[o.id]; b.setAttribute('aria-label', t(o.name)); }
+function renderTimeLabel() { $('#time').setAttribute('aria-valuetext', t(SKY[Math.min(S.i, 2)].when)); }
+function renderFrame() {
+  const f = $('#frame'); f.innerHTML = ''; f.hidden = false;
+  SKY.forEach(o => { const d = document.createElement('div'); d.className = 'skytok'; d.textContent = ART[o.id]; d.__o = o; d.setAttribute('aria-label', t(o.name)); draggable(d, { targets: () => [$('#created')], onDrop: placed }); f.appendChild(d); });
+  const c = document.createElement('button'); c.type = 'button'; c.id = 'created'; dropTarget(c); f.appendChild(c); renderCreated();
+}
+function renderCreated() {
+  const c = $('#created'); if (!c) return;
+  const inFrame = SKY.filter(o => !$$('.skytok').some(d => d.__o === o)).map(o => ART[o.id]).join(' ');
+  c.innerHTML = `<span>${t(L.created)}</span><span class="in" aria-hidden="true">${inFrame}</span>`;
+}
+function renderTray() {
+  const r = $('#tentRow');
+  const far = document.createElement('button'); far.type = 'button'; far.id = 'far'; far.textContent = t(L.far); dropTarget(far);
+  const mat = document.createElement('button'); mat.type = 'button'; mat.id = 'mat'; mat.textContent = t(L.mat); dropTarget(mat);
+  const tray = document.createElement('div'); tray.id = 'tray'; tray.textContent = ART.tray; tray.setAttribute('aria-label', t({ en: 'Tray of food', ar: 'صينية الطعام' }));
+  draggable(tray, { targets: () => [$('#mat'), $('#far')], onDrop: trayDrop });
+  r.prepend(far); r.appendChild(mat); r.appendChild(tray);
+}
+$('#skyObj').addEventListener('click', skyTapped);
+$('#time').addEventListener('input', e => timeMoved(+e.target.value));
+onLang(() => {
+  $('#phaseTag').textContent = t(S.phase); if (S.stage === 'sky' && !$('#skyObj').hidden) $('#skyObj').setAttribute('aria-label', t(SKY[Math.min(S.i, 2)].name));
+  renderTimeLabel(); renderCreated(); if ($('#mat')) $('#mat').firstChild.textContent = t(L.mat); if ($('#far')) $('#far').textContent = t(L.far);
+  $$('.skytok').forEach(d => d.setAttribute('aria-label', t(d.__o.name)));
+  if (!$('#ctl').hidden) $('#nextBtn').textContent = t(L.toTent);
+});
+wireEnding(reset);
+reset(); initShell();
+</script>
+</body>
+</html>

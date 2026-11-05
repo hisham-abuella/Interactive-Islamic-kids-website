@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<!--
+  MOCKUP 07 - Ayah Lanterns (prototype, not a production page)
+  Learning goal: After playing, the child can put the whole ayat of Surah Al-Ikhlas (and, as a harder tier, Al-Fatiha) in their correct order and say what each one is about.
+  Core loop: listen to (or read) an ayah, find the lantern that holds it, hang it on the string in order, and watch the courtyard light up; a lantern that is not next floats gently back to its tray with a hint (no 'wrong' sound or wobble on a Quran card).
+  Scripture: every ayah string below is copied character-for-character from UI/surah-al-ikhlas.html and UI/surah-fatiha.html (verify with the check in claudeteam/reviews/game-ayah-lanterns.md).
+  Audio: uses UI/audio/<surah>/en/verse-N.mp3 - the site's narration of each ayah's MEANING, not a recitation.
+  Scholar gate 1 (2026-11-03) and round 3 (2026-11-04): no synthesised voice ever speaks Quranic wording. If a
+  narration file is missing the game stays silent (no speech synthesis of an ayah or its translation). The Arabic
+  verse files were removed (they opened with the ayah); while SurahNarration.arVerseAudio is false, AR mode shows
+  a "coming soon" note and requests no file. Chimes are one
+  fixed two-note chime, never a rising run, and never sound while ayah audio plays: the ayah waits for the chime
+  to finish, and the finale chime waits for the last ayah to end. A recitation, if the owner wants one, must be a
+  licensed human qari, never TTS and never a voice clone.
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayah Lanterns - game mockup</title>
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body.gm { margin: 0; min-height: 100vh; background: var(--parchment); color: var(--ink);
+    font-family: 'Baloo 2', 'Nunito', system-ui, sans-serif; line-height: 1.5; }
+  html[lang="ar"] body.gm { font-family: 'Amiri', 'Geeza Pro', 'Noto Naskh Arabic', 'Nunito', serif; }
+  .quran { font-family: 'Amiri Quran', 'Amiri', 'Geeza Pro', 'Noto Naskh Arabic', serif; direction: rtl; unicode-bidi: isolate; }
+
+  /* --- top bar --- */
+  .gbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+    padding: .5rem 1rem; background: var(--turquoise-deep); color: #fff; border-bottom: 2px solid var(--gold); }
+  .gbar h1 { flex: 1; margin: 0; font-size: 1.2rem; line-height: 1.2; }
+  .mock-tag { font-size: .75rem; font-weight: 700; background: var(--gold-pale); color: var(--gold-ink-strong);
+    border-radius: 999px; padding: .1rem .6rem; margin-inline-start: .5rem; vertical-align: middle; }
+  .gbtn { min-height: 48px; min-width: 48px; border-radius: 999px; border: 2px solid var(--gold); background: var(--card);
+    color: var(--ink); font: inherit; font-weight: 700; padding: .35rem 1rem; cursor: pointer;
+    transition: transform .12s ease, box-shadow .2s ease; touch-action: manipulation; }
+  .gbtn:active { transform: scale(.94); }
+  .gbtn.primary { background: linear-gradient(var(--turquoise), var(--turquoise-deep)); color: #fff; border-color: var(--gold-light); }
+  .gbtn[aria-pressed="true"] { background: var(--gold-pale); }
+  .gbar .gbtn { background: transparent; color: #fff; border-color: rgba(255,255,255,.55); }
+  .gbar .gbtn[aria-pressed="true"] { background: rgba(255,255,255,.18); }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 1rem; }
+  .card { background: var(--card); border: 1.5px solid var(--rule-strong); border-radius: var(--radius-xl); padding: 1.25rem; box-shadow: var(--shadow-md); }
+  h2 { margin: .2rem 0 .6rem; font-size: 1.5rem; color: var(--turquoise-deep); }
+  .lead { font-size: 1.1rem; margin: 0 0 1rem; }
+  .row { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; }
+  .choice { flex: 1 1 220px; display: flex; align-items: center; gap: .75rem; min-height: 88px; text-align: start;
+    border-radius: var(--radius-lg); padding: .75rem 1rem; }
+  .choice svg { width: 44px; height: 66px; flex: none; }
+  .choice[aria-pressed="true"] { box-shadow: 0 0 0 4px var(--gold-light); }
+  .label-sm { font-size: .95rem; color: var(--slate-700); font-weight: 700; margin: 1rem 0 .4rem; }
+
+  /* --- the night courtyard --- */
+  .say-row { display: flex; gap: .5rem; align-items: center; margin-bottom: .75rem; flex-wrap: wrap; }
+  .say { flex: 1 1 260px; min-height: 3.2em; font-size: 1.15rem; font-weight: 700; padding: .5rem .9rem; border-radius: var(--radius-lg);
+    background: var(--gold-wash); border: 1.5px solid var(--rule); }
+  .night { --lit: 0; position: relative; border-radius: var(--radius-xl); padding: 1rem .75rem 1.25rem; overflow: hidden;
+    background: radial-gradient(ellipse at 50% 0%, rgba(240, 196, 110, calc(var(--lit) * .55)), transparent 70%),
+                linear-gradient(#0c2733, #15404a 70%, #1b4d52);
+    border: 2px solid var(--gold); box-shadow: var(--shadow-lg); transition: background .8s ease; }
+  .night::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: calc(.25 + var(--lit) * .75);
+    background-image: radial-gradient(1.5px 1.5px at 10% 20%, #fff 50%, transparent), radial-gradient(1px 1px at 30% 8%, #fff 50%, transparent),
+      radial-gradient(1.5px 1.5px at 55% 15%, #fff 50%, transparent), radial-gradient(1px 1px at 75% 6%, #fff 50%, transparent),
+      radial-gradient(1.5px 1.5px at 90% 22%, #fff 50%, transparent), radial-gradient(1px 1px at 42% 28%, #fff 50%, transparent); }
+  .arch { position: relative; height: 26px; margin: 0 1rem .25rem; border: 3px solid var(--gold); border-bottom: none;
+    border-radius: 60% 60% 0 0 / 100% 100% 0 0; opacity: .8; }
+  .path { list-style: none; margin: 0; padding: 0; display: grid; gap: .45rem; position: relative; }
+  .path.drop-hot { outline: 3px dashed var(--gold-light); outline-offset: 6px; border-radius: 16px; }
+  .slot { display: flex; align-items: center; gap: .75rem; min-height: 72px; padding: .35rem .75rem; border-radius: 18px;
+    border: 2px dashed rgba(224, 183, 92, .45); color: #f6ecd2; transition: background .6s ease, border-color .6s ease; }
+  .slot .num { flex: none; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%;
+    border: 2px solid var(--gold-light); font-weight: 800; font-size: 1.1rem; }
+  .slot .lan { flex: none; width: 40px; height: 60px; opacity: .25; }
+  .slot .txt { flex: 1; font-size: 1.05rem; opacity: .65; }
+  .slot.next { border-color: var(--gold-light); background: rgba(224, 183, 92, .08); }
+  .slot.next .txt { opacity: .9; }
+  .slot.filled { border-style: solid; border-color: var(--gold); background: rgba(246, 210, 122, .14); }
+  .slot.filled .lan { opacity: 1; --glass: #F6D27A; --flame: #FFF7DD; filter: drop-shadow(0 0 10px rgba(255, 214, 120, .9)); }
+  .slot.filled .txt { opacity: 1; }
+  .slot .quran { font-size: 1.6rem; line-height: 1.8; color: #fff; display: block; }
+  .slot .mean { display: block; font-size: .95rem; color: #f3e4c4; }
+  .slot .hear { margin-inline-start: auto; }
+  .slot.bloom .lan { animation: bloom .9s ease; }
+  @keyframes bloom { 0% { transform: scale(.6); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
+
+  /* --- the tray of unlit lanterns --- */
+  .tray-title { margin: 1.1rem 0 .5rem; font-weight: 800; color: var(--slate-700); }
+  .tray { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .75rem; }
+  .lcard { position: relative; display: flex; flex-direction: column; border-radius: var(--radius-lg); background: var(--card);
+    border: 2px solid var(--rule-strong); box-shadow: var(--shadow-sm); transition: transform .2s ease, box-shadow .2s ease; }
+  .lcard .pick { flex: 1; display: flex; align-items: center; gap: .75rem; min-height: 96px; padding: .6rem .8rem; background: none;
+    border: none; border-radius: var(--radius-lg); font: inherit; color: inherit; cursor: grab; text-align: start; touch-action: none; }
+  .lcard .pick:active { cursor: grabbing; }
+  .lcard .pick svg { width: 40px; height: 60px; flex: none; --glass: #2B4F55; }
+  .lcard .quran { font-size: 1.5rem; line-height: 1.8; }
+  .lcard .mean { display: block; font-size: .95rem; color: var(--slate-700); }
+  .lcard .hear { position: absolute; inset-inline-end: .35rem; bottom: .35rem; }
+  .lcard.glimmer { box-shadow: 0 0 0 4px var(--gold-light), 0 0 24px rgba(224,183,92,.8); animation: glimmer 1.6s ease-in-out 3; }
+  @keyframes glimmer { 50% { transform: translateY(-4px); } }
+  /* a Quran card that is not next floats back to its tray: a soft lift, never a 'wrong' wobble */
+  .lcard.swing { animation: floatBack .7s ease; }
+  @keyframes floatBack { 0%,100% { transform: none; } 45% { transform: translateY(-6px); } }
+  .lcard.dragging { opacity: .35; }
+  .ghost { position: fixed; z-index: 200; pointer-events: none; width: 230px; transform: translate(-50%, -50%) rotate(-3deg);
+    box-shadow: var(--shadow-lg); opacity: .95; }
+  .flyer { position: fixed; z-index: 200; pointer-events: none; transition: transform .55s cubic-bezier(.3,1.3,.5,1), opacity .55s; }
+  .icon-btn { min-width: 48px; min-height: 48px; border-radius: 50%; padding: 0; font-size: 1.2rem; }
+  .meanings-off .mean { display: none !important; }
+  html[lang="ar"] .mean { display: none !important; } /* the ayah itself is the Arabic; meanings are heard */
+
+  /* --- end + pause --- */
+  .end-surah { background: linear-gradient(#0c2733, #15404a); color: #fff; border: 2px solid var(--gold); border-radius: var(--radius-xl);
+    padding: 1rem 1.25rem; margin: 1rem 0; text-align: center; }
+  .end-surah p { margin: .2rem 0; font-size: 1.7rem; line-height: 2; }
+  .end-surah .n { display: inline-grid; place-items: center; width: 34px; height: 34px; border: 1.5px solid var(--gold-light);
+    border-radius: 50%; font-size: .95rem; margin-inline: .4rem; font-family: 'Nunito', sans-serif; vertical-align: middle; }
+  .note { font-size: .9rem; color: var(--slate-500); margin-top: 1rem; }
+  .pause { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 1rem; background: rgba(12, 39, 51, .6); }
+  .pause[hidden] { display: none; }
+  .pause-card { max-width: 540px; background: var(--card); border: 2px solid var(--gold); border-radius: var(--radius-xl);
+    padding: 1.5rem; box-shadow: var(--shadow-lg); text-align: center; }
+  .pp-tag { display: inline-block; font-size: .85rem; font-weight: 800; color: var(--gold-ink); background: var(--gold-wash);
+    border-radius: 999px; padding: .15rem .75rem; margin-bottom: .5rem; }
+  .pause-card .q { font-size: 1.35rem; font-weight: 800; margin: .5rem 0 1rem; }
+
+  /* --- bedtime: same game, softer --- */
+  body.bedtime { background: #10262c; color: #e9e2cf; }
+  body.bedtime .card { background: #173238; color: #e9e2cf; border-color: rgba(224,183,92,.35); }
+  body.bedtime .lcard { background: #1d3b41; color: #e9e2cf; }
+  body.bedtime .lcard .mean, body.bedtime .label-sm, body.bedtime .tray-title { color: #cfc6ad; }
+  body.bedtime .say { background: #1d3b41; border-color: rgba(224,183,92,.3); }
+  body.bedtime h2 { color: var(--gold-light); }
+  body.bedtime .gbtn:not(.primary) { background: #1d3b41; color: #e9e2cf; }
+  body.bedtime .slot.filled .lan { filter: drop-shadow(0 0 5px rgba(255, 214, 120, .6)); }
+
+  @media (prefers-reduced-motion: reduce) { .lcard.glimmer { animation: none; } .slot.bloom .lan { animation: none; } }
+  @media (max-width: 560px) { .slot .quran { font-size: 1.35rem; } .gbar h1 { font-size: 1rem; } }
+</style>
+</head>
+<body class="gm">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="lantern" viewBox="0 0 60 90">
+      <circle cx="30" cy="6" r="4" fill="none" stroke="#C08A2E" stroke-width="2"/>
+      <path d="M18 14h24l-4 8H22z" fill="#C08A2E"/>
+      <path d="M20 22h20l6 18-6 26H20l-6-26z" style="fill:var(--glass,#2B4F55)" stroke="#C08A2E" stroke-width="2"/>
+      <path d="M30 22v44M14 40h32" stroke="#C08A2E" stroke-width="1" opacity=".6"/>
+      <ellipse cx="30" cy="46" rx="4" ry="7" style="fill:var(--flame,transparent)"/>
+      <path d="M22 66h16l-4 8h-8z" fill="#C08A2E"/>
+      <path d="M30 74v10" stroke="#C08A2E" stroke-width="2"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="gbar">
+  <h1><span data-t="title"></span><span class="mock-tag" data-t="mock"></span></h1>
+  <button class="gbtn" id="bedBtn" type="button" aria-pressed="false" data-t-aria="bedtime">🌙</button>
+  <button class="gbtn" id="sndBtn" type="button" aria-pressed="true" data-t-aria="sound">🔔</button>
+  <button class="gbtn" id="langBtn" type="button" lang="ar">عربي</button>
+</header>
+
+<main class="wrap">
+  <!-- 1. Setup -->
+  <section class="card" id="setup">
+    <h2 data-t="setupTitle"></h2>
+    <p class="lead" data-t="setupLead"></p>
+    <p class="label-sm" data-t="pickSurah"></p>
+    <div class="row" role="group" data-t-aria="pickSurah" id="surahPick">
+      <button class="gbtn choice" type="button" data-surah="ikhlas" aria-pressed="true">
+        <svg aria-hidden="true"><use href="#lantern"/></svg><span data-t="ikhlasName"></span></button>
+      <button class="gbtn choice" type="button" data-surah="fatiha" aria-pressed="false">
+        <svg aria-hidden="true"><use href="#lantern"/></svg><span data-t="fatihaName"></span></button>
+    </div>
+    <p class="label-sm" data-t="levelLabel"></p>
+    <div class="row" role="group" data-t-aria="levelLabel" id="levelPick">
+      <button class="gbtn" type="button" data-level="help" aria-pressed="true" data-t="lvlHelp"></button>
+      <button class="gbtn" type="button" data-level="hard" aria-pressed="false" data-t="lvlHard"></button>
+    </div>
+    <p style="margin-top:1.25rem"><button class="gbtn primary" id="startBtn" type="button" data-t="start"></button></p>
+    <p class="note" data-t="audioNote"></p>
+  </section>
+
+  <!-- 2. Play -->
+  <section id="play" hidden>
+    <div class="say-row">
+      <div class="say" id="say" aria-live="polite"></div>
+      <button class="gbtn icon-btn" id="readBtn" type="button" data-t-aria="readToMe">🔊</button>
+      <button class="gbtn" id="listenNextBtn" type="button" data-t="listenNext"></button>
+    </div>
+    <div class="night" id="night">
+      <div class="arch" aria-hidden="true"></div>
+      <ol class="path" id="path" data-t-aria="pathLabel"></ol>
+    </div>
+    <p class="tray-title" id="trayTitle" data-t="trayTitle"></p>
+    <div class="tray" id="tray"></div>
+  </section>
+
+  <!-- 3. End -->
+  <section class="card" id="end" hidden>
+    <h2 data-t="endTitle"></h2>
+    <p class="lead" data-t="endLead"></p>
+    <div class="end-surah" id="endSurah"></div>
+    <p class="lead"><strong data-t="finishWith"></strong> <span id="recap"></span></p>
+    <div class="row">
+      <button class="gbtn primary" id="againBtn" type="button" data-t="again"></button>
+      <button class="gbtn" id="otherBtn" type="button"></button>
+      <button class="gbtn" id="hearAllBtn" type="button" data-t="hearAll"></button>
+    </div>
+  </section>
+</main>
+
+<div class="pause" id="pause" hidden role="dialog" aria-modal="true" aria-labelledby="pauseQ">
+  <div class="pause-card">
+    <span class="pp-tag" data-t="pauseTag"></span>
+    <p class="q" id="pauseQ"></p>
+    <p id="pauseSub"></p>
+    <div class="row" style="justify-content:center">
+      <button class="gbtn icon-btn" id="pauseRead" type="button" data-t-aria="readToMe">🔊</button>
+      <button class="gbtn primary" id="pauseGo" type="button" data-t="pauseGo"></button>
+    </div>
+  </div>
+</div>
+
+<script src="../../surah-narration.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- scripture: copied from the site pages, never retyped ---------- */
+  var SURAHS = {
+    ikhlas: {
+      id: 'surah-al-ikhlas',
+      ayat: [
+        { ar: 'قُلْ هُوَ اللَّهُ أَحَدٌ', en: '"Say: He is Allah, the One."' },
+        { ar: 'اللَّهُ الصَّمَدُ', en: '"Allah, the Eternal Refuge."' },
+        { ar: 'لَمْ يَلِدْ وَلَمْ يُولَدْ', en: '"He does not give birth, nor was He born."' },
+        { ar: 'وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ', en: '"And there is none comparable to Him."' }
+      ],
+      /* parent prompts copied from the page's "For the grown-up reading" box */
+      ask: { en: 'Can you tell me one thing this surah says about Allah?', ar: 'هل تخبرني بشيء واحد تقوله هذه السورة عن الله؟' },
+      recap: { en: 'Four short verses that answer the biggest question: who is Allah?', ar: 'أربع آيات قصيرة تجيب عن أعظم سؤال: من هو الله؟' },
+      firstHint: { en: 'The first ayah starts with a command: <b>"Say!"</b>', ar: 'الآية الأولى تبدأ بأمر: <b>«قُلْ»</b>' }
+    },
+    fatiha: {
+      id: 'surah-fatiha',
+      ayat: [
+        { ar: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', en: '"In the name of Allah, the Most Gracious, the Most Merciful"' },
+        { ar: 'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ', en: '"All praise is for Allah, Lord of all worlds"' },
+        { ar: 'الرَّحْمَٰنِ الرَّحِيمِ', en: '"The Most Gracious, the Most Merciful"' },
+        { ar: 'مَالِكِ يَوْمِ الدِّينِ', en: '"Master of the Day of Judgment"' },
+        { ar: 'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ', en: '"You alone we worship, and You alone we ask for help"' },
+        { ar: 'اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ', en: '"Guide us to the straight path"' },
+        { ar: 'صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ', en: '"The path of those You have blessed, not of those who earned Your anger, nor of those who went astray"' }
+      ],
+      ask: { en: 'Which line are we asking Allah for something in?', ar: 'أي آية نطلب فيها من الله شيئاً؟' },
+      recap: { en: 'We say this surah in every prayer — that is why we learn it first.', ar: 'نقرأ هذه السورة في كل صلاة، ولهذا نتعلّمها أولاً.' },
+      firstHint: { en: 'Al-Fatiha begins with Allah\'s name: the <b>Bismillah</b>.', ar: 'تبدأ الفاتحة باسم الله: <b>البسملة</b>.' }
+    }
+  };
+
+  /* ---------- strings ---------- */
+  var T = {
+    title: { en: 'Ayah Lanterns', ar: 'فوانيس الآيات' },
+    mock: { en: 'Mockup', ar: 'نموذج تجريبي' },
+    bedtime: { en: 'Bedtime mode', ar: 'وضع النوم الهادئ' },
+    sound: { en: 'Sound and voice', ar: 'الصوت' },
+    setupTitle: { en: 'Light the lanterns in order', ar: 'أضئ الفوانيس بالترتيب' },
+    setupLead: { en: 'Each lantern holds one whole ayah. Hang them on the string in the order they come in the surah, from the first ayah to the last, and the courtyard will glow.',
+                 ar: 'في كل فانوس آية كاملة. علّق الفوانيس على الحبل بترتيب آياتها في السورة، من الآية الأولى إلى الأخيرة، فيضيء الفناء.' },
+    pickSurah: { en: 'Choose a surah', ar: 'اختر سورة' },
+    ikhlasName: { en: '<b>Al-Ikhlas</b><br>4 ayat · start here', ar: '<b>الإخلاص</b><br>٤ آيات · ابدأ بها' },
+    fatihaName: { en: '<b>Al-Fatiha</b><br>7 ayat · a bigger challenge', ar: '<b>الفاتحة</b><br>٧ آيات · تحدٍّ أكبر' },
+    levelLabel: { en: 'Grown-up: how much help?', ar: 'للكبير: كم من المساعدة؟' },
+    lvlHelp: { en: 'With helpers', ar: 'مع المساعدة' },
+    lvlHard: { en: 'Arabic only, fewer hints', ar: 'بالعربية فقط، تلميحات أقل' },
+    start: { en: 'Start ✨', ar: 'ابدأ ✨' },
+    audioNote: { en: 'Mockup note: the 🔊 buttons play the site\'s narration of each ayah\'s meaning (it is not a recitation). Tap a lantern\'s 🔊 to hear it.',
+                 ar: 'ملاحظة: أزرار 🔊 تُسمِعك شرح معنى كل آية كما في الموقع (وليست تلاوة). المس 🔊 على الفانوس لتسمعه.' },
+    readToMe: { en: 'Read this to me', ar: 'اقرأ لي' },
+    listenNext: { en: '👂 Listen for the next ayah', ar: '👂 استمع إلى الآية التالية' },
+    pathLabel: { en: 'The lantern string, in ayah order', ar: 'حبل الفوانيس بترتيب الآيات' },
+    trayTitle: { en: 'Unlit lanterns: tap one, or drag it up to the string', ar: 'فوانيس مطفأة: المس فانوساً أو اسحبه إلى الحبل' },
+    sayStart: { en: 'Which ayah comes <b>first</b>? Tap its lantern, or drag it up to the string.', ar: 'أي آية تأتي <b>أولاً</b>؟ المس فانوسها أو اسحبه إلى الحبل.' },
+    sayNext: { en: 'Which ayah comes <b>next</b>?', ar: 'أي آية تأتي <b>بعدها</b>؟' },
+    praise: { en: ['Lovely!', 'You remembered!', 'That\'s the one!', 'Beautiful listening!', 'Well done!'],
+              ar: ['أحسنت!', 'تذكّرتها!', 'هذه هي!', 'استماع جميل!', 'بارك الله فيك!'] },
+    notYet1: { en: 'Not yet — that ayah is waiting for its turn. It comes later in the surah.', ar: 'ليس بعد — هذه الآية تنتظر دورها، فهي تأتي لاحقاً في السورة.' },
+    notYet2: { en: 'Let\'s listen to the ayah that comes next… which lantern holds it?', ar: 'لنستمع إلى الآية التالية… في أي فانوس هي؟' },
+    notYet3: { en: 'Look — one lantern is glowing softly. That is the one that comes next.', ar: 'انظر — هناك فانوس يلمع بهدوء. هذا هو الذي يأتي بعدها.' },
+    hearIt: { en: 'Hear this ayah\'s meaning', ar: 'استمع إلى معنى هذه الآية' },
+    ayahN: { en: 'Ayah', ar: 'الآية' },
+    waiting: { en: 'waiting for its lantern…', ar: 'تنتظر فانوسها…' },
+    pauseTag: { en: 'For the grown-up · pause and talk', ar: 'للكبير · توقّفا وتحدّثا' },
+    pauseSub: { en: 'Half the lanterns are lit. Ask, listen to the answer, then carry on together.', ar: 'نصف الفوانيس مضاء. اسأل، واستمع إلى الجواب، ثم أكملا معاً.' },
+    pauseGo: { en: 'We talked — carry on', ar: 'تحدّثنا — لنكمل' },
+    endTitle: { en: 'Every lantern is lit!', ar: 'أُضيئت كل الفوانيس!' },
+    endLead: { en: 'You put the whole surah in order. Now recite it together, ayah by ayah, while the lanterns glow.', ar: 'رتّبت السورة كلها. والآن اقرآها معاً، آية بعد آية، والفوانيس مضيئة.' },
+    finishWith: { en: 'Finish with:', ar: 'اختم بهذه:' },
+    again: { en: 'Play together again', ar: 'لنلعب معاً مرة أخرى' },
+    tryFatiha: { en: 'Try Al-Fatiha', ar: 'جرّب الفاتحة' },
+    tryIkhlas: { en: 'Try Al-Ikhlas', ar: 'جرّب الإخلاص' },
+    hearAll: { en: '🔊 Hear the meanings in order', ar: '🔊 استمع إلى المعاني بالترتيب' }
+  };
+
+  /* ---------- tiny kit: language, sound, voice, motion ---------- */
+  var LKEY = 'islamicKidsLang' /* the site's own language key, as games 01-05 read it */, SKEY = 'mockupGames.sound';
+  var lang = localStorage.getItem(LKEY) === 'ar' ? 'ar' : 'en';
+  var soundOn = localStorage.getItem(SKEY) !== 'off';
+  var reduceMQ = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function calm() { return reduceMQ.matches || document.body.classList.contains('bedtime'); }
+  function t(k) { var v = T[k]; return v ? v[lang] : k; }
+  function digits(n) { return lang === 'ar' ? String(n).replace(/[0-9]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'[d]; }) : String(n); }
+  function $(id) { return document.getElementById(id); }
+
+  var actx = null;
+  var toneEnd = 0; /* performance.now() when the last chime fades; ayah audio never starts before it */
+  function audioBusy() { return !!(current && !current.paused && !current.ended); }
+  function tone(freq, dur, vol, type) {
+    if (!soundOn || audioBusy()) return; /* nothing may sound over ayah audio */
+    toneEnd = Math.max(toneEnd, performance.now() + ((dur || 0.5) + 0.08) * 1000);
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      var now = actx.currentTime, o = actx.createOscillator(), g = actx.createGain();
+      o.type = type || 'sine'; o.frequency.value = freq;
+      var v = (vol || 0.12) * (document.body.classList.contains('bedtime') ? 0.5 : 1);
+      g.gain.setValueAtTime(0.0001, now); g.gain.linearRampToValueAtTime(v, now + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + (dur || 0.5));
+      o.connect(g); g.connect(actx.destination); o.start(now); o.stop(now + (dur || 0.5) + 0.05);
+    } catch (e) { /* no audio: fine */ }
+  }
+  /* one fixed two-note chime (no melody, no rising run) until the owner rules on instruments */
+  function chimeStep() { tone(659.25, 0.6, 0.1); setTimeout(function () { tone(987.77, 0.6, 0.06); }, 140); }
+
+  var current = null;
+  function stopVoice() { if (current) { current.pause(); current = null; } if ('speechSynthesis' in window) speechSynthesis.cancel(); }
+  /* speech synthesis is for game prose only: quoted Quran (class "quran" or «...») is stripped before speaking */
+  function speak(html) {
+    if (!soundOn || !('speechSynthesis' in window)) return;
+    speechSynthesis.cancel();
+    var txt = String(html).replace(/<span class="quran"[^>]*>[\s\S]*?<\/span>/g, '').replace(/«[^»]*»/g, '').replace(/<[^>]+>/g, '').trim();
+    if (!txt) return;
+    var u = new SpeechSynthesisUtterance(txt);
+    u.lang = lang === 'ar' ? 'ar-SA' : 'en-GB'; u.rate = 0.92; speechSynthesis.speak(u);
+  }
+  /* Plays the site's own narration file for an ayah; falls back to speech, as surah-narration.js does. */
+  /* No recitation (scholar ruling 2026-11-04, Part 2 A): the Arabic verse files recited the ayah and
+     were removed. While SurahNarration.arVerseAudio is false (one flag, in UI/surah-narration.js),
+     Arabic mode requests no verse file and shows a short "coming soon" note instead. */
+  var AR_VERSE_AUDIO = !!(window.SurahNarration && window.SurahNarration.arVerseAudio);
+  var SOON_NOTE = 'السرد بالعربية قريباً · Arabic narration is coming soon';
+  function arSoon() { return lang === 'ar' && !AR_VERSE_AUDIO; }
+  var ayahTimer = null;
+  function playAyah(sKey, i, onEnd) {
+    stopVoice(); clearTimeout(ayahTimer);
+    if (!soundOn || arSoon()) { if (onEnd) onEnd(); return; }
+    /* wait for any chime to finish first: no sound may overlap the ayah audio */
+    var gap = toneEnd - performance.now();
+    if (gap > 0) { ayahTimer = setTimeout(function () { playAyah(sKey, i, onEnd); }, gap + 30); return; }
+    var s = SURAHS[sKey];
+    var a = new Audio('../../audio/' + s.id + '/' + lang + '/verse-' + (i + 1) + '.mp3');
+    current = a;
+    var done = function () { if (current === a) current = null; if (onEnd) onEnd(); };
+    /* no speech synthesis for an ayah or its translation, in either language: a missing file stays silent */
+    var fallback = function () { if (current === a) current = null; if (onEnd) onEnd(); };
+    a.addEventListener('ended', done);
+    a.addEventListener('error', fallback);
+    a.play().catch(fallback);
+  }
+
+  /* ---------- game state ---------- */
+  var surahKey = 'ikhlas', level = 'help';
+  var placed = 0, misses = 0, order = [], paused = false, pauseShown = false;
+
+  function shuffle(a) {
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var x = a[i]; a[i] = a[j]; a[j] = x; }
+    /* never deal them out already in order */
+    var sorted = a.every(function (v, k) { return v === k; });
+    if (sorted && a.length > 1) { var y = a[0]; a[0] = a[1]; a[1] = y; }
+    return a;
+  }
+
+  function setSay(html, voice) { $('say').innerHTML = html; if (voice) speak(html); }
+
+  function lanternSVG() { return '<svg class="lan" aria-hidden="true" viewBox="0 0 60 90"><use href="#lantern"/></svg>'; }
+
+  function buildPath() {
+    var s = SURAHS[surahKey], ol = $('path');
+    ol.innerHTML = '';
+    s.ayat.forEach(function (ay, i) {
+      var li = document.createElement('li');
+      li.className = 'slot' + (i < placed ? ' filled' : '') + (i === placed ? ' next' : '');
+      li.dataset.i = i;
+      var body;
+      if (i < placed) {
+        body = '<span class="txt"><span class="quran" lang="ar">' + ay.ar + '</span><span class="mean">' + ay.en + '</span></span>' +
+               '<button class="gbtn icon-btn hear" type="button" data-hear="' + i + '" aria-label="' + t('hearIt') + ' ' + digits(i + 1) + '">🔊</button>';
+      } else {
+        body = '<span class="txt">' + t('ayahN') + ' ' + digits(i + 1) + (i === placed ? ' · ' + t('waiting') : '') + '</span>';
+      }
+      li.innerHTML = '<span class="num">' + digits(i + 1) + '</span>' + lanternSVG() + body;
+      ol.appendChild(li);
+    });
+    $('night').style.setProperty('--lit', String(placed / s.ayat.length));
+  }
+
+  function buildTray() {
+    var s = SURAHS[surahKey], tray = $('tray');
+    tray.innerHTML = '';
+    tray.classList.toggle('meanings-off', level === 'hard');
+    order.forEach(function (i) {
+      if (i < placed) return;
+      var ay = s.ayat[i];
+      var div = document.createElement('div');
+      div.className = 'lcard'; div.dataset.i = i;
+      div.innerHTML =
+        '<button class="pick" type="button" aria-label="' + ay.ar + '">' +
+          '<svg aria-hidden="true" viewBox="0 0 60 90"><use href="#lantern"/></svg>' +
+          '<span><span class="quran" lang="ar">' + ay.ar + '</span><span class="mean">' + ay.en + '</span></span>' +
+        '</button>' +
+        '<button class="gbtn icon-btn hear" type="button" data-hear="' + i + '" aria-label="' + t('hearIt') + '">🔊</button>';
+      tray.appendChild(div);
+    });
+    $('trayTitle').hidden = placed >= s.ayat.length;
+  }
+
+  function render() { buildPath(); buildTray(); }
+
+  function start() {
+    placed = 0; misses = 0; pauseShown = false;
+    order = shuffle(SURAHS[surahKey].ayat.map(function (_, i) { return i; }));
+    $('setup').hidden = true; $('end').hidden = true; $('play').hidden = false;
+    render();
+    setSay(t('sayStart'), true);
+    window.scrollTo({ top: 0, behavior: calm() ? 'auto' : 'smooth' });
+  }
+
+  function tryPlace(i, cardEl) {
+    if (paused) return;
+    var s = SURAHS[surahKey];
+    if (i === placed) {
+      success(i, cardEl);
+    } else {
+      misses++;
+      if (cardEl) { cardEl.classList.remove('swing'); void cardEl.offsetWidth; cardEl.classList.add('swing'); }
+      /* hint ladder: explain -> let them hear the next ayah -> make it glimmer (later on the harder tier) */
+      var glimmerAt = level === 'hard' ? 4 : 3;
+      if (misses === 1) {
+        setSay(t('notYet1') + (placed === 0 ? '<br>' + s.firstHint[lang] : ''), false);
+      } else if (misses >= glimmerAt) {
+        setSay(t('notYet3'), false);
+        var target = document.querySelector('.lcard[data-i="' + placed + '"]');
+        if (target) { target.classList.remove('glimmer'); void target.offsetWidth; target.classList.add('glimmer'); }
+      } else {
+        setSay(t('notYet2'), false); playAyah(surahKey, placed);
+      }
+    }
+  }
+
+  function success(i, cardEl) {
+    var s = SURAHS[surahKey];
+    var slot = document.querySelector('.slot[data-i="' + i + '"]');
+    var finish = function () {
+      placed++; misses = 0;
+      render();
+      var filled = document.querySelector('.slot[data-i="' + i + '"]');
+      if (filled && !calm()) filled.classList.add('bloom');
+      chimeStep();
+      var praise = T.praise[lang][Math.floor(Math.random() * T.praise[lang].length)];
+      if (placed >= s.ayat.length) {
+        setSay(praise, false);
+        /* the finale chime plays only after the last ayah's audio has ended */
+        var ended = false;
+        playAyah(surahKey, i, function () { ended = true; if (!$('end').hidden) chimeStep(); });
+        setTimeout(function () { finishGame(ended); }, calm() ? 900 : 1600);
+        return;
+      }
+      setSay(praise + ' ' + t('sayNext'), false);
+      playAyah(surahKey, i, null);
+      var next = document.querySelector('.lcard .pick');
+      if (next && document.activeElement === document.body) next.focus({ preventScroll: true });
+      if (!pauseShown && placed === Math.ceil(s.ayat.length / 2)) { pauseShown = true; setTimeout(showPause, 1200); }
+    };
+    if (!cardEl || !slot || calm()) { finish(); return; }
+    /* FLIP: fly a copy of the lantern card into its slot */
+    var from = cardEl.getBoundingClientRect(), to = slot.getBoundingClientRect();
+    var fly = cardEl.cloneNode(true);
+    fly.classList.add('flyer'); fly.classList.remove('swing', 'glimmer');
+    fly.style.left = from.left + 'px'; fly.style.top = from.top + 'px'; fly.style.width = from.width + 'px';
+    document.body.appendChild(fly);
+    cardEl.style.visibility = 'hidden';
+    requestAnimationFrame(function () {
+      fly.style.transform = 'translate(' + (to.left - from.left) + 'px,' + (to.top - from.top) + 'px) scale(.85)';
+      fly.style.opacity = '.3';
+    });
+    setTimeout(function () { fly.remove(); finish(); }, 560);
+  }
+
+  function showPause() {
+    var s = SURAHS[surahKey];
+    paused = true;
+    $('pauseQ').textContent = s.ask[lang];
+    $('pauseSub').textContent = t('pauseSub');
+    $('pause').hidden = false;
+    $('pauseGo').focus();
+    tone(659.25, 1.2, 0.06);
+  }
+  function hidePause() { paused = false; $('pause').hidden = true; var p = document.querySelector('.lcard .pick'); if (p) p.focus(); }
+
+  function finishGame(audioDone) {
+    var s = SURAHS[surahKey];
+    $('play').hidden = true; $('end').hidden = false;
+    $('endSurah').innerHTML = s.ayat.map(function (ay, i) {
+      return '<p><span class="quran" lang="ar">' + ay.ar + '</span><span class="n" aria-hidden="true">' + digits(i + 1) + '</span></p>';
+    }).join('');
+    $('recap').textContent = s.recap[lang];
+    $('otherBtn').textContent = surahKey === 'ikhlas' ? t('tryFatiha') : t('tryIkhlas');
+    if (audioDone) chimeStep();
+    $('againBtn').focus();
+    window.scrollTo({ top: 0, behavior: calm() ? 'auto' : 'smooth' });
+  }
+
+  function hearAll() {
+    if (arSoon()) { setSay(SOON_NOTE, false); return; }
+    var i = 0, s = SURAHS[surahKey];
+    var next = function () { if (i < s.ayat.length) { playAyah(surahKey, i++, next); } };
+    next();
+  }
+
+  /* ---------- drag to the string (pointer events); tap and keyboard fall through to click ---------- */
+  var drag = null, suppressClick = false;
+  document.addEventListener('pointerdown', function (e) {
+    var pick = e.target.closest('.lcard .pick');
+    if (!pick || paused) return;
+    drag = { pick: pick, card: pick.parentNode, x: e.clientX, y: e.clientY, ghost: null, id: e.pointerId };
+  });
+  document.addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!drag.ghost && Math.hypot(dx, dy) > 10) {
+      drag.ghost = drag.card.cloneNode(true);
+      drag.ghost.classList.add('ghost');
+      document.body.appendChild(drag.ghost);
+      drag.card.classList.add('dragging');
+      tone(440, 0.15, 0.04);
+    }
+    if (drag.ghost) {
+      e.preventDefault();
+      drag.ghost.style.left = e.clientX + 'px'; drag.ghost.style.top = e.clientY + 'px';
+      var r = $('night').getBoundingClientRect();
+      $('path').classList.toggle('drop-hot', e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom);
+    }
+  }, { passive: false });
+  function endDrag(e) {
+    if (!drag) return;
+    var d = drag; drag = null;
+    $('path').classList.remove('drop-hot');
+    if (!d.ghost) return; /* it was a tap - click handler does the work */
+    suppressClick = true; setTimeout(function () { suppressClick = false; }, 50);
+    d.ghost.remove(); d.card.classList.remove('dragging');
+    var r = $('night').getBoundingClientRect();
+    if (e.type === 'pointerup' && e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom) {
+      tryPlace(+d.card.dataset.i, d.card);
+    }
+  }
+  document.addEventListener('pointerup', endDrag);
+  document.addEventListener('pointercancel', endDrag);
+
+  document.addEventListener('click', function (e) {
+    var hear = e.target.closest('[data-hear]');
+    if (hear) { if (arSoon()) setSay(SOON_NOTE, false); else playAyah(surahKey, +hear.dataset.hear); return; }
+    var pick = e.target.closest('.lcard .pick');
+    if (pick) { if (suppressClick) return; tryPlace(+pick.parentNode.dataset.i, pick.parentNode); }
+  });
+
+  /* ---------- setup + chrome ---------- */
+  function pressGroup(groupId, btn) {
+    $(groupId).querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
+  }
+  $('surahPick').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; surahKey = b.dataset.surah; pressGroup('surahPick', b); tone(587, 0.2, 0.05); });
+  $('levelPick').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; level = b.dataset.level; pressGroup('levelPick', b); tone(587, 0.2, 0.05); });
+  $('startBtn').addEventListener('click', start);
+  $('againBtn').addEventListener('click', start);
+  $('otherBtn').addEventListener('click', function () { surahKey = surahKey === 'ikhlas' ? 'fatiha' : 'ikhlas'; pressGroup('surahPick', document.querySelector('[data-surah="' + surahKey + '"]')); start(); });
+  $('hearAllBtn').addEventListener('click', hearAll);
+  $('listenNextBtn').addEventListener('click', function () { if (arSoon()) { setSay(SOON_NOTE, false); return; } if (placed < SURAHS[surahKey].ayat.length) playAyah(surahKey, placed); });
+  $('readBtn').addEventListener('click', function () { speak($('say').innerHTML); });
+  $('pauseRead').addEventListener('click', function () { speak($('pauseQ').textContent); });
+  $('pauseGo').addEventListener('click', hidePause);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('pause').hidden) hidePause(); });
+
+  function applyLang() {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-t]').forEach(function (el) { el.innerHTML = t(el.dataset.t); });
+    document.querySelectorAll('[data-t-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.dataset.tAria)); });
+    var lb = $('langBtn');
+    lb.textContent = lang === 'ar' ? 'English' : 'عربي';
+    lb.setAttribute('lang', lang === 'ar' ? 'en' : 'ar');
+    lb.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'التبديل إلى العربية');
+    if (!$('play').hidden) { render(); setSay(placed ? t('sayNext') : t('sayStart'), false); }
+    if (!$('end').hidden) finishGame();
+    if (!$('pause').hidden) { $('pauseQ').textContent = SURAHS[surahKey].ask[lang]; $('pauseSub').textContent = t('pauseSub'); }
+  }
+  $('langBtn').addEventListener('click', function () { lang = lang === 'ar' ? 'en' : 'ar'; localStorage.setItem(LKEY, lang); stopVoice(); applyLang(); });
+  function applySound() { var b = $('sndBtn'); b.textContent = soundOn ? '🔔' : '🔕'; b.setAttribute('aria-pressed', String(soundOn)); }
+  $('sndBtn').addEventListener('click', function () { soundOn = !soundOn; localStorage.setItem(SKEY, soundOn ? 'on' : 'off'); if (!soundOn) stopVoice(); applySound(); tone(660, 0.2, 0.05); });
+  $('bedBtn').addEventListener('click', function () { var on = document.body.classList.toggle('bedtime'); this.setAttribute('aria-pressed', String(on)); });
+
+  applySound();
+  applyLang();
+})();
+</script>
+</body>
+</html>

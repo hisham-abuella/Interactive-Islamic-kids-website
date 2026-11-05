@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<!--
+  GAME MOCKUP 01 - Nuh and the Ark (prototype, not linked from the hub)
+  Learning goal: After playing, the child can say that Nuh kept building the ark patiently, trusting Allah,
+  even when people laughed, and that persisting in good work pays off.
+  Core loop: drag a plank onto the next row of the ark and press-and-hold to hammer it firm while mocking
+  words drift by (keep going), then drag the animals onto the ramp two by two; the rain comes and the ark floats.
+  Story source: UI/story-prophet-nuh.html. Dua copied from that page. No prophet, angel, person or face is drawn:
+  the mockers are only distant tents, lantern-lights and their words (scholar gate 1, 2026-11-03).
+  The Biblical dove and olive leaf are removed; the ending keeps to 11:44 (the ark rests on Judi).
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuh and the Ark - game prototype - Islamic Kids</title>
+<link rel="icon" href="data:,">
+<style>
+/* ---- Illuminated Page tokens (copied from UI/styles.css so this mockup stands alone) ---- */
+:root{
+  --ink:#14383A; --turquoise:#17877F; --turquoise-deep:#0F6B65; --cobalt:#24508C;
+  --gold:#C08A2E; --gold-light:#E0B75C; --gold-text:#8A6220; --gold-pale:#F3E4C4;
+  --parchment:#FBF6EA; --parchment-deep:#F3E9D6; --rule:rgba(192,138,46,.32); --rule-strong:rgba(192,138,46,.6);
+  --card:#FFFDF8; --gold-ink:#7A5518; --gold-wash:#F7EDD8; --cobalt-deep:#1B3C6B; --cobalt-mid:#5A79B0;
+  --cobalt-pale:#C9D8EC; --cobalt-wash:#E7EDF6; --slate-500:#5C7370;
+  --radius-lg:20px; --radius-xl:28px; --radius-full:50px;
+  --shadow-sm:0 2px 8px rgba(20,56,58,.06); --shadow-md:0 8px 24px rgba(20,56,58,.09);
+  --shadow-lg:0 16px 40px rgba(20,56,58,.12); --shadow-teal:0 8px 24px rgba(23,135,127,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Nunito','Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--parchment);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+[dir=rtl] body{font-family:'Noto Sans Arabic','Geeza Pro','Tahoma',system-ui,sans-serif}
+button{font:inherit;color:inherit}
+:focus-visible{outline:4px solid var(--cobalt);outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* top bar */
+.gbar{position:relative;z-index:60;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;padding:.5rem 1rem;background:var(--turquoise-deep);border-bottom:2px solid var(--gold);color:#fff}
+.gbar h1{font-family:'Baloo 2','Nunito',sans-serif;font-size:clamp(1.05rem,2.6vw,1.45rem);font-weight:800;flex:1;min-width:10rem;line-height:1.2}
+.gbar .proto{font-size:.72rem;font-weight:800;background:var(--gold-light);color:var(--ink);border-radius:var(--radius-full);padding:.1rem .55rem;margin-inline-start:.4rem;vertical-align:middle}
+.gbar .back{color:#fff;text-decoration:none;font-weight:800;min-height:48px;display:inline-flex;align-items:center;padding:0 .6rem;border-radius:12px}
+.gbar .back:hover{background:rgba(255,255,255,.12)}
+.tools{display:flex;gap:.4rem;flex-wrap:wrap}
+.gbtn{min-width:48px;min-height:48px;border-radius:14px;border:2px solid rgba(255,255,255,.55);background:rgba(255,255,255,.12);color:#fff;font-weight:800;cursor:pointer;padding:0 .55rem;font-size:1.05rem}
+.gbtn[aria-pressed=false]{opacity:.6}
+.gbtn:active{transform:scale(.94)}
+
+/* stage + scene */
+main#stage{flex:1;width:100%;max-width:1100px;margin:0 auto;padding:.8rem 1rem 1rem;display:flex;flex-direction:column;gap:.8rem}
+.scene{position:relative;border-radius:var(--radius-xl);overflow:hidden;border:3px solid var(--gold);box-shadow:var(--shadow-lg);width:100%;aspect-ratio:16/10;min-height:320px;max-height:68vh;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.scene svg.bg{position:absolute;inset:0;width:100%;height:100%}
+.phase-tag{position:absolute;top:.6rem;inset-inline-start:.6rem;z-index:5;background:rgba(255,253,248,.92);border:2px solid var(--rule-strong);border-radius:var(--radius-full);padding:.15rem .8rem;font-weight:800;font-size:.95rem}
+
+/* narration strip */
+.narr{display:flex;gap:.7rem;align-items:center;background:var(--card);border:2px solid var(--rule-strong);border-radius:var(--radius-lg);padding:.6rem .8rem;font-size:clamp(1.02rem,2.4vw,1.2rem);font-weight:700;box-shadow:var(--shadow-sm);min-height:72px}
+.narr p{flex:1}
+.speak{flex:none;width:52px;height:52px;border-radius:50%;border:2px solid var(--rule-strong);background:var(--gold-wash);cursor:pointer;font-size:1.4rem}
+.speak[hidden]{display:none}
+
+/* controls */
+.row{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center;align-items:center}
+.btn{min-height:56px;padding:.55rem 1.3rem;border-radius:var(--radius-full);border:none;background:linear-gradient(135deg,var(--turquoise),var(--turquoise-deep));color:#fff;font-weight:800;font-size:1.08rem;cursor:pointer;box-shadow:var(--shadow-teal);transition:transform .12s ease}
+.btn:active{transform:scale(.94)}
+.btn.gold{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--ink);box-shadow:0 8px 24px rgba(192,138,46,.25)}
+.btn.ghost{background:var(--card);color:var(--ink);border:2px solid var(--rule-strong);box-shadow:none}
+.btn[disabled]{opacity:.45;cursor:default}
+.choices{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center}
+.choice{min-height:64px;min-width:9rem;max-width:22rem;padding:.6rem 1rem;border-radius:var(--radius-lg);border:3px solid var(--rule-strong);background:var(--card);font-weight:800;font-size:1.05rem;cursor:pointer;box-shadow:var(--shadow-md);transition:transform .12s ease}
+.choice:hover{border-color:var(--gold)}
+.choice:active{transform:scale(.95)}
+.choice .ic{font-size:1.6rem;display:block;line-height:1.2}
+.panel{background:var(--card);border:2px solid var(--rule-strong);border-radius:var(--radius-lg);padding:.8rem;box-shadow:var(--shadow-sm)}
+.panel[hidden],.choices[hidden],.row[hidden]{display:none}
+
+/* hold-to-do ring button */
+.hold{position:relative;min-width:72px;min-height:72px;border-radius:50%;border:3px solid var(--gold);background:var(--gold-wash);cursor:pointer;font-size:1.8rem;touch-action:none}
+.hold .ring{position:absolute;inset:-7px;border-radius:50%;background:conic-gradient(var(--turquoise) calc(var(--p,0)*1turn),transparent 0);-webkit-mask:radial-gradient(circle,transparent 62%,#000 63%);mask:radial-gradient(circle,transparent 62%,#000 63%);pointer-events:none}
+
+/* draggables */
+.drag{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
+.drag.dragging{cursor:grabbing;z-index:40;position:relative;filter:drop-shadow(0 10px 10px rgba(0,0,0,.25));transition:none!important}
+.drag.selected{outline:4px dashed var(--gold);outline-offset:4px}
+.drag.back-home{transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.drop-hot{box-shadow:0 0 0 5px var(--gold-light),0 0 28px var(--gold-light)!important}
+.drop-hint{animation:hintPulse 1.4s ease-in-out infinite}
+@keyframes hintPulse{50%{box-shadow:0 0 0 5px rgba(224,183,92,.7)}}
+
+/* overlays */
+.overlay{position:fixed;inset:0;background:rgba(20,56,58,.55);display:flex;align-items:center;justify-content:center;z-index:50;padding:1rem}
+.overlay[hidden]{display:none}
+.card{background:var(--card);border:3px solid var(--gold);border-radius:var(--radius-xl);padding:1.3rem 1.4rem;max-width:580px;width:100%;text-align:center;box-shadow:var(--shadow-lg);animation:pop .35s ease;max-height:92vh;overflow:auto}
+.card h2{font-family:'Baloo 2','Nunito',sans-serif;font-size:1.5rem;margin-bottom:.4rem}
+.card p{margin:.4rem 0;font-size:1.1rem}
+.pause-tag{display:inline-block;background:var(--cobalt-wash);color:var(--cobalt-deep);border-radius:var(--radius-full);padding:.15rem .9rem;font-weight:800;margin-bottom:.4rem}
+.hint{color:var(--slate-500);font-size:.98rem!important}
+.scripture{font-family:'Amiri','Scheherazade New','Noto Naskh Arabic','Geeza Pro',serif;font-size:clamp(1.4rem,3.6vw,1.9rem);direction:rtl;color:var(--cobalt-deep);line-height:2.1;margin:.4rem 0}
+.duabox{background:var(--cobalt-wash);border:2px solid var(--cobalt-pale);border-radius:var(--radius-lg);padding:.7rem 1rem;margin:.6rem 0}
+.ending-art{font-size:3rem;line-height:1.2}
+.tier{min-height:48px;cursor:pointer;display:flex;gap:.5rem;align-items:center;justify-content:center;margin-top:.6rem;font-weight:700;color:var(--slate-500)}
+.tier input{width:28px;height:28px}
+
+/* gentle juice */
+.spark{position:fixed;width:9px;height:9px;border-radius:50%;background:var(--gold-light);box-shadow:0 0 8px var(--gold-light);pointer-events:none;z-index:70;animation:spark .75s ease-out forwards}
+@keyframes spark{to{transform:translate(var(--dx),var(--dy)) scale(.2);opacity:0}}
+@keyframes pop{from{transform:scale(.88);opacity:0}}
+.wobble{animation:wobble .45s ease}
+@keyframes wobble{25%{transform:translateX(-5px) rotate(-2deg)}75%{transform:translateX(5px) rotate(2deg)}}
+.bounce{animation:bounce .45s ease}
+@keyframes bounce{40%{transform:scale(1.1)}70%{transform:scale(.98)}}
+.narr p.bounce{animation:nudge .4s ease}
+@keyframes nudge{40%{transform:translateY(-3px)}}
+.glow{animation:glowA 1.2s ease}
+@keyframes glowA{40%{filter:drop-shadow(0 0 14px var(--gold-light)) brightness(1.15)}}
+
+/* bedtime: same interaction, softer feel */
+body.bedtime main#stage,body.bedtime .narr{filter:brightness(.82) saturate(.75)}
+body.bedtime .spark{display:none}
+body.bedtime .drop-hint{animation:none}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+@media (max-width:600px){
+  .scene{aspect-ratio:4/5;max-height:62vh}
+  .gbar h1{order:-1;flex-basis:100%}
+}
+/* bilingual pairs inside templates: show only the active language */
+[dir=rtl] .l-en,[dir=ltr] .l-ar{display:none}
+
+/* ========== ART / SCENE STYLES (placeholder art; swap freely - game logic only uses the ids and classes) ========== */
+.scene{background:linear-gradient(#a9d6e5,#f3e9d6 70%);transition:background 1.5s ease}
+.scene.stormy{background:linear-gradient(#5f7480,#a8b4b8 70%)}
+.scene.clear{background:linear-gradient(#bfe3ef,#fbf6ea 75%)}
+#ark{position:absolute;inset-inline-start:36%;width:54%;bottom:12%;height:44%;z-index:3;transition:transform 2.5s ease}
+#ark.afloat{animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-1deg)}}
+#hull{position:absolute;bottom:0;left:0;right:0;height:68%;display:flex;flex-direction:column-reverse;clip-path:polygon(0 0,100% 0,88% 100%,12% 100%);background:repeating-linear-gradient(90deg,transparent 0 11%,rgba(94,66,18,.55) 11% 12.2%);border-top:3px dashed rgba(94,66,18,.5)}
+.slot{flex:1;border:none;border-top:2px dashed rgba(94,66,18,.35);background:transparent;position:relative;min-height:24px;transition:background .3s,transform .3s}
+.slot.next{background:rgba(224,183,92,.35)}
+#hull.drop-hot .slot.next,#hull.drop-hint .slot.next{background:var(--gold-light)}
+#hull.drop-hot{box-shadow:none!important}
+#hull{cursor:pointer}
+.slot.loose{background:linear-gradient(#b07a3c,#8a5a26);transform:rotate(-1.6deg) translateY(-3px);opacity:.9}
+.slot.loose::after{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:calc(var(--p,0)*100%);background:rgba(255,255,255,.28)}
+.slot.fixed{background:linear-gradient(#a8743a,#7d5222),repeating-linear-gradient(90deg,transparent 0 30px,rgba(0,0,0,.08) 30px 32px);background-blend-mode:multiply;border-top:2px solid #5E4212}
+#cabin{position:absolute;bottom:68%;inset-inline-start:22%;width:56%;height:32%;background:linear-gradient(#9b6a33,#7d5222);border:3px solid #5E4212;border-bottom:none;border-radius:14px 14px 0 0;display:flex;align-items:center;justify-content:space-around;padding:0 .3rem}
+#cabin[hidden]{display:none}
+.win{width:22%;height:62%;background:#fbf0d4;border:3px solid #5E4212;border-radius:10px;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;font-size:clamp(.8rem,2vw,1.15rem);line-height:1.1;overflow:hidden}
+#pile{position:absolute;inset-inline-start:4%;bottom:6%;width:26%;height:24%;z-index:4;display:flex;align-items:flex-end;justify-content:center}
+.stack{position:absolute;bottom:0;width:80%;height:30px;border-radius:6px;background:linear-gradient(#a8743a,#7d5222);opacity:.55}
+.stack.s2{bottom:12px;width:74%}
+.plank{position:relative;z-index:2;width:clamp(110px,18vw,170px);height:52px;border-radius:10px;background:linear-gradient(#c58d4a,#8a5a26);border:3px solid #5E4212;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;gap:.3rem;margin-bottom:34px;box-shadow:0 6px 0 #5E4212}
+.plank[hidden]{display:none}
+#taunts{position:absolute;inset:0;pointer-events:none;z-index:6}
+.taunt{position:absolute;left:6%;top:16%;max-width:38%;background:rgba(255,255,255,.88);border:2px solid #9aa5a6;border-radius:20px;padding:.45rem .8rem;font-weight:700;color:#3d4d4f;pointer-events:auto;cursor:pointer;min-height:48px;transition:opacity 1s ease,transform 1s ease;animation:drift 6s ease-in-out infinite}
+.taunt::after{content:"";position:absolute;bottom:-10px;left:22px;border:10px solid transparent;border-top-color:#9aa5a6;border-bottom:0}
+.taunt.fade{opacity:0;transform:translateY(-30px) scale(.9)}
+@keyframes drift{50%{transform:translateX(10px)}}
+#ramp{position:absolute;inset-inline-start:22%;bottom:10%;width:16%;min-width:120px;height:26%;z-index:5;border:3px dashed var(--gold);border-radius:18px;background:rgba(255,253,248,.75);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;font-weight:800;cursor:pointer;padding:.2rem}
+#ramp[hidden]{display:none}
+#ramp .seats{display:flex;gap:.3rem}
+.seat{width:52px;height:52px;border-radius:50%;border:2px dashed var(--rule-strong);display:flex;align-items:center;justify-content:center;font-size:1.9rem;background:var(--card)}
+#meadow{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;background:linear-gradient(#e3efc8,#cfe0a8);border:2px solid #9fbf6a}
+#meadow[hidden]{display:none}
+.animal{width:68px;height:68px;border-radius:50%;background:var(--card);border:3px solid #9fbf6a;font-size:2.3rem;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md)}
+.animal.gone{visibility:hidden}
+#rain{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;transition:opacity 1.5s;background:repeating-linear-gradient(105deg,transparent 0 22px,rgba(255,255,255,.55) 22px 24px);background-size:200px 200px;animation:rain .6s linear infinite}
+.stormy #rain{opacity:.7}
+@keyframes rain{to{background-position:-40px 200px}}
+#water:not(.on){display:none}
+#water{position:absolute;left:0;right:0;bottom:0;height:0;z-index:2;background:linear-gradient(rgba(36,80,140,.75),rgba(27,60,107,.9));transition:height 3s ease;cursor:pointer}
+#water::before{content:"";position:absolute;top:-12px;left:0;right:0;height:24px;background:radial-gradient(circle at 20px 24px,transparent 14px,rgba(36,80,140,.75) 15px) 0 0/40px 24px repeat-x}
+.ripple{position:absolute;width:20px;height:20px;border:3px solid rgba(255,255,255,.8);border-radius:50%;transform:translate(-50%,-50%);animation:rip 1s ease-out forwards;pointer-events:none;z-index:8}
+@keyframes rip{to{width:120px;height:40px;opacity:0}}
+#judi{position:absolute;left:30%;right:4%;bottom:0;height:0;z-index:1;background:linear-gradient(#8f9f6a,#6f7d4e);clip-path:polygon(0 100%,35% 10%,60% 0,100% 100%);transition:height 3s ease}
+#mockers{transition:opacity 2s}
+.lamp{animation:lampPulse 4s ease-in-out infinite}
+@keyframes lampPulse{50%{opacity:.55}}
+@media (prefers-reduced-motion:reduce){.lamp{animation:none}}
+#ark.settling{cursor:pointer}
+#hammerWrap{display:flex;align-items:center;gap:.8rem}
+#hammerWrap[hidden]{display:none}
+@media (max-width:600px){
+  #ark{inset-inline-start:30%;width:68%;height:36%}
+  #pile{width:34%;inset-inline-start:2%}
+  #ramp{inset-inline-start:3%;bottom:40%;width:40%}
+  .taunt{max-width:70%}
+}
+</style>
+</head>
+<body>
+<header class="gbar">
+  <a class="back" href="../../story-prophet-nuh.html" data-ar="→ القصة">← Story</a>
+  <h1><span data-ar="نوح والسفينة">Nuh and the Ark</span><span class="proto" data-ar="نموذج تجريبي">Prototype</span></h1>
+  <div class="tools" role="toolbar" aria-label="Game settings" data-ar-label="إعدادات اللعبة">
+    <button class="gbtn" id="voiceBtn" type="button" aria-pressed="false" aria-label="Read instructions aloud automatically" data-ar-label="قراءة التعليمات تلقائياً" title="Read aloud">🗣️</button>
+    <button class="gbtn" id="soundBtn" type="button" aria-pressed="true" aria-label="Soft chimes on or off" data-ar-label="تشغيل الأصوات الهادئة أو إيقافها" title="Chimes">🔔</button>
+    <button class="gbtn" id="bedBtn" type="button" aria-pressed="false" aria-label="Bedtime mode: calmer and dimmer" data-ar-label="وضع النوم: أهدأ وأخفت" title="Bedtime">🌙</button>
+    <button class="gbtn" id="langBtn" type="button" lang="ar">عربي</button>
+  </div>
+</header>
+
+<main id="stage">
+  <div class="scene" id="scene" aria-label="A dry valley far from the sea, with an unfinished ark" data-ar-label="وادٍ جاف بعيد عن البحر، وفيه سفينة لم تكتمل">
+    <svg class="bg" viewBox="0 0 1000 625" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <circle id="sun" cx="860" cy="110" r="46" fill="#E0B75C" opacity=".9"/>
+      <path d="M0 380 Q120 270 260 330 T520 360 L520 625 L0 625Z" fill="#c9b98f"/>
+      <!-- the mockers are never drawn as people: only distant tents and their lantern-lights -->
+      <g id="mockers" opacity=".75">
+        <path d="M100 330 L122 296 L144 330Z" fill="#8a7a5c"/><path d="M118 330 L122 312 L126 330Z" fill="#5e5140"/>
+        <path d="M150 326 L168 300 L186 326Z" fill="#9a8a68"/><path d="M164 326 L168 312 L172 326Z" fill="#5e5140"/>
+        <circle class="lamp" cx="140" cy="318" r="3.5" fill="#E0B75C"/><circle class="lamp" cx="190" cy="314" r="3" fill="#E0B75C"/>
+      </g>
+      <path d="M0 470 Q250 440 500 465 T1000 455 L1000 625 L0 625Z" fill="#d8c79c"/>
+      <path d="M0 540 Q300 520 600 545 T1000 535 L1000 625 L0 625Z" fill="#c7b585"/>
+    </svg>
+    <span class="phase-tag" id="phaseTag"></span>
+    <div id="judi" aria-hidden="true"></div>
+    <div id="water" aria-hidden="true"></div>
+    <div id="ark">
+      <div id="cabin" hidden><div class="win"></div><div class="win"></div><div class="win"></div></div>
+      <div id="hull"></div>
+    </div>
+    <div id="pile">
+      <div class="stack" aria-hidden="true"></div><div class="stack s2" aria-hidden="true"></div>
+      <div class="plank" id="plank" aria-label="A wooden plank: drag it to the ark" data-ar-label="لوح خشبي: اسحبه إلى السفينة">🪵 <span data-ar="لوح">Plank</span></div>
+    </div>
+    <button id="ramp" type="button" hidden aria-label="The ramp into the ark" data-ar-label="المنحدر إلى السفينة">
+      <span data-ar="المنحدر">Ramp</span>
+      <span class="seats"><span class="seat" id="seat0"></span><span class="seat" id="seat1"></span></span>
+    </button>
+    <div id="taunts" aria-live="polite"></div>
+    <div id="rain" aria-hidden="true"></div>
+  </div>
+  <div class="narr" role="status" aria-live="polite">
+  <p id="narrText"></p>
+  <button class="speak" id="speakBtn" type="button" aria-label="Read this aloud" data-ar-label="اقرأ هذا بصوت عالٍ">🔊</button>
+</div>
+
+  <div class="row">
+    <div id="hammerWrap" hidden>
+      <button class="hold" id="hammer" type="button" aria-label="Hold to hammer the plank" data-ar-label="اضغط مطوّلاً لتثبيت اللوح"><span class="ring"></span>🔨</button>
+      <strong data-ar="اضغط مطوّلاً لتطرق اللوح">Hold to hammer</strong>
+    </div>
+  </div>
+  <div class="choices" id="choices" hidden></div>
+  <div class="panel" id="meadow" hidden aria-label="The meadow of animals" data-ar-label="مرج الحيوانات"></div>
+  <div class="row" id="nextRow" hidden><button class="btn gold" id="nextBtn" type="button"></button></div>
+</main>
+<div class="overlay" id="pause" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="pauseQ">
+    <span class="pause-tag" data-ar="⏸ لحظة حوار مع الوالدين">⏸ Parent pause</span>
+    <p class="hint" data-ar="توقّفا قليلاً واسألا معاً:">Stop for a moment and ask together:</p>
+    <h2 id="pauseQ"></h2>
+    <p class="hint" id="pauseHint"></p>
+    <button class="btn gold" id="pauseGo" type="button" data-ar="تحدّثنا، لنكمل ▶">We talked, carry on ▶</button>
+  </div>
+</div>
+<div class="overlay" id="ending" hidden>
+  <div class="card" role="dialog" aria-modal="true" aria-labelledby="endTitle">
+    <div class="ending-art" id="endArt" aria-hidden="true"></div>
+    <h2 id="endTitle"></h2>
+    <p id="endBody"></p>
+    <div id="endExtra"></div>
+    <div class="row" style="margin-top:.8rem">
+      <button class="btn gold" id="againBtn" type="button" data-ar="🔁 لنلعب معاً مرة أخرى">🔁 Play together again</button>
+      <a class="btn ghost" href="../../story-prophet-nuh.html" style="text-decoration:none;display:inline-flex;align-items:center" data-ar="📖 العودة إلى القصة">📖 Back to the story</a>
+    </div>
+    <label class="tier" id="tierWrap"><input type="checkbox" id="tierBox"> <span id="tierLabel"></span></label>
+  </div>
+</div>
+
+<script>
+/* ---------- shared mockup kit (inlined in every game so each file stands alone) ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+const G = { lang: 'en', sound: true, voice: false, bedtime: false, hooks: [], narr: null, pauseCur: null, endCur: null, sel: null, tier: false };
+try { if (localStorage.getItem('islamicKidsLang') === 'ar') G.lang = 'ar'; } catch (e) { /* private mode */ }
+
+const wait = ms => new Promise(r => setTimeout(r, ms));
+/* animation-only waits shrink when the user asked for less motion */
+const anim = ms => wait(RM ? Math.min(ms, 120) : (G.bedtime ? ms * 1.25 : ms));
+const t = o => (o == null ? '' : typeof o === 'string' ? o : (o[G.lang] != null ? o[G.lang] : o.en));
+const num = n => (G.lang === 'ar' ? String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]) : String(n));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const onLang = f => G.hooks.push(f);
+const isRTL = () => G.lang === 'ar';
+
+function applyLang() {
+  const ar = G.lang === 'ar';
+  document.documentElement.lang = G.lang;
+  document.documentElement.dir = ar ? 'rtl' : 'ltr';
+  $$('[data-ar]').forEach(el => {
+    if (el.dataset.en === undefined) el.dataset.en = el.innerHTML;
+    el.innerHTML = ar ? el.dataset.ar : el.dataset.en;
+  });
+  $$('[data-ar-label]').forEach(el => {
+    if (el.dataset.enLabel === undefined) el.dataset.enLabel = el.getAttribute('aria-label') || '';
+    el.setAttribute('aria-label', ar ? el.dataset.arLabel : el.dataset.enLabel);
+  });
+  const lb = $('#langBtn');
+  if (lb) { lb.textContent = ar ? 'English' : 'عربي'; lb.lang = ar ? 'en' : 'ar'; lb.setAttribute('aria-label', ar ? 'Switch to English' : 'التبديل إلى العربية'); }
+  if (G.narr) $('#narrText').textContent = t(G.narr);
+  if (G.pauseCur) { $('#pauseQ').textContent = t(G.pauseCur.q); $('#pauseHint').textContent = t(G.pauseCur.hint); }
+  if (G.endCur) renderEnding();
+  G.hooks.forEach(f => f());
+}
+
+/* ---- narration: the strip under the scene, optionally spoken (never scripture) ---- */
+function say(o) { G.narr = o; const el = $('#narrText'); el.textContent = t(o); el.classList.remove('bounce'); void el.offsetWidth; el.classList.add('bounce'); if (G.voice) speakText(t(o)); }
+function speakText(txt) {
+  if (!('speechSynthesis' in window) || !txt) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(txt.replace(/\p{Extended_Pictographic}|️/gu, ''));
+  u.lang = G.lang === 'ar' ? 'ar-SA' : 'en-GB'; u.rate = G.bedtime ? 0.8 : 0.9;
+  speechSynthesis.speak(u);
+}
+
+/* ---- soft Web Audio chimes (sine bells; no music). Scholar ruling 2026-11-03: until the owner decides on
+   instruments, every cue is one soft tone or a two-note chime; no arpeggios or melodic runs. ---- */
+let AC = null;
+function ac() {
+  if (!AC) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; AC = new C(); }
+  if (AC.state === 'suspended') AC.resume();
+  return AC;
+}
+function tone(a, f, at, dur, vol) {
+  const o = a.createOscillator(), g = a.createGain();
+  o.type = 'sine'; o.frequency.value = f;
+  g.gain.setValueAtTime(0.0001, at); g.gain.exponentialRampToValueAtTime(vol, at + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+  o.connect(g).connect(a.destination); o.start(at); o.stop(at + dur + 0.05);
+}
+function chime(kind) {
+  if (!G.sound) return; const a = ac(); if (!a) return;
+  const n = a.currentTime, v = G.bedtime ? 0.04 : 0.08;
+  if (kind === 'tap') tone(a, 880, n, 0.12, v * 0.45);
+  else if (kind === 'good') { tone(a, 659, n, 0.4, v); tone(a, 988, n + 0.09, 0.5, v * 0.8); }
+  else if (kind === 'soft') tone(a, 392, n, 0.45, v * 0.6);
+  else if (kind === 'thud') tone(a, 220, n, 0.16, v * 0.9);
+  else if (kind === 'done') { tone(a, 523, n, 0.9, v * 0.7); tone(a, 784, n + 0.2, 1.1, v * 0.6); }
+}
+
+/* ---- sparse, soft sparkles ---- */
+function sparkle(el, n = 8) {
+  if (RM || G.bedtime || !el) return;
+  const r = el.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement('span'); s.className = 'spark';
+    const ang = (Math.PI * 2 * i) / n + Math.random() * 0.4, d = 30 + Math.random() * 30;
+    s.style.left = x + 'px'; s.style.top = y + 'px';
+    s.style.setProperty('--dx', Math.cos(ang) * d + 'px'); s.style.setProperty('--dy', Math.sin(ang) * d + 'px');
+    document.body.appendChild(s); setTimeout(() => s.remove(), 800);
+  }
+}
+function fx(el, cls) { if (!el) return; el.classList.remove(cls); void el.getBoundingClientRect(); el.classList.add(cls); setTimeout(() => el.classList.remove(cls), 600); }
+
+/* ---- parent pause point (a question to talk about, never graded) ---- */
+function pausePoint(q, hint) {
+  return new Promise(res => {
+    G.pauseCur = { q, hint };
+    $('#pauseQ').textContent = t(q); $('#pauseHint').textContent = t(hint);
+    $('#pause').hidden = false; chime('soft');
+    const b = $('#pauseGo'); setTimeout(() => b.focus(), 50);
+    if (G.voice) speakText(t(q));
+    b.onclick = () => { $('#pause').hidden = true; G.pauseCur = null; chime('tap'); res(); };
+  });
+}
+
+/* ---- calm ending ---- */
+function showEnding(o) { G.endCur = o; renderEnding(); $('#ending').hidden = false; chime('done'); setTimeout(() => $('#againBtn').focus(), 60); }
+function renderEnding() {
+  const o = G.endCur; if (!o) return;
+  $('#endArt').textContent = o.art || '🌙';
+  $('#endTitle').textContent = t(o.title); $('#endBody').textContent = t(o.body);
+  $('#endExtra').innerHTML = o.extra ? o.extra() : '';
+  const tw = $('#tierWrap');
+  if (o.tier) { tw.hidden = false; $('#tierLabel').textContent = t(o.tier); $('#tierBox').checked = G.tier; } else tw.hidden = true;
+}
+function wireEnding(restart) {
+  $('#againBtn').onclick = () => { G.tier = $('#tierBox').checked; $('#ending').hidden = true; G.endCur = null; chime('tap'); restart(); };
+}
+
+/* ---- drag with generous snap zones; tap-to-select + tap-target as the keyboard / no-drag path ---- */
+function rectHit(x, y, el, pad) { const r = el.getBoundingClientRect(); return x >= r.left - pad && x <= r.right + pad && y >= r.top - pad && y <= r.bottom + pad; }
+function findTarget(x, y, targets, pad = 28) {
+  let best = null, bd = 1e9;
+  targets.forEach(tg => { if (!rectHit(x, y, tg, pad)) return; const r = tg.getBoundingClientRect(); const d = Math.hypot(x - (r.left + r.width / 2), y - (r.top + r.height / 2)); if (d < bd) { bd = d; best = tg; } });
+  return best;
+}
+function clearSel() { if (G.sel) { G.sel.el.classList.remove('selected'); G.sel.el.setAttribute('aria-pressed', 'false'); G.sel.opts.targets().forEach(x => x.classList.remove('drop-hint')); } G.sel = null; }
+function draggable(el, opts) {
+  el.classList.add('drag'); el.setAttribute('role', 'button'); el.tabIndex = 0; el.setAttribute('aria-pressed', 'false');
+  let sx = 0, sy = 0, pid = null, dragging = false, hot = null;
+  const reset = () => { el.classList.remove('dragging'); el.style.transform = ''; if (hot) hot.classList.remove('drop-hot'); hot = null; };
+  el.addEventListener('pointerdown', e => {
+    if (el.dataset.locked) return; pid = e.pointerId; sx = e.clientX; sy = e.clientY; dragging = false;
+    try { el.setPointerCapture(pid); } catch (_) {}
+    ac();
+  });
+  el.addEventListener('pointermove', e => {
+    if (e.pointerId !== pid) return;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    if (!dragging && Math.hypot(dx, dy) > 8) { dragging = true; clearSel(); el.classList.add('dragging'); chime('tap'); opts.onPick && opts.onPick(el); }
+    if (dragging) {
+      el.style.transform = `translate(${dx}px,${dy}px) scale(1.08)`;
+      const tg = findTarget(e.clientX, e.clientY, opts.targets());
+      if (tg !== hot) { if (hot) hot.classList.remove('drop-hot'); hot = tg; if (hot) hot.classList.add('drop-hot'); }
+    }
+  });
+  const up = e => {
+    if (e.pointerId !== pid) return; pid = null;
+    if (!dragging) { reset(); select(); return; }
+    const tg = e.type === 'pointerup' ? findTarget(e.clientX, e.clientY, opts.targets()) : null;
+    reset();
+    if (tg) opts.onDrop(el, tg); else { el.classList.add('back-home'); setTimeout(() => el.classList.remove('back-home'), 400); opts.onMiss && opts.onMiss(el); }
+  };
+  el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); } });
+  function select() {
+    if (el.dataset.locked) return;
+    if (G.sel && G.sel.el === el) { clearSel(); return; }
+    clearSel(); G.sel = { el, opts }; el.classList.add('selected'); el.setAttribute('aria-pressed', 'true'); chime('tap');
+    opts.targets().forEach(x => x.classList.add('drop-hint'));
+    opts.onSelect && opts.onSelect(el);
+  }
+}
+/* a drop target: click / Enter places the selected item there */
+function dropTarget(tg) {
+  if (!tg.matches('button')) { tg.tabIndex = 0; tg.setAttribute('role', 'button'); tg.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tg.click(); } }); }
+  tg.addEventListener('click', () => {
+    if (!G.sel || !G.sel.opts.targets().includes(tg)) return;
+    const { el, opts } = G.sel; clearSel(); opts.onDrop(el, tg);
+  });
+}
+
+/* ---- press-and-hold (patience as a mechanic: progress keeps if you let go) ---- */
+function holdButton(btn, ms, onTick, onDone) {
+  let p = 0, timer = null, last = 0;
+  const set = v => { p = v; btn.style.setProperty('--p', p); };
+  const step = now => { if (!timer) return; const dt = now - last; last = now; set(Math.min(1, p + dt / ms)); onTick && onTick(p); if (p >= 1) { stop(); onDone(); return; } timer = requestAnimationFrame(step); };
+  const start = e => { if (btn.disabled || p >= 1) return; e && e.preventDefault(); ac(); last = performance.now(); timer = requestAnimationFrame(step); btn.classList.add('holding'); };
+  const stop = () => { if (timer) cancelAnimationFrame(timer); timer = null; btn.classList.remove('holding'); };
+  btn.addEventListener('pointerdown', start); ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev => btn.addEventListener(ev, stop));
+  btn.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) start(e); });
+  btn.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') stop(); });
+  btn.addEventListener('contextmenu', e => e.preventDefault());
+  return { reset: () => { stop(); set(0); }, get: () => p };
+}
+
+/* ---- choice helper: show buttons, resolve with the chosen id ---- */
+function ask(container, options) {
+  return new Promise(res => {
+    container.innerHTML = ''; container.hidden = false;
+    const btns = shuffle(options).map(o => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'choice'; b.__o = o;
+      b.addEventListener('click', () => { chime('tap'); container.hidden = true; G.hooks = G.hooks.filter(h => h !== hk); res(o.id); });
+      container.appendChild(b); return b;
+    });
+    const hk = () => btns.forEach(b => { const o = b.__o; b.innerHTML = (o.ic ? `<span class="ic" aria-hidden="true">${o.ic}</span>` : '') + t(o.label); });
+    hk(); G.hooks.push(hk);
+    setTimeout(() => btns[0] && btns[0].focus({ preventScroll: true }), 30);
+  });
+}
+
+/* ---- toolbar ---- */
+function initShell() {
+  $('#langBtn').addEventListener('click', () => { G.lang = G.lang === 'ar' ? 'en' : 'ar'; if ('speechSynthesis' in window) speechSynthesis.cancel(); applyLang(); chime('tap'); });
+  const tog = (id, key, after) => $(id).addEventListener('click', e => { G[key] = !G[key]; e.currentTarget.setAttribute('aria-pressed', String(G[key])); after && after(); chime('tap'); });
+  tog('#soundBtn', 'sound');
+  tog('#voiceBtn', 'voice', () => { if (G.voice && G.narr) speakText(t(G.narr)); if (!G.voice && 'speechSynthesis' in window) speechSynthesis.cancel(); });
+  tog('#bedBtn', 'bedtime', () => document.body.classList.toggle('bedtime', G.bedtime));
+  if (!('speechSynthesis' in window)) { $('#voiceBtn').hidden = true; $('#speakBtn').hidden = true; }
+  $('#speakBtn').addEventListener('click', () => speakText(t(G.narr)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') clearSel(); });
+  applyLang();
+}
+const times = n => (G.lang === 'ar' ? (n === 1 ? 'مرة واحدة' : n === 2 ? 'مرتين' : `${num(n)} مرات`) : (n === 1 ? 'once' : n === 2 ? 'twice' : `${n} times`));
+
+/* ================= Nuh game ================= */
+const ROWS = 6;
+const TAUNTS = [
+  { en: 'A boat? There is no sea here!', ar: 'سفينة؟ لا يوجد بحر هنا!' },
+  { en: 'Why work so hard? It will never float!', ar: 'لماذا تتعب نفسك؟ لن تطفو أبداً!' },
+  { en: 'Ha! Building a ship on dry land!', ar: 'ها! يبني سفينة على اليابسة!' }
+];
+const ANIMALS = [
+  ['🐘', { en: 'elephant', ar: 'فيل' }, { en: 'elephants', ar: 'الفيلة' }], ['🦁', { en: 'lion', ar: 'أسد' }, { en: 'lions', ar: 'الأسود' }],
+  ['🐪', { en: 'camel', ar: 'جمل' }, { en: 'camels', ar: 'الجمال' }], ['🐑', { en: 'sheep', ar: 'خروف' }, { en: 'sheep', ar: 'الخراف' }],
+  ['🦒', { en: 'giraffe', ar: 'زرافة' }, { en: 'giraffes', ar: 'الزرافات' }], ['🐇', { en: 'rabbit', ar: 'أرنب' }, { en: 'rabbits', ar: 'الأرانب' }],
+  ['🐢', { en: 'tortoise', ar: 'سلحفاة' }, { en: 'tortoises', ar: 'السلاحف' }], ['🐦', { en: 'bird', ar: 'طائر' }, { en: 'birds', ar: 'الطيور' }],
+  ['🐄', { en: 'cow', ar: 'بقرة' }, { en: 'cows', ar: 'الأبقار' }], ['🐐', { en: 'goat', ar: 'ماعز' }, { en: 'goats', ar: 'الماعز' }]
+];
+const S = {};
+function reset() {
+  Object.assign(S, { row: 0, loose: false, kept: 0, pairs: 0, total: G.tier ? 8 : 5, seat: null, phase: 'build' });
+  const scene = $('#scene'); scene.className = 'scene';
+  $('#hull').innerHTML = ''; $('#taunts').innerHTML = '';
+  for (let i = 0; i < ROWS; i++) {
+    const b = document.createElement('div'); b.className = 'slot'; b.dataset.i = i; $('#hull').appendChild(b);
+  }
+  $('#cabin').hidden = true; $$('.win').forEach(w => (w.textContent = ''));
+  $('#plank').hidden = false; $('#pile').hidden = false; $('#ramp').hidden = true; $('#meadow').hidden = true;
+  $('#water').style.height = '0'; $('#water').classList.remove('on'); $('#judi').style.height = '0'; $('#ark').classList.remove('afloat'); $('#ark').style.transform = '';
+  $('#mockers').style.opacity = '.75'; $('#nextRow').hidden = true; $('#choices').hidden = true;
+  markNext(); phase({ en: '1 · Build the ark', ar: '١ · ابنِ السفينة' });
+  say({ en: 'Allah told Prophet Nuh to build a huge ark, far from any sea. Drag the plank onto the ark: it goes on the glowing row, from the bottom up.', ar: 'أمر الله النبيَّ نوحاً عليه السلام أن يبني سفينة ضخمة بعيداً عن البحر. اسحب اللوح إلى السفينة: يوضع في الصف المضيء، من الأسفل إلى الأعلى.' });
+}
+let phaseObj = null;
+function phase(o) { phaseObj = o; $('#phaseTag').textContent = t(o); }
+/* patience is never counted or scored (scholar ruling): the ark simply glows when the work goes on */
+function arkGlow() { fx($('#ark'), 'glow'); }
+function slotLabels() {
+  $('#hull').setAttribute('aria-label', t({ en: `The ark: ${S.row} of ${ROWS} rows built. Place the plank here.`, ar: `السفينة: بُني ${num(S.row)} من ${num(ROWS)} صفوف. ضع اللوح هنا.` }));
+}
+dropTarget($('#hull'));
+function markNext() { $$('.slot').forEach((s, i) => s.classList.toggle('next', i === S.row && !S.loose)); slotLabels(); }
+
+/* ---- building ---- */
+draggable($('#plank'), {
+  targets: () => (S.phase === 'build' && !S.loose ? [$('#hull')] : []),
+  onDrop: () => {
+    const slot = $$('.slot')[S.row];
+    S.loose = true; slot.classList.add('loose'); slot.classList.remove('next'); chime('thud'); sparkle(slot, 5);
+    $('#plank').hidden = true; $('#hammerWrap').hidden = false; hammer.reset();
+    say({ en: 'Good! Now press and hold the hammer to fix the plank firmly. Slow and steady.', ar: 'أحسنت! والآن اضغط مطوّلاً على المطرقة لتثبّت اللوح جيداً. بهدوء وثبات.' });
+    setTimeout(() => $('#hammer').focus({ preventScroll: true }), 50);
+  },
+  onMiss: () => say({ en: 'Bring the plank right onto the ark.', ar: 'ضع اللوح فوق السفينة.' })
+});
+let lastTick = 0;
+const hammer = holdButton($('#hammer'), 1500, p => {
+  const slot = $$('.slot')[S.row]; if (slot) slot.style.setProperty('--p', p);
+  const k = Math.floor(p * 5); if (k !== lastTick) { lastTick = k; chime('thud'); fx($('#hammer'), 'bounce'); }
+}, () => plankFixed());
+async function plankFixed() {
+  const slot = $$('.slot')[S.row];
+  slot.classList.remove('loose'); slot.classList.add('fixed'); chime('good'); sparkle(slot, 10); lastTick = 0;
+  $('#hammerWrap').hidden = true; S.loose = false; S.row++;
+  // anyone still taunting fades away once the work goes on
+  const old = $$('.taunt:not(.fade)');
+  if (old.length) { old.forEach(x => x.classList.add('fade')); arkGlow(); setTimeout(() => old.forEach(x => x.remove()), 1100); }
+  if (S.row >= ROWS) return built();
+  if (S.row === 1) await firstTaunt();
+  else if (S.row === 3 || S.row === 5) showTaunt(TAUNTS[S.row === 3 ? 1 : 2]);
+  $('#plank').hidden = false; markNext();
+  if (S.row > 1) say(S.row === 3 || S.row === 5
+    ? { en: 'More mocking words... Nuh did not stop. Keep building: drag the next plank.', ar: 'كلمات سخرية أخرى... لكن نوحاً لم يتوقف. واصل البناء: اسحب اللوح التالي.' }
+    : { en: `Plank ${S.row} is firm. Drag the next plank.`, ar: `اللوح ${num(S.row)} ثابت. اسحب اللوح التالي.` });
+}
+function showTaunt(o) {
+  const d = document.createElement('button'); d.type = 'button'; d.className = 'taunt'; d.__o = o; d.textContent = t(o);
+  d.style.top = (10 + Math.random() * 14) + '%';
+  d.addEventListener('click', () => { chime('soft'); say({ en: 'Those are mocking words. They cannot stop good work. Nuh kept doing what Allah asked, so we keep building too.', ar: 'هذه كلمات سخرية، ولا تستطيع أن توقف العمل الطيب. ظل نوح يفعل ما أمره الله، فلنواصل البناء نحن أيضاً.' }); });
+  $('#taunts').appendChild(d); chime('soft');
+}
+async function firstTaunt() {
+  showTaunt(TAUNTS[0]);
+  say({ en: 'Some people on the hill are laughing at the ark. What should we do?', ar: 'بعض الناس على التل يضحكون من السفينة. ماذا نفعل؟' });
+  for (;;) {
+    const c = await ask($('#choices'), [
+      { id: 'keep', ic: '🔨', label: { en: 'Keep building, trusting Allah', ar: 'نواصل البناء ونتوكل على الله' } },
+      { id: 'stop', ic: '🛑', label: { en: 'Stop, they are laughing', ar: 'نتوقف، إنهم يضحكون' } }
+    ]);
+    if (c === 'keep') { chime('good'); $$('.taunt').forEach(x => x.classList.add('fade')); arkGlow(); say({ en: 'Yes! Nuh kept going, because Allah had asked him to. Drag the next plank.', ar: 'نعم! واصل نوح العمل لأن الله أمره بذلك. اسحب اللوح التالي.' }); return; }
+    chime('soft'); fx($('#ark'), 'wobble');
+    say({ en: 'If we stop, the ark stays half built, and it will be needed soon. Laughing cannot hurt the work. Let us choose again.', ar: 'إن توقفنا بقيت السفينة نصف مبنية، وسنحتاجها قريباً. الضحك لا يضرّ العمل. لنختر مرة أخرى.' });
+    await wait(2600);
+  }
+}
+async function built() {
+  slotLabels(); $('#pile').hidden = true; $$('.taunt').forEach(x => x.remove()); $('#mockers').style.opacity = '.25';
+  $('#cabin').hidden = false; sparkle($('#ark'), 12); chime('done');
+  say({ en: 'The ark is built! Nuh worked patiently, plank by plank, even when people laughed.', ar: 'اكتملت السفينة! عمل نوح بصبر لوحاً بعد لوح، حتى حين ضحك الناس.' });
+  await wait(1800);
+  await pausePoint({ en: 'Nuh kept building even when people laughed. Has anyone ever laughed at something good you were doing? What helped you keep going?', ar: 'واصل نوح البناء حتى حين ضحك الناس. هل ضحك أحد يوماً من شيء طيب كنت تفعله؟ ما الذي ساعدك على الاستمرار؟' },
+    { en: 'Idea: we keep doing good because Allah sees it, not because people clap.', ar: 'فكرة: نستمر في فعل الخير لأن الله يرانا، لا لأن الناس يصفقون لنا.' });
+  startAnimals();
+}
+
+/* ---- two by two ---- */
+function startAnimals() {
+  S.phase = 'animals'; phase({ en: '2 · Two by two', ar: '٢ · زوجين زوجين' });
+  const kinds = shuffle(ANIMALS).slice(0, S.total);
+  const tokens = shuffle(kinds.flatMap(k => [k, k]));
+  const m = $('#meadow'); m.innerHTML = ''; m.hidden = false; $('#ramp').hidden = false; S.seat = null; seatsRender();
+  tokens.forEach(([e, name, plural]) => {
+    const a = document.createElement('div'); a.className = 'animal'; a.textContent = e; a.dataset.e = e; a.__n = name; a.__p = plural;
+    a.setAttribute('aria-label', t(name));
+    draggable(a, { targets: () => [$('#ramp')], onDrop: (el) => toRamp(el) });
+    m.appendChild(a);
+  });
+  say({ en: 'Allah told Nuh to bring a pair of every animal. Drag an animal onto the ramp, then find its partner.', ar: 'أمر الله نوحاً أن يحمل زوجين من كل حيوان. اسحب حيواناً إلى المنحدر، ثم ابحث عن شريكه.' });
+}
+onLang(() => { $$('.animal').forEach(a => a.setAttribute('aria-label', t(a.__n))); $$('.taunt').forEach(d => (d.textContent = t(d.__o))); if (phaseObj) $('#phaseTag').textContent = t(phaseObj); slotLabels(); if (!$('#nextRow').hidden && $('#nextBtn').__o) $('#nextBtn').textContent = t($('#nextBtn').__o); });
+dropTarget($('#ramp'));
+function seatsRender() { $('#seat0').textContent = S.seat ? S.seat.dataset.e : ''; $('#seat1').textContent = ''; }
+$('#seat0').addEventListener('click', e => {
+  if (S.seat && !G.sel) { e.stopPropagation(); S.seat.classList.remove('gone'); S.seat = null; seatsRender(); chime('tap'); say({ en: 'Okay, that one went back to the meadow. Pick any animal.', ar: 'حسناً، عاد إلى المرج. اختر أي حيوان.' }); }
+});
+async function toRamp(a) {
+  if (!S.seat) {
+    S.seat = a; a.classList.add('gone'); seatsRender(); chime('tap'); fx($('#seat0'), 'bounce');
+    say({ en: `Now find its partner: another ${t(a.__n)} ${a.dataset.e}.`, ar: `والآن ابحث عن شريكه المطابق ${a.dataset.e} في المرج.` });
+    return;
+  }
+  if (a.dataset.e !== S.seat.dataset.e) {
+    chime('soft'); fx(a, 'wobble');
+    say({ en: `This ${t(a.__n)} needs a partner of its own kind. Who matches the ${S.seat.dataset.e} on the ramp?`, ar: `هذا ${a.dataset.e} يحتاج إلى شريك من نوعه. من يطابق ${S.seat.dataset.e} الذي على المنحدر؟` });
+    return;
+  }
+  a.classList.add('gone'); $('#seat1').textContent = a.dataset.e; chime('good'); sparkle($('#ramp'), 8);
+  const w = $$('.win')[S.pairs % 3]; await anim(400);
+  w.textContent += a.dataset.e + a.dataset.e; fx(w, 'glow'); seatsRender(); S.seat = null; S.pairs++;
+  if (S.pairs >= S.total) return rain();
+  const left = S.total - S.pairs;
+  say({ en: `Two ${t(a.__p)} are safely aboard! ${left} more ${left === 1 ? 'pair' : 'pairs'} to go.`, ar: `صعد زوجٌ من ${t(a.__p)} بأمان! ` + (left === 1 ? 'بقي زوجٌ واحد.' : left === 2 ? 'بقي زوجان.' : `بقيت ${num(left)} أزواج.`) });
+}
+
+/* ---- the flood ---- */
+async function rain() {
+  S.phase = 'flood'; $('#meadow').hidden = true; $('#ramp').hidden = true; phase({ en: '3 · The rain', ar: '٣ · المطر' });
+  say({ en: 'Every pair is aboard. Then the rain began, more rain than anyone had ever seen!', ar: 'صعدت كل الأزواج. ثم بدأ المطر، مطرٌ لم يرَ أحد مثله قط!' });
+  await anim(1200); $('#scene').classList.add('stormy'); $('#mockers').style.opacity = '0';
+  $('#water').classList.add('on'); await anim(1500); $('#water').style.height = '58%'; $('#ark').style.transform = 'translateY(-82%)';
+  await anim(3000); $('#ark').classList.add('afloat');
+  say({ en: 'Water covered the earth, but the ark floated safely with everyone inside. Tap the waves if you like.', ar: 'غطى الماء الأرض، لكن السفينة طفت بأمان وكل من فيها. المس الأمواج إن أحببت.' });
+  await wait(3500);
+  $('#scene').classList.replace('stormy', 'clear');
+  S.phase = 'settle'; $('#ark').classList.add('settling');
+  say({ en: 'After many days, Allah commanded the rain to stop and the water to go down. Tap the ark to watch where it comes to rest.', ar: 'وبعد أيام كثيرة أمر الله المطر أن يتوقف والماء أن ينحسر. المس السفينة لترى أين تستقر.' });
+  const nb = $('#nextBtn'); nb.__o = { en: '⛰️ Watch the ark come to rest', ar: '⛰️ شاهد السفينة تستقر' }; nb.textContent = t(nb.__o);
+  nb.onclick = settle; $('#nextRow').hidden = false; nb.focus({ preventScroll: true });
+}
+$('#ark').addEventListener('click', () => { if (S.phase === 'settle') settle(); });
+$('#water').addEventListener('pointerdown', e => {
+  if (S.phase !== 'flood') return; const r = $('#scene').getBoundingClientRect();
+  const d = document.createElement('span'); d.className = 'ripple'; d.style.left = (e.clientX - r.left) + 'px'; d.style.top = (e.clientY - r.top) + 'px';
+  $('#scene').appendChild(d); chime('tap'); setTimeout(() => d.remove(), 1000);
+});
+/* 11:44: the water went down and the ark came to rest on Judi. The child watches; Allah commanded it. */
+async function settle() {
+  if (S.phase !== 'settle') return; S.phase = 'rest'; chime('tap');
+  $('#nextRow').hidden = true; $('#ark').classList.remove('settling');
+  $('#water').style.height = '6%'; $('#judi').style.height = '40%'; $('#ark').classList.remove('afloat'); $('#ark').style.transform = 'translateY(-64%)';
+  say({ en: 'The ark came to rest safely on a mountain called Judi. Prophet Nuh thanked Allah for keeping them safe.', ar: 'فاستقرت السفينة بسلام على جبل اسمه الجودي. فحمد النبي نوح الله على نجاتهم.' });
+  await anim(3200); sparkle($('#ark'), 8);
+  await pausePoint({ en: 'Why do you think Nuh trusted Allah, even when there was no sea nearby?', ar: 'لماذا برأيك وثق نوح بالله، مع أنه لم يكن هناك بحر قريب؟' },
+    { en: 'Idea: Allah always keeps His promise, so doing what He asks is always worth it.', ar: 'فكرة: الله يفي بوعده دائماً، ففعل ما يأمر به يستحق العناء دائماً.' });
+  showEnding({
+    art: '⛰️🚢',
+    title: { en: 'Safe, by Allah\'s mercy', ar: 'في أمان، برحمة الله' },
+    body: { en: `You helped build the ark, plank by plank, and you kept building when people laughed. You helped ${S.pairs} pairs of animals aboard. Prophet Nuh was patient and trusted Allah.`, ar: `ساعدت في بناء السفينة لوحاً بعد لوح، وواصلت البناء حين ضحك الناس، وساعدت ${num(S.pairs)} أزواج من الحيوانات على الصعود. كان النبي نوح عليه السلام صابراً واثقاً بالله.` },
+    extra: () => document.getElementById('duaTpl').innerHTML,
+    tier: { en: 'Next time: more animals (8 pairs)', ar: 'في المرة القادمة: حيوانات أكثر (٨ أزواج)' }
+  });
+}
+wireEnding(reset);
+reset(); initShell();
+</script>
+<template id="duaTpl">
+  <div class="duabox">
+    <p class="hint"><span class="l-en">This is a dua Prophet Nuh made. We can say it too!</span><span class="l-ar" lang="ar">هذا دعاء دعا به النبي نوح. ونستطيع أن ندعو به نحن أيضاً!</span></p>
+    <p class="scripture" lang="ar">رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ</p>
+    <p><span class="l-en">"My Lord, forgive me and my parents."</span><span class="l-ar" lang="ar">&quot;ربّ اغفر لي ولوالديّ&quot;</span></p>
+  </div>
+</template>
+</body>
+</html>

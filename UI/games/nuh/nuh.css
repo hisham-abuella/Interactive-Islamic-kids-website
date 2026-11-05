@@ -1,0 +1,263 @@
+/* Game 01, Nuh and the Ark: painted flagship. Illuminated Page tokens (UI/styles.css) + game UI kit. */
+@font-face{font-family:"Baloo 2";font-weight:700;font-display:swap;src:url(../../vendor/fonts/baloo-2-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Baloo 2";font-weight:800;font-display:swap;src:url(../../vendor/fonts/baloo-2-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-weight:600;font-display:swap;src:url(../../vendor/fonts/nunito-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-weight:700;font-display:swap;src:url(../../vendor/fonts/nunito-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-weight:800;font-display:swap;src:url(../../vendor/fonts/nunito-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Baloo Bhaijaan 2";font-weight:600;font-display:swap;src:url(../../vendor/fonts/baloo-bhaijaan-2-arabic-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Baloo Bhaijaan 2";font-weight:800;font-display:swap;src:url(../../vendor/fonts/baloo-bhaijaan-2-arabic-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Amiri";font-weight:400;font-display:swap;src:url(../../vendor/fonts/amiri-arabic-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Amiri";font-weight:700;font-display:swap;src:url(../../vendor/fonts/amiri-arabic-700-normal.woff2) format("woff2")}
+
+:root{
+  --parchment:#FBF6EA; --parchment-deep:#F3E9D2; --card:#FFFDF8;
+  --ink:#14383A; --ink-soft:#3E5A5B;
+  --turq:#17877F; --turq-deep:#0F5F59; --turq-light:#5FB8AE;
+  --gold:#C08A2E; --gold-light:#E0B75C; --gold-deep:#8F6418;
+  --cobalt:#24508C; --rule:rgba(192,138,46,.45);
+  --ui:"Nunito","Baloo Bhaijaan 2",system-ui,sans-serif;
+  --title:"Baloo 2","Baloo Bhaijaan 2",system-ui,sans-serif;
+  --naskh:"Amiri","Noto Naskh Arabic","Geeza Pro",serif;
+  --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+  --safe-l:env(safe-area-inset-left,0px); --safe-r:env(safe-area-inset-right,0px);
+}
+html[lang=ar]{--ui:"Baloo Bhaijaan 2","Nunito",system-ui,sans-serif;--title:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#20403f;color:var(--ink);font-family:var(--ui);
+  -webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+body{position:fixed;inset:0}
+button{font:inherit;color:inherit}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
+#app{position:absolute;inset:0;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+
+/* ---------- the world: a fixed logical canvas scaled to cover the screen (JS sets --s, size, offset) ---------- */
+#viewport{position:absolute;inset:0;overflow:hidden}
+#world{position:absolute;left:0;top:0;transform-origin:0 0} /* JS sets size and transform (scale to cover; scaleX(-1) mirror in RTL) */
+.plates,.plates img{position:absolute;inset:0;width:100%;height:100%}
+.plates img{opacity:0;transition:opacity 3.2s ease}
+.plates img.on{opacity:1}
+.dim{position:absolute;inset:0;background:radial-gradient(120% 90% at 18% 0%,rgba(255,236,190,.0),rgba(20,40,60,.0));
+  pointer-events:none;transition:background 2s ease}
+/* bedtime: a night palette with the lamps lit, not just a darker screen */
+.bed #world{filter:brightness(.68) saturate(.8) hue-rotate(-6deg)}
+.bed .dim{background:radial-gradient(90% 70% at 20% 10%,rgba(255,214,140,.12),rgba(14,30,70,.38))}
+.lantern{position:absolute;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(255,226,150,.85) 0 8%,rgba(255,200,110,.35) 22%,rgba(255,190,100,0) 62%);
+  animation:lamp 5s ease-in-out infinite;transition:opacity 2.4s ease}
+.lantern.l2{animation-delay:-2.3s}
+.bed .lantern{transform:scale(1.5)}
+@keyframes lamp{50%{opacity:.62}}
+.phase-flood .lantern,.phase-judi .lantern,.phase-end .lantern{opacity:0;animation:none}
+
+/* ---------- the ark ---------- */
+#ark{position:absolute;outline:none;cursor:default;transition:filter .6s ease}
+#ark img{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
+#ark .ark-whole{clip-path:inset(var(--reveal,100%) 0 0 0);transition:clip-path .9s cubic-bezier(.2,.8,.2,1)}
+#ark .loose{width:auto;height:auto;transform-origin:50% 50%;filter:drop-shadow(0 0 10px rgba(255,220,140,.9))}
+#ark .ark-row-hint{position:absolute;left:12%;right:12%;height:6%;border-radius:40px;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,226,150,.75),rgba(255,226,150,0));opacity:0;transition:opacity .5s}
+.phase-build #ark .ark-row-hint.on{opacity:1;animation:breathe 4s ease-in-out infinite}
+#ark.target-on{filter:drop-shadow(0 0 18px rgba(255,220,140,.95))}
+#ark.selectable{cursor:pointer}
+#ark:focus-visible{filter:drop-shadow(0 0 0 #fff) drop-shadow(0 0 6px var(--turq-light))}
+.win{position:absolute;width:4%;height:5%;border-radius:4px;background:radial-gradient(circle,rgba(255,226,150,.95),rgba(255,200,110,0) 70%);
+  opacity:0;transition:opacity 1.2s ease;pointer-events:none;mix-blend-mode:screen}
+.win.lit{opacity:1}
+.arkglow{position:absolute;border-radius:50%;pointer-events:none;opacity:0;transition:opacity 1.4s ease;
+  background:radial-gradient(closest-side,rgba(255,226,150,.55),rgba(255,226,150,.18) 55%,rgba(255,226,150,0))}
+.arkglow.on{opacity:1}
+#ark.afloat{animation:bob 6s ease-in-out infinite}
+@keyframes bob{50%{translate:0 -6px;rotate:-.6deg}}
+
+/* ---------- pieces: plank, mallet, animals ---------- */
+.piece{position:absolute;cursor:grab;touch-action:none;outline:none;
+  filter:drop-shadow(0 6px 4px rgba(60,40,10,.28));transition:filter .25s ease}
+.piece:focus-visible,.piece.selected{filter:drop-shadow(0 0 0 #fff) drop-shadow(0 0 10px rgba(95,184,174,.95)) drop-shadow(0 6px 4px rgba(60,40,10,.28))}
+.piece.dragging{cursor:grabbing;filter:drop-shadow(0 18px 10px rgba(60,40,10,.3));z-index:30}
+.piece.idle{animation:breathe 5s ease-in-out infinite}
+@keyframes breathe{50%{scale:1.025}}
+#pile{position:absolute;pointer-events:none}
+#pile img{width:100%;height:auto;display:block;filter:drop-shadow(0 6px 4px rgba(60,40,10,.25))}
+#plank{transform-origin:50% 60%}
+#mallet{position:absolute;border:0;padding:0;background:radial-gradient(circle,rgba(255,250,235,.95) 0 55%,rgba(255,250,235,0) 70%);
+  border-radius:50%;cursor:pointer;touch-action:none;outline:none}
+#mallet img{position:absolute;inset:12%;width:76%;height:76%;transform-origin:70% 70%;pointer-events:none;transition:rotate .08s}
+#mallet.knock img{rotate:-16deg}
+#mallet .ring{position:absolute;inset:0;width:100%;height:100%;rotate:-90deg;pointer-events:none}
+#mallet .ring circle{fill:none;stroke:var(--gold-light);stroke-width:5;stroke-linecap:round;stroke-dasharray:289;stroke-dashoffset:calc(289 * (1 - var(--p,0)))}
+#mallet:focus-visible{box-shadow:0 0 0 4px var(--turq-light)}
+#mallet.idle{animation:breathe 4s ease-in-out infinite}
+.animal{position:absolute;cursor:grab;touch-action:none;outline:none;transform-origin:50% 100%;
+  filter:drop-shadow(0 5px 3px rgba(60,40,10,.25))}
+.animal::before{content:"";position:absolute;inset:-26px -18px -10px}  /* generous hit area for small animals */
+.animal img{width:100%;height:100%;object-fit:contain;object-position:50% 100%;pointer-events:none;display:block}
+.animal.flip img{scale:-1 1}
+.animal:focus-visible,.animal.selected{filter:drop-shadow(0 0 0 #fff) drop-shadow(0 0 10px rgba(95,184,174,.95))}
+.animal.dragging{cursor:grabbing;z-index:30}
+.animal.waiting{filter:drop-shadow(0 0 12px rgba(255,220,140,.9))}
+#ramp{position:absolute;transform-origin:0 50%;object-fit:cover;pointer-events:none;filter:drop-shadow(0 4px 3px rgba(60,40,10,.3))}
+#rampSpot{position:absolute;border-radius:50%;outline:none;
+  background:radial-gradient(closest-side,rgba(255,226,150,.55),rgba(255,226,150,0));animation:breathe 4.5s ease-in-out infinite}
+#rampSpot.hot{background:radial-gradient(closest-side,rgba(255,226,150,.9),rgba(255,226,150,0))}
+#rampSpot:focus-visible{box-shadow:0 0 0 4px var(--turq-light)}
+.wob{animation:wob .5s ease}
+@keyframes wob{25%{rotate:-4deg}75%{rotate:3deg}}
+.land{animation:land .42s cubic-bezier(.3,1.6,.5,1)}
+@keyframes land{0%{scale:1.06 .9}100%{scale:1 1}}
+.reeds{position:absolute;pointer-events:none;transition:opacity 2.5s ease, translate 2.5s ease}
+.phase-flood .reeds,.phase-judi .reeds,.phase-end .reeds{opacity:0;translate:0 40px}
+
+/* ---------- taunts: grey ink words drifting from the tents, counter-mirrored so text reads in RTL ---------- */
+#taunts{position:absolute;inset:0;pointer-events:none}
+.taunt{position:absolute;pointer-events:auto;max-width:300px;border:0;cursor:pointer;
+  font:700 23px/1.25 var(--ui);color:#4b5658;background:rgba(251,246,234,.9);padding:10px 18px;border-radius:26px 26px 26px 6px;
+  box-shadow:0 0 0 1.5px rgba(120,130,130,.45),0 8px 16px rgba(40,40,30,.15);transition:opacity 1.1s ease,translate 1.1s ease;
+  animation:drift 7s ease-in-out infinite}
+#world.rtl .taunt{scale:-1 1;border-radius:26px 26px 6px 26px}
+.taunt.fade{opacity:0;translate:0 -40px;pointer-events:none}
+@keyframes drift{50%{translate:10px -6px}}
+
+/* ---------- frame ---------- */
+.frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.frame rect{fill:none;stroke:var(--gold-light);stroke-width:1.5}
+.frame .f1{stroke:rgba(224,183,92,.9);stroke-width:2.5}
+.frame .f2{stroke:rgba(224,183,92,.55)}
+.corner{position:absolute;width:76px;height:76px;pointer-events:none;stroke:var(--gold-light)}
+.corner.c-ts{top:calc(6px + var(--safe-t));left:calc(6px + var(--safe-l))}
+.corner.c-te{top:calc(6px + var(--safe-t));right:calc(6px + var(--safe-r));scale:-1 1}
+.corner.c-bs{bottom:calc(6px + var(--safe-b));left:calc(6px + var(--safe-l));scale:1 -1}
+.corner.c-be{bottom:calc(6px + var(--safe-b));right:calc(6px + var(--safe-r));scale:-1 -1}
+#girih *{stroke:inherit}
+
+/* ---------- HUD ---------- */
+.hud-top{position:absolute;top:calc(14px + var(--safe-t));inset-inline:calc(22px + var(--safe-l)) calc(22px + var(--safe-r));
+  display:flex;align-items:center;justify-content:space-between;gap:12px;pointer-events:none;z-index:20}
+.hud-top>*{pointer-events:auto}
+.tools{display:flex;gap:10px}
+.tbtn{min-width:64px;height:64px;border-radius:20px;border:0;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:0 14px;text-decoration:none;color:var(--ink);font:800 19px var(--ui);cursor:pointer;touch-action:manipulation;
+  background:linear-gradient(var(--card),var(--parchment-deep));
+  box-shadow:0 0 0 1px var(--rule),0 5px 0 #c9b98f,0 8px 14px rgba(20,40,40,.22);transition:translate .08s,box-shadow .08s}
+.tbtn:active{translate:0 4px;box-shadow:0 0 0 1px var(--rule),0 1px 0 #c9b98f,0 3px 6px rgba(20,40,40,.2)}
+.tbtn svg{width:28px;height:28px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tbtn.icon{padding:0}
+.tbtn[aria-pressed=false] .on-only{display:none}
+.tbtn[aria-pressed=true] .off-only{display:none}
+#bedBtn[aria-pressed=true]{background:linear-gradient(#2b4a7a,#1d3560)} #bedBtn[aria-pressed=true] svg{stroke:var(--gold-light)}
+html[dir=rtl] .dirarrow{transform:scaleX(-1);transform-origin:12px 12px}
+.tbtn.lang{font-size:20px}
+:focus-visible{outline:3px solid var(--turq-light);outline-offset:3px}
+.beads{display:flex;gap:10px;align-items:center;padding:10px 16px;border-radius:40px;background:rgba(251,246,234,.82);
+  box-shadow:0 0 0 1px var(--rule)}
+.bead{width:18px;height:18px;border-radius:50%;background:rgba(192,138,46,.18);box-shadow:inset 0 0 0 1.5px rgba(143,100,24,.55);transition:background .6s,box-shadow .6s}
+.bead.full{background:radial-gradient(circle at 35% 30%,#fff3c9,var(--gold-light) 45%,var(--gold) 80%);box-shadow:0 0 8px rgba(224,183,92,.8)}
+.bead.now{animation:breathe 3.5s ease-in-out infinite;box-shadow:inset 0 0 0 2px var(--gold)}
+
+.ribbon{position:absolute;inset-inline:max(18px,calc(50% - 470px));bottom:calc(16px + var(--safe-b));z-index:20;
+  display:flex;align-items:center;gap:14px;min-height:76px;padding:12px 26px;border-radius:22px;
+  background:linear-gradient(rgba(255,253,248,.95),rgba(243,233,210,.95));
+  box-shadow:0 0 0 1px var(--rule),0 0 0 5px rgba(251,246,234,.35),0 10px 24px rgba(20,40,40,.25)}
+.ribbon::before,.ribbon::after{content:"";position:absolute;top:50%;width:10px;height:10px;margin-top:-5px;rotate:45deg;
+  border:1.5px solid var(--gold);background:var(--parchment)}
+.ribbon::before{left:-6px}.ribbon::after{right:-6px}
+#say{margin:0;font:700 24px/1.35 var(--ui);color:var(--ink);flex:1;text-wrap:balance}
+html[lang=ar] #say{font-size:26px;line-height:1.5}
+#say.in{animation:sayin .5s ease}
+@keyframes sayin{from{opacity:0;translate:0 6px}}
+.listen{flex:none;width:64px;height:64px;border-radius:50%;border:0;cursor:pointer;
+  background:linear-gradient(var(--turq-light),var(--turq));box-shadow:0 5px 0 var(--turq-deep),0 0 0 1px var(--gold);transition:translate .08s,box-shadow .08s}
+.listen:active,.listen.playing{translate:0 4px;box-shadow:0 1px 0 var(--turq-deep),0 0 0 1px var(--gold)}
+.listen svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+.btn{min-height:64px;padding:0 28px;border-radius:22px;border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  font:800 22px var(--ui);text-decoration:none;touch-action:manipulation;transition:translate .08s,box-shadow .08s}
+.btn.gold{color:#fff;background:linear-gradient(var(--turq-light),var(--turq));
+  box-shadow:0 0 0 1.5px var(--gold-light),0 6px 0 var(--turq-deep),0 10px 18px rgba(20,40,40,.25);text-shadow:0 1px 0 rgba(0,0,0,.2)}
+.btn.gold:active{translate:0 5px;box-shadow:0 0 0 1.5px var(--gold-light),0 1px 0 var(--turq-deep)}
+.btn.ghost{color:var(--ink);background:linear-gradient(var(--card),var(--parchment-deep));box-shadow:0 0 0 1px var(--rule),0 6px 0 #c9b98f}
+.btn.ghost:active{translate:0 5px;box-shadow:0 0 0 1px var(--rule),0 1px 0 #c9b98f}
+.btn.soft{color:var(--ink);background:linear-gradient(var(--card),var(--parchment-deep));box-shadow:0 0 0 1px var(--rule),0 6px 0 #c9b98f,0 10px 18px rgba(20,40,40,.2)}
+.btn.soft:active{translate:0 5px;box-shadow:0 0 0 1px var(--rule),0 1px 0 #c9b98f}
+.btn img,.btn svg.ic{width:44px;height:44px;flex:none}
+.choices,.actrow{position:absolute;inset-inline:0;bottom:calc(112px + var(--safe-b));display:flex;justify-content:center;gap:18px;flex-wrap:wrap;z-index:21;padding:0 18px}
+.choices .btn{min-height:76px;font-size:23px}
+
+/* ---------- parent pause and ending: a parchment page beside the still scene ---------- */
+.sheet{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:flex-end;padding:calc(92px + var(--safe-t)) 5% 24px;
+  background:linear-gradient(to left,rgba(20,40,40,.35),rgba(20,40,40,0) 70%)}
+html[dir=rtl] .sheet{background:linear-gradient(to right,rgba(20,40,40,.35),rgba(20,40,40,0) 70%)}
+/* the ending sits on the start side, so the ark resting on Judi (end side) stays in view */
+.sheet.end{justify-content:flex-start;background:linear-gradient(to right,rgba(20,40,40,.35),rgba(20,40,40,0) 70%)}
+html[dir=rtl] .sheet.end{background:linear-gradient(to left,rgba(20,40,40,.35),rgba(20,40,40,0) 70%)}
+#app.ended .ribbon{display:none}
+.page{position:relative;width:min(470px,100%);max-height:calc(100% - 20px);overflow:auto;padding:34px 34px 30px;border-radius:18px;
+  background:radial-gradient(130% 90% at 30% 0%,#fffdf6,var(--parchment) 55%,var(--parchment-deep));
+  box-shadow:0 0 0 1px var(--gold),0 0 0 6px rgba(251,246,234,.9),0 0 0 7px var(--rule),0 24px 50px rgba(10,30,30,.4);
+  animation:pagein .6s cubic-bezier(.2,.8,.2,1)}
+@keyframes pagein{from{opacity:0;clip-path:inset(0 0 0 100%)}to{opacity:1;clip-path:inset(0 0 0 0)}}
+html[dir=rtl] .page{animation-name:pagein-rtl}
+@keyframes pagein-rtl{from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0 0 0 0)}}
+.star8{position:absolute;top:12px;inset-inline-end:12px;width:34px;height:34px;stroke:var(--gold)}
+.page .kicker{margin:0 0 6px;font:800 16px var(--ui);letter-spacing:.06em;text-transform:uppercase;color:var(--gold-deep)}
+html[lang=ar] .page .kicker{letter-spacing:0}
+.page .sub{margin:0;color:var(--ink-soft);font-weight:700}
+.page h2{font:800 30px/1.25 var(--title);margin:10px 0 12px;color:var(--ink)}
+.page p{font-size:20px;line-height:1.5}
+.page .idea{color:var(--ink-soft);border-inline-start:3px solid var(--gold-light);padding-inline-start:12px}
+.page .btn{margin-top:8px}
+.cartouche{margin:16px 0;padding:18px 20px 14px;border-radius:60px/40px;text-align:center;
+  background:radial-gradient(closest-side,rgba(255,253,246,1),rgba(243,233,210,1));
+  box-shadow:0 0 0 1.5px var(--gold),0 0 0 6px rgba(251,246,234,1),0 0 0 7px rgba(36,80,140,.55)}
+.cartouche .kicker{font-size:14px;text-transform:none;letter-spacing:0;color:var(--ink-soft);font-weight:700}
+.page .dua{font:700 50px/1.7 var(--naskh);color:var(--cobalt);margin:2px 0 6px}
+.page .dua-tr{margin:0;font-weight:700;color:var(--ink)}
+.endrow{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+.tier{display:flex;gap:10px;align-items:center;margin-top:14px;font-weight:700;color:var(--ink-soft);min-height:48px}
+.tier input{width:28px;height:28px;accent-color:var(--turq)}
+
+/* ---------- reward moment ---------- */
+.reward{position:absolute;inset:0;pointer-events:none;z-index:15;opacity:0;transition:opacity 1.6s ease}
+.reward.on{opacity:1}
+.reward .lamp{position:absolute;inset:0;background:radial-gradient(60% 55% at var(--lx,50%) var(--ly,45%),rgba(255,230,160,.45),rgba(20,40,60,.0) 55%,rgba(14,30,40,.42))}
+.shamsa{position:absolute;width:min(30vmin,240px);height:min(30vmin,240px);left:var(--sx,28%);top:var(--sy,30%);translate:-50% -50%}
+.shamsa path,.shamsa circle{fill:none;stroke:var(--gold-light);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
+  transition:stroke-dashoffset 2.4s cubic-bezier(.4,0,.2,1)}
+.reward.on .shamsa path,.reward.on .shamsa circle{stroke-dashoffset:0}
+/* the medallion: a solid ivory disc under the gold lines, so it reads as an illuminated roundel and never as a sun
+   or an eye with sky showing through (scholar gate 3 SHOULD 1). Lines go a shade deeper to read on ivory. */
+.shamsa circle.disc{fill:#FBF6EA;stroke:var(--gold);stroke-width:2.4;stroke-dasharray:none;opacity:0;transition:opacity 1.2s ease;
+  filter:drop-shadow(0 4px 10px rgba(20,40,40,.25))}
+.reward.on .shamsa circle.disc{opacity:1}
+.shamsa #shamsaG path,.shamsa #shamsaG circle{stroke:var(--gold)}
+.cssrain{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 2s;
+  background:repeating-linear-gradient(100deg,rgba(255,255,255,0) 0 46px,rgba(230,240,250,.25) 46px 47px);filter:blur(.6px)}
+.nopixi.phase-flood .cssrain{opacity:.6}
+
+/* ---------- phone portrait ---------- */
+@media (max-aspect-ratio:4/5){
+  .tbtn{min-width:56px;height:56px;border-radius:18px}
+  .tbtn.back span{display:none}
+  .tools{gap:8px}
+  .beads{position:absolute;top:auto;bottom:calc(10px + var(--safe-b));left:50%;translate:-50% 0;padding:8px 12px;gap:8px;position:fixed}
+  .bead{width:15px;height:15px}
+  .hud-top{inset-inline:calc(14px + var(--safe-l)) calc(14px + var(--safe-r))}
+  .ribbon{inset-inline:12px;top:calc(80px + var(--safe-t));bottom:auto;padding:10px 16px;min-height:68px;gap:10px}
+  #say{font-size:19px}
+  html[lang=ar] #say{font-size:20px}
+  .listen{width:56px;height:56px}
+  .choices,.actrow{bottom:calc(56px + var(--safe-b));flex-direction:column;align-items:stretch;padding:0 22px;gap:14px}
+  .choices .btn{font-size:20px;min-height:68px}
+  .sheet{align-items:flex-end;justify-content:center;padding:12px 12px calc(12px + var(--safe-b));background:linear-gradient(to top,rgba(20,40,40,.4),rgba(20,40,40,0) 70%)}
+  .page{padding:24px 22px 20px;max-height:74%}
+  .page h2{font-size:24px}
+  .page p{font-size:18px}
+  .page .dua{font-size:40px}
+  .corner{width:56px;height:56px}
+  .taunt{font-size:30px;max-width:420px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.25s!important}
+  .plates img{transition:opacity .8s ease!important}
+}

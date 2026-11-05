@@ -1,0 +1,30 @@
+{
+ "world": {
+  "land": [
+   1240,
+   776
+  ],
+  "port": [
+   690,
+   1303
+  ]
+ },
+ "aspects": {
+  "ark-whole": 2.6911,
+  "ark-frame": 2.6911,
+  "plank": 4.0152,
+  "timber-pile": 1.9247,
+  "mallet": 1.0084,
+  "reeds": 0.7119,
+  "animal-camel": 1.1075,
+  "animal-cow": 1.4592,
+  "animal-elephant": 1.36,
+  "animal-giraffe": 0.5853,
+  "animal-goat": 1.0429,
+  "animal-hoopoe": 1.0462,
+  "animal-lion": 1.2454,
+  "animal-rabbit": 0.8853,
+  "animal-sheep": 1.1684,
+  "animal-tortoise": 1.6749
+ }
+}
