@@ -102,7 +102,7 @@ const translations = {
         // Scene 9: Repentance
         scene9Title: "Asking for Forgiveness",
         scene9Text1: "Adam and Hawa felt very sorry. They turned to Allah and said:",
-        scene9Quran: "\"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy on us, we will surely be among the losers.\"",
+        scene9Quran: "\"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy on us, we will surely be among the losers.\" (Surah Al-A'raf 7:23)",
         scene9Text2: "And SubhanAllah - Allah forgave them! Allah is the Most Merciful!",
         scene9Celebrate: "Allah Forgave Them!",
 
@@ -123,7 +123,7 @@ const translations = {
 
         // Dua Box
         duaTitle: "Adam's Dua for Forgiveness",
-        duaTranslation: "\"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers.\"",
+        duaTranslation: "\"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers.\" (Surah Al-A'raf 7:23)",
         duaNote: "Say this dua when you make a mistake and want Allah's forgiveness!",
         memorizeBtn: "I want to memorize this!",
         memorizeSaved: "Added to your duas!",
@@ -234,7 +234,7 @@ const translations = {
 
         // Scene 4: Iblis Refuses
         scene4Title: "واحد رفض",
-        scene4Text: "لكن كان هناك واحد لم يسجد - إبليس (الشيطان). كان متكبراً ومغروراً. قال: \"أنا خير منه! خلقتني من نار وخلقته من طين!\"",
+        scene4Text: "لكن كان هناك واحد لم يسجد - إبليس (الشيطان). كان متكبراً ومغروراً. قال إنه خير من آدم، لأن الله خلقه من نار وخلق آدم من طين!",
         scene4Highlight: "الكبر والغرور سيئان جداً! يجب أن نكون متواضعين دائماً!",
         scene4Question: "ما الخطأ الذي فعله إبليس؟",
         scene4Happy: "نام",
@@ -278,7 +278,7 @@ const translations = {
         // Scene 9: Repentance
         scene9Title: "طلب المغفرة",
         scene9Text1: "شعر آدم وحواء بالندم الشديد. توجها إلى الله وقالا:",
-        scene9Quran: "\"ربنا ظلمنا أنفسنا وإن لم تغفر لنا وترحمنا لنكونن من الخاسرين.\"",
+        scene9Quran: "معناه: يا ربّنا، أخطأنا في حقّ أنفسنا، فإن لم تسامحنا وترحمنا كنّا من الخاسرين. (سورة الأعراف، الآية ٢٣)",
         scene9Text2: "وسبحان الله - غفر الله لهما! الله أرحم الراحمين!",
         scene9Celebrate: "غفر الله لهما!",
 
@@ -299,7 +299,7 @@ const translations = {
 
         // Dua Box
         duaTitle: "دعاء آدم للمغفرة",
-        duaTranslation: "\"ربنا ظلمنا أنفسنا وإن لم تغفر لنا وترحمنا لنكونن من الخاسرين.\"",
+        duaTranslation: "معناه: يا ربّنا، أخطأنا في حقّ أنفسنا، فإن لم تسامحنا وترحمنا كنّا من الخاسرين. (سورة الأعراف، الآية ٢٣)",
         duaNote: "قل هذا الدعاء عندما تخطئ وتريد مغفرة الله!",
         memorizeBtn: "أريد حفظ هذا!",
         memorizeSaved: "تمت إضافته إلى أدعيتك!",

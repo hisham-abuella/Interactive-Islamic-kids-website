@@ -2,8 +2,10 @@
 """Diff every surah page's Arabic against api.alquran.cloud.
 
 Also checks every ayah quoted on a story page (story-prophet-*.html): any element
-carrying data-ayah="<surah>:<ayah>" must be that ayah, or a run of whole words
-from it (a quote may start mid-ayah, e.g. 12:92 without its opening «قال»).
+carrying data-ayah="<surah>:<ayah>" (or a range of ayat, "<surah>:<from>-<to>",
+e.g. the dua 20:25-26) must be that ayah, or a run of whole words from it (a
+quote may start mid-ayah, e.g. 12:92 without its opening «قال»). This covers the
+quotes inside scenes and the dua boxes.
 
 Checks each verse card and the complete-surah block, in two tiers:
 
@@ -90,7 +92,16 @@ def api_verses(num):
     return out
 
 
-STORY_AYAH = re.compile(r'<(p|span|div)\b[^>]*\bdata-ayah="(\d+):(\d+)"[^>]*>(.*?)</\1>', re.S)
+STORY_AYAH = re.compile(r'<(p|span|div)\b[^>]*\bdata-ayah="(\d+):(\d+)(?:-(\d+))?"[^>]*>(.*?)</\1>', re.S)
+
+
+def api_ayah(sura, ayah):
+    ref = n(json.load(urllib.request.urlopen(
+        'https://api.alquran.cloud/v1/ayah/%s:%s/quran-simple' % (sura, ayah), timeout=30)
+    )['data']['text'])
+    if int(ayah) == 1 and int(sura) != 1 and ref.startswith(n(BISM)):
+        ref = ref[len(n(BISM)):].strip()
+    return ref
 
 
 def check_story_ayat():
@@ -99,12 +110,11 @@ def check_story_ayat():
     for path in sorted(glob.glob(os.path.join(UI, 'story-prophet-*.html'))):
         page = os.path.basename(path)
         src = open(path, encoding='utf-8').read()
-        for _, sura, ayah, body in STORY_AYAH.findall(src):
-            ref = n(json.load(urllib.request.urlopen(
-                'https://api.alquran.cloud/v1/ayah/%s:%s/quran-simple' % (sura, ayah), timeout=30)
-            )['data']['text'])
-            if int(ayah) == 1 and int(sura) != 1 and ref.startswith(n(BISM)):
-                ref = ref[len(n(BISM)):].strip()
+        for _, sura, ayah, last, body in STORY_AYAH.findall(src):
+            # a range (20:25-26) is checked against its ayat joined in order
+            ref = ' '.join(api_ayah(sura, a) for a in range(int(ayah), int(last or ayah) + 1))
+            if last:
+                ayah = '%s-%s' % (ayah, last)
             quote = n(re.sub(r'<[^>]+>', '', body))
             whole = letters(quote) == letters(ref)
             part = (' %s ' % letters(quote)) in (' %s ' % letters(ref))

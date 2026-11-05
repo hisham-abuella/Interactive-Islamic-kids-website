@@ -2229,9 +2229,9 @@ html[lang="ar"] .story-scene.has-plate {
     object-fit: cover;
 }
 
-/* An ayah quoted inside a story scene (Ibrahim 21:69, Musa 20:12 and 20:44,
-   Yusuf 12:92 and 12:101). Checked by scripts/verify-scripture.py through its
-   data-ayah attribute.
+/* An ayah quoted inside a story scene (Adam 7:23, Ibrahim 21:69, Musa 20:12
+   and 20:44, Yusuf 12:92). Checked by scripts/verify-scripture.py through its
+   data-ayah attribute, as are the dua boxes (7:23, 71:28, 2:127, 20:25-26, 12:101).
    The .story-slide selector is needed: the slide-mode stories (Ibrahim, Musa)
    size every scene paragraph with `.story-slide .scene-text p` (0,2,1), which
    beat the plain `.scene-text .story-ayah` (0,2,0) and set the ayah at the

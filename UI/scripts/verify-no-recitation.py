@@ -209,11 +209,15 @@ class Quran:
             live, e = nxt, e + 1
         return e, live
 
-    def scan_ar(self, w, masked=frozenset()):
-        """w: canonical words; masked: positions inside whitelisted phrases. A run is excused
-        only if every word of it is whitelisted ("لا إله إلا هو" alone is dhikr; "الله لا إله إلا
-        هو الحي القيوم" is 2:255 and is flagged). Yields (kind, run, refs)."""
-        excused = lambda k, e: all(j in masked for j in range(k, e))
+    def scan_ar(self, w, spans=()):
+        """w: canonical words; spans: (start, end) of each whitelisted phrase found in w. A run
+        is excused only if ONE whitelisted phrase covers all of it ("لا إله إلا هو" alone is
+        dhikr; "الله لا إله إلا هو الحي القيوم" is 2:255 and is flagged). Two adjacent entries
+        never combine: «لا إله إلا هو» + «الرحمن الرحيم» is the end of 2:163, and «حسبي الله» +
+        «لا إله إلا هو» is 9:129; neither combination was reviewed as a whole (scholar, Round 4,
+        3). Yields (kind, run, refs)."""
+        excused = lambda k, e: any(a <= k and e <= b for a, b in spans)
+        masked = {j for a, b in spans for j in range(a, b)}
         k = 0
         while k <= len(w) - RUN:
             hits = self.grams.get(tuple(w[k:k + RUN]))
@@ -302,29 +306,43 @@ class Quran:
 
 # ---------------------------------------------------------------- whitelist
 class Whitelist:
-    def __init__(self):
+    def __init__(self, transcripts=False):
+        # transcripts: scanning Whisper transcripts (--transcripts). Entries marked
+        # "transcripts_only" (a Whisper spelling, e.g. «أعود» for «أعوذ») apply only then: in a
+        # script or a page that spelling is a typo, and is checked like any other text.
+        self.transcripts = transcripts
         self.data = json.load(open(WHITELIST, encoding='utf-8'))
         self.ar = [(canon(p['phrase']), p) for p in self.data['phrases'] if p['lang'] == 'ar']
         self.en = [(re.compile(re.escape(p['phrase']).replace(r'\ ', r'[\s-]+'), re.I), p)
                    for p in self.data['phrases'] if p['lang'] == 'en']
         self.used = set()
 
+    def applies(self, p):
+        """Whether whitelist entry p may excuse text in the unit being scanned."""
+        if p.get('units') and self._unit not in p['units']:
+            return False
+        if p.get('except_units') and self._unit in p['except_units']:
+            return False
+        if p.get('transcripts_only') and not self.transcripts:
+            return False
+        return True
+
     def mask_ar(self, w):
-        """Positions of w covered by a whitelisted phrase."""
-        masked = set()
+        """(start, end) of each occurrence of a whitelisted phrase in w."""
+        spans = []
         for ph, p in self.ar:
-            if p.get('units') and self._unit not in p['units']:
+            if not self.applies(p):
                 continue
             n = len(ph)
             for k in range(len(w) - n + 1):
                 if w[k:k + n] == ph:
-                    masked.update(range(k, k + n))
+                    spans.append((k, k + n))
                     self.used.add(p['phrase'])
-        return masked
+        return spans
 
     def mask_en(self, text):
         for rx, p in self.en:
-            if p.get('units') and self._unit not in p['units']:
+            if not self.applies(p):
                 continue
             text, n = rx.subn(' | ', text)
             if n:
@@ -383,7 +401,7 @@ def main():
     ap.add_argument('--transcripts')
     ap.add_argument('--self-test', action='store_true')
     args = ap.parse_args()
-    Q, WL = Quran(), Whitelist()
+    Q, WL = Quran(), Whitelist(transcripts=bool(args.transcripts))
 
     if args.text is not None:
         f = WL.scan(Q, 'cli', args.text)
@@ -410,8 +428,38 @@ def main():
             for kind, run, refs in f:
                 print(f'         {kind}: {run} [{", ".join(refs[:3])}]')
             bad += not f
+        # Round 4, 3: two adjacent whitelist entries never combine to excuse a run
+        plants += [('ar', 'لا إله إلا هو الرحمن الرحيم'),          # 2:163 (end)
+                   ('ar', 'حسبي الله لا إله إلا هو')]               # 9:129 (part)
+        for lang, t in plants[-2:]:
+            f = WL.scan(Q, 'self-test', t)
+            print(('caught ' if f else 'MISSED ') + f'[{lang}] {t}  (two adjacent whitelist entries)')
+            for kind, run, refs in f:
+                print(f'         {kind}: {run} [{", ".join(refs[:3])}]')
+            bad += not f
+        # Round 4, 3: the Whisper spelling «أعود» is excused only when scanning transcripts
+        tw = 'أعود بالله من الشيطان الرجيم'
+        f = WL.scan(Q, 'prophet-adam/ar/slide-7', tw)
+        print(('caught ' if f else 'MISSED ') + f'[ar] {tw}  (in a script: transcripts_only entry must not apply)')
+        bad += not f
+        f = Whitelist(transcripts=True).scan(Q, 'prophet-adam/ar/slide-7', tw)
+        print(('clean  ' if not f else 'FALSE+ ') + f'[ar] {tw}  (in a Whisper transcript)')
+        bad += bool(f)
+        # Round 4, 3: entries 0 and 13 may not excuse Al-Fatiha verses 1 and 3 (for when
+        # AR_VERSE_AUDIO is on: a meaning line that is still the ayah must fail)
+        for unit, t in (('surah-fatiha/ar/verse-1', 'بسم الله الرحمن الرحيم'),
+                        ('surah-fatiha/ar/verse-3', 'الرحمن الرحيم')):
+            f = WL.scan(Q, unit, t)
+            print(('caught ' if f else 'MISSED ') + f'[ar] {unit}: {t}')
+            bad += not f
+            f = WL.scan(Q, 'prophet-adam/ar/slide-1', t)
+            print(('clean  ' if not f else 'FALSE+ ') + f'[ar] prophet-adam/ar/slide-1: {t}  (dhikr / Names of Allah elsewhere)')
+            bad += bool(f)
         clean = [('ar', 'هذا دعاء جميل دعا به النبي نوح: سأل الله أن يغفر له ولوالديه.'),
-                 ('en', 'Here is a beautiful dua Prophet Nuh made. It means: My Lord, forgive me and my parents.')]
+                 ('en', 'Here is a beautiful dua Prophet Nuh made. It means: My Lord, forgive me and my parents.'),
+                 ('ar', 'قل: لا إله إلا هو.'),
+                 ('ar', 'حسبي الله ونعم الوكيل'),
+                 ('ar', 'أعوذ بالله من الشيطان الرجيم')]
         for lang, t in clean:
             f = WL.scan(Q, 'self-test', t)
             print(('clean  ' if not f else 'FALSE+ ') + f'[{lang}] {t}')

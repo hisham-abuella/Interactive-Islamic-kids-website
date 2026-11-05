@@ -472,3 +472,172 @@ A transliterated ayah spoken by a clone is still the Quranic wording produced by
 | C. EN transliterated Quranic duas (4 slides) | CHANGE (MUST): meaning only in the voice; transliteration stays on screen |
 | D. Yusuf 0, Adam 7, isti'adha, Ibrahim fragments | APPROVED (optional polish noted) |
 | Site-wide rule | Rules 1-5 above; make the scan a build check with a reviewed whitelist |
+
+---
+
+## Round 4 (2026-11-05)
+
+Read-only review at commit `c50a016` (branch `ui-games-books-scholar-fixes`, working tree at `8131ad7`, clean).
+- **Files read:** `UI/voice-scripts.js`, `UI/scripts/recitation-whitelist.json`, `UI/scripts/verify-no-recitation.py`, `UI/mockups/games/04`, `08`, `10`, and the five `UI/story-prophet-*.html` pages with `UI/translations.js`.
+- **Checks run:** `verify-no-recitation.py` (PASS: 321 units, 13 speech files, 2317 literals; 148 AR verse units suppressed with 0 mp3s; 1 slide held), `--self-test` (PASSED), and `--text` probes.
+- **Other evidence:** a scan of every on-screen `data-ar` and `translations.js` Arabic string with the same matcher, a word diff of the five story dua blocks against `api.alquran.cloud/v1/ayah/{ref}/quran-simple`, and YouTube oEmbed for all 27 embeds.
+
+### 1. EN dua narration, meaning only: APPROVED
+
+| Unit | Evidence | Ruling |
+|---|---|---|
+| Adam EN 11 | `UI/voice-scripts.js:78` | APPROVED. Matches the round-3 C pattern word for word. A faithful rendering of 7:23. |
+| Ibrahim EN 9 | `:241` "It means: Our Lord, accept this from us. Indeed You are the All-Hearing, the All-Knowing." | APPROVED. A faithful rendering of 2:127 (the dua part). |
+| Nuh EN 9 | `:281` "It means: My Lord, forgive me and my parents." | APPROVED. This is the opening of 71:28, the same part the page shows. |
+| Musa EN 13 | `:367` "It means: My Lord, open my chest for me, and make my task easy for me. He made this dua before facing Pharaoh." | APPROVED. It is 20:25-26, and the context is right (20:24-26). |
+
+None of the four contains any transliteration, and the checker passes them. Their mp3s were re-taken in `c50a016`.
+
+### 2. Musa AR slide 9 draft: APPROVED
+
+«…فسجدوا لله، وأعلنوا أنهم آمنوا بالله الذي أرسل موسى وهارون!»
+- It is indirect speech in the narrator's own words.
+- It is faithful to 7:120-122, 20:70 and 26:46-48: they fell in prostration to Allah and declared belief in the Lord of Musa and Harun.
+- The checker passes it clean. «موسى وهارون» are names, and no 2-3 word whole ayah remains.
+
+You may release the hold, render the slide and install it, then run `verify-no-recitation.py` and the Whisper sweep. **Also** the page prose has the same quote. `UI/story-prophet-musa.html:192` `data-ar` still ends «فسجدوا وقالوا: "آمنا برب موسى وهارون!"». Give the page the same sentence so that screen and voice agree (SHOULD, see 5b).
+
+### 3. Whitelist and checker
+
+| Entry | Ruling |
+|---|---|
+| `"Wa alaykum as-salam"` (EN, game 04 `optSalam`, `UI/mockups/games/04-*.html:449`) | APPROVED. It is the Sunnah reply to the salam, a greeting and not an ayah. 4:86 commands returning a greeting but does not give this wording. Change its `ruling` to "Round 4, 3". |
+| `«أعود بالله من الشيطان الرجيم»` (Whisper spelling) | APPROVED, for transcripts only. It is needed because «بالله من الشيطان الرجيم» is a 4-word run of 16:98. SHOULD: scope it in code (for example `"transcripts_only": true`, honoured only under `--transcripts`). The `about` text says "no script uses this spelling", but nothing enforces that, and a misspelt isti'adha in a script should be caught as a quality error. |
+| `onscreen_only` «التين والزيتون» (game 10, `UI/mockups/games/10-ask-and-find-coop.html:173`) | APPROVED. These are ordinary fruit nouns used as an item name. I confirmed that speech reads only `clue`/`hint` (`:338-339`). `notThat` with `it.name` goes to `textContent` only (`:321`). The clue «تبدأ سورة بالقسم بهاتين الثمرتين» is meaning, not wording. |
+| The other `phrases` entries (0-21) | APPROVED. Each one is a Name of Allah, a dhikr formula, the isti'adha, or approved narrative nouns, as Round 3 Part 2 rule 2 and D allow. Ten entries are unused at present. Keep them. |
+| The other `onscreen_only` entries (games 02, 06, 07, 08, 09) | APPROVED on the mechanism each one states, backed by the `speak(...)` argument rule and the "entry matched nothing" failure. |
+
+**The rule implementation.**
+- **APPROVED: a one-word ayah is flagged only when it is the whole line** (`verify-no-recitation.py:242-246`). This is rule 1(b) together with rule 2 (a single key word being explained).
+- **APPROVED: a whole ayah of 2-3 words is flagged anywhere in a line** (`:228-241`). This is correct. Rule 1(b) takes precedence over the 2-3 word dialogue allowance, and it is exactly what caught «رب موسى وهارون».
+- **APPROVED: the runs-of-4 logic.**
+- **SHOULD (gap): adjacent whitelist entries.** "Excused only if every word is whitelisted" (`:216`) also excuses a run made of **two adjacent entries**. Neither combination was ever reviewed as a whole. Probes:
+  - «لا إله إلا هو الرحمن الرحيم» passes, but it is the end of 2:163.
+  - «حسبي الله لا إله إلا هو» passes, but it is 9:129, part of the ayah.
+
+  The second is also a known morning dhikr, but that is a coincidence. Excuse a run only when a **single** whitelist occurrence covers it, and otherwise flag it for review. No current unit triggers this.
+- **SHOULD before `AR_VERSE_AUDIO` is turned on:** entries 0 «بسم الله الرحمن الرحيم» and 13 «الرحمن الرحيم» are each a whole ayah of Al-Fatiha (1:1, 1:3). Add an exclusion (`except_units`: `surah-fatiha/ar/verse-1`, `verse-3`) so that a Fatiha meaning line that is still the ayah cannot pass through the whitelist.
+- **NOTE (known limit):** rule 1(a), a quotation frame of any length, cannot be fully machine-checked. «يقول الله تعالى: القارعة» passes. A cheap heuristic is to flag a one-word ayah that directly follows «قال الله / يقول الله / في القرآن» and a colon. Otherwise this stays a review item.
+
+### 4. Game 08 in AR reads exAr only: CONFIRMED
+
+- In `UI/mockups/games/08-al-fil-seek.html:422-423`, `playVerse` falls back to `speak(lang === 'ar' ? AYAT[i].exAr : AYAT[i].exEn)`. While `arSoon()` is true, no verse file is requested. `AYAT[].ar` goes only to `textContent`.
+- The `exAr` strings (`:289-301`) contain only explained key words (`«ألم تر؟»`, `«أصحاب الفيل»`, `«أبابيل»`) and meaning. This is allowed under rule 2.
+- `got` and `find` lines are narrator prose.
+
+### 5. Story pages: AR "translation" line repeats the ayah. CHANGE (MUST), as ruling A
+
+The screen also shows ayat that the verifier does not see. **5a, MUST: the AR "meaning" line is the ayah again.** Replace each `data-ar` (for Adam, the `duaTranslation` value in `translations.js`) with the meaning line below. They are Muyassar-based, first-person "meaning of the dua", with no quote marks, and the citation added. Each one passes `verify-no-recitation.py --text` clean.
+
+| Page:line | Current `data-ar` | Replacement |
+|---|---|---|
+| `UI/story-prophet-adam.html:373` (via `UI/translations.js:302` `duaTranslation`) | «"ربنا ظلمنا أنفسنا وإن لم تغفر لنا وترحمنا لنكونن من الخاسرين."» | «معناه: يا ربّنا، أخطأنا في حقّ أنفسنا، فإن لم تسامحنا وترحمنا كنّا من الخاسرين. (سورة الأعراف، الآية ٢٣)» |
+| `UI/story-prophet-nuh.html:178` | «"ربّ اغفر لي ولوالديّ"» | «معناه: يا ربّ، اغفر ذنوبي وذنوب أمّي وأبي. (سورة نوح، الآية ٢٨)» |
+| `UI/story-prophet-ibrahim.html:308` | «"ربّنا تقبّل منا إنك أنت السميع العليم"» | «معناه: يا ربّنا، اقبل منّا هذا العمل، فأنت تسمع كل دعاء وتعلم كل شيء. (سورة البقرة، الآية ١٢٧)» |
+| `UI/story-prophet-musa.html:234` | «"ربّ اشرح لي صدري ويسّر لي أمري"» | «معناه: يا ربّ، املأ قلبي طمأنينة وشجاعة، وسهّل عليّ مهمّتي. (سورة طه، الآيتان ٢٥ و٢٦)» |
+| `UI/story-prophet-yusuf.html:193` | «"أنت وليّي في الدنيا والآخرة، توفّني مسلماً وألحقني بالصالحين." (سورة يوسف، الآية ١٠١)» | «معناه: يا الله، أنت الذي تتولّى أموري في الدنيا والآخرة، فاجعلني أموت مسلماً، واجعلني مع الصالحين. (سورة يوسف، الآية ١٠١)» |
+
+**Already correct:** `story-prophet-ibrahim.html:243` (21:69), `story-prophet-musa.html:180` (20:44) and `story-prophet-yusuf.html:172` (12:92). `story-prophet-musa.html:139` (20:12) shows the citation only. That is acceptable. Optionally use «أي: أخبر الله موسى أنه هو ربّه الذي يكلّمه. (سورة طه، الآية ١٢)».
+
+**5b, SHOULD: story prose quotes ayat unvowelled and uncited, as dialogue.**
+- These lines are on screen only; no voice reads them. But the child cannot tell they are Quran, and `verify-scripture.py` does not check them.
+- For each one, either use the indirect wording already approved for the voice, or make it a vowelled, cited `quran-text story-ayah` block with `data-ayah`.
+
+| Location | Text |
+|---|---|
+| `UI/story-prophet-musa.html:192` | «"آمنا برب موسى وهارون!"» (use the draft in 2) |
+| `UI/story-prophet-musa.html:203` | «"كلا! إن معي ربي سيهدين."» (26:62; use the round-3 B line: «...وأخبرهم أن الله معه وسيهديه إلى طريق النجاة») |
+| `UI/story-prophet-ibrahim.html:164` | «"إني وجهت وجهي للذي فطر السماوات والأرض"» (6:79) |
+| `UI/story-prophet-ibrahim.html:188` | «...ما لا يسمع ولا يبصر ولا...» (19:42) |
+| `UI/story-prophet-yusuf.html:88` | «لا تقصص رؤياك على إخوتك» (12:5) |
+| `UI/translations.js:237` (Adam `scene4Text`) | «"أنا خير منه! خلقتني من نار وخلقته من طين!"» (7:12) |
+| `UI/translations.js:281` (Adam `scene9Quran`, shown in a `quran-text` block at `story-prophet-adam.html:308`) | 7:23 unvowelled, in quotes, uncited. Make it the vowelled ayah with `data-ayah="7:23"` and the citation. |
+
+`UI/quran.html:312` (94:5) and `:329` (95:1, 95:4) are short teaser quotes on the hub. That is acceptable as a NOTE: vowel and cite them when convenient.
+
+**5c, NOTE: the four story dua blocks have no `data-ayah`, so the verifier does not check them.** The blocks are `story-prophet-adam.html:372`, `nuh.html:177`, `ibrahim.html:307` and `musa.html:233`. I diffed them word by word against quran-simple, and the wording is correct in all four. The only differences are display conventions:
+- Shadda and haraka are stored in a different order.
+- Adam has no sukun on «أنفسنا» or «وإن», and «لَّمْ» carries an idgham shadda.
+- Ibrahim has no sukun on «أنتَ».
+
+These are Uthmani-print tajweed marks, and they do not change the reading. Add `data-ayah` (7:23, 71:28, 2:127, 20:25-26) so that the verifier holds them.
+
+### 6. Musa AR 13, what Whisper heard: a quality issue, not doctrinal
+
+- «أن يملأ» for «أي يملأ» turns the gloss into a second request ("and that He fill his heart with tranquillity"). That is still true to the meaning of 20:25.
+- «يسّر» for «ييسّر» makes the clause read "that He eased", which is grammatically off but carries no doctrinal error.
+- «يسهّل» is the gloss word itself.
+
+None of these is Quranic wording, so none affects recitation. The Whisper text also passes the checker clean, so no mishearing brings it closer to 20:26. Whisper often confuses أي and أن, and dropped geminate يي. Have an Arabic speaker listen once. Re-take only if «ييسّر» is audibly «يسّر».
+
+### 7. Owner view: YouTube embeds (27)
+
+Inventory, from oEmbed today:
+- 21 surah pages plus `ayat-al-kursi.html:271` = 22 recitation-learning videos:
+  - "Learn with Zakaria": 10 (Duha, Adiyat, Bayyinah, Humazah, Kafirun, Qariah, Takathur, Sharh, Zalzalah, Tin)
+  - "Osratouna tv": 9 (Falaq, Ikhlas, Fil, Masad, Ma'un, Kawthar, Nasr, Nas, Quraysh)
+  - "Bismillah Beginnings": 1 (Asr)
+  - "One4kids / Zaky": 1 (Kursi)
+  - **IQRA Cartoon** for Fatiha (`surah-fatiha.html:260`). This is a *tafsir cartoon*, not a listen-and-repeat recitation, so the page's "learn to recite" framing does not fit it.
+- 5 story pages (`story-prophet-adam.html:454`, `ibrahim.html:389`, `nuh.html:254`, `musa.html:308` (Part 1 only), `yusuf.html:267`): all IQRA Cartoon prophet-story episodes.
+
+**Recommendation.**
+1. **Gate, don't trust.** Before release, the owner (or an Arabic-reading adult) watches each video end to end once against a short checklist:
+   - human recitation by a named qari, Hafs, correct, with no synthetic or AI voice;
+   - no music under the recitation;
+   - **no depiction of any prophet, angel or of Allah.** This matters most for the five IQRA story cartoons;
+   - no isra'iliyyat or content that contradicts the page;
+   - no ads or end-screens that lead off-site.
+
+   Record the qari, the channel, the date checked and the verdict per video ID in a small manifest beside the pages. A video that fails is removed, not argued over.
+2. **Reduce exposure:**
+   - Embed from `youtube-nocookie.com` with `rel=0` (end-screen suggestions then stay on the same channel).
+   - Lazy-load each video behind a parent-facing "play" tap, not autoplay.
+   - Keep the site's own text as the primary teaching.
+3. **Re-check periodically** (manually, for example each release). A third-party video can be deleted, replaced, or have its suggestions change, and the site cannot see that.
+4. **Longer term, preferred for the 22 recitation slots:**
+   - Replace the videos with licensed audio by a known qari per ayah (rule 4: human recitation is the only acceptable voice), for example from the Quran.com / EveryAyah sources, with licence terms confirmed. This gives the site control of the exact text and reciter, and it lines up with the vowelled ayah on the card.
+   - Keep video only where it adds something audio cannot.
+   - For the story cartoons, if the owner cannot vouch for every frame of a 10-20 minute cartoon, remove the embed. The story pages are complete without it.
+5. Fatiha: if the IQRA tafsir cartoon is kept, relabel its section as "watch the story" instead of "learn to recite", or replace it with a recitation video like the other 21.
+
+### Round 4 summary
+
+| Item | Ruling |
+|---|---|
+| 1. EN dua narration, meaning only (Adam 11, Ibrahim 9, Nuh 9, Musa 13) | APPROVED |
+| 2. Musa AR 9 draft | APPROVED; release the hold and render. Page `:192` should match (SHOULD) |
+| 3. Whitelist: Wa alaykum as-salam, أعود (transcripts), التين والزيتون (on screen) | APPROVED. SHOULD: scope أعود to transcripts |
+| 3. Checker rules | APPROVED. SHOULD: excuse only single-entry coverage; exclude Fatiha verse-1 and verse-3 from entries 0 and 13 before AR verse audio. NOTE: quotation frames stay a review item |
+| 4. Game 08 AR speaks exAr only | CONFIRMED |
+| 5a. Story AR dua "translation" lines (5 pages) | CHANGE (MUST): the replacement lines above |
+| 5b. Unvowelled ayah quotes in story prose (7 places) | SHOULD: indirect speech or a cited `data-ayah` block |
+| 5c. Four dua blocks without `data-ayah` | NOTE: wording correct; add `data-ayah` |
+| 6. Musa AR 13 Whisper differences | Quality only; not doctrinal |
+| 7. YouTube embeds | Owner vets all 27 against a checklist with a manifest; nocookie, rel=0, tap to play; long term, licensed qari audio; drop any story cartoon that cannot be vouched for |
+
+## Round 5 (2026-11-05): Round 4 fixes applied (lead's report, for the scholar to confirm)
+
+The owner approved "fix all". The scholar's wording is used exactly. EN changes alongside AR.
+
+| Item | Where | Change |
+|---|---|---|
+| 5a (MUST) | `story-prophet-adam.html:374` via `translations.js:302`, `nuh.html:178`, `ibrahim.html:308`, `musa.html:234`, `yusuf.html:193` | AR meaning lines replaced with the Round 4, 5a lines word for word. EN lines get the matching citation: (Surah Al-A'raf 7:23), (Surah Nuh 71:28), (Surah Al-Baqarah 2:127), (Surah Ta-Ha 20:25-26). Yusuf EN already had its citation. |
+| 2 | `voice-scripts.js:385`, `scripts/voice-scripts-data.json`, `musa.html:192` | AR slide 9 uses the approved sentence «…فسجدوا لله، وأعلنوا أنهم آمنوا بالله الذي أرسل موسى وهارون!». The hold is released, and the page `data-ar` uses the same sentence. The slide was re-recorded (S2-Pro, `ram-gate run --heavy`) and installed. Whisper heard the final sentence exactly; whole-unit WER 0.128 and CER 0.039 (dialect mishearings: «ألك» for «ألقى», «السحر» for «السحرة», «عساه» for «عصاه»). The heard text passes `--text` clean, and the full sweep gives 322 transcripts, 0 flagged. |
+| 5b | `musa.html:203` | «لكن موسى طمأنهم بهدوء وثقة، وأخبرهم أن الله معه وسيهديه إلى طريق النجاة.» (the round-3 B voice line) |
+| 5b | `ibrahim.html:164` | NEW, to confirm: «وأعلن إبراهيم لقومه أنه يتوجّه بعبادته إلى الله وحده، خالقِ السماوات والأرض!» / EN "Ibrahim declared to his people that he turned in worship to Allah alone, the Creator of the heavens and the earth!" («الذي خلق السماوات والأرض» was avoided: it is a 4-word run of 6:1, 6:73, 7:54 and 10:3.) |
+| 5b | `ibrahim.html:188` | NEW, to confirm (follows the approved AR voice slide 4): «فسألهم كيف يعبدون أشياء لا تسمع ولا ترى ولا تنفعهم بشيء.» |
+| 5b | `yusuf.html:88` | NEW, to confirm: «وبابتسامة حانية، أخبر النبي يعقوب ابنه أن الله أعطاه هبة خاصة، ونصحه ألّا يحكي رؤياه لإخوته، فقد يحسدونه. فأصغى يوسف جيداً لأبيه الحكيم.» |
+| 5b | `translations.js:237` (Adam `scene4Text`) | «…قال إنه خير من آدم، لأن الله خلقه من نار وخلق آدم من طين!» (the approved AR voice slide 3 wording) |
+| 5b | `story-prophet-adam.html:308` (`scene9Quran`) | This is now a vowelled `arabic-text quran-text story-ayah` block with `data-ayah="7:23"` (the text of the site's dua box). Below it is a meaning line: AR is the 5a line for 7:23; EN is the translation plus "(Surah Al-A'raf 7:23)". |
+| 5c | `adam.html:373`, `nuh.html:177`, `ibrahim.html:307`, `musa.html:233` | Added `data-ayah` (7:23, 71:28, 2:127, 20:25-26). `verify-scripture.py` now accepts a range, `S:A-B`, and checks it against those ayat joined in order. All four pass at the letters tier, so no verifier change was needed for the tajweed marks: Adam and Ibrahim show "[marks differ]", which is information only. |
+| 3 (checker) | `scripts/verify-no-recitation.py`, `scripts/recitation-whitelist.json` | (a) A run is excused only when ONE whitelist occurrence covers it. (b) «أعود…» is `transcripts_only` and is honoured only under `--transcripts`. (c) Entries 0 and 13 carry `except_units: surah-fatiha/ar/verse-1, verse-3`. The ruling for "Wa alaykum as-salam" is set to "Round 4, 3". Self-tests were added for all three, and the approved site lines still pass. |
+
+**EN in 5b.** The EN page lines for Musa :192 and :203, Ibrahim :188, Yusuf :88 and Adam scene 4 are left as English meaning in direct speech. Each is word for word the EN narration of that slide, which was approved in Round 3 (EN meaning may be voiced). Changing them would split screen from voice. Ibrahim :164 has no narration, so its EN now follows the new AR. **Scholar: confirm or rule otherwise.**
+
+**On-screen scan** (every `data-ar` on the five story pages and every Arabic string in `translations.js`, with the checker's matcher): 14 findings before, 1 after. The one left is `yusuf.html:77`, «أحد عشر كوكباً والشمس والقمر», the narrative nouns approved in Round 3 Part 2, D.
