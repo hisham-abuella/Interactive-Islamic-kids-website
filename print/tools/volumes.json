@@ -1,0 +1,89 @@
+[
+ {
+  "slug": "vol-prophets",
+  "title": "Stories of the Prophets",
+  "title_ar": "قصص الأنبياء",
+  "unit": "stories",
+  "shelf": "qr-shelf-stories",
+  "frame": "islamic:#0F6B65",
+  "books": [
+   "story-prophet-adam",
+   "story-prophet-nuh",
+   "story-prophet-ibrahim",
+   "story-prophet-yusuf",
+   "story-prophet-musa"
+  ],
+  "blurb": "Five true stories of the prophets from the Quran: Adam, Nuh, Ibrahim, Yusuf and Musa, peace be upon them. Read a story together, look at the pictures, and talk about what each prophet teaches us.",
+  "blurb_ar": "خمس قصص صادقة من القرآن الكريم عن الأنبياء: آدم ونوح وإبراهيم ويوسف وموسى عليهم السلام. اقرؤوا القصة معاً، وتأمّلوا الصور، وتحدّثوا عمّا يعلّمنا كل نبي."
+ },
+ {
+  "slug": "vol-surahs-1",
+  "title": "Short Surahs I: In Allah's Care",
+  "title_ar": "قصار السور (١): في حفظ الله",
+  "unit": "surahs",
+  "shelf": "qr-shelf-quran",
+  "frame": "islamic:#24508C",
+  "books": [
+   "surah-fatiha",
+   "ayat-al-kursi",
+   "surah-al-ikhlas",
+   "surah-al-falaq",
+   "surah-an-nas"
+  ],
+  "blurb": "Al-Fatiha, Ayat al-Kursi and the three Quls: short, much-loved passages for a child to learn by heart. Each verse, or part of a verse, has its own page, with its meaning in simple words.",
+  "blurb_ar": "سورة الفاتحة وآية الكرسي والمعوّذات الثلاث: آيات وسور قصيرة محبوبة، ليحفظها الطفل عن ظهر قلب. لكل آية، أو مقطع من آية، صفحتها، ومعها معناها بكلمات بسيطة."
+ },
+ {
+  "slug": "vol-surahs-2",
+  "title": "Short Surahs II",
+  "title_ar": "قصار السور (٢)",
+  "unit": "surahs",
+  "shelf": "qr-shelf-quran",
+  "frame": "islamic:#24508C",
+  "books": [
+   "surah-al-asr",
+   "surah-al-fil",
+   "surah-quraysh",
+   "surah-al-maun",
+   "surah-al-kawthar",
+   "surah-al-kafirun",
+   "surah-an-nasr",
+   "surah-al-masad"
+  ],
+  "blurb": "Short surahs from Juz 'Amma, the last part of the Quran, one verse to a page: the verse, its meaning in simple words, and a picture or ornament to remember it by.",
+  "blurb_ar": "سور قصيرة من جزء عمّ، وهو آخر أجزاء القرآن. لكل آية صفحتها: الآية، ومعناها بكلمات بسيطة، وصورة أو زخرفة تساعد على تذكّرها."
+ },
+ {
+  "slug": "vol-surahs-3",
+  "title": "Short Surahs III",
+  "title_ar": "قصار السور (٣)",
+  "unit": "surahs",
+  "shelf": "qr-shelf-quran",
+  "frame": "islamic:#24508C",
+  "books": [
+   "surah-ad-duha",
+   "surah-ash-sharh",
+   "surah-at-tin",
+   "surah-az-zalzalah",
+   "surah-at-takathur"
+  ],
+  "blurb": "Short surahs from Juz 'Amma, the last part of the Quran, one verse to a page: the verse, its meaning in simple words, and a picture or ornament to remember it by.",
+  "blurb_ar": "سور قصيرة من جزء عمّ، وهو آخر أجزاء القرآن. لكل آية صفحتها: الآية، ومعناها بكلمات بسيطة، وصورة أو زخرفة تساعد على تذكّرها."
+ },
+ {
+  "slug": "vol-surahs-4",
+  "title": "Short Surahs IV",
+  "title_ar": "قصار السور (٤)",
+  "unit": "surahs",
+  "shelf": "qr-shelf-quran",
+  "frame": "islamic:#24508C",
+  "books": [
+   "surah-al-bayyinah",
+   "surah-al-adiyat",
+   "surah-al-qariah",
+   "surah-al-humazah"
+  ],
+  "blurb": "Short surahs from Juz 'Amma, the last part of the Quran, one verse to a page: the verse, its meaning in simple words, and a picture or ornament to remember it by.",
+  "blurb_ar": "سور قصيرة من جزء عمّ، وهو آخر أجزاء القرآن. لكل آية صفحتها: الآية، ومعناها بكلمات بسيطة، وصورة أو زخرفة تساعد على تذكّرها."
+ }
+]

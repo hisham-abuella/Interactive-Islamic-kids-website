@@ -1,0 +1,21 @@
+{
+ "_about": "Plate rulings from islamic-content-scholar (claudeteam/reviews/book-islamic-review-2026-11-04.md), applied to print only. 'withheld': the page prints with no picture (ayah in the gold panel) until the plate is re-rendered and re-reviewed; then remove it here. 'never_on_cover': never used for a front cover, back cover or section-divider cover; a divider whose own plate is listed gets the typographic title panel. Paths are UI/images/ relative, without extension.",
+ "withheld": [
+  "surahs/surah-az-zalzalah/verse-4",
+  "surahs/surah-al-bayyinah/verse-1"
+ ],
+ "never_on_cover": [
+  "surahs/surah-al-bayyinah/verse-1",
+  "surahs/surah-al-falaq/verse-1",
+  "surahs/surah-ash-sharh/verse-1",
+  "surahs/surah-az-zalzalah/verse-4",
+  "surahs/surah-al-fil/verse-4",
+  "surahs/surah-al-kawthar/verse-2",
+  "stories/prophet-nuh/scene-3",
+  "stories/prophet-nuh/scene-7",
+  "stories/prophet-musa/scene-3",
+  "stories/prophet-musa/scene-7",
+  "stories/prophet-ibrahim/scene-3",
+  "stories/prophet-ibrahim/scene-8"
+ ]
+}
