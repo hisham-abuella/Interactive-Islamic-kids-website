@@ -11,6 +11,9 @@ story pages does not have to send the prompts anywhere.
     python3 scripts/build-illustrations.py --force …        # redo existing
     python3 scripts/build-illustrations.py --list           # prompts only
     python3 scripts/build-illustrations.py --surahs …       # surah plates instead
+    python3 scripts/build-illustrations.py --seed-offset 1 --keep-png /tmp/x prophet-nuh:3
+                                                            # try a new seed, keep the
+                                                            # full-size PNG to inspect
 
 Output: images/stories/<story>/<cover|scene-N>.webp
         images/surahs/<slug>/verse-N.webp   (with --surahs)
@@ -22,6 +25,7 @@ write it, which is why this goes through Pillow instead.)
 """
 
 import argparse
+import os
 import subprocess
 import sys
 import tempfile
@@ -31,15 +35,18 @@ from pathlib import Path
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).parent))
-from specs.illustrations import NEGATIVE, PLATES, STYLE, all_plates  # noqa: E402
+from specs.illustrations import PLATES, SEEDS, STYLE, all_plates, negative_for  # noqa: E402
 from specs import surah_plates  # noqa: E402
 
-CLI = "/opt/homebrew/bin/draw-things-cli"
+# Through the RAM-gated shim (user rule): it waits for free RAM and the heavy lane.
+CLI = os.path.expanduser("~/.local/bin/draw-things-cli")
 MODEL = "z_image_turbo_1.0_q8p.ckpt"
 
 # The engine reloads the model on every call (~40s), so a full run is slow but
-# needs no daemon. Generous ceiling: a cold first load is the worst case.
-TIMEOUT = 600
+# needs no daemon. The ceiling also covers the time the gated shim spends
+# queued behind another image/voice job (it waits for the heavy lane), which is
+# why it is an hour rather than the ~2 minutes a render takes. --timeout sets it.
+TIMEOUT = 3600
 
 # 16:9, and both sides a multiple of 64 as the engine requires.
 GEN_W, GEN_H = 1024, 576
@@ -53,32 +60,50 @@ OUT_ROOT = ROOT / "images" / "stories"
 SURAH_OUT_ROOT = ROOT / "images" / "surahs"
 
 
-def seed_for(story: str, key) -> int:
+def seed_for(story: str, key, offset: int = 0) -> int:
     """Stable per-plate seed, so a re-run reproduces the same picture.
 
     crc32 rather than hash(): Python salts string hashing per process, so
     hash() would hand the same plate a different seed on every run.
+
+    A plate rejected at review is re-rolled with a new seed, never retouched.
+    The seed that was kept is recorded in the spec's SEEDS (story -> key ->
+    seed), so the next full run reproduces the approved picture. `offset`
+    (--seed-offset) tries a new seed without editing the spec.
     """
+    if offset:
+        return (zlib.crc32(f"{story}/{key}".encode()) + offset * 104_729) % 2_000_000
+    fixed = SEEDS.get(story, {}).get(key) or surah_plates.SEEDS.get(story, {}).get(key)
+    if fixed is not None:
+        return fixed
     return zlib.crc32(f"{story}/{key}".encode()) % 2_000_000
 
 
-def render(story: str, key, prompt: str, dest: Path) -> bool:
+def render(story: str, key, prompt: str, dest: Path, seed: int,
+           keep_png: Path | None = None, timeout: int = TIMEOUT) -> bool:
     with tempfile.TemporaryDirectory() as tmp:
         png = Path(tmp) / "plate.png"
         cmd = [
             CLI, "generate",
             "--model", MODEL,
             "--prompt", f"{prompt}, {STYLE}",
-            "--negative-prompt", NEGATIVE,
+            "--negative-prompt", negative_for(story, key),
             "--width", str(GEN_W), "--height", str(GEN_H),
-            "--seed", str(seed_for(story, key)),
+            "--seed", str(seed),
             "--output", str(png),
         ]
-        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT)
+        try:
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+        except subprocess.TimeoutExpired:
+            print(f"  FAILED {story}/{key}: no picture after {timeout}s (queued or stuck)")
+            return False
         if proc.returncode != 0 or not png.exists():
             tail = (proc.stderr or proc.stdout or "no output").strip().splitlines()[-2:]
             print(f"  FAILED {story}/{key}: {' '.join(tail)}")
             return False
+        if keep_png is not None:
+            keep_png.mkdir(parents=True, exist_ok=True)
+            (keep_png / f"{story}-{key}-seed{seed}.png").write_bytes(png.read_bytes())
 
         dest.parent.mkdir(parents=True, exist_ok=True)
         with Image.open(png) as im:
@@ -95,6 +120,11 @@ def main() -> int:
     ap.add_argument("--force", action="store_true", help="re-render plates that already exist")
     ap.add_argument("--list", action="store_true", help="print prompts and exit")
     ap.add_argument("--surahs", action="store_true", help="the surah plates, not the stories")
+    ap.add_argument("--seed-offset", type=int, default=0,
+                    help="try a different seed (record a kept one in the spec's SEEDS)")
+    ap.add_argument("--keep-png", type=Path, help="also keep the full-size PNG here, to inspect")
+    ap.add_argument("--timeout", type=int, default=TIMEOUT,
+                    help="seconds per plate, including time queued for the heavy lane")
     args = ap.parse_args()
 
     if args.surahs:
@@ -132,8 +162,9 @@ def main() -> int:
         if dest.exists() and not args.force:
             skipped += 1
             continue
-        print(f"[{i}/{len(wanted)}] {story}/{name} …", flush=True)
-        if render(story, key, prompt, dest):
+        seed = seed_for(story, key, args.seed_offset)
+        print(f"[{i}/{len(wanted)}] {story}/{name} seed {seed} …", flush=True)
+        if render(story, key, prompt, dest, seed, args.keep_png, args.timeout):
             print(f"  wrote {dest.relative_to(ROOT)}  {dest.stat().st_size // 1024} KB", flush=True)
             made += 1
         else:

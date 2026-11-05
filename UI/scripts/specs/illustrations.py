@@ -38,8 +38,57 @@ NEGATIVE = (
     "rainbow, rainbows, prismatic arc, "
     "kaaba, mosque, minaret, dome with a finial, shrine, temple, religious building, "
     "star and crescent emblem, religious symbol, flag, banner with an emblem, "
-    "blurry, low quality"
+    "blurry, low quality, "
+    # Round 2 (scholar review of the print volumes, 2026-11-04). Each of these got into a
+    # shipped plate: pseudo-Arabic panels and a frieze (Musa 3, 7), a Latin signature on a
+    # dune (Ibrahim 3), suns and moons with faces (Nuh 3), a stone circle or hooded file on a
+    # ridge (Falaq 1), a face in a rock (Ash-Sharh 1), a mushaf-like book under footprints
+    # (Zalzalah 4), a Torah-like scroll (Bayyinah 1), a sheep on a prayer rug (Kawthar 2),
+    # a generated Ka'bah (Ibrahim 8). The Ka'bah and the mushaf are never generated.
+    "letters, script, inscription, hieroglyphs, glyphs, frieze with symbols, "
+    "artist signature, monogram, seal, "
+    "faces on celestial bodies, smiling sun, smiling moon, eyes in the sky, "
+    "human figures, silhouettes, standing stones, hooded figures, face in the rock, "
+    "pareidolia, "
+    "book, books, open book, mushaf, scroll, scrolls, parchment roll, "
+    "prayer rug, prayer mat, "
+    "kaaba, cube building, black cube, "
+    "blood, red droplets, splatter, "
+    # Round 2, try 2: Musa 3 grew a tiled, mihrab-like arch with a band of pseudo-script in it.
+    "mihrab, prayer niche, arched niche, inscription band"
 )
+
+# The rug negative above is per plate (scholar, site-fixes confirmation, 2026-11-04). An empty
+# prayer rug is a respectful way to show salah without a person, and four surah plates ask for
+# one. Those plates drop "prayer rug, prayer mat" and get RUG_PLATE_NEGATIVE instead: a rug is
+# never shown with an animal on it, under shoes or feet, as a sacrifice surface, or with a
+# woven Ka'bah, mosque or text. Every other plate keeps the rug negative (Kawthar 2: a sheep
+# on a prayer rug).
+RUG_NEGATIVE = "prayer rug, prayer mat, "
+RUG_PLATE_NEGATIVE = ("kaaba on the rug, mosque picture on the rug, writing on the rug, "
+                      "animal on the rug, shoes on the rug, ")
+RUG_PLATES = {
+    ("surah-an-nasr", 3),      # tasbih and istighfar: a rug with prayer beads in a courtyard
+    ("surah-al-maun", 4),      # "woe to those who pray": a neglected, rolled rug
+    ("surah-al-bayyinah", 5),  # "establish prayer and give zakah": a rug beside a bowl of grain
+    ("surah-ash-sharh", 7),    # "when you are free, stand up": a rug on a rooftop at evening
+}
+
+
+def negative_for(story, key):
+    """The negative prompt for one plate: NEGATIVE, with the rug terms swapped on a rug plate."""
+    if (story, key) in RUG_PLATES:
+        return NEGATIVE.replace(RUG_NEGATIVE, RUG_PLATE_NEGATIVE)
+    return NEGATIVE
+
+# story id -> {key: seed}. A plate rejected at review is re-rolled with a new seed (never
+# retouched); the seed that passed is recorded here so a full re-run reproduces it.
+# Absent keys use the stable crc32 seed in build-illustrations.py.
+SEEDS = {
+    # Round 2 (2026-11-04): the crc32 seed kept the defect through two prompt changes.
+    "prophet-ibrahim": {3: 996245},   # crc32 seed 891516 kept a pseudo-signature on the dune
+    "prophet-musa": {3: 343892},      # crc32 seed 239163 kept a gate with pseudo-script bands
+}
 
 # story id -> {"cover": prompt, scene number -> prompt}
 PLATES = {
@@ -74,8 +123,9 @@ PLATES = {
            "distant hills, soft rose and gold light, sheltered and still",
         2: "an enormous night sky crowded with golden stars above dark desert dunes, "
            "the Milky Way arching over",
-        3: "a full silver moon high over a dark blue desert, long shadows on the dunes, "
-           "cool night light",
+        # A Latin pseudo-signature kept appearing on the left dune (scholar M5, 2026-11-04).
+        3: "a full silver moon high over a dark blue desert, long shadows on smooth clean "
+           "unmarked dunes, empty sand, cool night light",
         4: "a blazing golden sun low over a desert horizon, long rays, heat shimmering "
            "above the sand",
         5: "a dim temple hall of empty carved stone pedestals and plain stone blocks, "
@@ -84,9 +134,12 @@ PLATES = {
            "instead of orange, calm and strange",
         7: "flames turning into a blooming garden, fire becoming roses and green leaves, "
            "turquoise and gold, flowers opening where the fire was",
-        8: "a building site in an open desert valley at dusk, squared blocks of pale cut stone "
-           "stacked ready, a level foundation line marked on the ground, wooden mallets and a "
-           "coil of rope, lanterns on the sand, nothing yet built",
+        # The Ka'bah is never image-generated (11-03 ruling). Squared blocks and a foundation
+        # line still came out as a generated Ka'bah with invented tiles (scholar, 2026-11-04).
+        # Now only loose tools and rough stones on open sand: no building, no walls, no cube.
+        8: "a builder's tools lying on the sand of an open desert valley at dusk: a coil of rope, "
+           "a wooden mallet, an iron chisel and a small heap of rough rounded stones, a clay "
+           "water jar, low hills and a rose and gold sky, open empty ground",
     },
     "prophet-musa": {
         "cover": "a great sea parted into two towering walls of turquoise water with a dry sand path "
@@ -95,16 +148,28 @@ PLATES = {
            "stars reflected on the surface, no buildings on the horizon",
         2: "a small woven basket floating among river reeds on calm water, morning light, "
            "lotus flowers and dragonflies",
-        3: "an Egyptian palace courtyard with painted lotus columns, a still reflecting pool, "
-           "gold and turquoise tilework",
+        # Was "painted lotus columns ... gold and turquoise tilework": the engine filled the walls
+        # with gold pseudo-Arabic panels and set a mihrab-like arch (scholar M3, 2026-11-04).
+        # Try 2 still grew a gate with pseudo-script bands: "palace" summons decorated
+        # architecture. The palace garden is now shown with no building in it at all.
+        3: "a royal riverside garden on the bank of the Nile, a long rectangular reflecting pool "
+           "with lotus flowers in the foreground, rows of date palms and papyrus along the "
+           "water, green lawns, the river and wide open blue sky beyond, no buildings",
         4: "a humble doorway of a mud-brick home at dawn, an empty wooden cradle inside, "
            "warm light falling across the threshold",
         5: "a tree glowing with white and gold light on a dark mountainside at night, "
            "radiance spilling down the rock, stars above",
         6: "a wooden staff lying on desert sand beside a coiled serpent, a pool of white-gold "
            "radiance on the ground, night sky",
-        7: "a vast Egyptian throne hall with painted lotus columns and an empty stone throne, "
-           "shafts of light from high windows",
+        # Was "painted lotus columns": the ceiling frieze came out as a band of pseudo-script
+        # glyphs (scholar M4, 2026-11-04). Plain stone, no frieze.
+        # Shipped: round-2 try 1 (crc32 seed 1109794, rendered before the "mihrab ... inscription
+        # band" negatives were added, so a re-run will not be pixel-identical). Tries 2-4 (narrow
+        # slits; new seeds) grew a figure relief on a column, hieroglyph walls and a signature.
+        # Scholar to confirm the glazed window grids in try 1 do not read as crosses.
+        7: "a vast Egyptian stone hall with tall plain smooth sandstone columns and an empty "
+           "stone seat on a raised dais, shafts of light from high windows, bare undecorated "
+           "walls and a plain ceiling",
         8: "ropes and wooden staffs scattered across the sand of a great arena, one enormous "
            "serpent coiled among them, banners above",
         9: "a stormy sea against a steep shore under dark thunderclouds, a cloud of dust rising "
@@ -119,16 +184,22 @@ PLATES = {
            "wide rose and gold sky",
         2: "a village of mud-brick houses under an enormous dusk sky, the crescent moon and "
            "first stars appearing above the rooftops",
-        3: "a great gnarled tree alone on a hill, rings of suns and moons circling in the sky "
-           "above it to show the passing years",
+        # Was "rings of suns and moons circling in the sky": the engine drew them with faces
+        # (scholar M2, 2026-11-04). The years now pass in the tree's seasons, with no sky bodies.
+        3: "a great gnarled old tree alone on a grassy hill, one side of its crown in spring "
+           "blossom, one side in autumn gold, fallen leaves on the ground around it to show many "
+           "years passing, a plain clear pale sky",
         4: "a half-built wooden ark on dry land far from any water, stacks of timber, "
            "a saw and wood shavings, bright day",
         5: "pairs of animals walking in a long procession toward a wooden ark — two elephants, "
            "two lions, two deer, birds flying above",
         6: "torrential rain falling from black clouds onto a vast sea, a wooden ark riding high "
            "waves, lightning behind",
-        7: "a white dove carrying a green olive leaf flying above a wooden ark resting on a green "
-           "mountain, clearing sky with soft golden light breaking through the parting clouds",
+        # 11:44: the water went down and the ark came to rest on Judi. No dove and no olive
+        # leaf: that detail is from Genesis 8:8-11, not the Quran (scholar ruling 2026-11-03).
+        7: "a wooden ark resting safely on top of a green mountain, the floodwater going down "
+           "far below, an empty clearing sky with soft golden light breaking through the parting "
+           "clouds, calm and peaceful",
     },
     "prophet-yusuf": {
         # Deliberately NOT eleven. See the note on scene 1 below.

@@ -1,0 +1,185 @@
+{
+  "about": "Phrases a synthetic voice MAY say although they contain Quranic words. Reviewed by islamic-content-scholar; every entry cites its ruling. Used by scripts/verify-no-recitation.py, which masks these phrases before matching. Do not add an entry without a ruling reference. 'units' (optional) limits an entry to the listed units.",
+  "ruling": "claudeteam/reviews/site-fixes-scholar-confirm-2026-11-04.md, Round 3 (2026-11-04), Part 2",
+  "phrases": [
+    {
+      "lang": "ar",
+      "phrase": "بسم الله الرحمن الرحيم",
+      "kind": "dhikr",
+      "ruling": "Part 2, rule 2 (بسم الله, dhikr and Sunnah formulas)"
+    },
+    {
+      "lang": "ar",
+      "phrase": "أعوذ بالله من الشيطان الرجيم",
+      "kind": "isti'adha",
+      "ruling": "Part 2, rule 2 and D (the isti'adha is dhikr, not an ayah; 16:98 uses فاستعذ)"
+    },
+    {
+      "lang": "ar",
+      "phrase": "أعود بالله من الشيطان الرجيم",
+      "kind": "isti'adha (as Whisper spells it in transcripts: ذ heard as د)",
+      "ruling": "Part 2, D (the isti'adha; An-Nas 5 explanation). Only for the Whisper audio sweep (--transcripts); no script uses this spelling."
+    },
+    {
+      "lang": "ar",
+      "phrase": "لا إله إلا هو",
+      "kind": "dhikr (tawhid formula)",
+      "ruling": "Part 2, A: «واحد لا إله إلا هو» (Ikhlas 1) is the tawhid formula and is allowed; rule 2 (لا إله إلا الله)"
+    },
+    {
+      "lang": "ar",
+      "phrase": "لا إله إلا الله",
+      "kind": "dhikr",
+      "ruling": "Part 2, rule 2"
+    },
+    {
+      "lang": "ar",
+      "phrase": "الحمد لله",
+      "kind": "dhikr",
+      "ruling": "Part 2, rule 2"
+    },
+    {
+      "lang": "ar",
+      "phrase": "سبحان الله",
+      "kind": "dhikr",
+      "ruling": "Part 2, rule 2"
+    },
+    {
+      "lang": "ar",
+      "phrase": "حسبي الله",
+      "kind": "dhikr",
+      "ruling": "Part 2, rule 2"
+    },
+    {
+      "lang": "ar",
+      "phrase": "أستغفر الله",
+      "kind": "dhikr",
+      "ruling": "Part 2, rule 2"
+    },
+    {
+      "lang": "ar",
+      "phrase": "إن شاء الله",
+      "kind": "dhikr",
+      "ruling": "Part 2, rule 2"
+    },
+    {
+      "lang": "ar",
+      "phrase": "أرحم الراحمين",
+      "kind": "name of Allah",
+      "ruling": "Part 2, rule 2 (Names and Attributes of Allah)"
+    },
+    {
+      "lang": "ar",
+      "phrase": "السميع العليم",
+      "kind": "name of Allah",
+      "ruling": "Part 2, rule 2 and B (Ibrahim 9)"
+    },
+    {
+      "lang": "ar",
+      "phrase": "العلي العظيم",
+      "kind": "name of Allah",
+      "ruling": "Part 2, rule 2"
+    },
+    {
+      "lang": "ar",
+      "phrase": "الرحمن الرحيم",
+      "kind": "name of Allah",
+      "ruling": "Part 2, rule 2 (Names of Allah; forbidden only when presented as the ayah, e.g. as a verse's meaning line, which the AR verse suppression covers)"
+    },
+    {
+      "lang": "ar",
+      "phrase": "أحد عشر كوكبا والشمس والقمر",
+      "kind": "narrative nouns",
+      "ruling": "Part 2, D (Yusuf AR slide 0: ordinary narrative nouns in the narrator's sentence)",
+      "units": [
+        "prophet-yusuf/ar/slide-0"
+      ]
+    },
+    {
+      "lang": "en",
+      "phrase": "A'udhu billahi min ash-shaytan ir-rajim",
+      "kind": "isti'adha",
+      "ruling": "Part 2, C and D (Adam EN 7: dhikr formula, may be voiced in both languages)"
+    },
+    {
+      "lang": "en",
+      "phrase": "A'oodhu billahi minash-shaytanir-rajeem",
+      "kind": "isti'adha",
+      "ruling": "Part 2, D (isti'adha; An-Nas 5 explanation named there)"
+    },
+    {
+      "lang": "en",
+      "phrase": "Bismillah",
+      "kind": "dhikr",
+      "ruling": "Part 2, rule 2"
+    },
+    {
+      "lang": "en",
+      "phrase": "Alhamdulillah",
+      "kind": "dhikr",
+      "ruling": "Part 2, rule 2"
+    },
+    {
+      "lang": "en",
+      "phrase": "SubhanAllah",
+      "kind": "dhikr",
+      "ruling": "Part 2, rule 2"
+    },
+    {
+      "lang": "en",
+      "phrase": "Insha Allah",
+      "kind": "dhikr",
+      "ruling": "Part 2, rule 2"
+    },
+    {
+      "lang": "en",
+      "phrase": "InshaAllah",
+      "kind": "dhikr",
+      "ruling": "Part 2, rule 2"
+    },
+    {
+      "lang": "en",
+      "phrase": "Wa alaykum as-salam",
+      "kind": "greeting (Sunnah formula)",
+      "ruling": "Part 2, rule 2 (Sunnah formulas). Not named there: SCHOLAR TO CONFIRM (game 04 reply option)"
+    }
+  ],
+  "onscreen_only": [
+    {
+      "file": "mockups/games/02-yusuf-journey.html",
+      "text": "الرؤيا: أحد عشر كوكباً والشمس والقمر",
+      "why": "START label: only set as innerHTML of the start stone; never passed to say() or speakText(). The phrase is also approved narrative nouns (Part 2, D)."
+    },
+    {
+      "file": "mockups/games/06-deeds-garden.html",
+      "field": "ayah",
+      "why": "SURAHS[].ayah: shown in <p class=quran> in the recall card; the card's spoken text is r.speak = recall + ask only."
+    },
+    {
+      "file": "mockups/games/07-ayah-lanterns.html",
+      "field": "ar",
+      "why": "SURAHS[].ayat[].ar: shown inside <span class=quran>; speak() strips span.quran and «...» before speaking; the ayah fallback no longer speaks at all."
+    },
+    {
+      "file": "mockups/games/08-al-fil-seek.html",
+      "field": "ar",
+      "why": "AYAT[].ar: set as textContent of #ayah and #fullSurah only; speech reads exAr/exEn, find text and prompts."
+    },
+    {
+      "file": "mockups/games/09-honest-choices.html",
+      "field": "ar",
+      "why": "SRC[].ar: shown in <p class=quran> in the 'where from' panel; speak() is only given t(key) game strings."
+    },
+    {
+      "file": "mockups/games/10-ask-and-find-coop.html",
+      "text": "أحد عشر كوكباً والشمس والقمر",
+      "why": "item name: shown on cards and lists only; speech reads clue and hint only. Approved narrative nouns (Part 2, D)."
+    },
+    {
+      "file": "mockups/games/10-ask-and-find-coop.html",
+      "text": "التين والزيتون",
+      "why": "item name (the fig and the olive, ordinary nouns; 95:1 is «والتين والزيتون»): shown on cards and lists only; speech reads clue and hint only."
+    }
+  ],
+  "about_onscreen_only": "String literals in files that use speech synthesis which hold Quranic text but are only ever put on screen. 'field' entries skip a literal under that object key only when the literal is scripture and nothing else; 'text' entries skip a literal containing that exact text. Each says where it is used and why no speech path reaches it. The speak(...) argument rule in the check keeps ayah fields out of speech calls; an entry that stops matching fails the check."
+}

@@ -9,7 +9,7 @@ const voiceScripts = {
             {
                 slide: 0,
                 title: "A Special Creation",
-                script: "Before there were any people on Earth, Allah decided to create something very special. Allah told the angels: I am going to create a human being from clay. Allah created Adam from different types of clay from all over the Earth. That's why people today have different skin colors - beautiful shades of brown, tan, and more!"
+                script: "Before there were any people on Earth, Allah decided to create something very special. Allah told the angels that He was going to create a human being from clay. Allah created Adam from different types of clay from all over the Earth. That's why people today have different skin colors - beautiful shades of brown, tan, and more!"
             },
             // Scene 2: The Soul
             {
@@ -45,13 +45,13 @@ const voiceScripts = {
             {
                 slide: 6,
                 title: "One Rule",
-                script: "Allah told Adam and Hawa they could enjoy everything in Jannah, but there was ONE tree they should not go near. Do not approach this tree, Allah said. This rule was to test their obedience to Allah."
+                script: "Allah told Adam and Hawa they could enjoy everything in Jannah, but that there was ONE tree they must not go near. This rule was to test their obedience to Allah."
             },
             // Scene 8: The Mistake
             {
                 slide: 7,
                 title: "A Mistake",
-                script: "Shaytan whispered to Adam and Hawa and tricked them. They ate from the forbidden tree. As soon as they did, they realized they had made a big mistake! Shaytan is always trying to trick us. We must be careful and say A'udhu billahi min ash-shaytan ir-rajim to seek protection from him."
+                script: "Shaytan whispered to Adam and Hawa and tricked them. They slipped and made a mistake: they ate from the forbidden tree. As soon as they did, they realized what they had done. Shaytan is always trying to trick us. We must be careful and say A'udhu billahi min ash-shaytan ir-rajim to seek protection from him."
             },
             // Scene 9: Repentance
             {
@@ -75,7 +75,7 @@ const voiceScripts = {
             {
                 slide: 11,
                 title: "Adam's Dua",
-                script: "Here is Adam's beautiful dua for forgiveness. In Arabic it is: Rabbana zalamna anfusana wa in lam taghfir lana wa tarhamna lanakoonanna minal khasireen. This means: Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers. You can say this dua whenever you make a mistake and want Allah's forgiveness!"
+                script: "Here is Adam's beautiful dua for forgiveness. Its words are written for you on the screen. It means: Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers. Learn the words with someone you love, and say this dua whenever you make a mistake!"
             },
             // Quiz Intro
             {
@@ -119,7 +119,7 @@ const voiceScripts = {
             {
                 slide: 0,
                 title: "خلق مميز",
-                script: "قبل أن يكون هناك أي بشر على الأرض، قرر الله أن يخلق شيئاً مميزاً جداً. قال الله للملائكة: إني خالق بشراً من طين. خلق الله آدم من أنواع مختلفة من الطين من جميع أنحاء الأرض. لهذا السبب يملك الناس اليوم ألوان بشرة مختلفة!"
+                script: "قبل أن يكون هناك أي بشر على الأرض، قرر الله أن يخلق شيئاً مميزاً جداً. وأخبر الله الملائكة أنه سيخلق بشراً من طين. خلق الله آدم من أنواع مختلفة من الطين من جميع أنحاء الأرض. لهذا السبب يملك الناس اليوم ألوان بشرة مختلفة!"
             },
             // Scene 2: The Soul
             {
@@ -137,7 +137,7 @@ const voiceScripts = {
             {
                 slide: 3,
                 title: "واحد رفض",
-                script: "لكن كان هناك واحد لم يسجد - إبليس، المعروف أيضاً بالشيطان. كان متكبراً ومغروراً. قال: أنا خير منه! خلقتني من نار وخلقته من طين! الكبر والغرور سيئان جداً. يجب أن نكون متواضعين دائماً."
+                script: "لكن كان هناك واحد لم يسجد - إبليس، المعروف أيضاً بالشيطان. كان متكبراً ومغروراً. قال إنه خير من آدم، لأن الله خلقه من نار وخلق آدم من طين! الكبر والغرور سيئان جداً. يجب أن نكون متواضعين دائماً."
             },
             // Scene 5: Knowledge
             {
@@ -155,19 +155,19 @@ const voiceScripts = {
             {
                 slide: 6,
                 title: "قاعدة واحدة",
-                script: "أخبر الله آدم وحواء أنهما يستطيعان الاستمتاع بكل شيء في الجنة، لكن كانت هناك شجرة واحدة يجب ألا يقتربا منها. قال الله: ولا تقربا هذه الشجرة. كانت هذه القاعدة لاختبار طاعتهما لله."
+                script: "أخبر الله آدم وحواء أنهما يستطيعان الاستمتاع بكل شيء في الجنة، إلا شجرة واحدة نهاهما أن يقربا منها. كانت هذه القاعدة لاختبار طاعتهما لله."
             },
             // Scene 8: The Mistake
             {
                 slide: 7,
                 title: "خطأ",
-                script: "وسوس الشيطان لآدم وحواء وخدعهما. أكلا من الشجرة المحرمة. بمجرد أن فعلا ذلك، أدركا أنهما ارتكبا خطأً كبيراً! الشيطان يحاول دائماً خداعنا. يجب أن نكون حذرين ونقول أعوذ بالله من الشيطان الرجيم."
+                script: "وسوس الشيطان لآدم وحواء وخدعهما، فأزلّهما الشيطان فأخطآ وأكَلا من الشجرة المحرمة. وما إن أكَلا منها حتى أدرَكا ما فعلا. الشيطان يحاول دائماً خداعنا. يجب أن نكون حذرين ونقول أعوذ بالله من الشيطان الرجيم."
             },
             // Scene 9: Repentance
             {
                 slide: 8,
                 title: "طلب المغفرة",
-                script: "شعر آدم وحواء بالندم الشديد. توجها إلى الله وقالا: ربنا ظلمنا أنفسنا وإن لم تغفر لنا وترحمنا لنكونن من الخاسرين. وسبحان الله - غفر الله لهما! الله أرحم الراحمين!"
+                script: "شعر آدم وحواء بالندم الشديد. فتوجَّهَا إلى الله واعترَفَا بخطئهما، وسألاه أن يغفر لهما ويرحمهما. وسبحان الله - غفر الله لهما! الله أرحم الراحمين!"
             },
             // Scene 10: Life on Earth
             {
@@ -185,7 +185,7 @@ const voiceScripts = {
             {
                 slide: 11,
                 title: "دعاء آدم",
-                script: "إليكم دعاء آدم الجميل للمغفرة: ربنا ظلمنا أنفسنا وإن لم تغفر لنا وترحمنا لنكونن من الخاسرين. يمكنك قول هذا الدعاء كلما أخطأت وأردت مغفرة الله!"
+                script: "إليكم دعاء آدم الجميل للمغفرة. فيه اعترف آدم وحواء بخطئهما، وسألا الله أن يغفر لهما ويرحمهما. تعلّم كلماته المكتوبة أمامك، وقُله كلما أخطأت وأردت مغفرة الله!"
             },
             // Quiz Intro
             {
@@ -230,15 +230,15 @@ const voiceScripts = {
     'prophet-ibrahim': {
         en: [
             { slide: 0, title: "A Special Baby", script: "Long ago, a special baby was born. His name was Ibrahim. Even as a child, Ibrahim was very smart and always wondered about the world around him. Ibrahim is known as Khalilullah - the Friend of Allah! He is one of the greatest prophets." },
-            { slide: 1, title: "Looking at the Sky", script: "One night, young Ibrahim looked up at the beautiful stars. Are these my lord? he wondered. But when the stars disappeared at dawn, he knew they couldn't be. Ibrahim kept searching for the truth." },
-            { slide: 2, title: "The Beautiful Moon", script: "Then Ibrahim saw the moon, big and bright! This is my lord! he said. But when morning came, the moon also disappeared. Ibrahim was still searching for the One True God." },
-            { slide: 3, title: "The Mighty Sun", script: "When the sun rose, Ibrahim thought, This must be my lord - it's the biggest! But when evening came, even the powerful sun went away. Ibrahim understood that only Allah - who created the stars, moon, and sun - deserves to be worshipped!" },
+            { slide: 1, title: "Looking at the Sky", script: "Ibrahim wanted to teach his people who the true Lord is. One night, he looked at a bright star and asked them, Is this my lord? But when the star disappeared, he said, I do not love things that disappear!" },
+            { slide: 2, title: "The Beautiful Moon", script: "Then Ibrahim saw the moon, big and bright! This is my lord! he said to his people. But when morning came, the moon also disappeared. Ibrahim was showing his people that something which disappears cannot be our Lord." },
+            { slide: 3, title: "The Mighty Sun", script: "When the sun rose, Ibrahim said to his people, This is my lord - it's the biggest! But when evening came, even the powerful sun went away. Ibrahim showed his people that only Allah - who created the stars, moon, and sun - deserves to be worshipped!" },
             { slide: 4, title: "The Stone Statues", script: "Ibrahim's people worshipped statues made of stone. Ibrahim knew this was wrong. How can you worship things that can't hear, see, or help you? he asked them. We should only worship Allah!" },
             { slide: 5, title: "The Great Fire", script: "The angry people built a huge fire and threw Ibrahim into it! But Ibrahim stayed calm. He trusted Allah completely. He said: Allah is sufficient for me." },
-            { slide: 6, title: "Allah's Amazing Miracle", script: "Allah commanded: O fire, be cool and safe for Ibrahim! The fire became cool like a garden! Ibrahim walked out completely safe. SubhanAllah! This shows that Allah protects those who trust Him." },
-            { slide: 7, title: "Building Allah's House", script: "Years later, Allah told Ibrahim and his son Ismail to build the Kaaba - the first house of worship for Allah. They worked together, brick by brick, making dua as they built." },
-            { slide: 8, title: "What We Learn", script: "Let's remember what we learned from Prophet Ibrahim. Always search for the truth. Trust Allah even when things are hard. Be brave and stand up for what's right. Only worship Allah alone." },
-            { slide: 9, title: "Ibrahim's Dua", script: "Here is the beautiful dua Ibrahim and Ismail made while building the Kaaba: Rabbana taqabbal minna innaka antas samee ul aleem. This means: Our Lord, accept from us. Indeed You are the Hearing, the Knowing." },
+            { slide: 6, title: "Allah's Amazing Miracle", script: "But Allah protected Ibrahim. In the Quran, Allah tells us: We said, O fire, be coolness and safety for Ibrahim. The fire became cool and safe! Ibrahim walked out unharmed. SubhanAllah! This shows that Allah protects those who trust Him." },
+            { slide: 7, title: "Building Allah's House", script: "Years later, Allah told Ibrahim and his son Ismail to build the Kaaba - the first house of worship for Allah. They worked together, stone by stone, making dua as they built." },
+            { slide: 8, title: "What We Learn", script: "Let's remember what we learned from Prophet Ibrahim. Think, and follow the truth. Trust Allah even when things are hard. Be brave and stand up for what's right. Only worship Allah alone." },
+            { slide: 9, title: "Ibrahim's Dua", script: "Here is the beautiful dua Ibrahim and Ismail made while building the Kaaba. Its words are written for you on the screen. It means: Our Lord, accept this from us. Indeed You are the All-Hearing, the All-Knowing. Learn the words with someone you love, and make this dua too!" },
             { slide: 10, title: "Quiz Time", script: "Amazing! You've completed the story of Prophet Ibrahim! Now let's see how much you remember with a fun quiz. Answer these questions to earn bonus stars!" },
             { slide: 11, title: "Question One", script: "Question one: What did Ibrahim realize about the stars, moon, and sun? Were they very beautiful, created by Allah and disappear, give us light, or very far away?" },
             { slide: 12, title: "Question Two", script: "Question two: What happened when Ibrahim was thrown into the fire? Did he get burned, run away, or did Allah make the fire cool and safe?" },
@@ -248,15 +248,15 @@ const voiceScripts = {
         ],
         ar: [
             { slide: 0, title: "طفل مميز", script: "منذ زمن بعيد، وُلد طفل مميز. اسمه إبراهيم. حتى وهو طفل، كان إبراهيم ذكياً جداً ودائماً يتساءل عن العالم من حوله. إبراهيم معروف بخليل الله! وهو من أعظم الأنبياء." },
-            { slide: 1, title: "النظر إلى السماء", script: "ذات ليلة، نظر إبراهيم الصغير إلى النجوم الجميلة. هل هذه ربي؟ تساءل. لكن عندما اختفت النجوم عند الفجر، عرف أنها لا يمكن أن تكون. استمر إبراهيم في البحث عن الحقيقة." },
-            { slide: 2, title: "القمر الجميل", script: "ثم رأى إبراهيم القمر، كبيراً ومشرقاً! هذا ربي! قال. لكن عندما جاء الصباح، اختفى القمر أيضاً. كان إبراهيم لا يزال يبحث عن الإله الحقيقي." },
-            { slide: 3, title: "الشمس العظيمة", script: "عندما طلعت الشمس، فكر إبراهيم: هذا يجب أن يكون ربي - إنها الأكبر! لكن عندما جاء المساء، ذهبت حتى الشمس القوية. فهم إبراهيم أن الله وحده - الذي خلق النجوم والقمر والشمس - يستحق العبادة!" },
+            { slide: 1, title: "النظر إلى السماء", script: "أراد إبراهيم أن يعلّم قومه من هو الرب الحق. ففي إحدى الليالي نظر إلى نجم لامع وقال لهم: هل هذا ربي؟ فلما غاب النجم قال: لا أحبّ ما يغيب!" },
+            { slide: 2, title: "القمر الجميل", script: "ثم رأى إبراهيم القمر كبيراً منيراً! فقال لقومه: هذا ربي! لكن لما جاء الصباح غاب القمر أيضاً. كان إبراهيم يُري قومه أن ما يغيب لا يمكن أن يكون رباً." },
+            { slide: 3, title: "الشمس العظيمة", script: "ولما أشرقت الشمس قال إبراهيم لقومه: هذا ربي، فهو الأكبر! لكن لما جاء المساء غابت الشمس القوية أيضاً. بيّن إبراهيم لقومه أن الله وحده - الذي خلق النجوم والقمر والشمس - هو المستحق للعبادة!" },
             { slide: 4, title: "التماثيل الحجرية", script: "كان قوم إبراهيم يعبدون تماثيل من حجر. عرف إبراهيم أن هذا خطأ. كيف تعبدون أشياء لا تسمع ولا ترى ولا تنفعكم؟ سألهم. يجب أن نعبد الله وحده!" },
             { slide: 5, title: "النار العظيمة", script: "بنى الناس الغاضبون ناراً ضخمة وألقوا إبراهيم فيها! لكن إبراهيم بقي هادئاً. وثق بالله تماماً. قال: حسبي الله." },
-            { slide: 6, title: "معجزة الله المذهلة", script: "أمر الله: يا نار كوني برداً وسلاماً على إبراهيم! أصبحت النار باردة مثل الحديقة! خرج إبراهيم سالماً تماماً. سبحان الله! هذا يُظهر أن الله يحمي من يثقون به." },
-            { slide: 7, title: "بناء بيت الله", script: "بعد سنوات، أمر الله إبراهيم وابنه إسماعيل ببناء الكعبة - أول بيت عبادة لله. عملا معاً، لبنة بلبنة، يدعوان وهما يبنيان." },
-            { slide: 8, title: "ما نتعلمه", script: "دعونا نتذكر ما تعلمناه من النبي إبراهيم. ابحث دائماً عن الحقيقة. ثق بالله حتى عندما تكون الأمور صعبة. كن شجاعاً ودافع عن الحق. اعبد الله وحده." },
-            { slide: 9, title: "دعاء إبراهيم", script: "هذا هو الدعاء الجميل الذي دعا به إبراهيم وإسماعيل أثناء بناء الكعبة: ربنا تقبل منا إنك أنت السميع العليم." },
+            { slide: 6, title: "معجزة الله المذهلة", script: "لكنّ الله حمى إبراهيم، فأمر النارَ أن تكون باردة سالمة لا تؤذيه. فصارت النار برداً وسلاماً! وخرج إبراهيم سالماً لم يُصبه أذى. سبحان الله! هذا يُظهر أن الله يحمي من يثقون به." },
+            { slide: 7, title: "بناء بيت الله", script: "بعد سنوات، أمر الله إبراهيم وابنه إسماعيل ببناء الكعبة - أول بيت عبادة لله. عملا معاً، حجراً حجراً، يدعوان وهما يبنيان." },
+            { slide: 8, title: "ما نتعلمه", script: "دعونا نتذكر ما تعلمناه من النبي إبراهيم. فكّر واتّبع الحق. ثق بالله حتى عندما تكون الأمور صعبة. كن شجاعاً ودافع عن الحق. اعبد الله وحده." },
+            { slide: 9, title: "دعاء إبراهيم", script: "هذا هو الدعاء الجميل الذي دعا به إبراهيم وإسماعيل أثناء بناء الكعبة: سألا الله أن يتقبّل منهما عملهما، فهو السميع الذي يسمع كل دعاء، العليم الذي يعلم كل شيء. تعلّم كلماته المكتوبة أمامك وادعُ بها!" },
             { slide: 10, title: "وقت الاختبار", script: "رائع! لقد أكملت قصة النبي إبراهيم! الآن لنرى كم تتذكر باختبار ممتع. أجب على هذه الأسئلة لتكسب نجوماً إضافية!" },
             { slide: 11, title: "السؤال الأول", script: "السؤال الأول: ماذا أدرك إبراهيم عن النجوم والقمر والشمس؟ هل هي جميلة جداً، أو مخلوقة من الله وتختفي، أو تعطينا نوراً، أو بعيدة جداً؟" },
             { slide: 12, title: "السؤال الثاني", script: "السؤال الثاني: ماذا حدث عندما أُلقي إبراهيم في النار؟ هل احترق، أو هرب، أو جعل الله النار برداً وسلاماً؟" },
@@ -276,9 +276,9 @@ const voiceScripts = {
             { slide: 4, title: "Building the Ark", script: "Allah told Prophet Nuh to build a huge boat called an Ark. Even though they were far from the ocean, Prophet Nuh trusted Allah completely. He worked hard every day, cutting wood and building the boat exactly as Allah instructed." },
             { slide: 5, title: "The Animals Board", script: "When the Ark was ready, Allah told Prophet Nuh to bring a pair of every animal onto the boat - two elephants, two lions, two birds, two of everything! Imagine all those animals walking onto the big boat together. What a sight!" },
             { slide: 6, title: "The Great Flood", script: "Then the rain began to fall - more rain than anyone had ever seen! Water came from the sky and from the ground. The whole earth was covered with water. But Prophet Nuh, the believers, and all the animals were safe inside the Ark, floating on the waves." },
-            { slide: 7, title: "A New Beginning", script: "After many days, the rain stopped and the water went away. Prophet Nuh sent a dove to find land, and it came back with an olive leaf! The Ark landed safely on a mountain called Judi. Prophet Nuh thanked Allah for keeping them safe." },
+            { slide: 7, title: "A New Beginning", script: "After many days, Allah commanded the rain to stop and the water to go down. The Ark came to rest safely on a mountain called Judi. Prophet Nuh thanked Allah for keeping them safe." },
             { slide: 8, title: "What We Learn", script: "What do we learn from Prophet Nuh? Always trust in Allah, even when things seem impossible. Be patient and never give up doing good. Listen to Allah's guidance and follow it. Be kind to all of Allah's creatures." },
-            { slide: 9, title: "Nuh's Dua", script: "Here is a beautiful dua Prophet Nuh made: Rabbi ighfir li wa li walidayya. This means: My Lord, forgive me and my parents. We can say this dua too!" },
+            { slide: 9, title: "Nuh's Dua", script: "Here is a beautiful dua Prophet Nuh made. Its words are written for you on the screen. It means: My Lord, forgive me and my parents. Learn the words with someone you love, and say this dua for yourself and your parents too!" },
             { slide: 10, title: "Quiz Time", script: "Story complete! Time for a quiz! Answer these questions to unlock your bonus video!" },
             { slide: 11, title: "Question One", script: "Question one: What did Allah tell Prophet Nuh to build? A house, an Ark which is a boat, a mosque, or a castle?" },
             { slide: 12, title: "Question Two", script: "Question two: What animals did Prophet Nuh bring on the Ark? Only birds, only big animals, a pair of every animal, or no animals?" },
@@ -294,11 +294,11 @@ const voiceScripts = {
             { slide: 4, title: "بناء السفينة", script: "أمر الله النبي نوح ببناء قارب ضخم يسمى السفينة. رغم أنهم كانوا بعيدين عن المحيط، وثق النبي نوح بالله تماماً. عمل بجد كل يوم، يقطع الخشب ويبني السفينة كما أمره الله." },
             { slide: 5, title: "الحيوانات تصعد", script: "عندما كانت السفينة جاهزة، أمر الله النبي نوح بإحضار زوج من كل حيوان على السفينة - فيلان، أسدان، طائران، اثنان من كل شيء! تخيل كل تلك الحيوانات تمشي إلى السفينة الكبيرة معاً. يا له من منظر!" },
             { slide: 6, title: "الطوفان العظيم", script: "ثم بدأ المطر يهطل - مطر أكثر مما رآه أي شخص! جاء الماء من السماء ومن الأرض. غطى الماء الأرض كلها. لكن النبي نوح والمؤمنين وجميع الحيوانات كانوا آمنين داخل السفينة، يطفون على الأمواج." },
-            { slide: 7, title: "بداية جديدة", script: "بعد أيام كثيرة، توقف المطر وذهب الماء. أرسل النبي نوح حمامة للبحث عن أرض، وعادت بورقة زيتون! رست السفينة بأمان على جبل يسمى الجودي. شكر النبي نوح الله على حفظهم آمنين." },
+            { slide: 7, title: "بداية جديدة", script: "وبعد أيام كثيرة أمر الله المطر أن يتوقف والماء أن ينحسر، فاستقرت السفينة بسلام على جبل اسمه الجودي. فحمد النبي نوح الله على نجاتهم." },
             { slide: 8, title: "ما نتعلمه", script: "ماذا نتعلم من النبي نوح؟ ثق دائماً بالله، حتى عندما تبدو الأمور مستحيلة. كن صبوراً ولا تستسلم عن فعل الخير. استمع لهداية الله واتبعها. كن لطيفاً مع جميع مخلوقات الله." },
-            { slide: 9, title: "دعاء نوح", script: "هذا دعاء جميل دعا به النبي نوح: رب اغفر لي ولوالدي. يمكننا أن نقول هذا الدعاء نحن أيضاً!" },
+            { slide: 9, title: "دعاء نوح", script: "هذا دعاء جميل دعا به النبي نوح: سأل الله أن يغفر له ولوالديه. تعلّم كلماته المكتوبة أمامك، وادعُ به أنت أيضاً لنفسك ولوالديك!" },
             { slide: 10, title: "وقت الاختبار", script: "اكتملت القصة! حان وقت الاختبار! أجب على هذه الأسئلة لفتح الفيديو الإضافي!" },
-            { slide: 11, title: "السؤال الأول", script: "السؤال الأول: ماذا أمر الله النبي نوح أن يبني؟ بيتاً، أو سفينة، أو مسجداً، أو قلعة؟" },
+            { slide: 11, title: "السؤال الأول", script: "السؤال الأول: ماذا أمر الله النبيَّ نوحاً أن يبني؟ بيتاً، أو سفينة، أو مسجداً، أو قلعة؟" },
             { slide: 12, title: "السؤال الثاني", script: "السؤال الثاني: ما الحيوانات التي أحضرها النبي نوح على السفينة؟ الطيور فقط، أو الحيوانات الكبيرة فقط، أو زوج من كل حيوان، أو لا حيوانات؟" },
             { slide: 13, title: "السؤال الثالث", script: "السؤال الثالث: ما الدرس الرئيسي من قصة النبي نوح؟ بناء القوارب كل يوم، أو الثقة بالله والصبر، أو جمع الحيوانات، أو انتظار المطر؟" },
             { slide: 14, title: "تهانينا", script: "تهانينا! لقد أبدعت! تذكر، ثق بالله ولا تستسلم أبداً، حتى عندما تكون الأمور صعبة!" },
@@ -317,9 +317,9 @@ const voiceScripts = {
             { slide: 5, title: "Life in Egypt", script: "In Egypt, Yusuf grew up to be very handsome and wise. He always told the truth and was kind to everyone. But some people were mean to him, and he was put in prison even though he did nothing wrong!" },
             { slide: 6, title: "The King's Dream", script: "One day, the King of Egypt had a strange dream that no one could explain. But Yusuf, with Allah's help, knew exactly what it meant! He told the King that there would be seven good years with lots of food, then seven hard years with very little." },
             { slide: 7, title: "Yusuf Becomes a Leader", script: "The King was so impressed that he made Yusuf an important leader in Egypt! Yusuf saved food during the good years so people wouldn't go hungry during the hard years. He was kind and fair to everyone." },
-            { slide: 8, title: "The Happy Reunion", script: "Years later, Yusuf's brothers came to Egypt looking for food. They didn't recognize Yusuf, but he knew them! Instead of being angry, Yusuf forgave them with all his heart. His whole family came to live in Egypt, and his dream came true - they all bowed to him with respect and love!" },
+            { slide: 8, title: "The Happy Reunion", script: "Years later, Yusuf's brothers came to Egypt looking for food. They didn't recognize Yusuf, but he knew them! Instead of being angry, he gave them food. Later, when they knew who he was, Yusuf forgave them with all his heart. He said: No blame upon you today. May Allah forgive you; He is the Most Merciful of the merciful. His whole family came to live in Egypt, and his dream came true - they all bowed to him with respect and love! It was a bow of respect, allowed in their time. In Islam we prostrate only to Allah." },
             { slide: 9, title: "What We Learn", script: "What do we learn from Prophet Yusuf? Always forgive others, even when they hurt you. Trust Allah's plan, even in difficult times. Be patient - good things come to those who wait. Always tell the truth and be kind. Allah never forgets those who believe in Him." },
-            { slide: 10, title: "Yusuf's Dua", script: "Prophet Yusuf thanked Allah for all His blessings. He said: Rabbi qad ataytani minal mulk. This means: My Lord, You have given me authority. We should always be grateful to Allah too!" },
+            { slide: 10, title: "Yusuf's Dua", script: "Prophet Yusuf thanked Allah for all His blessings, and then he made a dua. It means: You are my Protector in this world and the Hereafter. Take my soul as a Muslim, and join me with the righteous. We can make this dua too!" },
             { slide: 11, title: "Quiz Time", script: "Story complete! Time for a quiz! Answer these questions to unlock your bonus video!" },
             { slide: 12, title: "Question One", script: "Question one: Where did Yusuf's brothers leave him? At home, in a well, on a mountain, or in a forest?" },
             { slide: 13, title: "Question Two", script: "Question two: What special ability did Allah give Yusuf? Flying, understanding dreams, speaking to animals, or super strength?" },
@@ -336,9 +336,9 @@ const voiceScripts = {
             { slide: 5, title: "الحياة في مصر", script: "في مصر، كبر يوسف ليصبح وسيماً وحكيماً جداً. كان دائماً يقول الحقيقة ولطيفاً مع الجميع. لكن بعض الناس كانوا سيئين معه، ووُضع في السجن رغم أنه لم يفعل شيئاً خاطئاً!" },
             { slide: 6, title: "حلم الملك", script: "ذات يوم، رأى ملك مصر حلماً غريباً لم يستطع أحد تفسيره. لكن يوسف، بمساعدة الله، عرف بالضبط ما يعنيه! أخبر الملك أنه ستكون هناك سبع سنوات جيدة بطعام كثير، ثم سبع سنوات صعبة بقليل جداً." },
             { slide: 7, title: "يوسف يصبح قائداً", script: "أُعجب الملك كثيراً فجعل يوسف قائداً مهماً في مصر! حفظ يوسف الطعام خلال السنوات الجيدة حتى لا يجوع الناس خلال السنوات الصعبة. كان لطيفاً وعادلاً مع الجميع." },
-            { slide: 8, title: "لمّ الشمل السعيد", script: "بعد سنوات، جاء إخوة يوسف إلى مصر يبحثون عن طعام. لم يتعرفوا على يوسف، لكنه عرفهم! بدلاً من أن يغضب، سامحهم يوسف بكل قلبه. جاءت عائلته كلها لتعيش في مصر، وتحقق حلمه - سجدوا له جميعاً باحترام وحب!" },
+            { slide: 8, title: "لمّ الشمل السعيد", script: "بعد سنوات، جاء إخوة يوسف إلى مصر يطلبون الطعام. لم يعرفوه، لكنه عرفهم! وبدل أن يغضب، أعطاهم الطعام. ثم لما عرفوا من هو، سامحهم من كل قلبه، وأخبرهم أنه لا لوم عليهم اليوم ولا عتاب، ودعا الله أن يغفر لهم، فالله أرحم الراحمين. وجاءت أسرته كلها لتعيش في مصر، وتحققت رؤياه - فسجدوا له جميعاً احتراماً ومحبة! كان سجود تحية واحترام، وكان مباحاً في زمانهم. وفي الإسلام لا نسجد إلا لله." },
             { slide: 9, title: "ما نتعلمه", script: "ماذا نتعلم من النبي يوسف؟ سامح الآخرين دائماً، حتى عندما يؤذونك. ثق بخطة الله، حتى في الأوقات الصعبة. كن صبوراً - الأشياء الجيدة تأتي لمن ينتظر. قل الحقيقة دائماً وكن لطيفاً. الله لا ينسى من يؤمنون به." },
-            { slide: 10, title: "دعاء يوسف", script: "شكر النبي يوسف الله على كل نعمه. قال: رب قد آتيتني من الملك. يجب أن نكون شاكرين لله دائماً!" },
+            { slide: 10, title: "دعاء يوسف", script: "شكر النبي يوسف الله على كل نعمه، ثم دعاه أن يكون وليَّه في الدنيا والآخرة، وأن يتوفّاه مسلماً ويُلحقه بالصالحين. ونحن أيضاً ندعو بهذا الدعاء!" },
             { slide: 11, title: "وقت الاختبار", script: "اكتملت القصة! حان وقت الاختبار! أجب على هذه الأسئلة لفتح الفيديو الإضافي!" },
             { slide: 12, title: "السؤال الأول", script: "السؤال الأول: أين ترك إخوة يوسف أخاهم؟ في البيت، أو في بئر، أو على جبل، أو في غابة؟" },
             { slide: 13, title: "السؤال الثاني", script: "السؤال الثاني: ما القدرة الخاصة التي أعطاها الله ليوسف؟ الطيران، أو فهم الأحلام، أو التحدث مع الحيوانات، أو القوة الخارقة؟" },
@@ -352,19 +352,19 @@ const voiceScripts = {
     'prophet-musa': {
         en: [
             { slide: 0, title: "A Baby in Danger", script: "Long ago in Egypt there ruled a cruel king called Pharaoh. He thought he was a god, and he treated the Children of Israel very badly. One day he gave a terrible order: every baby boy born to them must be taken away. It was a frightening time, and one mother had just had a beautiful baby boy. His name was Musa." },
-            { slide: 1, title: "The Basket on the River", script: "Musa's mother was so worried. Then Allah put a thought into her heart: Place him in a basket and let the river carry him. Do not be afraid, I will bring him back to you. That was a very hard thing to do! But she trusted Allah completely, and she gently set the little basket onto the water of the River Nile." },
+            { slide: 1, title: "The Basket on the River", script: "Musa's mother was so worried. Then Allah inspired her to set him afloat on the river, told her not to be afraid, and promised to bring him back to her. That was a very hard thing to do! But she trusted Allah completely, and she gently set the little basket onto the water of the River Nile." },
             { slide: 2, title: "Safe in the Palace", script: "Where do you think the river took baby Musa? Straight to Pharaoh's own palace! Pharaoh's wife Asiyah found the basket and loved the baby right away. Let us keep him, she said. So the very baby Pharaoh was searching for grew up safely inside Pharaoh's house. Only Allah could plan something so amazing!" },
             { slide: 3, title: "Quick Question", script: "Quick question! Where did the river carry baby Musa? To a forest, to Pharaoh's palace, to a mountain, or to another country? Think carefully!" },
             { slide: 4, title: "Back to His Mother", script: "Baby Musa would not drink milk from anyone in the palace. Musa's clever big sister, who had been following the basket, said: I know a woman who can feed him! And so they brought Musa's very own mother to the palace. Allah kept His promise and gave her son back to her, exactly as He had said." },
-            { slide: 5, title: "The Light on the Mountain", script: "Musa grew into a strong, honest man. Years later, while travelling with his family at night, he saw a light glowing on a mountain called Tur. He climbed up to fetch some fire to keep his family warm, and there Allah spoke to him directly! Allah told him: O Musa, I am your Lord. What an incredible honour!" },
-            { slide: 6, title: "The Staff and the Shining Hand", script: "Allah gave Musa two miracles to show that he was truly a prophet. Throw down your staff, said Allah, and the wooden stick turned into a real, moving snake! Then Musa put his hand inside his cloak, and when he took it out, it shone with a beautiful bright light. Allah then sent him to Pharaoh with His message." },
+            { slide: 5, title: "The Light on the Mountain", script: "Musa grew into a strong, honest man. Years later, while travelling with his family at night, he saw a light glowing on a mountain called Tur. He climbed up to fetch some fire to keep his family warm, and there Allah spoke to him directly! Allah called him by his name, and said: Indeed, I am your Lord. What an incredible honour!" },
+            { slide: 6, title: "The Staff and the Shining Hand", script: "Allah gave Musa two miracles to show that he was truly a prophet. Allah told him to throw down his staff, and the wooden stick turned into a real, moving snake! Then Musa put his hand inside his cloak, and when he took it out, it shone with a beautiful bright light. Allah then sent him to Pharaoh with His message." },
             { slide: 7, title: "Quick Question", script: "Quick question! What did Prophet Musa's staff turn into? A bird, a river, a snake, or a tree? Think carefully!" },
-            { slide: 8, title: "Speaking Kindly to Pharaoh", script: "Allah told Musa and his brother Harun something beautiful: Speak to him gently. Even to a cruel king like Pharaoh, they had to be polite! Musa said, Worship Allah alone, and set my people free. But Pharaoh was too proud. He called his best magicians to prove Musa wrong." },
+            { slide: 8, title: "Speaking Kindly to Pharaoh", script: "Allah told Musa and his brother Harun something beautiful: So speak to him with gentle words. Even to a cruel king like Pharaoh, they had to be polite! Musa said, Worship Allah alone, and set my people free. But Pharaoh was too proud. He called his best magicians to prove Musa wrong." },
             { slide: 9, title: "The Day of the Magicians", script: "The magicians threw their ropes and sticks, and with their tricks they seemed to wriggle like snakes. Then Musa threw his staff, and it became a huge real snake that swallowed all their tricks! The magicians knew at once that this was no magic. They fell down and said, We believe in the Lord of Musa and Harun!" },
             { slide: 10, title: "Trapped at the Sea", script: "Allah told Musa to lead the believers away from Egypt at night. But Pharaoh chased after them with his whole army! Soon the believers were trapped: a huge sea in front of them, and thundering chariots behind. The people cried, They have caught us! But Musa said calmly, No! My Lord is with me, and He will guide me." },
-            { slide: 11, title: "The Sea Splits Open", script: "Allah said: Strike the sea with your staff. Musa struck the water, and the whole sea split into two mighty walls with a dry path running right through the middle! The believers walked safely across. When Pharaoh's army followed, the walls of water came crashing back down. Allah had saved the believers and stopped the cruel king." },
+            { slide: 11, title: "The Sea Splits Open", script: "Allah told Musa to strike the sea with his staff. Musa struck the water, and by Allah's command the whole sea split into two mighty walls with a dry path running right through the middle! The believers walked safely across. When Pharaoh's army followed, the walls of water came crashing back down. Allah had saved the believers and stopped the cruel king." },
             { slide: 12, title: "What We Learn", script: "What do we learn from Prophet Musa? Trust Allah's plan, even when it looks scary. Allah always keeps His promises. Be gentle and polite, even to people who are unkind. Never be too proud to admit the truth. And remember, Allah is with you, so you are never really alone." },
-            { slide: 13, title: "Musa's Dua", script: "Here is a beautiful dua Prophet Musa made: Rabbi ishrah li sadri wa yassir li amri. This means: My Lord, open my chest for me, and make my task easy for me. He said it before facing Pharaoh. Say it before something hard, like a test or speaking in class!" },
+            { slide: 13, title: "Musa's Dua", script: "Here is a beautiful dua Prophet Musa made. Its words are written for you on the screen. It means: My Lord, open my chest for me, and make my task easy for me. He made this dua before facing Pharaoh. Learn the words with someone you love, and say it before something hard, like a test or speaking in class!" },
             { slide: 14, title: "Quiz Time", script: "Story complete! Time for a quiz! Answer these questions to unlock your bonus video!" },
             { slide: 15, title: "Question One", script: "Question one: What did Musa's mother place him in? A big ship, a basket on the river, a hidden house, or a cave?" },
             { slide: 16, title: "Question Two", script: "Question two: How did Allah save the believers at the sea? He sent boats, He made them fly, He split the sea into a dry path, or He built a bridge?" },
@@ -374,19 +374,19 @@ const voiceScripts = {
         ],
         ar: [
             { slide: 0, title: "طفل في خطر", script: "منذ زمن بعيد في مصر، حكم ملك قاسٍ اسمه فرعون. كان يظن أنه إله، وكان يعامل بني إسرائيل معاملة سيئة جداً. وفي يوم من الأيام أصدر أمراً فظيعاً: كل طفل ذكر يولد لهم يجب أن يؤخذ. كان وقتاً مخيفاً، وكانت إحدى الأمهات قد أنجبت للتو طفلاً جميلاً. اسمه موسى." },
-            { slide: 1, title: "السلة على النهر", script: "كانت أم موسى قلقة جداً. ثم ألهمها الله في قلبها: ضعيه في سلة ودعي النهر يحمله. لا تخافي، سأرده إليك. كان ذلك أمراً صعباً جداً! لكنها وثقت بالله تماماً، ووضعت السلة الصغيرة برفق على ماء نهر النيل." },
+            { slide: 1, title: "السلة على النهر", script: "كانت أم موسى قلقة جداً. ثم ألهمها الله أن تضعه على ماء النهر، وألّا تخاف، ووعدها أن يردّه إليها. كان ذلك أمراً صعباً جداً! لكنها وثقت بالله تماماً، ووضعت السلة الصغيرة برفق على ماء نهر النيل." },
             { slide: 2, title: "آمن في القصر", script: "إلى أين تظن أن النهر أخذ الطفل موسى؟ إلى قصر فرعون نفسه! وجدت آسية زوجة فرعون السلة وأحبت الطفل على الفور. قالت: دعنا نبقيه. وهكذا نشأ الطفل الذي كان فرعون يبحث عنه آمناً داخل بيت فرعون. الله وحده يستطيع أن يدبر أمراً مذهلاً كهذا!" },
             { slide: 3, title: "سؤال سريع", script: "سؤال سريع! إلى أين حمل النهر الطفل موسى؟ إلى غابة، أو إلى قصر فرعون، أو إلى جبل، أو إلى بلد آخر؟ فكر جيداً!" },
             { slide: 4, title: "العودة إلى أمه", script: "لم يشرب الطفل موسى الحليب من أي أحد في القصر. قالت أخت موسى الكبيرة الذكية، التي كانت تتبع السلة: أعرف امرأة تستطيع إرضاعه! وهكذا أحضروا أم موسى نفسها إلى القصر. أوفى الله بوعده ورد إليها ابنها، تماماً كما قال." },
-            { slide: 5, title: "النور على الجبل", script: "كبر موسى وأصبح رجلاً قوياً صادقاً. وبعد سنوات، بينما كان يسافر مع عائلته ليلاً، رأى نوراً يتوهج على جبل يسمى الطور. صعد ليأخذ ناراً تدفئ عائلته، وهناك كلمه الله مباشرة! قال له الله: يا موسى، إني أنا ربك. يا له من شرف عظيم!" },
-            { slide: 6, title: "العصا واليد المضيئة", script: "أعطى الله موسى معجزتين ليثبت أنه نبي حقاً. قال الله: ألق عصاك، فتحولت العصا الخشبية إلى ثعبان حقيقي يتحرك! ثم أدخل موسى يده في جيبه، وعندما أخرجها كانت تلمع بنور جميل ساطع. ثم أرسله الله إلى فرعون برسالته." },
+            { slide: 5, title: "النور على الجبل", script: "كبر موسى وأصبح رجلاً قوياً صادقاً. وبعد سنوات، بينما كان يسافر مع عائلته ليلاً، رأى نوراً يتوهج على جبل يسمى الطور. صعد ليأخذ ناراً تدفئ عائلته، وهناك كلمه الله مباشرة! ناداه الله باسمه، وأخبره أنه ربّه. يا له من شرف عظيم!" },
+            { slide: 6, title: "العصا واليد المضيئة", script: "أعطى الله موسى معجزتين ليثبت أنه نبي حقاً. أمره الله أن يلقي عصاه، فتحولت العصا الخشبية إلى ثعبان حقيقي يتحرك! ثم أدخل موسى يده في جيبه، وعندما أخرجها كانت تلمع بنور جميل ساطع. ثم أرسله الله إلى فرعون برسالته." },
             { slide: 7, title: "سؤال سريع", script: "سؤال سريع! إلى ماذا تحولت عصا النبي موسى؟ إلى طائر، أو نهر، أو ثعبان، أو شجرة؟ فكر جيداً!" },
-            { slide: 8, title: "الكلام اللطيف مع فرعون", script: "قال الله لموسى وأخيه هارون شيئاً جميلاً: قولا له قولاً ليناً. حتى مع ملك قاسٍ مثل فرعون، كان عليهما أن يكونا مؤدبين! قال موسى: اعبد الله وحده، وأطلق سراح قومي. لكن فرعون كان متكبراً جداً. فاستدعى أفضل سحرته ليثبت أن موسى مخطئ." },
-            { slide: 9, title: "يوم السحرة", script: "ألقى السحرة حبالهم وعصيهم، وبحيلهم بدت وكأنها تتلوى مثل الثعابين. ثم ألقى موسى عصاه، فأصبحت ثعباناً ضخماً حقيقياً ابتلع كل حيلهم! عرف السحرة على الفور أن هذا ليس سحراً. فسجدوا وقالوا: آمنا برب موسى وهارون!" },
-            { slide: 10, title: "محاصرون عند البحر", script: "أمر الله موسى أن يقود المؤمنين خارج مصر ليلاً. لكن فرعون طاردهم بجيشه كله! وسرعان ما أصبح المؤمنون محاصرين: بحر ضخم أمامهم، وعربات مدوية خلفهم. صاح الناس: لقد أدركونا! لكن موسى قال بهدوء: كلا! إن معي ربي سيهدين." },
-            { slide: 11, title: "البحر ينشق", script: "قال الله: اضرب بعصاك البحر. ضرب موسى الماء، فانشق البحر كله إلى جدارين عظيمين وبينهما طريق يابس في المنتصف! عبر المؤمنون بأمان. وعندما تبعهم جيش فرعون، انهارت جدران الماء عليهم. أنقذ الله المؤمنين وأوقف الملك القاسي." },
+            { slide: 8, title: "الكلام اللطيف مع فرعون", script: "أمر الله موسى وأخاه هارون بأمر جميل: أن يكلّما فرعون بكلام ليّن لطيف. حتى مع ملك قاسٍ مثل فرعون، كان عليهما أن يكونا مؤدبين! قال موسى: اعبد الله وحده، وأطلق سراح قومي. لكن فرعون كان متكبراً جداً. فاستدعى أفضل سحرته ليثبت أن موسى مخطئ." },
+            { slide: 9, title: "يوم السحرة", held: "No-recitation sweep (round 4, 2026-11-05): «آمنا برب موسى وهارون» contains the whole ayah «رب موسى وهارون» (7:122, 26:48). Audio removed and this slide is silent until the scholar approves new wording.", script: "ألقى السحرة حبالهم وعصيهم، وبحيلهم بدت وكأنها تتلوى مثل الثعابين. ثم ألقى موسى عصاه، فأصبحت ثعباناً ضخماً حقيقياً ابتلع كل حيلهم! عرف السحرة على الفور أن هذا ليس سحراً. فسجدوا وقالوا: آمنا برب موسى وهارون!" },
+            { slide: 10, title: "محاصرون عند البحر", script: "أمر الله موسى أن يقود المؤمنين خارج مصر ليلاً. لكن فرعون طاردهم بجيشه كله! وسرعان ما أصبح المؤمنون محاصرين: بحر ضخم أمامهم، وعربات مدوية خلفهم. صاح الناس: لقد أدركونا! لكن موسى طمأنهم بهدوء وثقة، وأخبرهم أن الله معه وسيهديه إلى طريق النجاة." },
+            { slide: 11, title: "البحر ينشق", script: "أمر الله موسى أن يضرب البحر بعصاه. فضرب موسى الماء، فانشق البحر كله بأمر الله إلى جدارين عظيمين وبينهما طريق يابس في المنتصف! عبر المؤمنون بأمان. وعندما تبعهم جيش فرعون، انهارت جدران الماء عليهم. أنقذ الله المؤمنين وأوقف الملك القاسي." },
             { slide: 12, title: "ما نتعلمه", script: "ماذا نتعلم من النبي موسى؟ ثق بتدبير الله، حتى عندما يبدو مخيفاً. الله دائماً يوفي بوعوده. كن لطيفاً ومؤدباً، حتى مع من يسيء إليك. لا تتكبر أبداً عن قبول الحق. وتذكر، الله معك، فأنت لست وحدك أبداً." },
-            { slide: 13, title: "دعاء موسى", script: "هذا دعاء جميل دعا به النبي موسى: رب اشرح لي صدري ويسر لي أمري. قاله قبل أن يواجه فرعون. قله أنت أيضاً قبل أي أمر صعب، مثل الامتحان أو التحدث أمام الصف!" },
+            { slide: 13, title: "دعاء موسى", script: "هذا دعاء جميل دعا به النبي موسى: سأل الله أن يشرح له صدره، أي يملأ قلبه طمأنينة وشجاعة، وأن ييسّر له أمره، أي يسهّل عليه مهمته. دعا به قبل أن يواجه فرعون. تعلّم كلماته المكتوبة أمامك، وادعُ به قبل أي أمر صعب، مثل الامتحان أو التحدث أمام الصف!" },
             { slide: 14, title: "وقت الاختبار", script: "اكتملت القصة! حان وقت الاختبار! أجب على هذه الأسئلة لفتح الفيديو الإضافي!" },
             { slide: 15, title: "السؤال الأول", script: "السؤال الأول: في ماذا وضعت أم موسى ابنها؟ في سفينة كبيرة، أو في سلة على النهر، أو في بيت مخفي، أو في كهف؟" },
             { slide: 16, title: "السؤال الثاني", script: "السؤال الثاني: كيف أنقذ الله المؤمنين عند البحر؟ أرسل قوارب، أو جعلهم يطيرون، أو شق البحر وجعل فيه طريقاً يابساً، أو بنى جسراً؟" },
@@ -423,6 +423,8 @@ function getVoiceScript(storyId, lang, slideIndex) {
 
     return scripts.find(s => s.slide === slideIndex) || null;
 }
+// A script marked held: "..." is silent: no audio file exists for it and it is never spoken by
+// speech synthesis (its wording awaits the scholar; see scripts/verify-no-recitation.py).
 
 // Get all scripts for a story in a language
 function getAllVoiceScripts(storyId, lang) {

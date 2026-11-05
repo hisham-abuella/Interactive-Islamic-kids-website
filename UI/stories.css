@@ -2228,3 +2228,66 @@ html[lang="ar"] .story-scene.has-plate {
     height: 100%;
     object-fit: cover;
 }
+
+/* An ayah quoted inside a story scene (Ibrahim 21:69, Musa 20:12 and 20:44,
+   Yusuf 12:92 and 12:101). Checked by scripts/verify-scripture.py through its
+   data-ayah attribute.
+   The .story-slide selector is needed: the slide-mode stories (Ibrahim, Musa)
+   size every scene paragraph with `.story-slide .scene-text p` (0,2,1), which
+   beat the plain `.scene-text .story-ayah` (0,2,0) and set the ayah at the
+   size of the prose around it. The font is set here, not inherited, so the
+   ayah is in Amiri in English mode too (the body font there is Nunito). */
+.scene-text .story-ayah,
+.story-slide .scene-text .story-ayah,
+.story-container.fullscreen-active .scene-text .story-ayah {
+    font-family: 'Amiri', 'Amiri Quran', 'Geeza Pro', 'Noto Naskh Arabic', serif;
+    direction: rtl;
+    text-align: center;
+    font-size: 1.7rem;
+    line-height: 1.9;
+    margin: 1rem 0 0.25rem;
+}
+
+@media (max-width: 768px) {
+    .scene-text .story-ayah,
+    .story-slide .scene-text .story-ayah {
+        font-size: 1.45rem;
+    }
+}
+
+.scene-text .story-ayah-meaning {
+    text-align: center;
+    font-size: 1.05rem;
+}
+
+/* "Play together": the end of a story links to its game (Nuh, round 4). A real link, 48px+. */
+.play-together {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 48px;
+    min-width: 48px;
+    white-space: nowrap;
+    margin-top: 1rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 25px;
+    background: var(--turquoise-deep);
+    border: 2px solid var(--gold);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.play-together:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(26, 143, 128, 0.3);
+}
+.play-together:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+    .play-together, .play-together:hover { transition: none; transform: none; }
+}

@@ -6,17 +6,36 @@
    card gets its own listen button, and there is one control at the top that
    reads the whole surah verse by verse.
 
-   The spoken text is taken from the page itself - the translation and the
-   explanation already sitting in the card, in whichever language is active -
-   so the narration can never drift out of sync with what is written. Where a
-   pre-generated file exists it is used; otherwise the browser's own speech
-   synthesis reads the same words, so the feature works before any audio has
-   been generated and degrades quietly if a file is missing.
+   A pre-generated file (recorded from the card's meaning line and explanation)
+   is played where it exists. If it is missing, the browser's own speech
+   synthesis reads the card's explanation only, so the feature degrades quietly.
 
    Files, when generated: audio/<surah-id>/<lang>/verse-<n>.mp3
+
+   NO RECITATION (scholar ruling, round 3, 2026-11-04, Part 2 A): no synthetic
+   voice may speak Quranic wording. The Arabic "meaning" line of every verse card
+   was the ayah itself, so every Arabic verse file opened by reciting it. Those
+   files were removed. Until the tafsir-based Arabic meaning lines are written,
+   approved and recorded, AR_VERSE_AUDIO stays false: on an Arabic page the
+   listen controls show a "coming soon" note, no verse file is requested, and no
+   speech synthesis runs. Turning it back on is this one flag (and the check in
+   scripts/verify-no-recitation.py reads it from here). Games 07 and 08 read the
+   same flag via window.SurahNarration.
+
+   Speech synthesis, in either language, reads ONLY the explanation paragraph.
+   It never reads .translation, the Arabic ayah, the complete-surah block or
+   anything carrying data-ayah: verify-no-recitation.py fails the build if this
+   file names any of them outside this comment.
    ============================================ */
 (function () {
     'use strict';
+
+    var AR_VERSE_AUDIO = false;
+
+    window.SurahNarration = {
+        arVerseAudio: AR_VERSE_AUDIO,
+        soonText: { ar: 'السرد بالعربية قريباً', en: 'Arabic narration is coming soon' }
+    };
 
     var state = {
         audio: null,
@@ -33,9 +52,15 @@
         return document.documentElement.lang === 'ar' ? 'ar' : 'en';
     }
 
+    /* Arabic page, interim: nothing to play yet. */
+    function soon() {
+        return lang() === 'ar' && !AR_VERSE_AUDIO;
+    }
+
     function label(key) {
         var ar = lang() === 'ar';
         return {
+            soonVerse: 'السرد بالعربية قريباً',
             listen: ar ? 'استمع' : 'Listen',
             stop: ar ? 'إيقاف' : 'Stop',
             readAll: ar ? '▶ اقرأ السورة كلها' : '▶ Read the whole surah',
@@ -43,15 +68,12 @@
         }[key];
     }
 
-    /* The words for a verse: its meaning and the explanation beside it. The
-       Arabic script itself is not read here - a recitation is not a reading. */
+    /* The words speech synthesis may say for a verse: the explanation only, in
+       either language. Never the ayah, and never the translation line (on an
+       Arabic page that line is the ayah itself). */
     function textFor(card) {
-        var parts = [];
-        var t = card.querySelector('.translation');
         var e = card.querySelector('.verse-explanation p');
-        if (t) parts.push(t.textContent.trim());
-        if (e) parts.push(e.textContent.trim());
-        return parts.join(' ').replace(/\s+/g, ' ').trim();
+        return e ? e.textContent.replace(/\s+/g, ' ').trim() : '';
     }
 
     function stop() {
@@ -69,7 +91,7 @@
     }
 
     function speak(text, onEnd) {
-        if (!window.speechSynthesis) { onEnd(); return; }
+        if (!window.speechSynthesis || !text || soon()) { onEnd(); return; }
         var u = new SpeechSynthesisUtterance(text);
         u.lang = lang() === 'ar' ? 'ar-SA' : 'en-GB';
         u.rate = 0.9;
@@ -80,7 +102,7 @@
     }
 
     function playIndex(i, cards) {
-        if (i >= cards.length) { stop(); return; }
+        if (i >= cards.length || soon()) { stop(); return; }
         var card = cards[i];
         state.playingIndex = i;
         refresh();
@@ -113,12 +135,36 @@
         Array.prototype.forEach.call(cards, function (card, i) {
             var btn = card.querySelector('.verse-listen');
             if (!btn) return;
+            var s = soon();
+            btn.classList.toggle('is-soon', s);
+            btn.setAttribute('aria-disabled', String(s));
+            if (s) {
+                btn.textContent = label('soonVerse');
+                btn.setAttribute('aria-pressed', 'false');
+                return;
+            }
             var on = state.playingIndex === i;
             btn.textContent = (on ? '■ ' : '▶ ') + (on ? label('stop') : label('listen'));
             btn.setAttribute('aria-pressed', String(on));
         });
         var all = document.querySelector('.surah-listen-all');
         if (all) {
+            var sa = soon();
+            all.classList.toggle('is-soon', sa);
+            all.setAttribute('aria-disabled', String(sa));
+            if (sa) {
+                /* two lines, one per language, so the bidi text does not interleave */
+                all.textContent = '';
+                var a1 = document.createElement('span');
+                a1.lang = 'ar'; a1.dir = 'rtl'; a1.className = 'soon-line';
+                a1.textContent = window.SurahNarration.soonText.ar;
+                var a2 = document.createElement('span');
+                a2.lang = 'en'; a2.dir = 'ltr'; a2.className = 'soon-line';
+                a2.textContent = window.SurahNarration.soonText.en;
+                all.appendChild(a1); all.appendChild(a2);
+                all.setAttribute('aria-pressed', 'false');
+                return;
+            }
             all.textContent = state.playAll ? label('stopAll') : label('readAll');
             all.setAttribute('aria-pressed', String(state.playAll));
         }
@@ -135,6 +181,7 @@
             btn.className = 'verse-listen';
             btn.setAttribute('aria-pressed', 'false');
             btn.addEventListener('click', function () {
+                if (soon()) return;
                 if (state.playingIndex === i) { stop(); return; }
                 stop();
                 state.playAll = false;
@@ -151,6 +198,7 @@
             all.className = 'surah-listen-all';
             all.setAttribute('aria-pressed', 'false');
             all.addEventListener('click', function () {
+                if (soon()) return;
                 if (state.playAll) { stop(); return; }
                 stop();
                 state.playAll = true;

@@ -18,6 +18,11 @@ there is a line of narration in each language, and a generated audio file for it
             page falls back to the browser's own speech synthesis, so those are
             reported as "speech-synthesis only" rather than as failures)
 
+  AR verses - while AR_VERSE_AUDIO is false in surah-narration.js (the no-recitation
+            interim: the Arabic "meaning" line is still the ayah), an Arabic verse file
+            must NOT exist; the page shows "coming soon" instead. With the flag on, the
+            Arabic set must be complete like the English one.
+
 Usage:  python3 scripts/verify-narration.py
 Exit status is non-zero only if a story is out of step, or a surah page has a
 partial set of audio (some verses voiced and others not, which is jarring mid-read).
@@ -86,17 +91,29 @@ def main():
 
     print('Stories')
     scripts = story_scripts()
+    data = json.load(open(os.path.join(HERE, 'voice-scripts-data.json'), encoding='utf-8'))
     for story in sorted(scripts):
         en, ar = scripts[story]['en'], scripts[story]['ar']
         men, mar = mp3_count(story, 'en'), mp3_count(story, 'ar')
+        # a held slide (no-recitation rule, wording awaiting the scholar) has a script and no file
+        held = {l: [x['slide'] for x in data[story][l] if x.get('held')] for l in ('en', 'ar')}
+        for l in ('en', 'ar'):
+            for n in held[l]:
+                if os.path.exists(os.path.join(AUDIO, story, l, 'slide-%d.mp3' % n)):
+                    problems.append('%s/%s/slide-%d is held but its mp3 exists' % (story, l, n))
         counts = {'en scripts': en, 'ar scripts': ar, 'en mp3': men, 'ar mp3': mar}
-        uniform = len({en, ar, men, mar}) == 1
-        print('  %-18s en %-3d  ar %-3d  mp3 %d/%d  %s'
-              % (story, en, ar, men, mar, 'ok' if uniform else 'MISMATCH'))
+        uniform = en == ar and men == en - len(held['en']) and mar == ar - len(held['ar'])
+        note = ''.join('  [%s slide %s held: silent]' % (l, ','.join(map(str, held[l]))) for l in held if held[l])
+        print('  %-18s en %-3d  ar %-3d  mp3 %d/%d  %s%s'
+              % (story, en, ar, men, mar, 'ok' if uniform else 'MISMATCH', note))
         if not uniform:
             problems.append('%s: %s' % (story, counts))
 
-    print('\nSurah pages')
+    m = re.search(r'var AR_VERSE_AUDIO\s*=\s*(true|false)\s*;',
+                  open(os.path.join(UI, 'surah-narration.js'), encoding='utf-8').read())
+    ar_on = bool(m and m.group(1) == 'true')
+    print('\nSurah pages' + ('' if ar_on else
+          '  (AR verse audio withheld: AR_VERSE_AUDIO is false, no-recitation interim)'))
     for f in sorted(os.listdir(UI)):
         if not (f.startswith('surah-') or f == 'ayat-al-kursi.html') or not f.endswith('.html'):
             continue
@@ -106,6 +123,16 @@ def main():
         if not verses:
             continue
         en, ar = mp3_count(sid, 'en'), mp3_count(sid, 'ar')
+        if not ar_on:
+            if ar:
+                problems.append('%s: %d Arabic verse file(s) exist while AR_VERSE_AUDIO is off '
+                                '(they would recite the ayah)' % (f, ar))
+            if en in (0, verses):
+                print('  %-26s %2d verses  en %s, ar withheld' % (f, verses, 'ok' if en else 'none'))
+            else:
+                print('  %-26s %2d verses  PARTIAL  en %d' % (f, verses, en))
+                problems.append('%s has partial audio: %d verses, en %d' % (f, verses, en))
+            continue
         if en == 0 and ar == 0:
             print('  %-26s %2d verses  no audio (speech-synthesis only)' % (f, verses))
         elif en == verses and ar == verses:

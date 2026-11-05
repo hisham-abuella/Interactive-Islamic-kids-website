@@ -392,6 +392,14 @@ const AudioNarration = {
         // Stop any current playback
         this.stop();
 
+        // A held slide (no-recitation rule: its wording awaits the scholar) is silent: no file,
+        // and never speech synthesis. In listen mode the story still turns its own page.
+        if (script.held) {
+            const self = this;
+            this.advanceTimer = setTimeout(function () { self.onNarrationEnded(); }, 3000);
+            return;
+        }
+
         if (this.usePreGeneratedAudio) {
             this.playAudioFile(slideIndex, lang);
         } else {

@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Diff every surah page's Arabic against api.alquran.cloud.
 
+Also checks every ayah quoted on a story page (story-prophet-*.html): any element
+carrying data-ayah="<surah>:<ayah>" must be that ayah, or a run of whole words
+from it (a quote may start mid-ayah, e.g. 12:92 without its opening «قال»).
+
 Checks each verse card and the complete-surah block, in two tiers:
 
   letters  - the consonantal text with every mark stripped. This MUST match. A
@@ -19,6 +23,7 @@ differences that are not there.
 Usage:  python3 scripts/verify-scripture.py
 Exit status is non-zero only if the letters tier fails.
 """
+import glob
 import json
 import os
 import re
@@ -85,6 +90,76 @@ def api_verses(num):
     return out
 
 
+STORY_AYAH = re.compile(r'<(p|span|div)\b[^>]*\bdata-ayah="(\d+):(\d+)"[^>]*>(.*?)</\1>', re.S)
+
+
+def check_story_ayat():
+    """Ayat quoted on the story pages, marked with data-ayah="S:A"."""
+    problems = 0
+    for path in sorted(glob.glob(os.path.join(UI, 'story-prophet-*.html'))):
+        page = os.path.basename(path)
+        src = open(path, encoding='utf-8').read()
+        for _, sura, ayah, body in STORY_AYAH.findall(src):
+            ref = n(json.load(urllib.request.urlopen(
+                'https://api.alquran.cloud/v1/ayah/%s:%s/quran-simple' % (sura, ayah), timeout=30)
+            )['data']['text'])
+            if int(ayah) == 1 and int(sura) != 1 and ref.startswith(n(BISM)):
+                ref = ref[len(n(BISM)):].strip()
+            quote = n(re.sub(r'<[^>]+>', '', body))
+            whole = letters(quote) == letters(ref)
+            part = (' %s ' % letters(quote)) in (' %s ' % letters(ref))
+            tag = '%s %s:%s' % (page, sura, ayah)
+            if whole or part:
+                kind = 'whole ayah' if whole else 'part of the ayah'
+                style = '' if quote in ref else '  [marks differ]'
+                print('%-26s ok  (%s)%s' % (tag, kind, style))
+            else:
+                problems += 1
+                print('%-26s FAIL  not the wording of %s:%s' % (tag, sura, ayah))
+    return problems
+
+
+AYAH_END = '\u06dd'   # ۝ ARABIC END OF AYAH
+
+
+def check_full_block(body, ref, fatiha, style):
+    """The complete-surah block: one ayah per source line, each closed by ۝.
+
+    Hafs counting: the Bismillah is ayah 1 of Al-Fatiha only. Before every other
+    surah it is Quran, but not a numbered ayah of that surah, so its line carries
+    no ۝ (the mushaf sets it on its own unnumbered line). The count of ۝ in the
+    block must therefore equal the surah's ayah count, Bismillah included only
+    for Al-Fatiha. The letters tier cannot see this: ۝ is not a letter.
+    """
+    bad = []
+    lines = [n(x) for x in re.sub(r'<[^>]+>', '', body).split('\n') if x.strip()]
+    marks = sum(x.count(AYAH_END) for x in lines)
+    if marks != len(ref):
+        bad.append('complete-surah block has %d %s marks, the surah has %d ayat'
+                   % (marks, AYAH_END, len(ref)))
+    expect = list(ref)
+    if not fatiha:
+        if not lines or letters(lines[0].replace(AYAH_END, '')) != letters(BISM):
+            bad.append('complete-surah block does not open with the Bismillah line')
+        else:
+            if AYAH_END in lines[0]:
+                bad.append('complete-surah Bismillah carries %s: it is not an ayah of '
+                           'this surah (Hafs)' % AYAH_END)
+            lines = lines[1:]
+    if len(lines) != len(expect):
+        bad.append('complete-surah block has %d ayah lines, expected %d'
+                   % (len(lines), len(expect)))
+    for i, (a, b) in enumerate(zip(lines, expect), 1):
+        if not a.endswith(AYAH_END) or a.count(AYAH_END) != 1:
+            bad.append('complete-surah ayah %d: not closed by exactly one %s' % (i, AYAH_END))
+        a = a.replace(AYAH_END, '').strip()
+        if letters(a) != letters(b):
+            bad.append('complete-surah line %d: wrong wording' % i)
+        elif a != b:
+            style.append('complete-surah line %d' % i)
+    return bad
+
+
 def main():
     problems = 0
     for page in sorted(PAGES):
@@ -108,17 +183,7 @@ def main():
                 style.append('verse %d' % i)
 
         if full:
-            parts = [n(p) for p in full.group(1).split('۝') if p.strip()]
-            # Al-Fatiha's block has no separate bismillah line: it is ayah 1.
-            expect = ref if PAGES[page] == 1 else [n(BISM)] + ref
-            if len(parts) != len(expect):
-                bad.append('complete-surah block has %d lines, expected %d'
-                           % (len(parts), len(expect)))
-            for i, (a, b) in enumerate(zip(parts, expect), 1):
-                if letters(a) != letters(b):
-                    bad.append('complete-surah line %d: wrong wording' % i)
-                elif a != b:
-                    style.append('complete-surah line %d' % i)
+            bad += check_full_block(full.group(1), ref, PAGES[page] == 1, style)
         else:
             bad.append('no complete-surah block')
 
@@ -146,6 +211,8 @@ def main():
         else:
             problems += 1
             print('%-26s FAIL  phrase-cards do not concatenate to 2:255' % 'ayat-al-kursi.html')
+
+    problems += check_story_ayat()
 
     print('\n%s' % ('ALL SCRIPTURE MATCHES' if not problems
                     else '%d problem(s) found' % problems))

@@ -25,8 +25,11 @@ first plate also serves as the page's hero. Rendered by
 # slug -> {first verse of the group: prompt}
 PLATES = {
     "surah-al-falaq": {
-        1: "the first light of daybreak splitting a dark night sky over quiet hills, "
-           "a bright seam of gold opening along the horizon",
+        # The ridge grew a row of upright rounded shapes that read as standing stones or hooded
+        # figures (scholar, 2026-11-04). Smooth, bare, empty hills.
+        1: "the first light of daybreak splitting a dark night sky over smooth bare rolling "
+           "hills, a bright seam of gold opening along the horizon, empty grassy slopes, "
+           "a clean unbroken ridge line",
         3: "darkness settling over rolling hills at night, one small house with a single lit "
            "doorway glowing warm and safe, deep blue sky with a few stars",
     },
@@ -40,7 +43,9 @@ PLATES = {
     },
     "surah-al-kawthar": {
         1: 'a flat manuscript miniature painting of an overflowing spring pouring into a wide clear river with golden banks, fruit trees heavy with fruit along both sides, ducks on the water, abundance everywhere',
-        2: 'a flat manuscript miniature painting of a woven prayer mat laid on clean sand beside a plain desert tent at dawn, a healthy white sheep resting peacefully nearby',
+        # Was a prayer mat with the sheep lying on it, which conflates the mat with the
+        # sacrifice (scholar, 2026-11-04). The sheep now rests on sand; no mat in the picture.
+        2: 'a flat manuscript miniature painting of a healthy white sheep resting peacefully on clean sand beside a plain desert tent at dawn, a clay water jug by the tent door, soft rose light',
         3: "a dry withered branch cut off and lying on the ground beside a tall flourishing "
            "green tree full of leaves and fruit",
     },
@@ -88,8 +93,11 @@ PLATES = {
         2: "an abandoned desert camp of empty tents, scattered spears on the sand, "
            "everything left behind",
         3: "flocks of small birds filling the sky in waves over desert hills",
-        4: "small round pebbles of baked red clay falling like rain from flocks of birds "
-           "across the sky",
+        # "baked red clay" came out as red droplets and a splash that read as blood (scholar,
+        # 2026-11-04). Sijjil is fired clay: brown and ochre, dusty, no red.
+        4: "flocks of small birds flying high across a pale clear sky in long wavy lines over "
+           "empty desert hills, each bird in flight holding a tiny round pebble of dusty brown "
+           "fired clay, a few pebbles dropping toward the sand like light hail",
         5: "a field of chewed, scattered straw and chaff blowing across the bare ground",
     },
     "surah-al-humazah": {
@@ -114,8 +122,10 @@ PLATES = {
         1: "cracked dry earth with rocks tumbling down a hillside, dust rising, "
            "dramatic but not frightening",
         2: "a cutaway of the earth with gemstones and gold rising up out of the ground",
-        4: "a cutaway of layered earth holding old footprints and buried keepsakes in its "
-           "layers, like pages of a book",
+        # Was "footprints ... like pages of a book": it drew a gilded mushaf-like book with
+        # footprints on it (scholar M6, 2026-11-04). The earth "telling its news" needs no book.
+        4: "a close-up of cracked dry ground with a small green sprout pushing up through the "
+           "crack, soft morning light, pebbles and grains of sand",
         7: "a single tiny ant beside a single sprouting seed on the ground, a close-up "
            "seen from very low down",
     },
@@ -128,7 +138,9 @@ PLATES = {
            "and water, warm light",
     },
     "surah-al-bayyinah": {
-        1: 'a flat manuscript miniature painting of two closed rolled parchment scrolls with gold end caps resting on a carved wooden stand in a niche, lit by a soft shaft of sunlight',
+        # Was two scrolls with gold finials in a wall niche: the iconography of a Sefer Torah in
+        # its ark (scholar M7, 2026-11-04). The clear proof is shown as clear light, not a text.
+        1: 'a flat manuscript miniature painting of a clear bright dawn breaking over a wide desert plain, one broad sunlit path running straight across the sand toward the horizon, the night sky lifting',
         4: 'a Persian miniature painting, flat and frontal with no perspective, of a wide desert plain seen from a hilltop, one sandy caravan track that branches at a single point into several separate sandy tracks spreading out across the plain toward different distant hills',
         5: 'a Persian miniature painting, flat and frontal with no perspective, of a small patterned rug on the plain clay floor of a sunny courtyard, a clay bowl of grain for charity set beside it, potted plants and a fig tree, plain walls',
         7: "a lush garden with clear rivers flowing beneath the trees, fruit and flowers, "
@@ -143,7 +155,10 @@ PLATES = {
         9: "an open doorway with a bowl of food and a jug of water set out for anyone in need",
     },
     "surah-ash-sharh": {
-        1: "a narrow rocky canyon opening out into a wide sunlit green valley",
+        # The canyon's rock face had an eye and a profile (scholar, 2026-11-04). Low smooth
+        # dunes instead of cliffs, so there is no rock face to read as a face.
+        1: "a narrow sandy pass between two low smooth dunes opening out into a wide sunlit "
+           "green valley with date palms and a stream",
         2: "a camel resting at ease, its heavy load of bundles set down on the sand beside it",
         5: "a steep rocky climb leading up to a clear spring and a green date palm at the top",
         7: 'a Persian miniature painting, flat and frontal with no perspective, of a small patterned rug on a flat clay rooftop at evening, potted plants along the parapet, palm trees and a rose and gold sky beyond',
@@ -162,6 +177,12 @@ PLATES = {
         7: "a vast star-filled sky over the curve of the earth, the heavens stretching beyond "
            "sight, no throne, no chair, no structure",
     },
+}
+
+
+# slug -> {verse: seed}. See SEEDS in illustrations.py: a plate re-rolled at review keeps
+# the seed that passed here, so a full re-run reproduces it.
+SEEDS = {
 }
 
 

@@ -39,7 +39,7 @@ const translations = {
 
         // Scene 1: Creation
         scene1Title: "A Special Creation",
-        scene1Text: "Before there were any people on Earth, Allah decided to create something very special. Allah told the angels: \"I am going to create a human being from clay.\"",
+        scene1Text: "Before there were any people on Earth, Allah decided to create something very special. Allah told the angels that He was going to create a human being from clay.",
         scene1TapPrompt: "Tap to learn how Adam was made!",
         scene1Fact: "Allah created Adam from different types of clay from all over the Earth. That's why people today have different skin colors - beautiful shades of brown, tan, and more!",
 
@@ -60,10 +60,10 @@ const translations = {
         scene4Title: "One Who Refused",
         scene4Text: "But there was one who did not bow - Iblis (Shaytan). He was proud and arrogant. \"I am better than him!\" he said. \"You made me from fire and him from clay!\"",
         scene4Highlight: "Pride and arrogance are very bad! We should always be humble.",
-        scene4Question: "How do you think Allah felt about Iblis refusing?",
-        scene4Happy: "Happy",
-        scene4Displeased: "Displeased",
-        scene4Surprised: "Surprised",
+        scene4Question: "What did Iblis do wrong?",
+        scene4Happy: "He fell asleep",
+        scene4Displeased: "He was proud and refused to bow",
+        scene4Surprised: "He ran away",
 
         // Scene 5: Knowledge
         scene5Title: "Adam Learns Names",
@@ -85,14 +85,14 @@ const translations = {
 
         // Scene 7: The Forbidden Tree
         scene7Title: "One Rule",
-        scene7Text: "Allah told Adam and Hawa they could enjoy everything in Jannah, but there was ONE tree they should not go near. \"Do not approach this tree,\" Allah said.",
+        scene7Text: "Allah told Adam and Hawa they could enjoy everything in Jannah, but that there was ONE tree they must not go near.",
         scene7Question: "Why do you think Allah gave them this rule?",
         scene7AnswerCorrect: "To test their obedience",
         scene7AnswerWrong: "To be mean",
 
         // Scene 8: The Mistake
         scene8Title: "A Mistake",
-        scene8Text: "Shaytan whispered to Adam and Hawa and tricked them. They ate from the forbidden tree. As soon as they did, they realized they had made a big mistake!",
+        scene8Text: "Shaytan whispered to Adam and Hawa and tricked them. They slipped and made a mistake: they ate from the forbidden tree. As soon as they did, they realized what they had done.",
         scene8Highlight: "Shaytan is always trying to trick us. We must be careful!",
         scene8TapPrompt: "What can we learn from this?",
         scene8Lesson1: "Always listen to Allah's commands",
@@ -215,7 +215,7 @@ const translations = {
 
         // Scene 1: Creation
         scene1Title: "خلق مميز",
-        scene1Text: "قبل أن يكون هناك أي بشر على الأرض، قرر الله أن يخلق شيئاً مميزاً جداً. قال الله للملائكة: \"إني خالق بشراً من طين.\"",
+        scene1Text: "قبل أن يكون هناك أي بشر على الأرض، قرر الله أن يخلق شيئاً مميزاً جداً. وأخبر الله الملائكة أنه سيخلق بشراً من طين.",
         scene1TapPrompt: "اضغط لتعرف كيف خُلق آدم!",
         scene1Fact: "خلق الله آدم من أنواع مختلفة من الطين من جميع أنحاء الأرض. لهذا السبب يملك الناس اليوم ألوان بشرة مختلفة - درجات جميلة من البني والأسمر وغيرها!",
 
@@ -236,10 +236,10 @@ const translations = {
         scene4Title: "واحد رفض",
         scene4Text: "لكن كان هناك واحد لم يسجد - إبليس (الشيطان). كان متكبراً ومغروراً. قال: \"أنا خير منه! خلقتني من نار وخلقته من طين!\"",
         scene4Highlight: "الكبر والغرور سيئان جداً! يجب أن نكون متواضعين دائماً!",
-        scene4Question: "كيف تعتقد أن الله شعر تجاه رفض إبليس؟",
-        scene4Happy: "سعيد",
-        scene4Displeased: "غاضب",
-        scene4Surprised: "متفاجئ",
+        scene4Question: "ما الخطأ الذي فعله إبليس؟",
+        scene4Happy: "نام",
+        scene4Displeased: "تكبّر ورفض أن يسجد",
+        scene4Surprised: "هرب",
 
         // Scene 5: Knowledge
         scene5Title: "آدم يتعلم الأسماء",
@@ -261,14 +261,14 @@ const translations = {
 
         // Scene 7: The Forbidden Tree
         scene7Title: "قاعدة واحدة",
-        scene7Text: "أخبر الله آدم وحواء أنهما يستطيعان الاستمتاع بكل شيء في الجنة، لكن كانت هناك شجرة واحدة يجب ألا يقتربا منها. قال الله: \"ولا تقربا هذه الشجرة.\"",
+        scene7Text: "أخبر الله آدم وحواء أنهما يستطيعان الاستمتاع بكل شيء في الجنة، إلا شجرة واحدة نهاهما أن يقربا منها.",
         scene7Question: "لماذا تعتقد أن الله أعطاهما هذه القاعدة؟",
         scene7AnswerCorrect: "لاختبار طاعتهما",
         scene7AnswerWrong: "ليكون قاسياً",
 
         // Scene 8: The Mistake
         scene8Title: "خطأ",
-        scene8Text: "وسوس الشيطان لآدم وحواء وخدعهما. أكلا من الشجرة المحرمة. بمجرد أن فعلا ذلك، أدركا أنهما ارتكبا خطأً كبيراً!",
+        scene8Text: "وسوس الشيطان لآدم وحواء وخدعهما، فأزلّهما الشيطان فأخطآ وأكلا من الشجرة المحرمة. وما إن أكلا منها حتى أدركا ما فعلا.",
         scene8Highlight: "الشيطان يحاول دائماً خداعنا. يجب أن نكون حذرين!",
         scene8TapPrompt: "ما الذي يمكننا تعلمه من هذا؟",
         scene8Lesson1: "استمع دائماً لأوامر الله",

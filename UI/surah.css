@@ -469,6 +469,14 @@
     direction: rtl;
 }
 
+/* The Bismillah before a surah (all but Al-Fatiha) is Quran but not one of the
+   surah's ayat (Hafs), so it carries no ۝. The mushaf sets it on its own
+   centred line; without that, it would run straight into ayah 1. */
+.full-bismillah {
+    display: block;
+    text-align: center;
+}
+
 /* Video Section */
 .video-section {
     margin: 3rem 0;
@@ -1129,3 +1137,16 @@ html[lang="ar"] .parent-note {
 .calligraphy-panel .ayah-mark {
     color: var(--gold-ink);
 }
+
+/* Arabic verse narration withheld (no-recitation interim, see surah-narration.js):
+   the controls become a quiet note, not a button that does nothing. */
+.verse-listen.is-soon,
+.surah-listen-all.is-soon {
+    cursor: default;
+    background: var(--card);
+    color: var(--ink);
+    border: 1px dashed var(--rule);
+    font-weight: 600;
+}
+.verse-listen.is-soon:hover { background: var(--card); color: var(--ink); }
+.surah-listen-all.is-soon .soon-line { display: block; }

@@ -15,6 +15,14 @@ Usage (the bakeoff project's venv has mlx-audio and mlx-whisper):
   uv run --project ~/Work/Whisper-audio/bakeoff python scripts/narrate-s2pro.py \
       --stage /path/to/stage [--lang en|ar] [--only prophet-adam,surah-fatiha] [--units slide-0,verse-1]
   ... --stage /path/to/stage --install
+
+Re-taking a unit whose installed take misread a word:
+  --seed-base 10      takes use seeds 10, 11, ... (the default 0, 1, ... reproduces the old takes)
+  --must-hear "TRIGGER=>WORDS"   (repeatable) a piece whose text contains TRIGGER passes only if
+                      Whisper heard every one of WORDS (compared as Arabic letters, so alef and
+                      hamza forms are unified). E.g. --must-hear "للعبادة=>للعبادة لقومه".
+                      If TRIGGER is Latin (an English line that transliterates Arabic, which
+                      Whisper writes in Arabic script), it is left out of the English score.
 """
 import argparse
 import glob
@@ -47,6 +55,11 @@ def ar_canon(s):
     return re.sub(r"[^ء-ي\s]", " ", s).split()
 
 
+def ar_verse_audio_on():
+    m = re.search(r"var AR_VERSE_AUDIO\s*=\s*(true|false)\s*;", (UI / "surah-narration.js").read_text())
+    return bool(m and m.group(1) == "true")
+
+
 def load_plan_module():
     spec = importlib.util.spec_from_file_location("plan", HERE / "build-narration-plan.py")
     mod = importlib.util.module_from_spec(spec)
@@ -60,6 +73,8 @@ def units(lang):
     stories = json.loads((HERE / "voice-scripts-data.json").read_text())
     for sid, langs in stories.items():
         for s in langs[lang]:
+            if s.get("held"):      # silent until the scholar approves new wording (no-recitation rule)
+                continue
             out.append((sid, f"slide-{s['slide']}", s["script"]))
     plan = load_plan_module()
     for page in sorted(glob.glob(str(UI / "surah-*.html"))) + [str(UI / "ayat-al-kursi.html")]:
@@ -69,6 +84,13 @@ def units(lang):
             tr, ex = plan.TRANSLATION.search(card), plan.EXPLANATION.search(card)
             g = 2 if lang == "en" else 1
             out.append((pid, f"verse-{n}", plan.text(tr.group(g) or "") + VERSE_BREAK + plan.text(ex.group(g) or "")))
+    # The voice cannot say the ligature ﷺ: Whisper heard "Muhammad thickly", or nothing, or
+    # junk in its place. Audio only: the page keeps ﷺ.
+    if lang == "en":
+        out = [(pid, stem, re.sub(r",\s*,", ",", re.sub(r"\s*ﷺ\s*", ", peace be upon him, ", t))
+                .replace(", .", ".").replace(", !", "!")) for pid, stem, t in out]
+    else:
+        out = [(pid, stem, re.sub(r"\s*ﷺ", " صلى الله عليه وسلم", t)) for pid, stem, t in out]
     if lang == "ar":
         num = re.compile(r"\b(" + "|".join(sorted(AR_NUMBERS, key=len, reverse=True)) + r")\b")
         out = [(pid, stem, num.sub(lambda m: AR_NUMBERS[m.group(1)], t)) for pid, stem, t in out]
@@ -85,10 +107,21 @@ def main():
     ap.add_argument("--force", action="store_true")
     ap.add_argument("--flagged", action="store_true", help="re-render only units with a piece Whisper flagged")
     ap.add_argument("--install", action="store_true", help="copy staged mp3s into UI/audio and stop")
+    ap.add_argument("--seed-base", type=int, default=0, help="first take seed (new takes, not the old ones)")
+    ap.add_argument("--must-hear", action="append", default=[], metavar="TRIGGER=>WORDS",
+                    help="a piece containing TRIGGER passes only if Whisper heard all of WORDS")
     args = ap.parse_args()
     only = set(filter(None, args.only.split(",")))
     pick = set(filter(None, args.units.split(",")))
     todo = [u for u in units(args.lang) if (not only or u[0] in only) and (not pick or u[1] in pick)]
+    # No recitation: an Arabic verse unit's "meaning" line is still the ayah itself, so it is not
+    # rendered (or installed) while AR_VERSE_AUDIO is off in surah-narration.js. See
+    # scripts/verify-no-recitation.py, which must pass before the flag is turned on.
+    if args.lang == "ar" and not ar_verse_audio_on():
+        held = [u for u in todo if u[1].startswith("verse-")]
+        if held:
+            print(f"skipping {len(held)} Arabic verse unit(s): AR_VERSE_AUDIO is off (no-recitation interim)")
+        todo = [u for u in todo if not u[1].startswith("verse-")]
 
     if args.install:
         n = 0
@@ -105,18 +138,32 @@ def main():
     import narrate
     from mlx_audio.audio_io import write as audio_write
 
+    rules = []
+    for r in args.must_hear:
+        trig, _, words = r.partition("=>")
+        rules.append((trig.strip(), ar_canon(words) or words.lower().split()))
+
     class KidsNarrator(narrate.Narrator):
         def best_take(self, text, tmp):
             spoken = " ".join(narrate.TAG_RE.sub(" ", text).split())
+            mine = [(t, w) for t, w in rules if t in spoken]
             log, best = [], None
             for attempt in range(self.tries):
-                audio = self.take(text, seed=attempt)
+                audio = self.take(text, seed=args.seed_base + attempt)
                 audio_write(str(tmp), audio, self.sr, format="wav")
                 heard = mlx_whisper.transcribe(str(tmp), path_or_hf_repo=narrate.WHISPER,
                                                language=args.lang)["text"].strip()
                 secs = len(audio) / self.sr
                 if args.lang == "en":
-                    ok, wer, cer, wps = narrate.score(spoken, heard, secs)
+                    # A transliterated Arabic phrase comes back in Arabic script: score the
+                    # English around it, and let --must-hear judge the phrase itself.
+                    ref_en, heard_en = spoken, heard
+                    for t, _ in mine:
+                        if not ar_canon(t):
+                            ref_en = ref_en.replace(t, " ")
+                            heard_en = re.sub(r"[\u0600-\u06ff]+", " ", heard_en)
+                    # bakeoff's score() now also returns the softened-letter list (Arabic only)
+                    ok, wer, cer, wps = narrate.score(ref_en, heard_en, secs)[:4]
                 else:
                     rw, hw = ar_canon(spoken), ar_canon(heard)
                     wer = narrate.edits(rw, hw) / max(len(rw), 1)
@@ -125,9 +172,13 @@ def main():
                     wps = len(rw) / max(secs, 0.01)
                     # Whisper's Arabic spelling drifts more than its English, so judge mostly on letters
                     ok = (wer <= 0.15 or cer <= 0.06) and (len(rw) < 8 or 1.0 <= wps <= 3.5)
-                log.append(dict(attempt=attempt, ok=ok, wer=round(wer, 3), cer=round(cer, 3),
-                                wps=round(wps, 2), heard=heard))
-                rank = (not ok, cer, abs(wps - 2.6))
+                hc = set(ar_canon(heard)) | set(re.findall(r"[a-z']+", heard.lower()))
+                missing = [w for _, ws in mine for w in ws if w not in hc]
+                ok = ok and not missing
+                log.append(dict(attempt=attempt, seed=args.seed_base + attempt, ok=ok,
+                                wer=round(wer, 3), cer=round(cer, 3), wps=round(wps, 2), heard=heard,
+                                **({"missing": missing} if missing else {})))
+                rank = (not ok, len(missing), cer, abs(wps - 2.6))
                 if best is None or rank < best[0]:
                     best = (rank, audio)
                 if ok:

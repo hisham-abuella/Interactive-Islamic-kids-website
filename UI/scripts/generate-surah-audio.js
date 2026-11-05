@@ -32,7 +32,13 @@ const opt = (name, dflt) => {
 const DRY = args.includes('--dry');
 const BUDGET = parseInt(opt('--budget', '0'), 10) || Infinity;
 const ONLY = (opt('--only', '') || '').split(',').filter(Boolean);
-const LANGS = (opt('--lang', 'en,ar') || '').split(',').filter(Boolean);
+// No recitation: Arabic verse "meaning" lines are still the ayah itself, so Arabic is not
+// generated while AR_VERSE_AUDIO is off in surah-narration.js (scripts/verify-no-recitation.py).
+const AR_ON = /var AR_VERSE_AUDIO\s*=\s*true\s*;/.test(fs.readFileSync(path.join(__dirname, '..', 'surah-narration.js'), 'utf8'));
+const LANGS = (opt('--lang', 'en,ar') || '').split(',').filter(Boolean).filter(function (l) {
+    if (l === 'ar' && !AR_ON) { console.log('skipping ar: AR_VERSE_AUDIO is off (no-recitation interim)'); return false; }
+    return true;
+});
 
 if (!planPath || !fs.existsSync(planPath)) {
     console.error('Usage: node generate-surah-audio.js <plan.json> [--budget N] [--only ids] [--lang en|ar] [--dry]');

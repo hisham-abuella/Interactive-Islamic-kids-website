@@ -112,8 +112,13 @@ def page(spec):
                 </div>''' % (i, i, vv['ar'], vv['tl'], esc(vv['tr_ar']), vv['tr_en'],
                              esc(vv['ex_ar']), vv['ex_en']))
 
-    full = '\n                        '.join([spec['bismillah_ar'] + ' ۝'] +
-                                            [x['ar'] + ' ۝' for x in v])
+    # Hafs: the Bismillah heads the surah but is not one of its ayat (it is ayah 1
+    # of Al-Fatiha only, and Al-Fatiha is not built from this template). So it gets
+    # its own centred line and no ۝; verify-scripture.py fails a block whose ۝
+    # count differs from the ayah count.
+    full = '\n                        '.join(
+        ['<span class="full-bismillah">%s</span>' % spec['bismillah_ar']] +
+        [x['ar'] + ' ۝' for x in v])
 
     quiz = []
     slots = correct_slots(spec['slug'], len(q))
@@ -162,7 +167,7 @@ def page(spec):
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="surah.css?v=20261008">
+    <link rel="stylesheet" href="surah.css?v=20261104">
 </head>
 <body>
     <!-- Floating Decorations -->
