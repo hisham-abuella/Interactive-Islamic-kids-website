@@ -45,6 +45,8 @@ back for it.
 |-------|------|--------------|
 | `frontend-lead` | Illuminated Page design system, CSS architecture, RTL layout, motion | Yes |
 | `kids-learning-designer` | Memorization scaffolding, quiz design, cognitive load, progress | Yes |
+| `kids-game-designer` | Learning games for Islamic morals, stories and surahs: core loops, game feel, co-play | Yes |
+| `book-designer` | Lulu print books per story/surah: interior, cover spread, QR to narration, print preflight (Kids Night Stories template) | Yes |
 | `audio-narration-engineer` | ElevenLabs pipeline, voice-script parity, slide indexing | Yes |
 
 ### Verification
