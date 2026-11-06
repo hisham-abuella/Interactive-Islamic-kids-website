@@ -6,7 +6,7 @@ generated page and a converted one carry byte-identical chrome.
 """
 import re
 
-V = '20261106'
+V = '20261107'
 
 HEAD_META = (
     '    <meta name="theme-color" content="#FBF6EA">\n'

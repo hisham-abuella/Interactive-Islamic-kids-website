@@ -50,14 +50,14 @@ SPEC = dict(
                  'eat; two of them you can stand on.',
                  'التين والزيتون وطور سينين والبلد الأمين — مكة. اثنان تأكلهما، واثنان تقف عليهما.'),
                 ('Many scholars said the last two are places where Allah spoke to His prophets: '
-                 'Sinai, where Musa عليه السلام heard Him, and Makkah, where the Quran came down to '
+                 'Sinai, where Musa (peace be upon him) heard Him, and Makkah, where the Quran came down to '
                  'Muhammad ﷺ.',
                  'وقال كثير من العلماء إن الأخيرين موضعان كلّم الله فيهما أنبياءه: طور سينين حيث '
                  'كلّم موسى عليه السلام، ومكة حيث نزل القرآن على محمد ﷺ.'),
                 dict(items=[
                     ('🫐 The <strong>fig</strong> — sweet and full of goodness', '🫐 <strong>التين</strong> — حلوٌ نافع'),
                     ('🫒 The <strong>olive</strong> — food, oil and light', '🫒 <strong>الزيتون</strong> — طعامٌ وزيتٌ وضياء'),
-                    ('⛰️ <strong>Mount Sinai</strong> — where Musa عليه السلام was spoken to', '⛰️ <strong>طور سينين</strong> — حيث كُلّم موسى عليه السلام'),
+                    ('⛰️ <strong>Mount Sinai</strong> — where Musa (peace be upon him) was spoken to', '⛰️ <strong>طور سينين</strong> — حيث كُلّم موسى عليه السلام'),
                     ('🕋 <strong>The safe city</strong> — Makkah', '🕋 <strong>البلد الأمين</strong> — مكة'),
                 ]),
             ],
@@ -116,7 +116,7 @@ SPEC = dict(
             tl='Wa Toori Seeneen',
             tr_en='"And Mount Sinai,"',
             tr_ar='"وطور سينين"',
-            ex_en='The mountain where Allah spoke to <strong>Prophet Musa عليه السلام</strong>. A '
+            ex_en='The mountain where Allah spoke to <strong>Prophet Musa (peace be upon him)</strong>. A '
                   'plain rocky hill, made great by what happened on it.',
             ex_ar='الجبل الذي كلّم الله عنده <strong>نبيه موسى عليه السلام</strong>. جبلٌ صخري '
                   'عادي، عظُم بما جرى عليه.',
@@ -244,7 +244,7 @@ SPEC = dict(
         ('It is the only surah that swears by <strong>fruit</strong>',
          'وهي السورة الوحيدة التي أقسم الله فيها بـ<strong>ثمر</strong>'),
         ('The <strong>olive</strong> gives food, oil and light', '<strong>الزيتون</strong> طعامٌ وزيتٌ وضياء'),
-        ('<em>Mount Sinai</em> is where <strong>Musa عليه السلام</strong> was spoken to',
+        ('<em>Mount Sinai</em> is where <strong>Musa (peace be upon him)</strong> was spoken to',
          '<em>طور سينين</em> حيث كُلّم <strong>موسى عليه السلام</strong>'),
         ('It ends with a <strong>question</strong>, not a statement', 'وتختم بـ<strong>سؤال</strong> لا بخبر'),
     ],

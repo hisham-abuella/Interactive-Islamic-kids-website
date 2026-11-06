@@ -129,9 +129,9 @@ SPEC = dict(
             tl='Rasoolum-minal-lahi yatloo suhufam-mutahharah',
             tr_en='"A Messenger from Allah, reciting purified pages,"',
             tr_ar='"رسول من الله يتلو صحفاً مطهرة"',
-            ex_en='This is what the clear proof turned out to be: <strong>a person reading aloud</strong>. '
+            ex_en='This is what the clear proof turned out to be: <strong>a Messenger, the Prophet Muhammad ﷺ, reciting it aloud</strong>. '
                   '<em>Purified</em> means nothing false ever got into them.',
-            ex_ar='وهذه هي البينة: <strong>إنسان يتلو بصوته</strong>. و<em>مطهرة</em> أي لم يدخلها '
+            ex_ar='وهذه هي البينة: <strong>رسولٌ هو النبي محمد ﷺ يتلو بصوته</strong>. و<em>مطهرة</em> أي لم يدخلها '
                   'باطل قط.',
         ),
         dict(
@@ -212,7 +212,7 @@ SPEC = dict(
             ],
         ),
         dict(
-            q=('What did the clear proof turn out to be?', 'ما الذي كانت البينة؟'),
+            q=('What did the clear proof turn out to be?', 'ما هي البيّنة؟'),
             options=[
                 ('A Messenger reciting pure pages', 'رسول يتلو صحفاً مطهرة', True),
                 ('A great light filling the whole sky', 'نور عظيم يملأ السماء', False),

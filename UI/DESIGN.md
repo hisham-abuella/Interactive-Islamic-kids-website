@@ -56,7 +56,7 @@ screen in `surah.css` (v2 block) + `surah-narration.js`. Icons: `vendor/icons/sp
 | **Quran** (cobalt) | `--quran` / `--quran-wash` | `#24508C` / `#E7EDF6` | ayah numbers, surah-name tiles, the Arabic name in the surah header |
 | Quran fill | `--quran-fill` | `#24508C` in both themes | cobalt behind light text (the dua "memorize" button) |
 | Plate ink | `--plate-ink` / `--plate-gold` | `#2A1D0C` / `#7A5518`, never flipped | text painted on the calligraphy panel, which stays light in bedtime (ayah marks 4.92-5.39:1) |
-| Wrong answer | literal | `#B42318` | wrong-answer feedback only (frontend hard rule 2) |
+| Wrong answer | `--wrong-text` (fills: literal `#B42318`) | `#B42318` (bedtime `#F2877C`) | wrong-answer feedback only (frontend hard rule 2): 6.10 by day, 5.6 in bedtime |
 | Lines | `--line`, `--hairline`, `--hairline-gold` | `#E3D7C0` / gold 60% | card edges; gold rule for ornamental frames |
 
 Bedtime mode (`html[data-theme="bedtime"]`) redefines every role token; nothing else changes.
@@ -128,7 +128,7 @@ Arabic gets +10% and line-height 1.9-1.95; headings in Arabic drop negative trac
 - **8pt grid:** `--s-1` 4, `--s-2` 8, `--s-3` 12, `--s-4` 16, `--s-5` 24, `--s-6` 32, `--s-7` 48, `--s-8` 64. Gutter `clamp(16px, 4vw, 32px)`.
 - **Radii:** `--r-sm` 10 (chips, inputs), `--r-md` 16 (cards, tiles, plates), `--r-lg` 24 (sheets, featured card), `--r-pill` (buttons, segmented, play).
 - **Elevation:** hairline for everything that sits on the page. `--shadow` (two layers, ink-brown, `0 1px 2px` + `0 10px 28px -12px`) only for floating layers. `--shadow-sm` for a selected segment.
-- **Hit areas:** `--tap` 44px minimum on every control; `--tap-lg` 56px for the play control, transport arrows and tabs.
+- **Hit areas:** `--tap` 48px on every control (WCAG asks 44; children get 48); `--tap-lg` 56px for the play control, transport arrows and tabs. The reader bar drops to the 44px floor only below 360px.
 - **Safe areas:** bars pad with `env(safe-area-inset-*)`; pages set `viewport-fit=cover`.
 
 ## 5. Iconography
@@ -261,9 +261,10 @@ cards; "Explore Activities" and the Ramadan countdown are gone (nothing behind t
 `scripts/app_shell.py` holds the shell's strings once. `scripts/surah-page-template.py` emits them
 for generated surahs; `scripts/apply-app-shell.py` converts a hand-made v1 page (idempotent; it
 touches only the head, the header and three attributes: `main#main`, `.stage-buttons.segmented`,
-`footer.app-footer`). Generated and converted chrome were checked byte-identical for all 8 specs. **Caution:** the
-specs for Al-Bayyinah, Al-Humazah and At-Tin are behind the pages (scholar corrections were made
-in the HTML only), so `build-surah.py` on those three would revert content. Update the specs first.
+`footer.app-footer`). Generated and converted chrome were checked byte-identical for all 8 specs. The specs for
+Al-Bayyinah, Al-Humazah and At-Tin were brought up to the scholar-corrected pages on 2026-11-06;
+all 8 now rebuild byte-identical to the pages. Edit the spec, not only the HTML, when a generated
+surah changes.
 
 ### 7.11 Install as an app
 `manifest.webmanifest` (standalone, parchment theme), `images/app/icon.svg` + 192/512 PNG +

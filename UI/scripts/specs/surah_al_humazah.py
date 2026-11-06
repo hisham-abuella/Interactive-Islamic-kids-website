@@ -234,7 +234,7 @@ SPEC = dict(
         ),
         dict(
             q=('Why is it meaningful that the Fire reaches the hearts?',
-               'لماذا كان ذكر أنها تطّلع على الأفئدة ذا معنى؟'),
+               'لماذا قالت السورة إن النار تطّلع على الأفئدة؟'),
             options=[
                 ('Because hearts are the strongest part of us', 'لأن القلب أقوى ما فينا', False),
                 ('Because that is where hurtful words land', 'لأن الكلمة الجارحة تقع هناك', True),

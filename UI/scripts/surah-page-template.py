@@ -175,9 +175,9 @@ def page(spec):
     <link rel="apple-touch-icon" href="images/app/apple-touch-icon.png">
     <title>%(title_en)s - Islamic Kids</title>
     <!-- fonts are self-hosted: @font-face in styles.css (vendor/fonts) -->
-    <link rel="stylesheet" href="styles.css?v=20261106">
-    <link rel="stylesheet" href="app.css?v=20261106">
-    <link rel="stylesheet" href="surah.css?v=20261106">
+    <link rel="stylesheet" href="styles.css?v=20261107">
+    <link rel="stylesheet" href="app.css?v=20261107">
+    <link rel="stylesheet" href="surah.css?v=20261107">
 </head>
 %(shell)s    <!-- Hero -->
     <section class="surah-hero">
@@ -324,10 +324,10 @@ def page(spec):
         </div>
     </footer>
 
-    <script src="surah.js?v=20261106"></script>
-    <script src="surah-narration.js?v=20261106"></script>
-    <script src="bilingual.js?v=20261106"></script>
-    <script src="bedtime.js?v=20261106"></script>
+    <script src="surah.js?v=20261107"></script>
+    <script src="surah-narration.js?v=20261107"></script>
+    <script src="bilingual.js?v=20261107"></script>
+    <script src="bedtime.js?v=20261107"></script>
 
 </body>
 </html>
