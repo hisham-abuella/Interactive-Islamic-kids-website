@@ -433,7 +433,7 @@
 
 .quiz-option {
     /* Keeps the tap target on the 44px floor when the text fits one line. */
-    min-height: 44px;
+    min-height: var(--tap);
     background: var(--surface-1);
     color: var(--slate-700);
     padding: 1rem;
@@ -2006,7 +2006,7 @@ html[lang="ar"] .fullscreen-controls {
     /* 44px is the site's touch-target floor; this was 32. It matters more here
        than elsewhere: the badge sits inside the card's link, so a miss does not
        just do nothing - it navigates away to the surah. */
-    min-height: 44px;
+    min-height: var(--tap);
     display: inline-flex;
     align-items: center;
     cursor: pointer;
@@ -2349,6 +2349,7 @@ html[lang="ar"] .reader-bar__title { font-family: var(--font-ui-ar); }
 }
 
 .reader-count {
+    white-space: nowrap;
     font-size: 0.8125rem;
     color: var(--text-2);
     font-variant-numeric: tabular-nums;
@@ -2944,7 +2945,7 @@ html[lang="ar"] body.app .start-story-btn { font-family: var(--font-ui-ar); }
 
 /* Sound-effects toggle in the reader bar: sparkles, struck through when off,
    so it never looks like the read-aloud (speaker) control beside it. */
-.reader-bar .sound-toggle { position: relative; color: var(--text-1); }
+.reader-bar .sound-toggle { position: relative; inset: auto; color: var(--text-1); }   /* inset: the v1 fixed offsets (top 100px) must not apply */
 .reader-bar .sound-toggle[aria-pressed="false"] { color: var(--text-2); }
 .reader-bar .sound-toggle[aria-pressed="false"]::after {
     content: '';
@@ -2975,4 +2976,22 @@ html[dir="rtl"] .nav-arrow-left,
 html[dir="rtl"] .nav-arrow-right {
     display: inline-block;
     transform: scaleX(-1);
+}
+
+/* Reflow: with very large text on a 320px phone the bar may take two rows
+   rather than push its buttons off screen. */
+.reader-bar { flex-wrap: wrap; }
+.reader-bar__actions { flex-wrap: wrap; justify-content: flex-end; }
+
+/* the title block never runs under the close button */
+.reader-bar__title { overflow: hidden; }
+.reader-count { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+
+/* 320-360px with stars and the effects toggle: Aa steps aside (text size is
+   also in the settings sheet), so the page count stays readable */
+@media (max-width: 360px) {
+    .reader-bar:has(.stars-counter) .reader-aa { display: none; }
+    .reader-bar .icon-btn { min-width: 44px; }      /* the WCAG floor, to keep the count whole */
+    .reader-bar .stars-counter { padding: 0 4px; }
+    .reader-bar { gap: 0; padding-inline: 4px; }
 }

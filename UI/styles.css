@@ -70,6 +70,7 @@
     /* Quran (cobalt) */
     --quran: #24508C;              /* 7.49:1 on canvas */
     --quran-wash: #E7EDF6;
+    --wrong-text: #B42318;         /* wrong-answer feedback text only (red is reserved): 6.10 on canvas */
     --quran-fill: #24508C;         /* cobalt as a FILL behind light text (same in bedtime, where --quran turns light) */
 
     /* Lines: hairlines before shadows */
@@ -95,7 +96,7 @@
     --r-pill: 999px;   /* buttons, segmented controls, the play control */
 
     /* Hit areas */
-    --tap: 44px;       /* WCAG 2.5.5 floor, every control */
+    --tap: 48px;       /* every control: 48px for children (WCAG 2.5.5 asks 44) */
     --tap-lg: 56px;    /* primary transport (play), tab bar items */
 
     /* Type families */
@@ -266,8 +267,8 @@ header {
     border: none;
     cursor: pointer;
     padding: 4px;
-    min-width: 44px;    /* children's hands - WCAG target size */
-    min-height: 44px;
+    min-width: var(--tap);    /* children's hands - WCAG target size */
+    min-height: var(--tap);
 }
 
 .nav-toggle span {
@@ -296,7 +297,7 @@ header {
     /* Matches the 44px touch target the rest of the controls use. */
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
+    min-height: var(--tap);
 }
 
 .nav-links a:hover,
@@ -1035,7 +1036,7 @@ summary:focus-visible {
     color: var(--text-1);
     border: 1px solid var(--line);
     padding: 0.4rem 1rem;
-    min-height: 44px;   /* children's hands - WCAG target size */
+    min-height: var(--tap);   /* children's hands - WCAG target size */
     border-radius: var(--radius-full);
     font-family: inherit;
     font-weight: 800;
@@ -1164,7 +1165,7 @@ html[lang="ar"] h3 {
     .lang-toggle-btn {
         padding: 0.35rem 0.8rem;
         font-size: 0.82rem;
-        min-height: 44px;
+        min-height: var(--tap);
     }
 }
 
@@ -1253,8 +1254,8 @@ html[lang="ar"] .info-badge:not([data-ar]) {
     color: #fff;
     font-size: 1.05rem;
     line-height: 1;
-    min-width: 44px;
-    min-height: 44px;
+    min-width: var(--tap);
+    min-height: var(--tap);
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: background 0.2s ease, transform 0.2s ease;
@@ -1289,7 +1290,8 @@ html[data-theme="bedtime"] {
     --action: #1F6F69;
     --action-bright: #3FB8AE;
     --action-wash: #23403C;
-    --action-text: #5CC6BC;        /* bedtime: 7.41 on surface-0, 6.74 on surface-1, 5.49 on action-wash (--action is a fill only) */
+    --action-text: #5CC6BC;
+    --wrong-text: #F2877C;         /* bedtime: 5.6 on surface-1, 6.17 on surface-0 */        /* bedtime: 7.41 on surface-0, 6.74 on surface-1, 5.49 on action-wash (--action is a fill only) */
     --focus: #E8C070;
     --reward-wash: #38301F;
     --reward-text: #E8C070;

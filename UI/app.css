@@ -1163,3 +1163,22 @@ body.app .stage-buttons.segmented .stage-btn[aria-pressed="true"] {
 @media (max-width: 360px) {
     body.app .stage-buttons.segmented .stage-btn { padding: 0 var(--s-3); }
 }
+
+/* Reflow (WCAG 1.4.4 / 1.4.10): at 320px or 200% text the app bar never
+   overflows. The wordmark gives way first (the mark and the actions stay),
+   then the title truncates. */
+.app-bar__brand {
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+.app-bar__brand > span:not(.brand-mark) {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.app-bar__spacer { min-width: 0; }
+.app-bar__actions { flex: none; }
+.app-bar .lang-toggle-btn { padding: 0 var(--s-3); }
