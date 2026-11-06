@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Islamic Kids app icon: the shamsa (8-fold star) in manuscript gold, with a parchment crescent, on Iznik turquoise -->
+  <rect width="512" height="512" rx="112" fill="#0F6B65"/>
+  <g fill="none" stroke="#E0B75C" stroke-width="14" stroke-linejoin="round">
+    <rect x="136" y="136" width="240" height="240"/>
+    <rect x="136" y="136" width="240" height="240" transform="rotate(45 256 256)"/>
+  </g>
+  <circle cx="256" cy="256" r="92" fill="#0F6B65"/>
+  <path d="M286 186a78 78 0 1 0 0 140a64 64 0 1 1 0-140z" fill="#FBF6EA"/>
+</svg>
