@@ -17,7 +17,7 @@
     position: absolute;
     font-size: 2rem;
     opacity: 0.5;
-    animation: float 6s ease-in-out infinite;
+    animation: float 6s ease-in-out 1;
 }
 
 .floating-star:nth-child(2) { animation-delay: 1s; }
@@ -59,7 +59,7 @@
     font-weight: 800;
     color: white;
     margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 2px 2px 4px rgba(60, 42, 12, 0.2);
 }
 
 .stories-hero p {
@@ -232,7 +232,7 @@
     font-weight: 700;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
     width: 100%;
 }
 
@@ -253,10 +253,10 @@
 .story-container {
     max-width: 900px;
     margin: 0 auto;
-    background: white;
+    background: var(--surface-1);
     border-radius: 30px;
     padding: 3rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 40px rgba(60, 42, 12, 0.1);
     border: 3px solid rgba(26, 143, 128, 0.2);
 }
 
@@ -295,7 +295,7 @@
     border-radius: 20px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
 }
 
 .mode-btn.active {
@@ -366,9 +366,9 @@
     justify-content: center;
     width: 100px;
     height: 100px;
-    background: white;
+    background: var(--surface-1);
     border-radius: 50%;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(60, 42, 12, 0.1);
 }
 
 .scene-text h2 {
@@ -391,7 +391,7 @@
     margin: 2rem 0;
     text-align: center;
     border: 3px solid var(--gold);
-    animation: pulse 2s ease-in-out infinite;
+    animation: pulse 2s ease-in-out 1;
 }
 
 @keyframes pulse {
@@ -432,14 +432,14 @@
 .quiz-option {
     /* Keeps the tap target on the 44px floor when the text fits one line. */
     min-height: 44px;
-    background: white;
+    background: var(--surface-1);
     color: var(--slate-700);
     padding: 1rem;
     border: 2px solid var(--slate-200);
     border-radius: 15px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
 }
 
 .quiz-option:hover {
@@ -563,7 +563,7 @@
 
 .quiz-lantern {
     font-size: 4rem;
-    animation: glow 2s ease-in-out infinite;
+    animation: glow 2s ease-in-out 1;
 }
 
 @keyframes glow {
@@ -583,11 +583,11 @@
 }
 
 .quiz-card {
-    background: white;
+    background: var(--surface-1);
     padding: 2rem;
     border-radius: 20px;
     margin-bottom: 1.5rem;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(60, 42, 12, 0.1);
     border: 2px solid var(--slate-200);
 }
 
@@ -621,7 +621,7 @@
 
 .results-icon {
     font-size: 5rem;
-    animation: bounce 1s ease infinite;
+    animation: bounce 1s ease 1;
 }
 
 @keyframes bounce {
@@ -659,7 +659,7 @@
 .unlock-animation {
     font-size: 3rem;
     margin-bottom: 1rem;
-    animation: sparkle 1.5s ease-in-out infinite;
+    animation: sparkle 1.5s ease-in-out 1;
 }
 
 @keyframes sparkle {
@@ -691,7 +691,7 @@
     top: 10px;
     right: 20px;
     font-size: 1rem;
-    animation: twinkle 2s ease-in-out infinite;
+    animation: twinkle 2s ease-in-out 1;
 }
 
 @keyframes twinkle {
@@ -752,7 +752,7 @@
     border-radius: 20px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
 }
 
 .video-btn:hover {
@@ -776,7 +776,7 @@
     border-radius: 25px;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
 }
 
 .nav-btn:hover {
@@ -848,7 +848,7 @@
     text-align: center;
     max-width: 400px;
     width: 90%;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 60px rgba(60, 42, 12, 0.3);
     border: 4px solid var(--emerald-500);
     animation: slideUp 0.4s ease;
 }
@@ -867,7 +867,7 @@
 .modal-icon {
     font-size: 4rem;
     margin-bottom: 1rem;
-    animation: bounce 1s ease infinite;
+    animation: bounce 1s ease 1;
 }
 
 .name-modal-content h2 {
@@ -890,7 +890,7 @@
     border-radius: 20px;
     text-align: center;
     font-family: 'Poppins', sans-serif;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
     margin-bottom: 1.5rem;
 }
 
@@ -909,7 +909,7 @@
     font-size: 1.2rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
     width: 100%;
 }
 
@@ -1087,7 +1087,7 @@
     border-radius: 50%;
     background: var(--slate-200);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
 }
 
 .slide-dot.active {
@@ -1117,7 +1117,7 @@
     border-radius: 50%;
     font-size: 1.5rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1160,7 +1160,7 @@
     font-size: 1.5rem;
     display: block;
     margin-bottom: 0.3rem;
-    animation: swipeHint 2s ease-in-out infinite;
+    animation: swipeHint 2s ease-in-out 1;
 }
 
 @keyframes swipeHint {
@@ -1247,7 +1247,7 @@
     }
 
     .story-slide .scene-text p {
-        font-size: 0.95rem;
+        font-size: 1.125rem;   /* v2: children's text never shrinks on a phone */
     }
 
     .story-slide .quiz-options {
@@ -1358,17 +1358,8 @@ html[lang="ar"] body {
 }
 
 /* Navbar RTL */
-html[lang="ar"] .navbar {
-    flex-direction: row-reverse;
-}
 
-html[lang="ar"] .nav-links {
-    flex-direction: row-reverse;
-}
 
-html[lang="ar"] .logo {
-    flex-direction: row-reverse;
-}
 
 /* Story Scene RTL */
 html[lang="ar"] .story-scene {
@@ -1388,9 +1379,6 @@ html[lang="ar"] .progress-bar {
 }
 
 /* Story Navigation RTL */
-html[lang="ar"] .story-navigation {
-    flex-direction: row-reverse;
-}
 
 html[lang="ar"] .nav-btn {
     direction: rtl;
@@ -1478,28 +1466,11 @@ html[lang="ar"] .floating-lantern {
 }
 
 /* Slide Navigation RTL */
-html[lang="ar"] .slide-navigation {
-    flex-direction: row-reverse;
-}
 
-/* CRITICAL: Force slides container to LTR to prevent positioning issues */
-html[lang="ar"] .story-slides-container {
-    direction: ltr;
-}
-
-html[lang="ar"] .story-slides {
-    direction: ltr;
-}
-
-/* But keep the slide content RTL for proper Arabic text display */
+/* v2: the slides are a stacked grid, not a translateX track, so the slide
+   container no longer has to be forced LTR. Content simply follows dir. */
 html[lang="ar"] .story-slide {
-    direction: rtl;
     text-align: right;
-}
-
-/* Progress dots stay LTR for proper visual order */
-html[lang="ar"] .slide-progress {
-    direction: ltr;
 }
 
 /* Featured Card RTL */
@@ -1525,7 +1496,7 @@ html[lang="ar"] .story-select-card.featured::before {
     font-size: 1.3rem;
     cursor: pointer;
     z-index: 100;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
     box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
     display: flex;
     align-items: center;
@@ -1606,7 +1577,7 @@ body.fullscreen-mode .story-main {
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -1674,7 +1645,7 @@ html[lang="ar"] .fullscreen-controls {
     background: linear-gradient(145deg, #ffffff 0%, var(--parchment) 100%);
     border-radius: 25px;
     box-shadow:
-        0 10px 40px rgba(0, 0, 0, 0.1),
+        var(--shadow),
         0 0 0 1px rgba(26, 143, 128, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
     overflow: hidden;
@@ -1690,7 +1661,7 @@ html[lang="ar"] .fullscreen-controls {
     font-size: 1.2rem;
     opacity: 0.6;
     z-index: 10;
-    animation: twinkle 2s ease-in-out infinite;
+    animation: twinkle 2s ease-in-out 1;
 }
 
 .story-slides-container::after {
@@ -1701,7 +1672,7 @@ html[lang="ar"] .fullscreen-controls {
     font-size: 1.2rem;
     opacity: 0.6;
     z-index: 10;
-    animation: twinkle 2s ease-in-out infinite 0.5s;
+    animation: twinkle 2s ease-in-out 1 0.5s;
 }
 
 @keyframes twinkle {
@@ -1715,9 +1686,9 @@ html[lang="ar"] .fullscreen-controls {
 }
 
 .story-slide .story-scene {
-    background: linear-gradient(145deg, #ffffff 0%, var(--parchment) 100%);
+    background: linear-gradient(145deg, var(--surface-1) 0%, var(--parchment) 100%);
     border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
 }
 
 /* =====================================================
@@ -1831,7 +1802,7 @@ html[lang="ar"] .fullscreen-controls {
     position: absolute;
     font-size: 1rem;
     opacity: 0.3;
-    animation: floatStar 8s ease-in-out infinite;
+    animation: floatStar 8s ease-in-out 1;
 }
 
 .bg-star:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
@@ -1844,7 +1815,7 @@ html[lang="ar"] .fullscreen-controls {
     position: absolute;
     font-size: 2rem;
     opacity: 0.15;
-    animation: floatCloud 15s ease-in-out infinite;
+    animation: floatCloud 15s ease-in-out 1;
 }
 
 .bg-cloud:nth-child(6) { top: 15%; left: -5%; animation-delay: 0s; }
@@ -1910,9 +1881,9 @@ html[lang="ar"] .fullscreen-controls {
     border-radius: 50%;
     background: var(--slate-200);
     border: 3px solid white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(60, 42, 12, 0.1);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
     z-index: 1;
     position: relative;
 }
@@ -2149,7 +2120,7 @@ html[lang="ar"] .story-scene[data-mood="garden"] { border-right-color: var(--eme
     border-radius: 14px;
     background: var(--parchment-warm);
     border: 1px solid var(--rule-warm);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.10);
+    box-shadow: 0 6px 18px rgba(60, 42, 12, 0.10);
     overflow: hidden;
     font-size: 0;
 }
@@ -2290,4 +2261,560 @@ html[lang="ar"] .story-scene.has-plate {
 }
 @media (prefers-reduced-motion: reduce) {
     .play-together, .play-together:hover { transition: none; transform: none; }
+}
+
+
+/* =====================================================================
+   ILLUMINATED PAGE v2: THE STORY READER (2026-11-05, UI/DESIGN.md 7.6)
+   stories.js adds body.reader once it has built the slides, so a page
+   without JS (or a classic-scroll story) keeps the layout above.
+   - one page on screen, no inner scroll, no 60vh cap
+   - children's text never below 18px (--step-read), sized by the Aa control
+   - a sticky top bar, a floating transport, a settings sheet
+   - RTL by logical properties and dir, never by row-reverse
+   ===================================================================== */
+
+html { --reader-scale: 1; }
+html[data-text-size="s"] { --reader-scale: 0.92; }
+html[data-text-size="l"] { --reader-scale: 1.18; }
+
+body.reader {
+    background: var(--surface-0);
+    padding-bottom: calc(112px + var(--safe-bottom));
+}
+
+/* v1 chrome steps aside: the reader bar replaces the site header */
+body.reader > header,
+body.reader .floating-decorations,
+body.reader .progress-container,
+body.reader .slide-progress,
+body.reader .swipe-hint,
+body.reader .fullscreen-toggle,
+body.reader .fullscreen-controls,
+body.reader .story-bg-animations,
+body.reader .story-controls,
+body.reader .personal-greeting {
+    display: none !important;
+}
+
+/* The story title stays the page's h1 for screen readers; the bar shows it */
+body.reader .story-header {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    margin: 0; padding: 0; border: 0;
+}
+
+/* ---------- top bar ---------- */
+.reader-bar {
+    position: sticky;
+    top: 0;
+    z-index: 950;
+    display: flex;
+    align-items: center;
+    gap: var(--s-1);
+    min-height: calc(var(--appbar-h) + var(--safe-top));
+    padding: var(--safe-top) calc(var(--s-2) + var(--safe-end)) 0 calc(var(--s-2) + var(--safe-start));
+    background: var(--surface-glass);
+    -webkit-backdrop-filter: saturate(1.4) blur(16px);
+            backdrop-filter: saturate(1.4) blur(16px);
+    border-bottom: var(--hairline);
+}
+
+.reader-bar__title {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.25;
+    font-family: var(--font-ui);
+    text-align: center;
+}
+
+html[lang="ar"] .reader-bar__title { font-family: var(--font-ui-ar); }
+
+.reader-bar__name {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-1);
+}
+
+.reader-count {
+    font-size: 0.8125rem;
+    color: var(--text-2);
+    font-variant-numeric: tabular-nums;
+}
+
+.reader-bar__actions {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.reader-aa {
+    font-family: var(--font-ui);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+#readerSound .icon-off { display: none; }
+#readerSound[aria-pressed="false"] .icon-on { display: none; }
+#readerSound[aria-pressed="false"] .icon-off { display: inline; }
+#readerSound[aria-pressed="false"] { color: var(--text-2); background: transparent; }
+
+.reader-progress {
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 3px;
+    pointer-events: none;
+}
+
+.reader-progress span {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: var(--ornament);
+    border-start-end-radius: 3px;
+    border-end-end-radius: 3px;
+    transition: width var(--dur-3) var(--ease-out);
+}
+
+/* stars and the effects toggle (Adam, Ibrahim) sit in the bar, not on the page */
+.reader-bar .stars-counter {
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    min-height: var(--tap);
+    padding: 0 var(--s-2);
+    margin: 0;
+    border: 0;
+    border-radius: var(--r-pill);
+    background: var(--reward-wash);
+    color: var(--reward-text);
+    box-shadow: none;
+    font-family: var(--font-ui);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    animation: none;
+}
+
+.reader-bar .sound-toggle {
+    position: static;
+    width: var(--tap);
+    height: var(--tap);
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    font-size: 1.1rem;
+}
+
+/* ---------- the page ---------- */
+body.reader .story-main {
+    min-height: 0;
+    padding: 0;
+    background: var(--surface-0);
+}
+
+body.reader .story-container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: var(--s-4) var(--gutter) 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+body.reader .story-slides-container {
+    position: relative;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    touch-action: pan-y;   /* vertical scroll stays native; horizontal is the page turn */
+}
+
+body.reader .story-slides {
+    display: block;
+    transform: none !important;
+    transition: none;
+}
+
+body.reader .story-slide {
+    display: none;
+    min-width: 0;
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    padding: 0;
+}
+
+body.reader .story-slide.active { display: block; }
+
+/* the page turn: a short fade with a <=16px move toward the reading direction */
+html { --turn: 1; }
+html[dir="rtl"] { --turn: -1; }
+
+body.reader .story-slide.enter-forward { animation: pageIn var(--dur-3) var(--ease-out); --from: calc(16px * var(--turn)); }
+body.reader .story-slide.enter-back    { animation: pageIn var(--dur-3) var(--ease-out); --from: calc(-16px * var(--turn)); }
+
+@keyframes pageIn {
+    from { opacity: 0; transform: translateX(var(--from, 0)); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* scenes: plate on top, text below, no nested padding */
+body.reader .story-slide .story-scene,
+body.reader .story-slide .story-scene[data-mood] {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    text-align: start;
+    animation: none;
+}
+
+body.reader .story-slide .story-scene .scene-illustration {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border-radius: var(--r-md);
+    border: var(--hairline);
+    box-shadow: none;
+    background: var(--surface-2);
+}
+
+/* scenes without a plate keep a small emoji roundel, start-aligned */
+body.reader .story-slide .story-scene:not(.has-plate) .scene-illustration {
+    width: 72px;
+    height: 72px;
+    aspect-ratio: auto;
+    font-size: 2.5rem;
+    border-radius: 50%;
+}
+
+body.reader .scene-text h2 {
+    margin: 0 0 var(--s-2);
+    font-family: var(--font-title);
+    font-size: var(--step-2);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--text-1);
+}
+
+html[lang="ar"] body.reader .scene-text h2 {
+    font-family: var(--font-ar);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.5;
+}
+
+/* children's reading text: never below 18px, the Aa control scales it */
+body.reader .scene-text p,
+body.reader .story-slide .scene-text p,
+body.reader .lesson-box p,
+body.reader .dua-box p {
+    max-width: 62ch;
+    font-family: var(--font-read);
+    font-size: max(1.125rem, calc(var(--step-read) * var(--reader-scale)));
+    font-weight: 400;
+    line-height: 1.7;
+    color: var(--text-1);
+}
+
+html[lang="ar"] body.reader .scene-text p,
+html[lang="ar"] body.reader .lesson-box p,
+html[lang="ar"] body.reader .dua-box p {
+    font-family: var(--font-ar);
+    font-size: max(1.25rem, calc(var(--step-read) * 1.1 * var(--reader-scale)));
+    line-height: 1.95;
+}
+
+/* mini quiz, quiz cards, results, lesson and dua: cards on the page */
+body.reader .story-slide .mini-quiz,
+body.reader .story-slide .quiz-card,
+body.reader .story-slide .quiz-intro,
+body.reader .story-slide .quiz-results,
+body.reader .story-slide .lesson-box,
+body.reader .story-slide .dua-box {
+    margin: 0;
+    padding: var(--s-5);
+    border-radius: var(--r-lg);
+    border: var(--hairline);
+    background: var(--surface-1);
+    box-shadow: none;
+    animation: none;
+    text-align: start;
+}
+
+body.reader .story-slide .mini-quiz {
+    background: var(--reward-wash);
+    border: var(--hairline-gold);
+}
+
+body.reader .quiz-header { justify-content: flex-start; }
+body.reader .quiz-question { font-size: var(--step-1); line-height: 1.4; color: var(--text-1); }
+
+body.reader .story-slide .quiz-options {
+    grid-template-columns: 1fr;
+    gap: var(--s-3);
+}
+
+@media (min-width: 600px) {
+    body.reader .story-slide .quiz-options { grid-template-columns: 1fr 1fr; }
+}
+
+body.reader .story-slide .quiz-option {
+    min-height: 56px;
+    padding: var(--s-3) var(--s-4);
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--surface-1);
+    color: var(--text-1);
+    font-family: var(--font-read);
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-align: start;
+}
+
+body.reader .story-slide .quiz-option:hover:not(:disabled) {
+    background: var(--action-wash);
+    border-color: var(--action);
+    color: var(--text-1);
+    transform: none;
+}
+
+body.reader .story-slide .quiz-option:active:not(:disabled) { transform: scale(0.98); }
+
+body.reader .story-slide .quiz-option.correct {
+    background: var(--action);
+    border-color: var(--action);
+    color: var(--text-on-action);
+}
+
+body.reader .story-slide .quiz-option.incorrect {
+    background: #B42318;            /* red: reserved for wrong answers (6.5:1 with the card colour) */
+    border-color: #B42318;
+    color: var(--text-on-action);
+}
+
+body.reader .video-section .video-frame iframe { border-radius: var(--r-md); }
+
+/* the prev/next-story links under the reader */
+body.reader .story-navigation {
+    margin: var(--s-6) 0 0;
+    gap: var(--s-3);
+}
+
+body.reader .story-navigation .nav-btn {
+    min-height: var(--tap);
+    display: inline-flex;
+    align-items: center;
+    border-radius: var(--r-pill);
+    background: var(--surface-1);
+    border: var(--hairline);
+    color: var(--text-1);
+    box-shadow: none;
+}
+
+/* the closing moral, as a quiet colophon on the page rather than a dark band */
+body.reader footer {
+    margin-top: var(--s-7);
+    background: transparent;
+    border-top: var(--hairline-gold);
+    color: var(--text-1);
+}
+
+body.reader footer .moral-takeaway {
+    background: var(--reward-wash);
+    border: var(--hairline-gold);
+    border-radius: var(--r-lg);
+    color: var(--text-1);
+}
+
+body.reader footer .moral-takeaway h4 { color: var(--reward-text); }
+body.reader footer .moral-takeaway p,
+body.reader footer .footer-subtitle { color: var(--text-1); }
+
+/* ---------- floating transport: previous / play / next ---------- */
+.reader-transport {
+    position: fixed;
+    inset-inline: 0;
+    bottom: calc(var(--s-4) + var(--safe-bottom));
+    z-index: 950;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-3);
+    width: min(calc(100% - 2 * var(--gutter)), 360px);
+    margin: 0 auto;
+    padding: var(--s-2);
+    background: var(--surface-1);
+    border: var(--hairline);
+    border-radius: var(--r-pill);
+    box-shadow: var(--shadow);
+}
+
+.reader-transport .transport-btn {
+    min-width: var(--tap-lg);
+    min-height: var(--tap-lg);
+}
+
+.reader-transport .transport-btn .icon { width: 28px; height: 28px; }
+
+.transport-play {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+}
+
+.transport-play .narration-progress-container {
+    position: absolute;
+    inset-inline: 8%;
+    top: -9px;
+    height: 3px;
+    border-radius: var(--r-pill);
+    background: transparent;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.transport-play .narration-progress-bar {
+    width: 0;
+    height: 100%;
+    background: var(--action);
+    border-radius: inherit;
+}
+
+.transport-play .narration-time { display: none; }
+
+body.is-narrating .reader-transport { border-color: var(--action); }
+
+/* the narration settings, inside the reading-settings sheet */
+.narration-speed { margin-bottom: var(--s-3); }
+.narration-speed .segmented button { font-variant-numeric: tabular-nums; }
+
+/* in the reader, full screen is the whole document; keep the v1 layout out of it */
+body.reader .story-container.fullscreen-active {
+    position: static;
+    inset: auto;
+    width: auto;
+    height: auto;
+    max-width: 760px;
+    z-index: auto;
+    overflow: visible;
+}
+
+/* ---------- classic-scroll stories (Yusuf): the narration bar, on tokens ---------- */
+.narration-control-bar {
+    position: sticky;
+    bottom: calc(var(--s-3) + var(--safe-bottom));
+    z-index: 800;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-3);
+    margin: var(--s-4) 0;
+    padding: var(--s-2) var(--s-4) var(--s-2) var(--s-2);
+    background: var(--surface-1);
+    border: var(--hairline);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow);
+}
+
+.narration-control-bar .narration-progress-container {
+    flex: 1;
+    min-width: 120px;
+    height: 6px;
+    border-radius: var(--r-pill);
+    background: var(--surface-2);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.narration-control-bar .narration-progress-bar {
+    width: 0;
+    height: 100%;
+    background: var(--action);
+}
+
+.narration-control-bar .narration-time {
+    font-family: var(--font-ui);
+    font-size: var(--step--1);
+    color: var(--text-2);
+    font-variant-numeric: tabular-nums;
+}
+
+.narration-control-bar .narration-settings > summary {
+    list-style: none;
+}
+
+.narration-control-bar .narration-settings > summary::-webkit-details-marker { display: none; }
+
+.narration-control-bar .narration-settings[open] {
+    flex-basis: 100%;
+    order: 5;
+}
+
+.narration-control-bar .narration-settings[open] > summary {
+    margin-inline-start: auto;
+    background: var(--action-wash);
+    color: var(--action);
+}
+
+.narration-settings__panel { padding: var(--s-2) var(--s-2) 0; }
+
+/* ---------- phone layout for every story page (classic scroll included):
+   one level of padding, not four, and reading text on the 18px floor ---------- */
+.scene-text p {
+    font-size: max(1.125rem, 1em);
+}
+
+@media (max-width: 768px) {
+    .story-main { padding: 0; }
+    .story-container {
+        padding: var(--s-4);
+        border-radius: 0;
+        border-inline: 0;
+        background: var(--surface-1);
+        box-shadow: none;
+    }
+    .story-scene { padding: var(--s-4); gap: var(--s-3); }
+    .story-scene .scene-text p,
+    .story-slide .scene-text p { font-size: 1.125rem; }
+    .story-title { font-size: clamp(1.5rem, 6vw, 2.2rem); line-height: 1.2; }
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    body.reader .story-slide.enter-forward,
+    body.reader .story-slide.enter-back { animation: none; }
+    .reader-progress span { transition: none; }
+}
+
+@media print {
+    .reader-bar, .reader-transport, .sheet { display: none !important; }
+    body.reader .story-slide { display: block !important; break-inside: avoid; margin-bottom: 1.5rem; }
+    body.reader .story-header { position: static !important; width: auto; height: auto; clip: auto; }
 }

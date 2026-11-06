@@ -21,278 +21,167 @@ const AudioNarration = {
         this.createNarrationUI();
         this.bindEvents();
         this.checkAudioAvailability();
-        console.log('🎙️ Audio narration initialized for:', storyId);
     },
 
-    // Create the narration UI controls
+    // Labels for the narration controls, in both languages
+    labels: {
+        en: { play: 'Listen to this page', pause: 'Pause', speed: 'Reading speed', autoplay: 'Read each page aloud',
+              autoplaySub: 'Starts the narration when you turn the page', advance: 'Turn the page by itself',
+              advanceSub: 'For children who cannot read yet', progress: 'Narration progress' },
+        ar: { play: 'استمع إلى هذه الصفحة', pause: 'إيقاف مؤقت', speed: 'سرعة القراءة', autoplay: 'اقرأ كل صفحة بصوت عالٍ',
+              autoplaySub: 'يبدأ السرد عند تقليب الصفحة', advance: 'تقليب الصفحة تلقائياً',
+              advanceSub: 'للأطفال الذين لا يقرؤون بعد', progress: 'تقدّم السرد' }
+    },
+
+    label: function(key) {
+        return this.labels[this.getCurrentLanguage() === 'ar' ? 'ar' : 'en'][key];
+    },
+
+    icon: function(name, extra) {
+        return '<svg class="icon' + (extra ? ' ' + extra : '') + '" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-' + name + '"/></svg>';
+    },
+
+    // Create the narration UI controls.
+    // v2: no injected stylesheet. The controls are styled in stories.css on the
+    // palette tokens (the old JS sheet carried off-palette hex and keyframe names
+    // that overrode stories.css). In the reader the play button sits in the
+    // floating transport and the settings go in the reading-settings sheet;
+    // on a classic-scroll story (Yusuf) they form one labelled bar.
     createNarrationUI: function() {
-        // Create narration control bar
-        const controlBar = document.createElement('div');
-        controlBar.className = 'narration-control-bar';
-        controlBar.id = 'narrationControlBar';
+        var self = this;
+        try {
+            var ap = localStorage.getItem('islamicKidsAutoPlay');
+            if (ap === 'off') this.autoPlayEnabled = false;
+        } catch (e) {}
 
-        // Play/Pause button
+        // Play / pause: a 56px round button with a text label for screen readers
         const playBtn = document.createElement('button');
-        playBtn.className = 'narration-btn play-btn';
+        playBtn.type = 'button';
+        playBtn.className = 'play-btn narration-btn';
         playBtn.id = 'narrationPlayBtn';
-        playBtn.textContent = '▶️';
-        playBtn.title = 'Play/Pause Narration';
+        playBtn.setAttribute('aria-pressed', 'false');
+        playBtn.innerHTML = this.icon('play', 'icon-play') + this.icon('pause', 'icon-pause');
 
-        // Progress bar
+        // Progress: a thin seekable line
         const progressContainer = document.createElement('div');
         progressContainer.className = 'narration-progress-container';
-
+        progressContainer.setAttribute('aria-hidden', 'true');
         const progressBar = document.createElement('div');
         progressBar.className = 'narration-progress-bar';
         progressBar.id = 'narrationProgressBar';
-
         progressContainer.appendChild(progressBar);
 
-        // Time display
         const timeDisplay = document.createElement('span');
         timeDisplay.className = 'narration-time';
         timeDisplay.id = 'narrationTime';
+        timeDisplay.setAttribute('aria-hidden', 'true');
         timeDisplay.textContent = '0:00';
 
-        // Auto-play toggle
+        // Speed: a segmented control
+        const speedGroup = document.createElement('div');
+        speedGroup.className = 'narration-speed';
+        speedGroup.innerHTML = '<span class="sheet-label" id="lblSpeed"></span>' +
+            '<div class="segmented" role="group" aria-labelledby="lblSpeed" id="narrationSpeedBtn">' +
+            [0.75, 1, 1.25, 1.5].map(function (r) {
+                return '<button type="button" dir="ltr" data-rate="' + r + '">' + r + '×</button>';
+            }).join('') + '</div>';
+
+        // Auto-play and auto-turn: switches
         const autoPlayToggle = document.createElement('button');
-        autoPlayToggle.className = 'narration-btn auto-play-btn active';
+        autoPlayToggle.type = 'button';
+        autoPlayToggle.className = 'setting-row narration-switch';
         autoPlayToggle.id = 'autoPlayToggle';
-        autoPlayToggle.textContent = '🔄';
-        autoPlayToggle.title = 'Auto-play: ON';
+        autoPlayToggle.setAttribute('role', 'switch');
+        autoPlayToggle.innerHTML = '<span><span class="sw-label"></span><small class="sw-sub"></small></span><span class="switch" aria-hidden="true"></span>';
 
-        // Speed control
-        const speedBtn = document.createElement('button');
-        speedBtn.className = 'narration-btn speed-btn';
-        speedBtn.id = 'narrationSpeedBtn';
-        speedBtn.textContent = '1x';
-        speedBtn.title = 'Playback Speed';
-
-        // Assemble control bar
-        controlBar.appendChild(playBtn);
-        controlBar.appendChild(progressContainer);
-        controlBar.appendChild(timeDisplay);
-        controlBar.appendChild(autoPlayToggle);
         // A child too young to read should not have to tap to turn the page.
         const advanceBtn = document.createElement('button');
-        advanceBtn.className = 'narration-btn advance-btn';
-        advanceBtn.id = 'autoAdvanceBtn';
         advanceBtn.type = 'button';
-        advanceBtn.textContent = '⏭';
-        advanceBtn.setAttribute('aria-pressed', 'false');
-        advanceBtn.title = 'Auto-turn: off';
+        advanceBtn.className = 'setting-row narration-switch';
+        advanceBtn.id = 'autoAdvanceBtn';
+        advanceBtn.setAttribute('role', 'switch');
+        advanceBtn.setAttribute('aria-checked', 'false');
+        advanceBtn.innerHTML = '<span><span class="sw-label"></span><small class="sw-sub"></small></span><span class="switch" aria-hidden="true"></span>';
 
-        controlBar.appendChild(speedBtn);
-        controlBar.appendChild(advanceBtn);
-
-        // Insert after slide navigation
-        const slideNav = document.getElementById('slideNavigation');
-        if (slideNav) {
-            slideNav.parentNode.insertBefore(controlBar, slideNav.nextSibling);
+        const transportSlot = document.getElementById('transportPlay');
+        const settingsSlot = document.getElementById('narrSettings');
+        if (transportSlot && settingsSlot) {
+            transportSlot.appendChild(progressContainer);
+            transportSlot.appendChild(playBtn);
+            transportSlot.appendChild(timeDisplay);
+            settingsSlot.appendChild(speedGroup);
+            settingsSlot.appendChild(autoPlayToggle);
+            settingsSlot.appendChild(advanceBtn);
         } else {
-            // Fallback: add to story container
+            // Classic-scroll story: one labelled bar, sticky at the bottom of the screen
+            const controlBar = document.createElement('div');
+            controlBar.className = 'narration-control-bar';
+            controlBar.id = 'narrationControlBar';
+            // settings fold away behind one icon so the bar stays one row
+            const settings = document.createElement('details');
+            settings.className = 'narration-settings';
+            const summary = document.createElement('summary');
+            summary.className = 'icon-btn';
+            summary.id = 'narrationMore';
+            summary.innerHTML = this.icon('settings-2');
+            settings.appendChild(summary);
+            const panel = document.createElement('div');
+            panel.className = 'narration-settings__panel';
+            panel.appendChild(speedGroup);
+            panel.appendChild(autoPlayToggle);
+            panel.appendChild(advanceBtn);
+            settings.appendChild(panel);
+            controlBar.appendChild(playBtn);
+            controlBar.appendChild(progressContainer);
+            controlBar.appendChild(timeDisplay);
+            controlBar.appendChild(settings);
             const storyContainer = document.querySelector('.story-container');
-            if (storyContainer) {
-                storyContainer.appendChild(controlBar);
-            }
+            const header = storyContainer && storyContainer.querySelector('.story-header');
+            if (header) header.after(controlBar);
+            else if (storyContainer) storyContainer.appendChild(controlBar);
         }
 
-        // Add styles
-        this.addStyles();
+        this.relabel();
+        this.updateSpeedControl();
+        document.addEventListener('languageChanged', function () { self.relabel(); });
     },
 
-    // Add CSS styles for narration UI
-    addStyles: function() {
-        const style = document.createElement('style');
-        style.textContent = `
-            .narration-control-bar {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 15px 20px;
-                background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
-                border-radius: 30px;
-                margin: 15px auto;
-                max-width: 500px;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            }
+    // Re-label every control for the current language and state
+    relabel: function() {
+        var set = function (el, sel, text) { var n = el && el.querySelector(sel); if (n) n.textContent = text; };
+        var ap = document.getElementById('autoPlayToggle');
+        if (ap) {
+            set(ap, '.sw-label', this.label('autoplay'));
+            set(ap, '.sw-sub', this.label('autoplaySub'));
+            ap.setAttribute('aria-checked', String(this.autoPlayEnabled));
+        }
+        var adv = document.getElementById('autoAdvanceBtn');
+        if (adv) {
+            set(adv, '.sw-label', this.label('advance'));
+            set(adv, '.sw-sub', this.label('advanceSub'));
+        }
+        var more = document.getElementById('narrationMore');
+        if (more) more.setAttribute('aria-label', this.getCurrentLanguage() === 'ar' ? 'إعدادات السرد' : 'Narration settings');
+                var lbl = document.getElementById('lblSpeed');
+        if (lbl) lbl.textContent = this.label('speed');
+        var sound = document.getElementById('readerSound');
+        if (sound) sound.setAttribute('aria-pressed', String(this.autoPlayEnabled));
+        this.updatePlayButton();
+    },
 
-            .narration-btn {
-                background: rgba(255, 255, 255, 0.2);
-                border: none;
-                border-radius: 50%;
-                width: 45px;
-                height: 45px;
-                font-size: 1.2rem;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+    updateSpeedControl: function() {
+        var rate = this.getPlaybackRate();
+        var group = document.getElementById('narrationSpeedBtn');
+        if (!group) return;
+        Array.prototype.forEach.call(group.querySelectorAll('button'), function (b) {
+            b.setAttribute('aria-pressed', String(parseFloat(b.getAttribute('data-rate')) === rate));
+        });
+    },
 
-            .narration-btn:hover {
-                background: rgba(255, 255, 255, 0.3);
-                transform: scale(1.1);
-            }
-
-            .narration-btn.play-btn {
-                background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
-                width: 55px;
-                height: 55px;
-                font-size: 1.4rem;
-                box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-            }
-
-            .narration-btn.play-btn.playing {
-                background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-                box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            }
-
-            .narration-progress-container {
-                flex: 1;
-                height: 8px;
-                background: rgba(255, 255, 255, 0.2);
-                border-radius: 4px;
-                overflow: hidden;
-                cursor: pointer;
-            }
-
-            .narration-progress-bar {
-                height: 100%;
-                width: 0%;
-                background: linear-gradient(90deg, #10b981 0%, #f59e0b 100%);
-                border-radius: 4px;
-                transition: width 0.1s linear;
-            }
-
-            .narration-time {
-                color: white;
-                font-size: 0.85rem;
-                font-weight: 600;
-                min-width: 45px;
-                text-align: center;
-            }
-
-            .narration-btn.auto-play-btn {
-                font-size: 1rem;
-                /* 44px is the site's touch-target floor; this was 40. */
-                width: 44px;
-                height: 44px;
-            }
-
-            .narration-btn.auto-play-btn.active {
-                background: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
-            }
-
-            .narration-btn.advance-btn {
-                background: rgba(255, 255, 255, 0.16);
-                font-size: 1rem;
-            }
-
-            .narration-btn.advance-btn.active {
-                background: var(--gold, #C08A2E);
-                color: #14383A;
-            }
-
-            .narration-btn.speed-btn {
-                font-size: 0.8rem;
-                font-weight: bold;
-                color: white;
-                /* 44px is the site's touch-target floor; this was 40. */
-                width: 44px;
-                height: 44px;
-            }
-
-            /* Loading indicator */
-            .narration-btn.play-btn.loading {
-                animation: pulse 1s ease-in-out infinite;
-            }
-
-            @keyframes pulse {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0.5; }
-            }
-
-            /* RTL Support */
-            html[lang="ar"] .narration-control-bar {
-                flex-direction: row-reverse;
-            }
-
-            /* Mobile responsive */
-            @media (max-width: 768px) {
-                .narration-control-bar {
-                    padding: 10px 15px;
-                    gap: 8px;
-                    max-width: 100%;
-                    margin: 10px;
-                    border-radius: 20px;
-                }
-
-                .narration-btn {
-                    width: 38px;
-                    height: 38px;
-                    font-size: 1rem;
-                }
-
-                .narration-btn.play-btn {
-                    width: 45px;
-                    height: 45px;
-                    font-size: 1.2rem;
-                }
-
-                .narration-time {
-                    font-size: 0.75rem;
-                    min-width: 35px;
-                }
-            }
-
-            /* Speaking indicator animation */
-            .speaking-indicator {
-                position: fixed;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: rgba(16, 185, 129, 0.9);
-                color: white;
-                padding: 10px 20px;
-                border-radius: 25px;
-                font-weight: 600;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                z-index: 1000;
-                animation: fadeInUp 0.3s ease;
-            }
-
-            .speaking-indicator .wave {
-                display: flex;
-                gap: 3px;
-            }
-
-            .speaking-indicator .wave span {
-                width: 4px;
-                height: 15px;
-                background: white;
-                border-radius: 2px;
-                animation: wave 0.5s ease-in-out infinite;
-            }
-
-            .speaking-indicator .wave span:nth-child(2) { animation-delay: 0.1s; }
-            .speaking-indicator .wave span:nth-child(3) { animation-delay: 0.2s; }
-            .speaking-indicator .wave span:nth-child(4) { animation-delay: 0.3s; }
-
-            @keyframes wave {
-                0%, 100% { height: 5px; }
-                50% { height: 15px; }
-            }
-
-            @keyframes fadeInUp {
-                from { opacity: 0; transform: translate(-50%, 20px); }
-                to { opacity: 1; transform: translate(-50%, 0); }
-            }
-        `;
-        document.head.appendChild(style);
+    setSpeed: function(rate) {
+        try { localStorage.setItem('narrationSpeed', rate); } catch (e) {}
+        if (this.currentAudio) this.currentAudio.playbackRate = rate;
+        this.updateSpeedControl();
     },
 
     // Bind event listeners
@@ -315,11 +204,11 @@ const AudioNarration = {
             });
         }
 
-        // Speed button
-        const speedBtn = document.getElementById('narrationSpeedBtn');
-        if (speedBtn) {
-            speedBtn.addEventListener('click', function() {
-                self.cycleSpeed();
+        // Speed: segmented control
+        const speedGroup = document.getElementById('narrationSpeedBtn');
+        if (speedGroup) {
+            Array.prototype.forEach.call(speedGroup.querySelectorAll('button'), function (b) {
+                b.addEventListener('click', function () { self.setSpeed(parseFloat(b.getAttribute('data-rate'))); });
             });
         }
 
@@ -618,44 +507,22 @@ const AudioNarration = {
         var btn = document.getElementById('autoAdvanceBtn');
         if (!btn) return;
         var on = this.autoAdvanceEnabled;
-        btn.setAttribute('aria-pressed', String(on));
+        btn.setAttribute('aria-checked', String(on));
         btn.classList.toggle('active', on);
-        var label = document.documentElement.lang === 'ar'
-            ? (on ? 'التقليب التلقائي: يعمل' : 'التقليب التلقائي: متوقف')
-            : (on ? 'Auto-turn: on' : 'Auto-turn: off');
-        btn.title = label;
-        btn.setAttribute('aria-label', label);
     },
 
     // Toggle auto-play
     toggleAutoPlay: function() {
         this.autoPlayEnabled = !this.autoPlayEnabled;
-        const btn = document.getElementById('autoPlayToggle');
-        if (btn) {
-            btn.classList.toggle('active', this.autoPlayEnabled);
-            btn.title = 'Auto-play: ' + (this.autoPlayEnabled ? 'ON' : 'OFF');
-        }
+        try { localStorage.setItem('islamicKidsAutoPlay', this.autoPlayEnabled ? 'on' : 'off'); } catch (e) {}
+        this.relabel();
     },
 
-    // Cycle playback speed
+    // Cycle playback speed (kept for callers; the UI uses setSpeed)
     cycleSpeed: function() {
         const speeds = [0.75, 1, 1.25, 1.5];
-        const currentRate = this.getPlaybackRate();
-        const currentIndex = speeds.indexOf(currentRate);
-        const nextIndex = (currentIndex + 1) % speeds.length;
-        const newRate = speeds[nextIndex];
-
-        localStorage.setItem('narrationSpeed', newRate);
-
-        const btn = document.getElementById('narrationSpeedBtn');
-        if (btn) {
-            btn.textContent = newRate + 'x';
-        }
-
-        // Apply to current audio
-        if (this.currentAudio) {
-            this.currentAudio.playbackRate = newRate;
-        }
+        const i = speeds.indexOf(this.getPlaybackRate());
+        this.setSpeed(speeds[(i + 1) % speeds.length]);
     },
 
     // Get current playback rate
@@ -667,7 +534,8 @@ const AudioNarration = {
     updatePlayButton: function() {
         const btn = document.getElementById('narrationPlayBtn');
         if (btn) {
-            btn.textContent = this.isPlaying ? '⏸️' : '▶️';
+            btn.setAttribute('aria-pressed', String(this.isPlaying));
+            btn.setAttribute('aria-label', this.isPlaying ? this.label('pause') : this.label('play'));
             btn.classList.toggle('playing', this.isPlaying);
         }
     },
@@ -710,37 +578,14 @@ const AudioNarration = {
         this.currentAudio.currentTime = percentage * this.currentAudio.duration;
     },
 
-    // Show speaking indicator
+    // Speaking state. v2: no floating emerald toast; the play button shows the
+    // state (aria-pressed, pause glyph) and the page gets .is-narrating.
     showSpeakingIndicator: function() {
-        let indicator = document.getElementById('speakingIndicator');
-        if (!indicator) {
-            indicator = document.createElement('div');
-            indicator.className = 'speaking-indicator';
-            indicator.id = 'speakingIndicator';
-
-            const lang = this.getCurrentLanguage();
-            const label = document.createElement('span');
-            label.textContent = lang === 'ar' ? 'جاري القراءة...' : 'Reading...';
-
-            const wave = document.createElement('div');
-            wave.className = 'wave';
-            for (let i = 0; i < 4; i++) {
-                wave.appendChild(document.createElement('span'));
-            }
-
-            indicator.appendChild(label);
-            indicator.appendChild(wave);
-            document.body.appendChild(indicator);
-        }
-        indicator.style.display = 'flex';
+        document.body.classList.add('is-narrating');
     },
 
-    // Hide speaking indicator
     hideSpeakingIndicator: function() {
-        const indicator = document.getElementById('speakingIndicator');
-        if (indicator) {
-            indicator.style.display = 'none';
-        }
+        document.body.classList.remove('is-narrating');
     }
 };
 

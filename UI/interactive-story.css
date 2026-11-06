@@ -17,7 +17,7 @@
     font-size: 1.2rem;
     color: var(--gold-ink);
     border: 3px solid var(--gold);
-    animation: starPulse 2s ease-in-out infinite;
+    animation: starPulse 2s ease-in-out 1;
 }
 
 @keyframes starPulse {
@@ -34,7 +34,7 @@
     position: fixed;
     top: 100px;
     left: 20px;
-    background: white;
+    background: var(--surface-1);
     border: 3px solid var(--emerald-500);
     border-radius: 50%;
     width: 50px;
@@ -42,8 +42,8 @@
     font-size: 1.5rem;
     cursor: pointer;
     z-index: 100;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: var(--t-press);
+    box-shadow: 0 5px 15px rgba(60, 42, 12, 0.1);
 }
 
 .sound-toggle:hover {
@@ -56,7 +56,7 @@
 
 /* Animated Icon */
 .animated-icon {
-    animation: iconBounce 2s ease-in-out infinite;
+    animation: iconBounce 2s ease-in-out 1;
 }
 
 @keyframes iconBounce {
@@ -90,7 +90,7 @@
 
 /* Animated Elements */
 .animated-bounce {
-    animation: bounce 1s ease infinite;
+    animation: bounce 1s ease 1;
 }
 
 @keyframes bounce {
@@ -114,7 +114,7 @@
 .twinkle-star {
     position: absolute;
     font-size: 0.8rem;
-    animation: twinkle 1.5s ease-in-out infinite;
+    animation: twinkle 1.5s ease-in-out 1;
 }
 
 .twinkle-star:nth-child(2) { animation-delay: 0.3s; }
@@ -131,7 +131,7 @@
 
 /* Moon Glow */
 .moon-glow {
-    animation: moonGlow 3s ease-in-out infinite;
+    animation: moonGlow 3s ease-in-out 1;
 }
 
 @keyframes moonGlow {
@@ -141,7 +141,7 @@
 
 /* Sun Rays */
 .sun-rays {
-    animation: sunRays 2s ease-in-out infinite;
+    animation: sunRays 2s ease-in-out 1;
 }
 
 @keyframes sunRays {
@@ -155,7 +155,7 @@
 }
 
 .fire-animation {
-    animation: fireFlicker 0.5s ease-in-out infinite alternate;
+    animation: fireFlicker 0.5s ease-in-out 1 alternate;
 }
 
 @keyframes fireFlicker {
@@ -165,7 +165,7 @@
 
 /* Miracle Glow */
 .miracle-glow {
-    animation: miracleGlow 2s ease-in-out infinite;
+    animation: miracleGlow 2s ease-in-out 1;
 }
 
 @keyframes miracleGlow {
@@ -195,7 +195,7 @@
     gap: 0.5rem;
     color: var(--cobalt-deep);
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
     border: 2px dashed var(--cobalt);
 }
 
@@ -206,7 +206,7 @@
 
 .tap-icon {
     font-size: 1.3rem;
-    animation: tapHint 1s ease-in-out infinite;
+    animation: tapHint 1s ease-in-out 3;
 }
 
 @keyframes tapHint {
@@ -269,12 +269,12 @@
 }
 
 .choice-btn {
-    background: white;
+    background: var(--surface-1);
     border: 3px solid var(--slate-200);
     border-radius: 15px;
     padding: 1rem 1.5rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -285,7 +285,7 @@
 .choice-btn:hover {
     border-color: var(--emerald-500);
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(60, 42, 12, 0.1);
 }
 
 .choice-btn.selected-correct {
@@ -323,7 +323,7 @@
 .shakeable-element {
     font-size: 4rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
     display: inline-block;
 }
 
@@ -378,12 +378,12 @@
 }
 
 .drag-item {
-    background: white;
+    background: var(--surface-1);
     border: 2px solid var(--slate-200);
     border-radius: 10px;
     padding: 0.8rem 1.2rem;
     cursor: grab;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
     font-weight: 600;
 }
 
@@ -419,7 +419,7 @@
     align-items: center;
     justify-content: center;
     padding: 1rem;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
 }
 
 .drop-zone.drag-over {
@@ -477,13 +477,13 @@
 }
 
 .emotion-btn {
-    background: white;
+    background: var(--surface-1);
     border: 3px solid var(--slate-200);
     border-radius: 15px;
     padding: 1rem 1.5rem;
     cursor: pointer;
     font-size: 1rem;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
 }
 
 .emotion-btn:hover {
@@ -521,8 +521,8 @@
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
-    animation: celebratePulse 2s ease-in-out infinite;
+    transition: var(--t-press);
+    animation: celebratePulse 2s ease-in-out 1;
 }
 
 @keyframes celebratePulse {
@@ -593,7 +593,7 @@
     border-radius: 20px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
     margin-top: 1rem;
 }
 
@@ -618,10 +618,10 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background: white;
+    background: var(--surface-1);
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
 }
 
 .lesson-item:hover {
@@ -657,7 +657,7 @@
     font-weight: 600;
     cursor: pointer;
     margin-top: 1rem;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
 }
 
 .memorize-btn:hover {
@@ -695,7 +695,7 @@
 
 /* Kaaba Icon */
 .kaaba-icon {
-    animation: kaabaGlow 3s ease-in-out infinite;
+    animation: kaabaGlow 3s ease-in-out 1;
 }
 
 @keyframes kaabaGlow {
@@ -780,44 +780,29 @@ html[lang="ar"] .scene-reward {
 }
 
 /* Tap to Reveal RTL */
-html[lang="ar"] .tap-prompt {
-    flex-direction: row-reverse;
-}
 
 /* Interactive Choice RTL */
 html[lang="ar"] .interactive-choice {
     text-align: right;
 }
 
-html[lang="ar"] .choice-options {
-    flex-direction: row-reverse;
-}
 
 /* Drag and Drop RTL */
 html[lang="ar"] .drag-drop-activity {
     text-align: right;
 }
 
-html[lang="ar"] .drag-items {
-    flex-direction: row-reverse;
-}
 
-html[lang="ar"] .drop-zones {
-    flex-direction: row-reverse;
-}
 
 /* Emotion Check RTL */
 html[lang="ar"] .emotion-check {
     text-align: right;
 }
 
-html[lang="ar"] .emotion-options {
-    flex-direction: row-reverse;
-}
 
 /* Lesson Items RTL */
 html[lang="ar"] .lesson-item {
-    flex-direction: row-reverse;
+    /* dir="rtl" already reverses the row; a second row-reverse flipped it back (v2) */
     text-align: right;
 }
 

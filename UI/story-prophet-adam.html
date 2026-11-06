@@ -2,21 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Interactive story of Prophet Adam (AS) - The First Human. Learn, play, and earn stars!">
-    <meta name="theme-color" content="#0d9488">
+    <meta name="theme-color" content="#FBF6EA">
     <title>Prophet Adam - The First Human - Islamic Kids</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="stories.css?v=20261104">
-    <link rel="stylesheet" href="interactive-story.css">
-    <style>
-        html[lang="ar"] body {
-            font-family: 'Noto Sans Arabic', 'Nunito', sans-serif;
-        }
-    </style>
+    <!-- fonts are self-hosted: @font-face in styles.css (vendor/fonts) -->
+    <link rel="stylesheet" href="styles.css?v=20261105">
+    <link rel="stylesheet" href="app.css?v=20261105">
+    <link rel="stylesheet" href="stories.css?v=20261105">
+    <link rel="stylesheet" href="interactive-story.css?v=20261105">
 </head>
 <body>
     <!-- Floating Decorations -->
@@ -484,9 +478,9 @@
 
     <script src="translations.js?v=20261104"></script>
     <script src="voice-scripts.js?v=20261104"></script>
-    <script src="audio-narration.js"></script>
-    <script src="stories.js"></script>
-    <script src="interactive-story.js"></script>
+    <script src="audio-narration.js?v=20261105"></script>
+    <script src="stories.js?v=20261105"></script>
+    <script src="interactive-story.js?v=20261105"></script>
     <script>
         // Initialize language on page load
         document.addEventListener('DOMContentLoaded', function() {
@@ -521,7 +515,7 @@
         });
     </script>
 
-    <script src="bilingual.js"></script>
-    <script src="bedtime.js"></script>
+    <script src="bilingual.js?v=20261105"></script>
+    <script src="bedtime.js?v=20261105"></script>
 </body>
 </html>

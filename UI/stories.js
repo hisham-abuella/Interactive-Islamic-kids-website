@@ -390,7 +390,10 @@ function initializeModeButtons() {
         listenMode.addEventListener('click', function() {
             listenMode.classList.add('active');
             readMode.classList.remove('active');
-            alert('🎧 Audio narration coming soon! For now, enjoy reading the story.');
+            // v2: Listen mode starts the narration (it used to alert "coming soon").
+            if (window.AudioNarration && !window.AudioNarration.isPlaying) {
+                window.AudioNarration.togglePlayPause();
+            }
         });
     }
 }
@@ -416,7 +419,7 @@ function playSound(soundName) {
 
 // Confetti Effect
 function createConfetti(container) {
-    const colors = ['#10b981', '#f59e0b', '#14b8a6', '#fde68a', '#a78bfa'];
+    const colors = ['var(--ornament)', 'var(--ornament-light)', 'var(--action-bright)', 'var(--quran)', 'var(--reward-wash)'];
     const confettiCount = 30;
 
     for (let i = 0; i < confettiCount; i++) {
@@ -444,6 +447,8 @@ function createConfetti(container) {
 }
 
 // Add styles for retry button and animations
+// Retry button and the two one-shot effects. v2: palette tokens only, no hex
+// in JS (frontend hard rule 1), and explicit transition properties.
 const style = document.createElement('style');
 style.textContent = [
     '@keyframes confettiFall {',
@@ -452,57 +457,97 @@ style.textContent = [
     '}',
     '@keyframes flashGreen {',
     '    0%, 100% { background-color: inherit; }',
-    '    50% { background-color: rgba(16, 185, 129, 0.1); }',
+    '    50% { background-color: var(--action-wash); }',
     '}',
     '.retry-btn {',
-    '    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);',
-    '    color: white;',
-    '    border: none;',
-    '    padding: 0.6rem 1.5rem;',
-    '    border-radius: 20px;',
-    '    font-weight: 600;',
+    '    background: var(--surface-1);',
+    '    color: var(--text-1);',
+    '    border: 1px solid var(--line);',
+    '    min-height: 44px;',
+    '    padding: 0 1.25rem;',
+    '    border-radius: 999px;',
+    '    font-weight: 700;',
     '    cursor: pointer;',
     '    margin-top: 0.8rem;',
     '    font-size: 1rem;',
-    '    transition: all 0.3s ease;',
+    '    transition: var(--t-press);',
     '}',
-    '.retry-btn:hover {',
-    '    transform: scale(1.05);',
-    '    box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);',
-    '}',
-    '.quiz-feedback.incorrect { color: #dc2626; }',
-    '.quiz-feedback.correct { color: #059669; }'
+    '.retry-btn:active { transform: scale(0.97); }',
+    '.quiz-feedback.incorrect { color: #B42318; }',
+    '.quiz-feedback.correct { color: var(--action); }'
 ].join('\n');
 document.head.appendChild(style);
 
-// Scroll animations for story scenes
-const observerOptions = {
-    threshold: 0.2,
-    rootMargin: '0px 0px -50px 0px'
-};
+// v2: story scenes are no longer hidden until an IntersectionObserver fires.
+// That hid the first slide (blank until scrolled into view, and blank in print
+// and full-page captures). Slide mode shows one page at a time anyway.
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Observe all story scenes
-document.querySelectorAll('.story-scene').forEach(scene => {
-    scene.style.opacity = '0';
-    scene.style.transform = 'translateY(30px)';
-    scene.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-    observer.observe(scene);
-});
-
-// Slide Mode for Stories
+// =====================================================
+// SLIDE MODE: the app reader
+// One page at a time, stacked in a grid cell and cross-faded. Hidden pages are
+// inert. A polite live region says "Page n of N". Swipe, arrow keys and the
+// arrow glyphs follow the reading direction, so in Arabic the book turns the
+// other way. Chrome: a minimal top bar (close, title and page, Aa, read-aloud,
+// settings), a floating transport (previous, play, next) and a settings sheet.
+// =====================================================
 let currentSlide = 0;
 let totalSlides = 0;
 let touchStartX = 0;
+let touchStartY = 0;
 let touchEndX = 0;
+let touchEndY = 0;
+
+var ICONS = 'vendor/icons/sprite.svg#i-';
+function icon(name, extra) {
+    return '<svg class="icon' + (extra ? ' ' + extra : '') + '" aria-hidden="true"><use href="' + ICONS + name + '"/></svg>';
+}
+
+function isRTL() {
+    return document.documentElement.dir === 'rtl';
+}
+
+function readerLang() {
+    return document.documentElement.lang === 'ar' ? 'ar' : 'en';
+}
+
+function digits(n) {
+    return readerLang() === 'ar' ? Number(n).toLocaleString('ar-EG') : String(n);
+}
+
+var READER_TEXT = {
+    en: { close: 'Close story', page: 'Page {n} of {N}', prev: 'Previous page', next: 'Next page',
+          size: 'Text size', sizes: ['small', 'medium', 'large'], sound: 'Read each page aloud',
+          settings: 'Reading settings', sheetTitle: 'Reading settings', textSize: 'Text size',
+          narration: 'Narration', display: 'Display', bedtime: 'Bedtime colours', bedtimeSub: 'A dim, warm page for a dark room',
+          fullscreen: 'Full screen', fullscreenSub: 'Hide everything but the page', language: 'Language', done: 'Done' },
+    ar: { close: 'إغلاق القصة', page: 'صفحة {n} من {N}', prev: 'الصفحة السابقة', next: 'الصفحة التالية',
+          size: 'حجم الخط', sizes: ['صغير', 'متوسط', 'كبير'], sound: 'اقرأ كل صفحة بصوت عالٍ',
+          settings: 'إعدادات القراءة', sheetTitle: 'إعدادات القراءة', textSize: 'حجم الخط',
+          narration: 'السرد', display: 'العرض', bedtime: 'ألوان الليل', bedtimeSub: 'صفحة خافتة ودافئة لغرفة مظلمة',
+          fullscreen: 'ملء الشاشة', fullscreenSub: 'إخفاء كل شيء ما عدا الصفحة', language: 'اللغة', done: 'تم' }
+};
+
+function rt(key) {
+    return READER_TEXT[readerLang()][key];
+}
+
+function storyId() {
+    return (location.pathname.split('/').pop() || '').replace(/^story-/, '').replace(/\.html$/, '');
+}
+
+function saveStoryProgress() {
+    try {
+        var all = JSON.parse(localStorage.getItem('ik-story-progress') || '{}') || {};
+        var prev = all[storyId()] || {};
+        all[storyId()] = {
+            slide: currentSlide,
+            total: totalSlides,
+            done: prev.done || currentSlide >= totalSlides - 1,
+            t: Date.now()
+        };
+        localStorage.setItem('ik-story-progress', JSON.stringify(all));
+    } catch (e) { /* private mode: the reader still works, it just forgets */ }
+}
 
 function initializeSlideMode() {
     const storyContent = document.getElementById('storyContent');
@@ -510,7 +555,6 @@ function initializeSlideMode() {
 
     // Skip slide mode if story uses classic scroll format
     if (storyContent.classList.contains('classic-scroll')) {
-        console.log('📜 Using classic scroll mode for this story');
         return;
     }
 
@@ -521,10 +565,8 @@ function initializeSlideMode() {
 
     if (storyScenes.length === 0) return;
 
-    // Collect all slide content
     const allSlideContent = Array.from(storyScenes);
 
-    // Add final quiz intro and cards as slides
     if (finalQuizSection) {
         const quizIntro = finalQuizSection.querySelector('.quiz-intro');
         const quizCards = finalQuizSection.querySelectorAll('.quiz-card');
@@ -541,16 +583,13 @@ function initializeSlideMode() {
         }
     }
 
-    // Add video section as final slide
     if (videoSection) {
         videoSection.classList.remove('hidden');
         allSlideContent.push(videoSection);
     }
 
     totalSlides = allSlideContent.length;
-    console.log('📖 Initializing slide mode with ' + totalSlides + ' slides');
 
-    // Create slides container
     const slidesContainer = document.createElement('div');
     slidesContainer.className = 'story-slides-container';
 
@@ -558,109 +597,245 @@ function initializeSlideMode() {
     slidesWrapper.className = 'story-slides';
     slidesWrapper.id = 'storySlides';
 
-    // Move all content into slides (not clone, to preserve event listeners)
+    // Move the real elements (not clones) so their listeners survive
     allSlideContent.forEach((content, index) => {
-        const slide = document.createElement('div');
+        const slide = document.createElement('section');
         slide.className = 'story-slide';
         slide.dataset.slideIndex = index;
-        // Move the actual element, not a clone
+        slide.setAttribute('aria-roledescription', 'page');
         slide.appendChild(content);
         slidesWrapper.appendChild(slide);
     });
 
-    // Hide original quiz and video sections since content moved to slides
     if (finalQuizSection) finalQuizSection.style.display = 'none';
     if (videoSection) videoSection.style.display = 'none';
 
     slidesContainer.appendChild(slidesWrapper);
-
-    // Insert at the beginning of story content
     storyContent.insertBefore(slidesContainer, storyContent.firstChild);
 
-    // Add progress dots
-    const progressDots = document.createElement('div');
-    progressDots.className = 'slide-progress';
-    progressDots.id = 'slideProgress';
+    buildReaderChrome(slidesContainer);
 
-    for (let i = 0; i < totalSlides; i++) {
-        const dot = document.createElement('span');
-        dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
-        dot.dataset.slideIndex = i;
-        dot.addEventListener('click', function() {
-            goToSlide(parseInt(this.dataset.slideIndex));
-        });
-        progressDots.appendChild(dot);
-    }
-
-    slidesContainer.after(progressDots);
-
-    // Add navigation arrows
-    const slideNav = document.createElement('div');
-    slideNav.className = 'slide-navigation';
-    slideNav.id = 'slideNavigation';
-
-    const prevBtn = document.createElement('button');
-    prevBtn.className = 'slide-nav-btn prev-btn';
-    prevBtn.id = 'prevSlide';
-    prevBtn.disabled = true;
-    prevBtn.textContent = '◀';
-
-    const counter = document.createElement('span');
-    counter.className = 'slide-counter';
-    counter.innerHTML = '<span id="currentSlideNum">1</span> / ' + totalSlides;
-
-    const nextBtn = document.createElement('button');
-    nextBtn.className = 'slide-nav-btn next-btn';
-    nextBtn.id = 'nextSlide';
-    nextBtn.textContent = '▶';
-
-    slideNav.appendChild(prevBtn);
-    slideNav.appendChild(counter);
-    slideNav.appendChild(nextBtn);
-
-    progressDots.after(slideNav);
-
-    // Add swipe hint for mobile
-    if ('ontouchstart' in window) {
-        const swipeHint = document.createElement('div');
-        swipeHint.className = 'swipe-hint';
-        swipeHint.textContent = '';
-        var swipeIcon = document.createElement('span');
-        swipeIcon.className = 'swipe-hint-icon';
-        swipeIcon.textContent = '👆';
-        swipeHint.appendChild(swipeIcon);
-        swipeHint.appendChild(document.createTextNode(t('swipeHint', 'Swipe left or right to navigate')));
-        slideNav.after(swipeHint);
-
-        // Remove hint after 5 seconds
-        setTimeout(() => swipeHint.remove(), 5000);
-    }
-
-    // Event listeners for navigation
-    prevBtn.addEventListener('click', prevSlide);
-    nextBtn.addEventListener('click', nextSlide);
-
-    // Touch/swipe support
     slidesContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
     slidesContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
-
-    // Keyboard navigation
     document.addEventListener('keydown', handleKeyNavigation);
+    document.addEventListener('languageChanged', relabelReader);
 
     // Re-initialize mini quizzes in slides
     const slideQuizzes = slidesWrapper.querySelectorAll('.mini-quiz');
     slideQuizzes.forEach(quiz => setupMiniQuiz(quiz));
 
-    // Set initial progress
-    updateSlideView();
+    // Resume where this child stopped, if they had started
+    try {
+        var saved = (JSON.parse(localStorage.getItem('ik-story-progress') || '{}') || {})[storyId()];
+        if (saved && !saved.done && saved.slide > 0 && saved.slide < totalSlides && /[?&]resume=0/.test(location.search) === false) {
+            currentSlide = saved.slide;
+        }
+    } catch (e) {}
+
+    updateSlideView(true);   // silent: nothing is announced on load
+}
+
+function buildReaderChrome(slidesContainer) {
+    document.body.classList.add('reader');
+
+    // --- top bar ---
+    const bar = document.createElement('div');
+    bar.className = 'reader-bar';
+    bar.id = 'readerBar';
+    var title = document.querySelector('.story-title');
+    bar.innerHTML =
+        '<a class="icon-btn" id="readerClose" href="stories.html">' + icon('x') + '</a>' +
+        '<div class="reader-bar__title"><span class="reader-bar__name" id="readerName"></span>' +
+        '<span class="reader-count" aria-hidden="true"><span id="currentSlideNum">1</span></span></div>' +
+        '<div class="reader-bar__actions" id="readerActions">' +
+            '<button class="icon-btn reader-aa" id="readerTextSize" type="button"><span aria-hidden="true">Aa</span></button>' +
+            '<button class="icon-btn" id="readerSound" type="button" aria-pressed="true">' + icon('volume-2', 'icon-on') + icon('volume-x', 'icon-off') + '</button>' +
+            '<button class="icon-btn" id="readerSettings" type="button" aria-haspopup="dialog">' + icon('settings-2') + '</button>' +
+        '</div>' +
+        '<div class="reader-progress" aria-hidden="true"><span id="readerProgressFill"></span></div>';
+    document.body.insertBefore(bar, document.body.firstChild);
+
+    // One toolbar: the stars counter and the effects-sound toggle (Adam,
+    // Ibrahim) join the bar instead of floating over the page.
+    var actions = bar.querySelector('#readerActions');
+    var stars = document.getElementById('starsCounter');
+    if (stars) actions.insertBefore(stars, actions.firstChild);
+    var fx = document.getElementById('soundToggle');
+    if (fx) {
+        fx.classList.add('icon-btn');
+        fx.setAttribute('type', 'button');
+        actions.insertBefore(fx, document.getElementById('readerSound'));
+    }
+
+    // --- live region: "Page n of N" ---
+    const live = document.createElement('div');
+    live.id = 'readerLive';
+    live.className = 'visually-hidden';
+    live.setAttribute('aria-live', 'polite');
+    live.setAttribute('aria-atomic', 'true');
+    slidesContainer.after(live);
+
+    // --- floating transport: previous / play / next ---
+    const transport = document.createElement('div');
+    transport.className = 'reader-transport';
+    transport.id = 'readerTransport';
+    transport.innerHTML =
+        '<button class="icon-btn transport-btn" id="prevSlide" type="button">' + icon('chevron-left', 'flip-rtl') + '</button>' +
+        '<div class="transport-play" id="transportPlay"></div>' +
+        '<button class="icon-btn transport-btn" id="nextSlide" type="button">' + icon('chevron-right', 'flip-rtl') + '</button>';
+    // Old id kept so anything that looks for the slide navigation still finds it
+    transport.setAttribute('data-role', 'slide-navigation');
+    document.body.appendChild(transport);
+
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+
+    // --- settings sheet ---
+    const sheet = document.createElement('dialog');
+    sheet.className = 'sheet';
+    sheet.id = 'readerSheet';
+    sheet.setAttribute('aria-labelledby', 'readerSheetTitle');
+    sheet.innerHTML =
+        '<div class="sheet__grabber" aria-hidden="true"></div>' +
+        '<div class="sheet__head"><h2 id="readerSheetTitle"></h2>' +
+        '<button class="btn btn--secondary" id="readerSheetDone" type="button"></button></div>' +
+        '<div class="sheet-group"><span class="sheet-label" id="lblTextSize"></span>' +
+            '<div class="segmented" role="group" aria-labelledby="lblTextSize" id="sizeSeg">' +
+            '<button type="button" data-size="s"></button><button type="button" data-size="m"></button><button type="button" data-size="l"></button></div></div>' +
+        '<div class="sheet-group"><span class="sheet-label" id="lblLanguage"></span>' +
+            '<div class="segmented" role="group" aria-labelledby="lblLanguage" id="langSeg">' +
+            '<button type="button" data-lang="en" lang="en">English</button><button type="button" data-lang="ar" lang="ar">العربية</button></div></div>' +
+        '<div class="sheet-group" id="narrSettings"><span class="sheet-label" id="lblNarration"></span></div>' +
+        '<div class="sheet-group"><span class="sheet-label" id="lblDisplay"></span>' +
+            '<button class="setting-row" type="button" role="switch" id="bedtimeSwitch" aria-checked="false"><span><span id="lblBedtime"></span><small id="lblBedtimeSub"></small></span><span class="switch" aria-hidden="true"></span></button>' +
+            '<button class="setting-row" type="button" id="fullscreenRow"><span><span id="lblFullscreen"></span><small id="lblFullscreenSub"></small></span>' + icon('maximize-2') + '</button>' +
+        '</div>';
+    document.body.appendChild(sheet);
+
+    document.getElementById('readerSettings').addEventListener('click', openReaderSheet);
+    document.getElementById('readerSheetDone').addEventListener('click', function () { sheet.close(); });
+    sheet.addEventListener('click', function (e) { if (e.target === sheet) sheet.close(); });  // tap the backdrop
+
+    // text size: Aa cycles, the sheet sets directly
+    applyTextSize(localStorageGet('ik-text-size') || 'm');
+    document.getElementById('readerTextSize').addEventListener('click', function () {
+        var order = ['s', 'm', 'l'];
+        var cur = document.documentElement.getAttribute('data-text-size') || 'm';
+        applyTextSize(order[(order.indexOf(cur) + 1) % order.length]);
+    });
+    sheet.querySelectorAll('#sizeSeg button').forEach(function (b) {
+        b.addEventListener('click', function () { applyTextSize(b.getAttribute('data-size')); });
+    });
+
+    // language
+    sheet.querySelectorAll('#langSeg button').forEach(function (b) {
+        b.addEventListener('click', function () {
+            if (window.bilingual && window.bilingual.current() !== b.getAttribute('data-lang')) window.bilingual.toggle();
+        });
+    });
+
+    // read-aloud toggle in the bar mirrors the narration autoplay setting
+    document.getElementById('readerSound').addEventListener('click', function () {
+        if (window.AudioNarration && window.AudioNarration.toggleAutoPlay) window.AudioNarration.toggleAutoPlay();
+    });
+
+    // bedtime (bedtime.js owns the state; this switch mirrors it)
+    var bed = document.getElementById('bedtimeSwitch');
+    bed.addEventListener('click', function () {
+        var b = document.querySelector('.bedtime-btn');
+        if (b) b.click();
+        syncBedtimeSwitch();
+    });
+
+    document.getElementById('fullscreenRow').addEventListener('click', function () {
+        sheet.close();
+        toggleFullscreen();
+    });
+
+    relabelReader();
+}
+
+function localStorageGet(k) {
+    try { return localStorage.getItem(k); } catch (e) { return null; }
+}
+
+function applyTextSize(size) {
+    document.documentElement.setAttribute('data-text-size', size);
+    try { localStorage.setItem('ik-text-size', size); } catch (e) {}
+    document.querySelectorAll('#sizeSeg button').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-size') === size));
+    });
+    var aa = document.getElementById('readerTextSize');
+    if (aa) {
+        var i = ['s', 'm', 'l'].indexOf(size);
+        aa.setAttribute('aria-label', rt('size') + ': ' + rt('sizes')[i]);
+    }
+}
+
+function syncBedtimeSwitch() {
+    var on = document.documentElement.getAttribute('data-theme') === 'bedtime';
+    var bed = document.getElementById('bedtimeSwitch');
+    if (bed) bed.setAttribute('aria-checked', String(on));
+}
+
+function openReaderSheet() {
+    var sheet = document.getElementById('readerSheet');
+    if (!sheet) return;
+    syncBedtimeSwitch();
+    if (typeof sheet.showModal === 'function') sheet.showModal();
+    else sheet.setAttribute('open', '');
+}
+
+function relabelReader() {
+    var set = function (id, text) { var el = document.getElementById(id); if (el) el.textContent = text; };
+    var lab = function (id, text) { var el = document.getElementById(id); if (el) el.setAttribute('aria-label', text); };
+    var title = document.querySelector('.story-title');
+    set('readerName', title ? title.textContent.trim() : '');
+    lab('readerClose', rt('close'));
+    lab('prevSlide', rt('prev'));
+    lab('nextSlide', rt('next'));
+    lab('readerSound', rt('sound'));
+    lab('readerSettings', rt('settings'));
+    set('readerSheetTitle', rt('sheetTitle'));
+    set('readerSheetDone', rt('done'));
+    set('lblTextSize', rt('textSize'));
+    set('lblLanguage', rt('language'));
+    set('lblNarration', rt('narration'));
+    set('lblDisplay', rt('display'));
+    set('lblBedtime', rt('bedtime'));
+    set('lblBedtimeSub', rt('bedtimeSub'));
+    set('lblFullscreen', rt('fullscreen'));
+    set('lblFullscreenSub', rt('fullscreenSub'));
+    var sizes = rt('sizes');
+    document.querySelectorAll('#sizeSeg button').forEach(function (b, i) {
+        b.textContent = sizes[i];
+        b.style.fontSize = ['0.9rem', '1.05rem', '1.2rem'][i];
+    });
+    document.querySelectorAll('#langSeg button').forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === readerLang()));
+    });
+    applyTextSize(document.documentElement.getAttribute('data-text-size') || 'm');
+    if (totalSlides) updateSlideView(true);
 }
 
 function goToSlide(index) {
     if (index < 0 || index >= totalSlides) return;
 
+    var dir = index > currentSlide ? 'forward' : 'back';
     currentSlide = index;
-    updateSlideView();
+    updateSlideView(false, dir);
     playSound('pageFlip');
+
+    // Bring the top of the page back into view on a long page; never move focus.
+    var bar = document.getElementById('readerBar');
+    var stage = document.querySelector('.story-slides-container');
+    if (stage && bar) {
+        var top = stage.getBoundingClientRect().top - bar.offsetHeight - 8;
+        if (top < 0) {
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            window.scrollBy({ top: top, behavior: reduced ? 'auto' : 'smooth' });
+        }
+    }
 
     // Dispatch slide changed event for audio narration
     document.dispatchEvent(new CustomEvent('slideChanged', {
@@ -680,90 +855,90 @@ function prevSlide() {
     }
 }
 
-function updateSlideView() {
+function updateSlideView(silent, dir) {
     const slidesWrapper = document.getElementById('storySlides');
     if (!slidesWrapper) return;
 
-    // Move slides
-    slidesWrapper.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
-
-    // Update progress dots
-    const dots = document.querySelectorAll('.slide-dot');
-    dots.forEach((dot, index) => {
-        dot.classList.remove('active');
-        if (index === currentSlide) {
-            dot.classList.add('active');
+    const slides = slidesWrapper.querySelectorAll('.story-slide');
+    slides.forEach(function (slide, index) {
+        var on = index === currentSlide;
+        slide.classList.toggle('active', on);
+        slide.classList.remove('enter-forward', 'enter-back');
+        if (on && dir) {
+            void slide.offsetWidth;   // restart the one-shot entrance
+            slide.classList.add(dir === 'forward' ? 'enter-forward' : 'enter-back');
         }
-        if (index < currentSlide) {
-            dot.classList.add('completed');
+        if (on) {
+            slide.removeAttribute('inert');
+            slide.removeAttribute('aria-hidden');
+        } else {
+            slide.setAttribute('inert', '');
+            slide.setAttribute('aria-hidden', 'true');
         }
     });
 
-    // Update counter
+    var pageText = rt('page').replace('{n}', digits(currentSlide + 1)).replace('{N}', digits(totalSlides));
     const counter = document.getElementById('currentSlideNum');
-    if (counter) {
-        counter.textContent = currentSlide + 1;
+    if (counter) counter.textContent = pageText;
+
+    var active = slides[currentSlide];
+    if (active) active.setAttribute('aria-label', pageText);
+
+    const live = document.getElementById('readerLive');
+    if (live && !silent) {
+        var heading = active && active.querySelector('h2, h3');
+        live.textContent = pageText + (heading ? ': ' + heading.textContent.trim() : '');
     }
 
-    // Update nav buttons
     const prevBtn = document.getElementById('prevSlide');
     const nextBtn = document.getElementById('nextSlide');
-
     if (prevBtn) prevBtn.disabled = currentSlide === 0;
     if (nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
 
-    // Update progress bar
+    var percent = ((currentSlide + 1) / totalSlides) * 100;
+    var fill = document.getElementById('readerProgressFill');
+    if (fill) fill.style.width = percent + '%';
     const progressBar = document.getElementById('progressBar');
-    const progressText = document.querySelector('.progress-text');
-    if (progressBar) {
-        const percent = ((currentSlide + 1) / totalSlides) * 100;
-        progressBar.style.width = percent + '%';
-        if (progressText) {
-            progressText.textContent = Math.round(percent) + '% Complete';
-        }
-    }
+    if (progressBar) progressBar.style.width = percent + '%';
+
+    saveStoryProgress();
 }
 
 function handleTouchStart(e) {
     touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
 }
 
 function handleTouchEnd(e) {
     touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
     handleSwipe();
 }
 
 function handleSwipe() {
     const swipeThreshold = 50;
     const diff = touchStartX - touchEndX;
-
-    if (Math.abs(diff) > swipeThreshold) {
-        if (diff > 0) {
-            // Swipe left - next slide
-            nextSlide();
-        } else {
-            // Swipe right - prev slide
-            prevSlide();
-        }
-    }
+    // a mostly vertical drag is a scroll, not a page turn
+    if (Math.abs(diff) < swipeThreshold || Math.abs(diff) < Math.abs(touchStartY - touchEndY)) return;
+    // finger moves toward the start edge = forward. LTR: right-to-left; RTL: left-to-right.
+    var forward = isRTL() ? diff < 0 : diff > 0;
+    if (forward) nextSlide(); else prevSlide();
 }
 
 function handleKeyNavigation(e) {
-    // Only handle if we're on a story page
     if (!document.getElementById('storySlides')) return;
+    // never steal keys from a text field, a select, an open sheet or a modifier chord
+    var el = e.target;
+    if (e.altKey || e.ctrlKey || e.metaKey) return;
+    if (el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))) return;
+    var sheet = document.getElementById('readerSheet');
+    if (sheet && sheet.open) return;
 
-    switch(e.key) {
-        case 'ArrowRight':
-        case 'ArrowDown':
-            nextSlide();
-            break;
-        case 'ArrowLeft':
-        case 'ArrowUp':
-            prevSlide();
-            break;
-    }
+    var fwd = isRTL() ? 'ArrowLeft' : 'ArrowRight';
+    var back = isRTL() ? 'ArrowRight' : 'ArrowLeft';
+    if (e.key === fwd) { e.preventDefault(); nextSlide(); }
+    else if (e.key === back) { e.preventDefault(); prevSlide(); }
 }
-
 // =====================================================
 // FULLSCREEN MODE
 // =====================================================
@@ -774,6 +949,13 @@ let controlsFadeTimeout = null;
 function initializeFullscreenMode() {
     const storyContainer = document.querySelector('.story-container');
     if (!storyContainer) return;
+
+    // Listen for ESC key and browser fullscreen changes either way
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+
+    // In the reader, "Full screen" lives in the settings sheet: no floating button.
+    if (document.body.classList.contains('reader')) return;
 
     // Create fullscreen toggle button
     const fullscreenBtn = document.createElement('button');
@@ -794,11 +976,7 @@ function initializeFullscreenMode() {
         }
     });
 
-    // Listen for fullscreen change events (browser fullscreen)
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
 
-    console.log('🖥️ Fullscreen mode initialized');
 }
 
 function toggleFullscreen() {
@@ -831,11 +1009,14 @@ function enterFullscreen() {
     createFullscreenControls();
 
     // Try to enter browser fullscreen
+    // In the reader the bar and transport live outside the container, so the
+    // whole document goes full screen.
+    var target = document.body.classList.contains('reader') ? document.documentElement : storyContainer;
     try {
-        if (storyContainer.requestFullscreen) {
-            storyContainer.requestFullscreen();
-        } else if (storyContainer.webkitRequestFullscreen) {
-            storyContainer.webkitRequestFullscreen();
+        if (target.requestFullscreen) {
+            target.requestFullscreen();
+        } else if (target.webkitRequestFullscreen) {
+            target.webkitRequestFullscreen();
         }
     } catch (e) {
         console.log('Browser fullscreen not available, using CSS fullscreen');
@@ -943,15 +1124,21 @@ function handleFullscreenChange() {
 // ANIMATED BACKGROUNDS
 // =====================================================
 
+// =====================================================
+// ANIMATED BACKGROUNDS
+// v2: the reader has no ambient loops (motion policy, UI/DESIGN.md section 6).
+// The decorative stars and clouds are only added to a classic-scroll story,
+// are hidden from screen readers, and play once.
+// =====================================================
+
 function initializeBackgroundAnimations() {
     const storyContainer = document.querySelector('.story-container.interactive-story');
-    if (!storyContainer) return;
+    if (!storyContainer || document.body.classList.contains('reader')) return;
 
-    // Create background animations container
     const bgAnimations = document.createElement('div');
     bgAnimations.className = 'story-bg-animations';
+    bgAnimations.setAttribute('aria-hidden', 'true');
 
-    // Add floating stars
     const starEmojis = ['⭐', '✨', '🌟', '💫', '⭐'];
     for (let i = 0; i < 5; i++) {
         const star = document.createElement('span');
@@ -959,83 +1146,16 @@ function initializeBackgroundAnimations() {
         star.textContent = starEmojis[i];
         bgAnimations.appendChild(star);
     }
-
-    // Add floating clouds
     for (let i = 0; i < 3; i++) {
         const cloud = document.createElement('span');
         cloud.className = 'bg-cloud';
         cloud.textContent = '☁️';
         bgAnimations.appendChild(cloud);
     }
-
-    // Insert at the beginning of container
     storyContainer.insertBefore(bgAnimations, storyContainer.firstChild);
-
-    console.log('🌟 Background animations initialized');
 }
 
-// =====================================================
-// ENHANCED SLIDE ANIMATIONS
-// =====================================================
 
-// Enhanced updateSlideView to add active class for animations
-function updateSlideViewEnhanced() {
-    const slidesWrapper = document.getElementById('storySlides');
-    if (!slidesWrapper) return;
-
-    // Move slides
-    slidesWrapper.style.transform = 'translateX(-' + (currentSlide * 100) + '%)';
-
-    // Update slide active states for animations
-    const slides = slidesWrapper.querySelectorAll('.story-slide');
-    slides.forEach(function(slide, index) {
-        slide.classList.remove('active');
-        if (index === currentSlide) {
-            slide.classList.add('active');
-        }
-    });
-
-    // Update progress dots
-    const dots = document.querySelectorAll('.slide-dot');
-    dots.forEach(function(dot, index) {
-        dot.classList.remove('active');
-        if (index === currentSlide) {
-            dot.classList.add('active');
-        }
-        if (index < currentSlide) {
-            dot.classList.add('completed');
-        }
-    });
-
-    // Update counter
-    const counter = document.getElementById('currentSlideNum');
-    if (counter) {
-        counter.textContent = currentSlide + 1;
-    }
-
-    // Update nav buttons
-    const prevBtn = document.getElementById('prevSlide');
-    const nextBtn = document.getElementById('nextSlide');
-
-    if (prevBtn) prevBtn.disabled = currentSlide === 0;
-    if (nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
-
-    // Update progress bar
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.querySelector('.progress-text');
-    if (progressBar) {
-        const percent = ((currentSlide + 1) / totalSlides) * 100;
-        progressBar.style.width = percent + '%';
-        if (progressText) {
-            progressText.textContent = Math.round(percent) + '% Complete';
-        }
-    }
-}
-
-// Replace the original updateSlideView with enhanced version
-updateSlideView = updateSlideViewEnhanced;
-
-console.log('📚 Islamic Kids Stories - Interactive features loaded!');
 
 
 // Exposed so audio-narration.js can turn the page when a slide's narration
