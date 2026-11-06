@@ -409,7 +409,7 @@ style.textContent = [
     '.retry-btn {',
     '    background: var(--surface-1);',
     '    color: var(--text-1);',
-    '    border: 1px solid var(--line);',
+    '    border: 1px solid var(--line-control);',
     '    min-height: 44px;',
     '    padding: 0 1.25rem;',
     '    border-radius: 999px;',
@@ -420,7 +420,7 @@ style.textContent = [
     '    transition: var(--t-press);',
     '}',
     '.retry-btn:active { transform: scale(0.97); }',
-    '.quiz-feedback.incorrect { color: #B42318; }',
+    '.quiz-feedback.incorrect { color: var(--wrong-text); }',
     '.quiz-feedback.correct { color: var(--action); }'
 ].join('\n');
 document.head.appendChild(style);

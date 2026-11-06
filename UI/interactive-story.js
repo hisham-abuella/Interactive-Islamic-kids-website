@@ -170,6 +170,20 @@ function playSound(type) {
     }, 300);
 }
 
+// Make a <div> control operable from the keyboard: focusable, a button to
+// assistive tech, Enter and Space activate it (v2 a11y; the markup stays).
+function makeKeyboardButton(el) {
+    if (!el || el.tagName === 'BUTTON') return;
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            el.click();
+        }
+    });
+}
+
 // Tap to Reveal
 function initializeTapToReveal() {
     const revealElements = document.querySelectorAll('.tap-to-reveal');
@@ -179,9 +193,15 @@ function initializeTapToReveal() {
         const content = element.querySelector('.revealed-content');
 
         if (prompt && content) {
+            makeKeyboardButton(prompt);
+            prompt.setAttribute('aria-expanded', 'false');
             prompt.addEventListener('click', function() {
                 content.classList.remove('hidden');
                 prompt.style.display = 'none';
+                prompt.setAttribute('aria-expanded', 'true');
+                // the prompt disappears: give focus to what it revealed
+                content.setAttribute('tabindex', '-1');
+                content.focus();
                 addStars(1);
             });
         }
@@ -205,14 +225,14 @@ function initializeInteractiveChoices() {
                 if (isCorrect) {
                     this.classList.add('selected-correct');
                     feedback.textContent = '🎉 ' + getGreeting() + getTranslatedText('feedbackCorrect');
-                    feedback.style.color = '#059669';
+                    feedback.style.color = 'var(--action-text)';
                     container.classList.add('answered');
                     addStars(2);
                     playSound('correct');
                 } else {
                     this.classList.add('selected-wrong');
                     feedback.textContent = '🤔 ' + getGreeting() + getTranslatedText('feedbackTryAgain');
-                    feedback.style.color = '#dc2626';
+                    feedback.style.color = 'var(--wrong-text)';
                     playSound('wrong');
 
                     var wrongBtn = this;
@@ -264,6 +284,10 @@ function initializeDragAndDrop() {
     var draggedItem = null;
     var correctPlacements = 0;
 
+    // Keyboard: pick an item (Enter/Space), then pick its box (Enter/Space)
+    dragItems.forEach(function (item) { makeKeyboardButton(item); item.setAttribute('aria-pressed', 'false'); });
+    dropZones.forEach(function (zone) { makeKeyboardButton(zone); });
+
     dragItems.forEach(function(item) {
         // Touch events for mobile
         item.addEventListener('touchstart', handleTouchStart, { passive: true });
@@ -288,8 +312,10 @@ function initializeDragAndDrop() {
             // Toggle selection
             dragItems.forEach(function(i) {
                 i.classList.remove('selected');
+                i.setAttribute('aria-pressed', 'false');
             });
             this.classList.add('selected');
+            this.setAttribute('aria-pressed', 'true');
             draggedItem = this;
         });
     });
@@ -335,17 +361,19 @@ function initializeDragAndDrop() {
             zone.appendChild(droppedElement);
 
             item.classList.add('placed');
+            item.setAttribute('aria-disabled', 'true');
+            item.setAttribute('aria-pressed', 'false');
             correctPlacements++;
 
             if (correctPlacements === 3) {
                 feedback.textContent = '🎉 ' + getGreeting() + getTranslatedText('feedbackPerfect');
-                feedback.style.color = '#059669';
+                feedback.style.color = 'var(--action-text)';
                 addStars(3);
                 playSound('correct');
             }
         } else {
             feedback.textContent = '🤔 ' + getGreeting() + getTranslatedText('feedbackTryElsewhere');
-            feedback.style.color = '#dc2626';
+            feedback.style.color = 'var(--wrong-text)';
             playSound('wrong');
 
             setTimeout(function() {
@@ -355,6 +383,7 @@ function initializeDragAndDrop() {
 
         draggedItem = null;
         item.classList.remove('selected');
+        if (!item.classList.contains('placed')) item.setAttribute('aria-pressed', 'false');
     }
 
     // Touch handlers for mobile drag
@@ -389,14 +418,14 @@ function initializeEmotionCheck() {
 
             if (isCorrect) {
                 emotionFeedback.textContent = '🎉 ' + getGreeting() + getTranslatedText('feedbackCorrect');
-                emotionFeedback.style.color = '#059669';
+                emotionFeedback.style.color = 'var(--action-text)';
                 this.parentElement.classList.add('answered');
                 addStars(2);
                 playSound('correct');
             } else {
                 this.classList.add('wrong');
                 emotionFeedback.textContent = '🤔 ' + getGreeting() + getTranslatedText('feedbackThinkAgain');
-                emotionFeedback.style.color = '#dc2626';
+                emotionFeedback.style.color = 'var(--wrong-text)';
                 playSound('wrong');
             }
         });
@@ -422,7 +451,7 @@ function initializeCelebration() {
 }
 
 function createMassiveConfetti() {
-    var colors = ['#10b981', '#f59e0b', '#14b8a6', '#fde68a', '#a78bfa', '#ec4899'];
+    var colors = ['var(--ornament)', 'var(--ornament-light)', 'var(--action-bright)', 'var(--quran)', 'var(--reward-wash)', 'var(--gold-pale)'];
     var container = document.body;
 
     for (var i = 0; i < 100; i++) {
@@ -516,7 +545,7 @@ function initializeInteractiveLessons() {
                 var instruction = document.querySelector('.lesson-instruction');
                 if (instruction) {
                     instruction.textContent = '🎉 ' + getGreeting() + getTranslatedText('feedbackAllLessons');
-                    instruction.style.color = '#059669';
+                    instruction.style.color = 'var(--action-text)';
                 }
             }
         });
@@ -588,7 +617,7 @@ function initializeSceneRewards() {
 
 // Confetti helper
 function createConfetti(container) {
-    var colors = ['#10b981', '#f59e0b', '#14b8a6', '#fde68a', '#a78bfa'];
+    var colors = ['var(--ornament)', 'var(--ornament-light)', 'var(--action-bright)', 'var(--quran)', 'var(--reward-wash)'];
 
     for (var i = 0; i < 30; i++) {
         var confetti = document.createElement('span');

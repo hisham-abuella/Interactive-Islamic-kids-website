@@ -179,7 +179,7 @@ function showNextQuestion(currentIndex, totalCards) {
 
 // Confetti Effect
 function createConfetti(container) {
-    const colors = ['#10b981', '#f59e0b', '#14b8a6', '#fde68a', '#a78bfa', '#818cf8'];
+    const colors = ['var(--ornament)', 'var(--ornament-light)', 'var(--action-bright)', 'var(--quran)', 'var(--reward-wash)', 'var(--gold-pale)'];
     const confettiCount = 25;
 
     for (let i = 0; i < confettiCount; i++) {
@@ -213,24 +213,23 @@ style.textContent = [
     '    0% { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }',
     '    100% { opacity: 0; transform: translateY(-100px) rotate(720deg) scale(0); }',
     '}',
+    // v2: tokens, not hex (white on the amber gradient was about 2:1)
     '.retry-btn {',
-    '    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);',
-    '    color: white;',
-    '    border: none;',
-    '    padding: 0.6rem 1.5rem;',
-    '    border-radius: 20px;',
-    '    font-weight: 600;',
+    '    background: var(--surface-1);',
+    '    color: var(--text-1);',
+    '    border: 1px solid var(--line-control);',
+    '    min-height: 44px;',
+    '    padding: 0 1.25rem;',
+    '    border-radius: 999px;',
+    '    font-weight: 700;',
     '    cursor: pointer;',
     '    margin-top: 0.8rem;',
     '    font-size: 1rem;',
-    '    transition: all 0.3s ease;',
+    '    transition: var(--t-press);',
     '}',
-    '.retry-btn:hover {',
-    '    transform: scale(1.05);',
-    '    box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);',
-    '}',
-    '.quiz-feedback.incorrect { color: #dc2626; }',
-    '.quiz-feedback.correct { color: #059669; }'
+    '.retry-btn:active { transform: scale(0.97); }',
+    '.quiz-feedback.incorrect { color: var(--wrong-text); }',
+    '.quiz-feedback.correct { color: var(--action-text); }'
 ].join('\n');
 document.head.appendChild(style);
 
