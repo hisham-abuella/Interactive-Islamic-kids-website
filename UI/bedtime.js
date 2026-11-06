@@ -21,7 +21,11 @@
         var btns = document.querySelectorAll('.bedtime-btn');
         Array.prototype.forEach.call(btns, function (b) {
             b.setAttribute('aria-pressed', String(on));
-            b.textContent = on ? '☀️' : '🌙';
+            /* v2 icon buttons carry both SVG glyphs and CSS shows the right one;
+               only the v1 emoji button has its text swapped. */
+            if (!b.querySelector('svg')) {
+                b.textContent = on ? '☀️' : '🌙';
+            }
         });
         try { localStorage.setItem(KEY, on ? 'on' : 'off'); } catch (e) {}
     }

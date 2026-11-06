@@ -50,6 +50,13 @@
         // the site takes no user input, so there is no untrusted path here.
         var nodes = document.querySelectorAll('[data-ar]');
         Array.prototype.forEach.call(nodes, function (el) {
+            /* The v1 bedtime button carries its Arabic NAME in data-ar; swapping
+               its innerHTML replaced the moon with a sentence. Treat it as a label. */
+            if (el.classList.contains('bedtime-btn')) {
+                if (el.__enLabel === undefined) el.__enLabel = el.getAttribute('aria-label') || '';
+                el.setAttribute('aria-label', lang === 'ar' ? el.getAttribute('data-ar') : el.__enLabel);
+                return;
+            }
             if (!el[EN_STORE]) {
                 el[EN_STORE] = el.innerHTML;
             }
@@ -57,6 +64,16 @@
         });
 
         // Keep the older data-i18n pages (Adam) in step with the same button.
+        /* v2: icon-only controls carry their Arabic accessible name in
+           data-ar-label (the English one stays in aria-label). */
+        var labelled = document.querySelectorAll('[data-ar-label]');
+        Array.prototype.forEach.call(labelled, function (el) {
+            if (el.__enLabel === undefined) {
+                el.__enLabel = el.getAttribute('aria-label') || '';
+            }
+            el.setAttribute('aria-label', lang === 'ar' ? el.getAttribute('data-ar-label') : el.__enLabel);
+        });
+
         if (window.i18n && typeof window.i18n.setLanguage === 'function') {
             window.i18n.setLanguage(lang);
         }

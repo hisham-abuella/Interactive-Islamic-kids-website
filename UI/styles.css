@@ -1,29 +1,143 @@
 /* ============================================
    Islamic Kids - Design System
-   Direction: "The Illuminated Page"
-   Every story and surah is a page in a hand-illuminated
-   book. Colors come from Iznik tilework (turquoise, cobalt)
-   and manuscript gold on parchment; the recurring ornament
-   is the 8-fold girih star.
+   Direction: "The Illuminated Page", v2 (2026-11-05)
+   Spec: UI/DESIGN.md. Research: claudeteam/reviews/refero-deep-dive-2026-11-05.md
+
+   Every story and surah is a page in a hand-illuminated book, held in a
+   calm, well-made reading app. Colours come from Iznik tilework (turquoise,
+   cobalt) and manuscript gold on parchment; the ornament is the 8-fold
+   girih star. v2 adds app ergonomics: one job per colour, hairlines before
+   shadows, one warm shadow, an 8pt grid, a fluid type scale with an 18px
+   floor for children's reading text, and self-hosted fonts and icons.
    ============================================ */
 
-:root {
-    /* --- Illumination palette --- */
-    --ink: #14383A;            /* deep pine - headings, text */
-    --turquoise: #17877F;      /* Iznik turquoise - primary */
-    --turquoise-deep: #0F6B65;
-    --cobalt: #24508C;         /* Iznik cobalt - Quran accent */
-    --gold: #C08A2E;           /* manuscript gold */
-    --gold-light: #E0B75C;
-    --gold-text: #8A6220;   /* AA-compliant gold for small text */
-    --gold-pale: #F3E4C4;
-    --parchment: #FBF6EA;
-    --parchment-deep: #F3E9D6;
-    --rule: rgba(192, 138, 46, 0.32);
-    --rule-strong: rgba(192, 138, 46, 0.6);
+/* --- Self-hosted fonts (UI/vendor/fonts, SIL OFL). No font CDN is needed
+       by any page that loads this sheet. --- */
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 400; font-display: swap; src: url('vendor/fonts/nunito-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 600; font-display: swap; src: url('vendor/fonts/nunito-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 700; font-display: swap; src: url('vendor/fonts/nunito-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Nunito'; font-style: normal; font-weight: 800; font-display: swap; src: url('vendor/fonts/nunito-latin-800-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Baloo 2'; font-style: normal; font-weight: 700; font-display: swap; src: url('vendor/fonts/baloo-2-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Baloo 2'; font-style: normal; font-weight: 800; font-display: swap; src: url('vendor/fonts/baloo-2-latin-800-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Baloo Bhaijaan 2'; font-style: normal; font-weight: 600; font-display: swap; src: url('vendor/fonts/baloo-bhaijaan-2-arabic-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Baloo Bhaijaan 2'; font-style: normal; font-weight: 800; font-display: swap; src: url('vendor/fonts/baloo-bhaijaan-2-arabic-800-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Amiri'; font-style: normal; font-weight: 400; font-display: swap; src: url('vendor/fonts/amiri-arabic-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Amiri'; font-style: normal; font-weight: 700; font-display: swap; src: url('vendor/fonts/amiri-arabic-700-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Amiri Quran'; font-style: normal; font-weight: 400; font-display: swap; src: url('vendor/fonts/amiri-quran-arabic-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Aref Ruqaa'; font-style: normal; font-weight: 700; font-display: swap; src: url('vendor/fonts/aref-ruqaa-arabic-700-normal.woff2') format('woff2'); }
 
-    /* --- Legacy names, remapped to the palette above so every
-           page (stories.css, surah.css) inherits the new look --- */
+:root {
+    /* ============ v2 ROLE TOKENS (use these in new code) ============
+       One job per colour:
+         turquoise = action (buttons, links, the active tab, the play control)
+         gold      = ornament, focus and reward (rules, the focus ring, stars, "featured")
+         cobalt    = Quran (verse numbers, the verse being narrated, Quran shelf)
+         red       = wrong-answer feedback only
+       Surfaces are parchment, never #fff; text is pine ink, never #000.
+       Contrast for every pair is in UI/DESIGN.md section 2.3. */
+
+    /* Surfaces (back to front) */
+    --surface-0: #FBF6EA;          /* canvas: parchment */
+    --surface-1: #FFFDF8;          /* raised: cards, sheets, bars (not pure white) */
+    --surface-2: #F3E9D6;          /* sunk: grouped-list wells, tracks, skeletons */
+    --surface-glass: rgba(251, 246, 234, 0.86);  /* app bar / tab bar over content */
+
+    /* Text */
+    --text-1: #14383A;             /* primary: 11.75:1 on canvas */
+    --text-2: #4F6663;             /* secondary: 5.71:1 on canvas, 5.11 on surface-2 */
+    --text-on-action: #FFFDF8;     /* on --action: 6.24:1 */
+
+    /* Action (turquoise) */
+    --action: #0F6B65;             /* fills and action text: 5.88:1 on canvas */
+    --action-bright: #17877F;      /* large glyphs / icons only (4.05:1) */
+    --action-wash: #E3F1EF;        /* selected / pressed tint */
+
+    /* Ornament, focus, reward (gold) */
+    --ornament: #C08A2E;           /* rules, frames, star fills: never text */
+    --ornament-light: #E0B75C;
+    --focus: #8A6220;              /* focus ring: 5.06:1 on canvas (needs 3:1) */
+    --reward-wash: #F7EDD8;        /* pale gold surface: featured card, highlighted verse */
+    --reward-text: #7A5518;        /* gold text on the wash: 5.75:1 */
+
+    /* Quran (cobalt) */
+    --quran: #24508C;              /* 7.49:1 on canvas */
+    --quran-wash: #E7EDF6;
+
+    /* Lines: hairlines before shadows */
+    --line: #E3D7C0;               /* 1px hairline on parchment */
+    --line-strong: rgba(192, 138, 46, 0.6);   /* gold rule (ornamental) */
+    --hairline: 1px solid var(--line);
+    --hairline-gold: 1px solid var(--line-strong);
+
+    /* The one warm shadow (ink-tinted, never black), for things that float:
+       sheets, the transport bar, the featured card. Cards use the hairline. */
+    --shadow: 0 1px 2px rgba(60, 42, 12, 0.06), 0 10px 28px -12px rgba(60, 42, 12, 0.22);
+
+    /* 8pt spacing grid */
+    --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;
+    --s-5: 24px; --s-6: 32px; --s-7: 48px; --s-8: 64px;
+    --gutter: clamp(16px, 4vw, 32px);
+
+    /* Radii */
+    --r-sm: 10px;      /* chips, small controls, inputs */
+    --r-md: 16px;      /* cards, tiles, cover plates */
+    --r-lg: 24px;      /* sheets, the featured card */
+    --r-pill: 999px;   /* buttons, segmented controls, the play control */
+
+    /* Hit areas */
+    --tap: 44px;       /* WCAG 2.5.5 floor, every control */
+    --tap-lg: 56px;    /* primary transport (play), tab bar items */
+
+    /* Type families */
+    --font-ui: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Nunito', system-ui, sans-serif;
+    --font-ui-ar: -apple-system, BlinkMacSystemFont, 'SF Arabic', 'Segoe UI', 'Baloo Bhaijaan 2', 'Amiri', system-ui, sans-serif;
+    --font-read: 'Nunito', 'Andika', ui-rounded, system-ui, sans-serif;    /* children's reading text */
+    --font-title: 'Baloo 2', 'Nunito', ui-rounded, system-ui, sans-serif;
+    --font-ar: 'Amiri', 'Baloo Bhaijaan 2', serif;                         /* the one Arabic body face */
+    --font-quran: 'Amiri Quran', 'Amiri', serif;                          /* ayat only */
+
+    /* Fluid type scale (min at 360px, max at ~1280px) */
+    --step--1: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);   /* 14-15  labels, captions */
+    --step-0:  clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);      /* 16-17  UI body */
+    --step-read: clamp(1.125rem, 1.04rem + 0.45vw, 1.375rem); /* 18-22  children's story text: never below 18px */
+    --step-1:  clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);       /* 20-24  card titles */
+    --step-2:  clamp(1.5rem, 1.3rem + 1vw, 2rem);             /* 24-32  screen titles */
+    --step-3:  clamp(1.875rem, 1.5rem + 1.8vw, 2.75rem);      /* 30-44  large titles */
+    --step-quran: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);     /* 28-40  ayat */
+
+    /* Motion: explicit properties only, never `transition: all` */
+    --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --dur-1: 120ms;    /* press */
+    --dur-2: 200ms;    /* hover, colour */
+    --dur-3: 320ms;    /* page turn, sheet */
+    --t-press: transform var(--dur-1) var(--ease-out), background-color var(--dur-2) var(--ease-out),
+               border-color var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out),
+               color var(--dur-2) var(--ease-out), opacity var(--dur-2) var(--ease-out);
+
+    /* App shell metrics */
+    --appbar-h: 56px;
+    --tabbar-h: 64px;
+    --rail-w: 96px;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-start: env(safe-area-inset-left, 0px);
+    --safe-end: env(safe-area-inset-right, 0px);
+
+    /* ============ v1 NAMES, aliased so every older sheet keeps working ============ */
+    --ink: var(--text-1);
+    --turquoise: #17877F;
+    --turquoise-deep: var(--action);
+    --cobalt: var(--quran);
+    --gold: var(--ornament);
+    --gold-light: var(--ornament-light);
+    --gold-text: var(--focus);
+    --gold-pale: #F3E4C4;
+    --parchment: var(--surface-0);
+    --parchment-deep: var(--surface-2);
+    --rule: rgba(192, 138, 46, 0.32);
+    --rule-strong: var(--line-strong);
+
+    /* Legacy Tailwind-ish names, remapped to the palette above */
     --teal-600: #17877F;
     --teal-500: #1E9B92;
     --teal-400: #3FB8AE;
@@ -33,36 +147,35 @@
     --amber-600: #A07223;
     --amber-100: #F3E4C4;
     --amber-50: #FBF3E2;
-    --slate-900: #14383A;
+    --slate-900: var(--text-1);
     --slate-800: #1D4A4A;
     --slate-700: #2E5B58;
-    --slate-500: #5C7370;
+    --slate-500: var(--text-2);   /* v2: darkened from #5C7370 (4.21:1 on parchment-deep) to pass AA everywhere */
     --slate-400: #8FA3A0;
     --slate-200: #E6DCC8;
-    --cream: #FBF6EA;
+    --cream: var(--surface-0);
     --cream-blue: #EEF4F3;
 
-    /* --- Shades that were repeated as raw hex across the page-type sheets.
-           Same values, now addressable. Added 2026-09-04. --- */
-    --card: #FFFDF8;              /* the near-white card face on parchment */
-    --gold-ink: #7A5518;          /* dark gold for text on a pale gold wash */
-    --gold-ink-strong: #5E4212;   /* the darkest gold, for small emphasis text */
-    --gold-wash: #F7EDD8;         /* pale gold surface, lighter than --gold-pale */
-    --parchment-warm: #F5EFE2;    /* parchment, one step warmer */
-    --rule-warm: #D9CFBC;         /* hairline rule on parchment */
-    --cobalt-deep: #1B3C6B;       /* deep cobalt, hero gradients */
+    --card: var(--surface-1);
+    --gold-ink: var(--reward-text);
+    --gold-ink-strong: #5E4212;
+    --gold-wash: var(--reward-wash);
+    --parchment-warm: #F5EFE2;
+    --rule-warm: #D9CFBC;
+    --cobalt-deep: #1B3C6B;
     --cobalt-mid: #5A79B0;
     --cobalt-pale: #C9D8EC;
-    --cobalt-wash: #E7EDF6;       /* palest cobalt surface */
+    --cobalt-wash: var(--quran-wash);
 
     --radius-lg: 20px;
     --radius-xl: 28px;
-    --radius-full: 50px;
-    --shadow-sm: 0 2px 8px rgba(20, 56, 58, 0.06);
-    --shadow-md: 0 8px 24px rgba(20, 56, 58, 0.09);
-    --shadow-lg: 0 16px 40px rgba(20, 56, 58, 0.12);
-    --shadow-teal: 0 8px 24px rgba(23, 135, 127, 0.18);
-    --shadow-amber: 0 8px 24px rgba(192, 138, 46, 0.2);
+    --radius-full: var(--r-pill);
+    /* v1 had five shadows; v2 has one. Small stays a hairline-weight lift. */
+    --shadow-sm: 0 1px 2px rgba(60, 42, 12, 0.06);
+    --shadow-md: var(--shadow);
+    --shadow-lg: var(--shadow);
+    --shadow-teal: var(--shadow);
+    --shadow-amber: var(--shadow);
 
     /* The signature ornament: an 8-fold girih star tessellation,
        drawn as two overlapping squares repeated on a 80px grid. */
@@ -79,7 +192,7 @@
 }
 
 body {
-    font-family: 'Nunito', 'Poppins', sans-serif;
+    font-family: var(--font-read);
     background: var(--parchment);
     color: var(--ink);
     line-height: 1.7;
@@ -117,13 +230,8 @@ header {
 
 .crescent {
     font-size: 2rem;
-    animation: crescentPulse 3s ease-in-out infinite;
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
-}
-
-@keyframes crescentPulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.05); }
+    /* v2: the crescent rests. It pulsed forever on every page (motion policy:
+       no infinite loops in chrome or the reading area). */
 }
 
 /* The site name is a wordmark, not the page heading - it is a <span> so each
@@ -156,7 +264,7 @@ header {
     display: block;
     width: 26px;
     height: 3px;
-    background: white;
+    background: var(--surface-1);
     border-radius: 3px;
     transition: transform 0.3s ease;
 }
@@ -172,7 +280,7 @@ header {
     text-decoration: none;
     font-weight: 700;
     font-size: 0.95rem;
-    transition: all 0.25s ease;
+    transition: var(--t-press);
     padding: 0.45rem 1.1rem;
     border-radius: var(--radius-full);
     /* Matches the 44px touch target the rest of the controls use. */
@@ -743,15 +851,31 @@ footer::before {
 /* ============================================
    Scroll Animations
    ============================================ */
-.fade-in {
+/* v2 js-reveal gate: content is hidden only once a script has proved it can
+   reveal it (it adds .js-reveal to <html> first). Without JS, without an
+   IntersectionObserver, in print and in full-page captures, cards are visible. */
+.js-reveal .fade-in:not(.visible) {
     opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+    transform: translateY(16px);
 }
 
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+.fade-in {
+    transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+
+.js-reveal .reveal:not(.visible) {
+    opacity: 0;
+    transform: translateY(16px);
+}
+
+.reveal {
+    transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out),
+                background-color var(--dur-2) var(--ease-out), border-color var(--dur-2) var(--ease-out),
+                box-shadow var(--dur-2) var(--ease-out);
+}
+
+@media print {
+    .js-reveal .reveal, .js-reveal .fade-in { opacity: 1 !important; transform: none !important; }
 }
 
 /* Stagger children */
@@ -847,8 +971,12 @@ footer::before {
 a:focus-visible,
 button:focus-visible,
 .quiz-option:focus-visible,
-.nav-toggle:focus-visible {
-    outline: 3px solid var(--gold);
+.nav-toggle:focus-visible,
+[tabindex]:focus-visible,
+summary:focus-visible {
+    /* v2: --focus (#8A6220) is 5.06:1 on parchment; the old --gold ring was 2.82:1.
+       Never animated: transitions list their properties and never include outline. */
+    outline: 3px solid var(--focus);
     outline-offset: 3px;
     border-radius: 4px;
 }
@@ -868,9 +996,17 @@ button:focus-visible,
         scroll-behavior: auto !important;
     }
 
-    .fade-in {
+    .fade-in,
+    .reveal {
         opacity: 1 !important;
         transform: none !important;
+    }
+
+    /* The universal selector above does not match view-transition pseudo-elements. */
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
     }
 }
 
@@ -883,9 +1019,11 @@ button:focus-visible,
    ============================================ */
 
 .lang-toggle-btn {
-    background: var(--gold);
-    color: var(--ink);
-    border: 2px solid var(--gold-light);
+    /* v2: ink on --gold was 4.18:1 (fails AA at this size). Now a parchment pill:
+       ink on --surface-1 is 12.47:1, and the pill reads on the dark v1 header too. */
+    background: var(--surface-1);
+    color: var(--text-1);
+    border: 1px solid var(--line);
     padding: 0.4rem 1rem;
     min-height: 44px;   /* children's hands - WCAG target size */
     border-radius: var(--radius-full);
@@ -895,20 +1033,25 @@ button:focus-visible,
     line-height: 1.4;
     cursor: pointer;
     white-space: nowrap;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    box-shadow: var(--shadow-sm);
+    transition: var(--t-press);
 }
 
-.lang-toggle-btn:hover,
-.lang-toggle-btn:focus-visible {
-    background: var(--gold-light);
-    transform: scale(1.06);
-    box-shadow: var(--shadow-amber);
+.lang-toggle-btn:hover {
+    background: var(--reward-wash);
+}
+
+.lang-toggle-btn:active {
+    transform: scale(0.97);
 }
 
 .lang-toggle-btn:focus-visible {
-    outline: 3px solid var(--parchment);
+    outline: 3px solid var(--focus);
     outline-offset: 2px;
+}
+
+header .lang-toggle-btn:focus-visible,
+header .bedtime-btn:focus-visible {
+    outline-color: var(--ornament-light);   /* on the dark v1 header: 5.8:1 */
 }
 
 /* Group the toggle with the nav links so it stays reachable on mobile */
@@ -927,7 +1070,7 @@ html[lang="ar"] .transliteration {
 }
 
 html[lang="ar"] body {
-    font-family: 'Amiri', 'Nunito', Georgia, serif;
+    font-family: var(--font-ar);
 }
 
 html[lang="ar"] .verse-explanation,
@@ -979,10 +1122,8 @@ html[lang="ar"] .quiz-options {
     padding-left: 0;
 }
 
-/* Prev/next buttons keep pointing the way the reader is travelling */
-html[lang="ar"] .page-navigation {
-    flex-direction: row-reverse;
-}
+/* v2: no row-reverse here. dir="rtl" already puts "previous" on the right,
+   where an Arabic reader's book begins; reversing again flipped it back. */
 
 html[lang="ar"] .quiz-option,
 html[lang="ar"] .start-story-btn {
@@ -1080,7 +1221,7 @@ html[lang="ar"] .info-badge:not([data-ar]) {
         display: none !important;
     }
     body {
-        background: #fff;
+        background: #fff;   /* paper */
     }
 }
 
@@ -1123,6 +1264,25 @@ html[lang="ar"] .info-badge:not([data-ar]) {
 }
 
 html[data-theme="bedtime"] {
+    /* v2 role tokens */
+    --surface-0: #2A2520;
+    --surface-1: #322C25;
+    --surface-2: #221E1A;
+    --surface-glass: rgba(42, 37, 32, 0.9);
+    --text-1: #F2E7D2;
+    --text-2: #C9BEA8;
+    --text-on-action: #FFFDF8;
+    --action: #1F6F69;
+    --action-bright: #3FB8AE;
+    --action-wash: #23403C;
+    --focus: #E8C070;
+    --reward-wash: #38301F;
+    --reward-text: #E8C070;
+    --quran: #9BBBEA;
+    --quran-wash: #26303C;
+    --line: rgba(232, 192, 112, 0.22);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px -12px rgba(0, 0, 0, 0.5);
+    /* v1 names */
     --parchment: #2A2520;
     --parchment-deep: #221E1A;
     --parchment-warm: #2F2A24;
