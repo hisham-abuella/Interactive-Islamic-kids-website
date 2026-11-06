@@ -10,12 +10,12 @@
     <link rel="apple-touch-icon" href="images/app/apple-touch-icon.png">
     <title>Interactive Stories - Islamic Kids</title>
     <!-- fonts are self-hosted: @font-face in styles.css (vendor/fonts) -->
-    <link rel="stylesheet" href="styles.css?v=20261105">
-    <link rel="stylesheet" href="app.css?v=20261105">
-    <link rel="stylesheet" href="stories.css?v=20261105">
+    <link rel="stylesheet" href="styles.css?v=20261106">
+    <link rel="stylesheet" href="app.css?v=20261106">
+    <link rel="stylesheet" href="stories.css?v=20261106">
 </head>
 <body class="app list-screen">
-    <a class="visually-hidden" href="#main">Skip to content</a>
+    <a class="visually-hidden" href="#main" data-ar="انتقل إلى المحتوى">Skip to content</a>
 
     <!-- Top app bar -->
     <header class="app-bar">
@@ -43,8 +43,9 @@
     </nav>
 
     <!-- Stories Hero -->
-    <section class="stories-hero" id="main">
-        <h1 data-ar="📚 قصص تفاعلية">📚 Interactive Stories</h1>
+    <main id="main">
+    <section class="stories-hero">
+        <h1 data-ar="<span aria-hidden=&quot;true&quot;>📚</span> قصص تفاعلية"><span aria-hidden="true">📚</span> Interactive Stories</h1>
         <p data-ar="اختر قصة لتبدأ مغامرتك!">Choose a story to begin your adventure!</p>
     </section>
 
@@ -59,15 +60,15 @@
                         <img class="story-cover" src="images/stories/prophet-adam/cover.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="story-info">
-                        <h3 data-ar="النبي آدم - أول إنسان">Prophet Adam - The First Human</h3>
+                        <h2 class="card-title" data-ar="النبي آدم - أول إنسان">Prophet Adam - The First Human</h2>
                         <p data-ar="مغامرة تفاعلية! تعرّف على أول إنسان وكيف أننا جميعاً أسرة واحدة.">An interactive adventure! Learn about the first human and how we're all one family.</p>
-                        <div class="story-meta" data-ar="<span>🎮 تفاعلية</span> <span>⭐ اجمع النجوم</span> <span>🎯 أنشطة</span> <span>🎬 فيديو</span>">
-                            <span>🎮 Interactive</span>
-                            <span>⭐ Earn Stars</span>
-                            <span>🎯 Activities</span>
-                            <span>🎬 Video</span>
+                        <div class="story-meta" data-ar="<span><span aria-hidden=&quot;true&quot;>🎮</span> تفاعلية</span> <span><span aria-hidden=&quot;true&quot;>⭐</span> اجمع النجوم</span> <span><span aria-hidden=&quot;true&quot;>🎯</span> أنشطة</span> <span><span aria-hidden=&quot;true&quot;>🎬</span> فيديو</span>">
+                            <span><span aria-hidden="true">🎮</span> Interactive</span>
+                            <span><span aria-hidden="true">⭐</span> Earn Stars</span>
+                            <span><span aria-hidden="true">🎯</span> Activities</span>
+                            <span><span aria-hidden="true">🎬</span> Video</span>
                         </div>
-                        <button class="start-story-btn" data-ar="ابدأ القصة ←">Play Story →</button>
+                        <span class="start-story-btn" data-ar="ابدأ القصة ←">Play Story →</span>
                     </div>
                 </div>
             </a>
@@ -79,15 +80,15 @@
                         <img class="story-cover" src="images/stories/prophet-ibrahim/cover.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="story-info">
-                        <h3 data-ar="ثقة النبي إبراهيم بالله">Prophet Ibrahim's Trust in Allah</h3>
+                        <h2 class="card-title" data-ar="ثقة النبي إبراهيم بالله">Prophet Ibrahim's Trust in Allah</h2>
                         <p data-ar="مغامرة تفاعلية! المس واسحب والعب خلال قصة إبراهيم المدهشة.">An interactive adventure! Tap, drag, and play through Ibrahim's amazing story.</p>
-                        <div class="story-meta" data-ar="<span>🎮 تفاعلية</span> <span>⭐ اجمع النجوم</span> <span>🎯 أنشطة</span> <span>🎬 فيديو</span>">
-                            <span>🎮 Interactive</span>
-                            <span>⭐ Earn Stars</span>
-                            <span>🎯 Activities</span>
-                            <span>🎬 Video</span>
+                        <div class="story-meta" data-ar="<span><span aria-hidden=&quot;true&quot;>🎮</span> تفاعلية</span> <span><span aria-hidden=&quot;true&quot;>⭐</span> اجمع النجوم</span> <span><span aria-hidden=&quot;true&quot;>🎯</span> أنشطة</span> <span><span aria-hidden=&quot;true&quot;>🎬</span> فيديو</span>">
+                            <span><span aria-hidden="true">🎮</span> Interactive</span>
+                            <span><span aria-hidden="true">⭐</span> Earn Stars</span>
+                            <span><span aria-hidden="true">🎯</span> Activities</span>
+                            <span><span aria-hidden="true">🎬</span> Video</span>
                         </div>
-                        <button class="start-story-btn" data-ar="ابدأ القصة ←">Play Story →</button>
+                        <span class="start-story-btn" data-ar="ابدأ القصة ←">Play Story →</span>
                     </div>
                 </div>
             </a>
@@ -99,14 +100,14 @@
                         <img class="story-cover" src="images/stories/prophet-nuh/cover.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="story-info">
-                        <h3 data-ar="النبي نوح والسفينة العظيمة">Prophet Nuh and the Great Ark</h3>
+                        <h2 class="card-title" data-ar="النبي نوح والسفينة العظيمة">Prophet Nuh and the Great Ark</h2>
                         <p data-ar="تعلّم الصبر والثقة بالله من قصة النبي نوح عليه السلام.">Learn about patience and trust in Allah through the story of Prophet Nuh (AS).</p>
-                        <div class="story-meta" data-ar="<span>📖 ١٠ دقائق قراءة</span> <span>🎯 مع اختبار</span> <span>🎬 فيديو إضافي</span>">
-                            <span>📖 10 min read</span>
-                            <span>🎯 Quiz included</span>
-                            <span>🎬 Bonus video</span>
+                        <div class="story-meta" data-ar="<span><span aria-hidden=&quot;true&quot;>📖</span> ١٠ دقائق قراءة</span> <span><span aria-hidden=&quot;true&quot;>🎯</span> مع اختبار</span> <span><span aria-hidden=&quot;true&quot;>🎬</span> فيديو إضافي</span>">
+                            <span><span aria-hidden="true">📖</span> 10 min read</span>
+                            <span><span aria-hidden="true">🎯</span> Quiz included</span>
+                            <span><span aria-hidden="true">🎬</span> Bonus video</span>
                         </div>
-                        <button class="start-story-btn" data-ar="ابدأ القصة ←">Start Story →</button>
+                        <span class="start-story-btn" data-ar="ابدأ القصة ←">Start Story →</span>
                     </div>
                 </div>
             </a>
@@ -118,14 +119,14 @@
                         <img class="story-cover" src="images/stories/prophet-yusuf/cover.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="story-info">
-                        <h3 data-ar="النبي يوسف والرؤيا الجميلة">Prophet Yusuf and the Beautiful Dream</h3>
+                        <h2 class="card-title" data-ar="النبي يوسف والرؤيا الجميلة">Prophet Yusuf and the Beautiful Dream</h2>
                         <p data-ar="اكتشف رحلة النبي يوسف عليه السلام المدهشة ورؤاه العجيبة.">Discover the amazing journey of Prophet Yusuf (AS) and his incredible dreams.</p>
-                        <div class="story-meta" data-ar="<span>📖 ١٢ دقيقة قراءة</span> <span>🎯 مع اختبار</span> <span>🎬 فيديو إضافي</span>">
-                            <span>📖 12 min read</span>
-                            <span>🎯 Quiz included</span>
-                            <span>🎬 Bonus video</span>
+                        <div class="story-meta" data-ar="<span><span aria-hidden=&quot;true&quot;>📖</span> ١٢ دقيقة قراءة</span> <span><span aria-hidden=&quot;true&quot;>🎯</span> مع اختبار</span> <span><span aria-hidden=&quot;true&quot;>🎬</span> فيديو إضافي</span>">
+                            <span><span aria-hidden="true">📖</span> 12 min read</span>
+                            <span><span aria-hidden="true">🎯</span> Quiz included</span>
+                            <span><span aria-hidden="true">🎬</span> Bonus video</span>
                         </div>
-                        <button class="start-story-btn" data-ar="ابدأ القصة ←">Start Story →</button>
+                        <span class="start-story-btn" data-ar="ابدأ القصة ←">Start Story →</span>
                     </div>
                 </div>
             </a>
@@ -137,15 +138,15 @@
                         <img class="story-cover" src="images/stories/prophet-musa/cover.webp" alt="" loading="lazy" decoding="async" width="960" height="540">
                     </div>
                     <div class="story-info">
-                        <h3 data-ar="النبي موسى وانشقاق البحر">Prophet Musa and the Parting of the Sea</h3>
+                        <h2 class="card-title" data-ar="النبي موسى وانشقاق البحر">Prophet Musa and the Parting of the Sea</h2>
                         <p data-ar="من سلة على النهر إلى طريق في البحر - قصة شجاعة وثقة بالله.">From a basket on the river to a path through the sea - a story of courage and trust in Allah.</p>
-                        <div class="story-meta" data-ar="<span>🎮 تفاعلية</span> <span>⭐ اجمع النجوم</span> <span>🎯 أنشطة</span> <span>🎬 فيديو</span>">
-                            <span>🎮 Interactive</span>
-                            <span>⭐ Earn Stars</span>
-                            <span>🎯 Activities</span>
-                            <span>🎬 Video</span>
+                        <div class="story-meta" data-ar="<span><span aria-hidden=&quot;true&quot;>🎮</span> تفاعلية</span> <span><span aria-hidden=&quot;true&quot;>⭐</span> اجمع النجوم</span> <span><span aria-hidden=&quot;true&quot;>🎯</span> أنشطة</span> <span><span aria-hidden=&quot;true&quot;>🎬</span> فيديو</span>">
+                            <span><span aria-hidden="true">🎮</span> Interactive</span>
+                            <span><span aria-hidden="true">⭐</span> Earn Stars</span>
+                            <span><span aria-hidden="true">🎯</span> Activities</span>
+                            <span><span aria-hidden="true">🎬</span> Video</span>
                         </div>
-                        <button class="start-story-btn" data-ar="ابدأ القصة ←">Play Story →</button>
+                        <span class="start-story-btn" data-ar="ابدأ القصة ←">Play Story →</span>
                     </div>
                 </div>
             </a>
@@ -154,6 +155,8 @@
     </section>
 
     <!-- Footer -->
+    </main>
+
     <footer class="app-footer">
         <div class="footer-content">
             <p data-ar="🌙 قصص أطفال الإسلام - نعلّم الإيمان بالحكاية ✨">🌙 Islamic Kids Stories - Teaching faith through storytelling ✨</p>
@@ -161,7 +164,7 @@
         </div>
     </footer>
 
-    <script src="bilingual.js?v=20261105"></script>
-    <script src="bedtime.js?v=20261105"></script>
+    <script src="bilingual.js?v=20261106"></script>
+    <script src="bedtime.js?v=20261106"></script>
 </body>
 </html>

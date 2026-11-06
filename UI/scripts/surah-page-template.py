@@ -175,9 +175,9 @@ def page(spec):
     <link rel="apple-touch-icon" href="images/app/apple-touch-icon.png">
     <title>%(title_en)s - Islamic Kids</title>
     <!-- fonts are self-hosted: @font-face in styles.css (vendor/fonts) -->
-    <link rel="stylesheet" href="styles.css?v=20261105">
-    <link rel="stylesheet" href="app.css?v=20261105">
-    <link rel="stylesheet" href="surah.css?v=20261105">
+    <link rel="stylesheet" href="styles.css?v=20261106">
+    <link rel="stylesheet" href="app.css?v=20261106">
+    <link rel="stylesheet" href="surah.css?v=20261106">
 </head>
 %(shell)s    <!-- Hero -->
     <section class="surah-hero">
@@ -211,7 +211,7 @@ def page(spec):
             <section class="verses-section">
                 <h2 class="section-title" data-ar="\U0001f4dc تعلّم كل آية">\U0001f4dc Learn Each Verse</h2>
 
-                <div class="stage-picker" role="group" aria-label="Learning stage">
+                <div class="stage-picker" role="group" aria-label="Learning stage" data-ar-label="مرحلة التعلّم">
                     <span class="stage-label" data-ar="كيف تريد أن تتعلّم؟">How do you want to learn?</span>
                     <div class="stage-buttons segmented">
                         <button class="stage-btn" type="button" data-stage="read" data-ar="اقرأ">Read</button>
@@ -324,10 +324,10 @@ def page(spec):
         </div>
     </footer>
 
-    <script src="surah.js?v=20261105"></script>
-    <script src="surah-narration.js?v=20261105"></script>
-    <script src="bilingual.js?v=20261105"></script>
-    <script src="bedtime.js?v=20261105"></script>
+    <script src="surah.js?v=20261106"></script>
+    <script src="surah-narration.js?v=20261106"></script>
+    <script src="bilingual.js?v=20261106"></script>
+    <script src="bedtime.js?v=20261106"></script>
 
 </body>
 </html>

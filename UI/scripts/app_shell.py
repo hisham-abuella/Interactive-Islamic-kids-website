@@ -6,7 +6,7 @@ generated page and a converted one carry byte-identical chrome.
 """
 import re
 
-V = '20261105'
+V = '20261106'
 
 HEAD_META = (
     '    <meta name="theme-color" content="#FBF6EA">\n'
@@ -76,7 +76,7 @@ def shell(body_class, current, title_en=None, title_ar=None, back=None, back_en=
         )
     return (
         '<body class="%s">\n'
-        '    <a class="visually-hidden" href="#main">Skip to content</a>\n'
+        '    <a class="visually-hidden" href="#main" data-ar="انتقل إلى المحتوى">Skip to content</a>\n'
         '\n'
         '    <!-- Top app bar -->\n'
         '    <header class="app-bar">\n' + start + actions() +

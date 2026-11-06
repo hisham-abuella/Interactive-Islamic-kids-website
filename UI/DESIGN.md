@@ -48,10 +48,14 @@ screen in `surah.css` (v2 block) + `surah-narration.js`. Icons: `vendor/icons/sp
 | **Action** (turquoise) | `--action` | `#0F6B65` | buttons, links, the active tab, the play control, correct answers |
 | On action | `--text-on-action` | `#FFFDF8` | text and glyphs on `--action` |
 | Action tint | `--action-wash` | `#E3F1EF` | pressed, hover and selected tints |
+| Action as text | `--action-text` | `#0F6B65` (bedtime `#5CC6BC`) | **every** use of the action colour as text or a glyph: active tab, "See all", link buttons, verse Listen, pressed icon buttons. `--action` itself is a fill (bedtime `#1F6F69` is 2.56:1 as text) |
+| Control edge | `--line-control` | `#857A66` (bedtime `#9C907A`) | edges that must be seen (WCAG 1.4.11): the selected segment, the off switch, the name field: 3.51-4.39:1 |
 | **Ornament** (gold) | `--ornament` | `#C08A2E` | rules, frames, stars, the reading progress line. Never text |
 | **Focus** (gold, dark) | `--focus` | `#8A6220` | the focus ring and the narrated-verse bar |
 | **Reward** (gold wash) | `--reward-wash` / `--reward-text` | `#F7EDD8` / `#7A5518` | the featured card, the narrated verse, "Reading" badges |
 | **Quran** (cobalt) | `--quran` / `--quran-wash` | `#24508C` / `#E7EDF6` | ayah numbers, surah-name tiles, the Arabic name in the surah header |
+| Quran fill | `--quran-fill` | `#24508C` in both themes | cobalt behind light text (the dua "memorize" button) |
+| Plate ink | `--plate-ink` / `--plate-gold` | `#2A1D0C` / `#7A5518`, never flipped | text painted on the calligraphy panel, which stays light in bedtime (ayah marks 4.92-5.39:1) |
 | Wrong answer | literal | `#B42318` | wrong-answer feedback only (frontend hard rule 2) |
 | Lines | `--line`, `--hairline`, `--hairline-gold` | `#E3D7C0` / gold 60% | card edges; gold rule for ornamental frames |
 
@@ -202,6 +206,10 @@ Built by `stories.js` when a story has slides (all but Yusuf, which stays classi
   `inert` and `aria-hidden`); no inner scroll, no 60vh cap; plate on top (16:9, `--r-md`), scene
   title, then the text at `--step-read`. Story text column on a 390px phone: 358px at 18.4px.
 - **Live region:** polite, "Page 3 of 16: Never Giving Up" (localised), not announced on load.
+  Quiz, choice, emotion and activity feedback carry `role="status"`.
+- **Focus is never dropped:** previous/next at the ends, answered quiz options and the finished
+  Kaaba button use `aria-disabled`, not `disabled`; "Try again" hands focus to the first open answer.
+- The previous/next-story links and the closing moral show on the **last page only**.
 - **Transport** (`.reader-transport`): a floating pill, fixed above the safe area: previous
   (56px) | play/pause (56px round, `aria-pressed`, labelled "Listen to this page") with a thin
   narration-progress line | next (56px). Always above the fold.
@@ -214,7 +222,8 @@ Built by `stories.js` when a story has slides (all but Yusuf, which stays classi
 - **Resume:** the slide is saved per story (`localStorage ik-story-progress`), feeding Home's
   "Continue" card; reopening a story resumes there. **Start over** / «من البداية» is a row in the
   settings sheet and a secondary button on the Continue card (`?resume=0`).
-- **Child's name** / «اسم الطفل»: a field in the settings sheet (and in Home's settings sheet,
+- **No name prompt.** The v1 first-visit name modal is gone (it blocked every story until a
+  name was typed). - **Child's name** / «اسم الطفل»: a field in the settings sheet (and in Home's settings sheet,
   reached from the app bar or the "Add your child's name" link under the greeting). Stored in
   `localStorage islamicKidsName` on this device only; no default name ships. With no name the
   greeting is just "Assalamu alaikum" / «السلام عليكم».
@@ -252,7 +261,9 @@ cards; "Explore Activities" and the Ramadan countdown are gone (nothing behind t
 `scripts/app_shell.py` holds the shell's strings once. `scripts/surah-page-template.py` emits them
 for generated surahs; `scripts/apply-app-shell.py` converts a hand-made v1 page (idempotent; it
 touches only the head, the header and three attributes: `main#main`, `.stage-buttons.segmented`,
-`footer.app-footer`). Generated and converted output were checked byte-identical for all 8 specs.
+`footer.app-footer`). Generated and converted chrome were checked byte-identical for all 8 specs. **Caution:** the
+specs for Al-Bayyinah, Al-Humazah and At-Tin are behind the pages (scholar corrections were made
+in the HTML only), so `build-surah.py` on those three would revert content. Update the specs first.
 
 ### 7.11 Install as an app
 `manifest.webmanifest` (standalone, parchment theme), `images/app/icon.svg` + 192/512 PNG +
