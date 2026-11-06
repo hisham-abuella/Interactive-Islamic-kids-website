@@ -51,13 +51,52 @@
     }
 
     /* ---- greeting ---- */
+    /* The child's name lives only in this browser (islamicKidsName). Nothing
+       ships with a default: with no name the greeting is just the salam. */
+    function getName() {
+        try { return (localStorage.getItem('islamicKidsName') || '').trim(); } catch (e) { return ''; }
+    }
+
+    function setName(v) {
+        v = (v || '').trim().slice(0, 20);
+        try {
+            if (v) localStorage.setItem('islamicKidsName', v);
+            else localStorage.removeItem('islamicKidsName');
+        } catch (e) {}
+    }
+
     function renderGreeting() {
         var h = document.getElementById('greeting');
         if (!h) return;
-        var name = '';
-        try { name = (localStorage.getItem('islamicKidsName') || '').trim(); } catch (e) {}
+        var name = getName();
         var hello = lang() === 'ar' ? 'السلام عليكم' : 'Assalamu alaikum';
         h.textContent = name ? hello + (lang() === 'ar' ? ' يا ' : ', ') + name : hello;
+        var edit = document.getElementById('nameEdit');
+        if (edit) {
+            edit.hidden = false;
+            edit.textContent = name
+                ? (lang() === 'ar' ? 'تغيير الاسم' : 'Change name')
+                : (lang() === 'ar' ? 'أضف اسم الطفل' : "Add your child's name");
+        }
+    }
+
+    function initSettings() {
+        var sheet = document.getElementById('homeSheet');
+        if (!sheet) return;
+        var input = document.getElementById('childName');
+        var open = function () {
+            input.value = getName();
+            if (typeof sheet.showModal === 'function') sheet.showModal(); else sheet.setAttribute('open', '');
+            input.focus();
+        };
+        var close = function () { setName(input.value); renderGreeting(); if (sheet.close) sheet.close(); else sheet.removeAttribute('open'); };
+        document.getElementById('homeSettings').addEventListener('click', open);
+        document.getElementById('nameEdit').addEventListener('click', open);
+        document.getElementById('homeSheetDone').addEventListener('click', close);
+        input.addEventListener('input', function () { setName(input.value); renderGreeting(); });
+        input.addEventListener('keydown', function (e) { if (e.key === 'Enter') close(); });
+        sheet.addEventListener('click', function (e) { if (e.target === sheet) close(); });
+        sheet.addEventListener('close', function () { setName(input.value); renderGreeting(); });
     }
 
     /* ---- the featured card ---- */
@@ -83,7 +122,14 @@
         var choice = pick();
         var s = choice.story;
         var ar = lang() === 'ar';
-        card.href = 'story-' + s.id + '.html';
+        var href = 'story-' + s.id + '.html';
+        document.getElementById('featuredCta').href = href;
+        document.getElementById('featuredCover').href = href;
+        var restart = document.getElementById('featuredRestart');
+        restart.href = href + '?resume=0';
+        restart.hidden = choice.kind !== 'continue';
+        var restartLabel = restart.querySelector('span');
+        if (restartLabel) restartLabel.textContent = ar ? 'من البداية' : 'Start over';
         var img = document.getElementById('featuredImg');
         if (img && img.getAttribute('src') !== 'images/stories/' + s.id + '/cover.webp') {
             img.classList.remove('is-loaded');
@@ -143,6 +189,7 @@
 
     function init() {
         initReveal();
+        initSettings();
         renderAll();
         document.addEventListener('languageChanged', renderAll);
     }

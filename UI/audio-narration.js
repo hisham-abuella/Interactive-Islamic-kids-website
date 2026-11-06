@@ -325,7 +325,7 @@ const AudioNarration = {
             }
         });
 
-        this.currentAudio.play();
+        this.currentAudio.play().catch(function () { /* interrupted by a page turn or pause: not an error */ });
         this.isPlaying = true;
         this.updatePlayButton();
         this.showSpeakingIndicator();
@@ -429,7 +429,7 @@ const AudioNarration = {
     // Resume playback
     resume: function() {
         if (this.currentAudio) {
-            this.currentAudio.play();
+            this.currentAudio.play().catch(function () { /* interrupted by a page turn or pause: not an error */ });
         }
         if (window.speechSynthesis) {
             window.speechSynthesis.resume();

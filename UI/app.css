@@ -1040,3 +1040,75 @@ a.visually-hidden:focus {
     color: var(--text-1);
     box-shadow: var(--shadow);
 }
+
+/* hidden must win over the display of a button class */
+.btn[hidden],
+.link-btn[hidden],
+.setting-row[hidden] {
+    display: none;
+}
+
+/* ---------- Featured card actions (primary + "Start over") ---------- */
+.feature-card__cover { display: block; }
+
+.feature-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-3);
+    margin-top: var(--s-2);
+}
+
+.feature-card__actions .btn { margin-top: 0; }
+
+/* ---------- Text field (the child's name) ---------- */
+.text-field {
+    display: block;
+    width: 100%;
+    min-height: 52px;
+    padding: 0 var(--s-4);
+    border: 1px solid var(--line);
+    border-radius: var(--r-sm);
+    background: var(--surface-1);
+    color: var(--text-1);
+    font-family: var(--font-read);
+    font-size: 1.125rem;
+    transition: border-color var(--dur-2) var(--ease-out);
+}
+
+html[lang="ar"] .text-field { font-family: var(--font-ar); font-size: 1.25rem; }
+
+.text-field:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+    border-color: var(--focus);
+}
+
+.field-hint {
+    margin: var(--s-2) 0 0;
+    color: var(--text-2);
+    font-family: var(--font-ui);
+    font-size: var(--step--1);
+}
+
+html[lang="ar"] .field-hint { font-family: var(--font-ui-ar); }
+
+/* ---------- Text button (e.g. "Add your child's name") ---------- */
+.link-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    margin-top: var(--s-1);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--action);
+    font-family: var(--font-ui);
+    font-size: var(--step-0);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-underline-offset: 4px;
+    cursor: pointer;
+}
+
+html[lang="ar"] .link-btn { font-family: var(--font-ui-ar); }

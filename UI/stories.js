@@ -519,12 +519,16 @@ var READER_TEXT = {
           size: 'Text size', sizes: ['small', 'medium', 'large'], sound: 'Read each page aloud',
           settings: 'Reading settings', sheetTitle: 'Reading settings', textSize: 'Text size',
           narration: 'Narration', display: 'Display', bedtime: 'Bedtime colours', bedtimeSub: 'A dim, warm page for a dark room',
-          fullscreen: 'Full screen', fullscreenSub: 'Hide everything but the page', language: 'Language', done: 'Done' },
+          fullscreen: 'Full screen', fullscreenSub: 'Hide everything but the page', language: 'Language', done: 'Done',
+          childName: "Child's name", childNameHint: 'Saved on this device only. It is never sent anywhere.',
+          restart: 'Start over', restartSub: 'Go back to page 1 of this story' },
     ar: { close: 'إغلاق القصة', page: 'صفحة {n} من {N}', prev: 'الصفحة السابقة', next: 'الصفحة التالية',
           size: 'حجم الخط', sizes: ['صغير', 'متوسط', 'كبير'], sound: 'اقرأ كل صفحة بصوت عالٍ',
           settings: 'إعدادات القراءة', sheetTitle: 'إعدادات القراءة', textSize: 'حجم الخط',
           narration: 'السرد', display: 'العرض', bedtime: 'ألوان الليل', bedtimeSub: 'صفحة خافتة ودافئة لغرفة مظلمة',
-          fullscreen: 'ملء الشاشة', fullscreenSub: 'إخفاء كل شيء ما عدا الصفحة', language: 'اللغة', done: 'تم' }
+          fullscreen: 'ملء الشاشة', fullscreenSub: 'إخفاء كل شيء ما عدا الصفحة', language: 'اللغة', done: 'تم',
+          childName: 'اسم الطفل', childNameHint: 'يُحفظ على هذا الجهاز فقط، ولا يُرسل إلى أي مكان.',
+          restart: 'من البداية', restartSub: 'العودة إلى الصفحة الأولى من القصة' }
 };
 
 function rt(key) {
@@ -613,6 +617,17 @@ function initializeSlideMode() {
     slidesContainer.appendChild(slidesWrapper);
     storyContent.insertBefore(slidesContainer, storyContent.firstChild);
 
+    // Read the saved place before the chrome is built: building it relabels and
+    // saves the current page, which would overwrite the place with page 1.
+    var resumeAt = 0;
+    try {
+        var saved = (JSON.parse(localStorage.getItem('ik-story-progress') || '{}') || {})[storyId()];
+        if (saved && !saved.done && saved.slide > 0 && saved.slide < totalSlides && !/[?&]resume=0/.test(location.search)) {
+            resumeAt = saved.slide;
+        }
+    } catch (e) {}
+    currentSlide = resumeAt;
+
     buildReaderChrome(slidesContainer);
 
     slidesContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
@@ -623,14 +638,6 @@ function initializeSlideMode() {
     // Re-initialize mini quizzes in slides
     const slideQuizzes = slidesWrapper.querySelectorAll('.mini-quiz');
     slideQuizzes.forEach(quiz => setupMiniQuiz(quiz));
-
-    // Resume where this child stopped, if they had started
-    try {
-        var saved = (JSON.parse(localStorage.getItem('ik-story-progress') || '{}') || {})[storyId()];
-        if (saved && !saved.done && saved.slide > 0 && saved.slide < totalSlides && /[?&]resume=0/.test(location.search) === false) {
-            currentSlide = saved.slide;
-        }
-    } catch (e) {}
 
     updateSlideView(true);   // silent: nothing is announced on load
 }
@@ -705,9 +712,13 @@ function buildReaderChrome(slidesContainer) {
         '<div class="sheet-group"><span class="sheet-label" id="lblLanguage"></span>' +
             '<div class="segmented" role="group" aria-labelledby="lblLanguage" id="langSeg">' +
             '<button type="button" data-lang="en" lang="en">English</button><button type="button" data-lang="ar" lang="ar">العربية</button></div></div>' +
+        '<div class="sheet-group"><label class="sheet-label" for="readerChildName" id="lblChildName"></label>' +
+            '<input class="text-field" id="readerChildName" type="text" maxlength="20" autocomplete="off" spellcheck="false">' +
+            '<p class="field-hint" id="lblChildNameHint"></p></div>' +
         '<div class="sheet-group" id="narrSettings"><span class="sheet-label" id="lblNarration"></span></div>' +
         '<div class="sheet-group"><span class="sheet-label" id="lblDisplay"></span>' +
             '<button class="setting-row" type="button" role="switch" id="bedtimeSwitch" aria-checked="false"><span><span id="lblBedtime"></span><small id="lblBedtimeSub"></small></span><span class="switch" aria-hidden="true"></span></button>' +
+            '<button class="setting-row" type="button" id="restartRow"><span><span id="lblRestart"></span><small id="lblRestartSub"></small></span>' + icon('repeat') + '</button>' +
             '<button class="setting-row" type="button" id="fullscreenRow"><span><span id="lblFullscreen"></span><small id="lblFullscreenSub"></small></span>' + icon('maximize-2') + '</button>' +
         '</div>';
     document.body.appendChild(sheet);
@@ -747,6 +758,31 @@ function buildReaderChrome(slidesContainer) {
         syncBedtimeSwitch();
     });
 
+    // Start over: back to page 1 (the saved place is reset with it)
+    document.getElementById('restartRow').addEventListener('click', function () {
+        sheet.close();
+        try {
+            var all = JSON.parse(localStorage.getItem('ik-story-progress') || '{}') || {};
+            delete all[storyId()];
+            localStorage.setItem('ik-story-progress', JSON.stringify(all));
+        } catch (e) {}
+        goToSlide(0);
+    });
+
+    // The child's name: this device only (islamicKidsName), never a default
+    var nameInput = document.getElementById('readerChildName');
+    var saveName = function () {
+        var v = nameInput.value.trim().slice(0, 20);
+        try {
+            if (v) localStorage.setItem('islamicKidsName', v);
+            else localStorage.removeItem('islamicKidsName');
+        } catch (e) {}
+        childName = v;
+        if (v) personalizeStory();
+    };
+    nameInput.addEventListener('change', saveName);
+    sheet.addEventListener('close', saveName);
+
     document.getElementById('fullscreenRow').addEventListener('click', function () {
         sheet.close();
         toggleFullscreen();
@@ -782,6 +818,8 @@ function openReaderSheet() {
     var sheet = document.getElementById('readerSheet');
     if (!sheet) return;
     syncBedtimeSwitch();
+    var nameInput = document.getElementById('readerChildName');
+    if (nameInput) nameInput.value = localStorageGet('islamicKidsName') || '';
     if (typeof sheet.showModal === 'function') sheet.showModal();
     else sheet.setAttribute('open', '');
 }
@@ -805,6 +843,10 @@ function relabelReader() {
     set('lblBedtime', rt('bedtime'));
     set('lblBedtimeSub', rt('bedtimeSub'));
     set('lblFullscreen', rt('fullscreen'));
+    set('lblChildName', rt('childName'));
+    set('lblChildNameHint', rt('childNameHint'));
+    set('lblRestart', rt('restart'));
+    set('lblRestartSub', rt('restartSub'));
     set('lblFullscreenSub', rt('fullscreenSub'));
     var sizes = rt('sizes');
     document.querySelectorAll('#sizeSeg button').forEach(function (b, i) {

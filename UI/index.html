@@ -28,6 +28,9 @@
         </a>
         <span class="app-bar__spacer"></span>
         <div class="app-bar__actions">
+            <button class="icon-btn" id="homeSettings" type="button" aria-haspopup="dialog" aria-label="Settings" data-ar-label="الإعدادات">
+                <svg class="icon" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-settings-2"/></svg>
+            </button>
             <button class="icon-btn bedtime-btn" type="button" aria-pressed="false" aria-label="Bedtime reading mode" data-ar-label="وضع القراءة الليلية">
                 <svg class="icon icon-moon" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-moon"/></svg>
                 <svg class="icon icon-sun" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-sun"/></svg>
@@ -49,16 +52,17 @@
         <!-- Greeting -->
         <div class="screen-head">
             <span class="eyebrow"><span lang="ar" dir="rtl" class="iqra">ٱقْرَأْ</span> &middot; <span data-ar="اقرأ">Iqra, read</span></span>
-            <h1 class="large-title" id="greeting" data-ar="السلام عليكم">Assalamu alaikum</h1>
+            <h1 class="large-title" id="greeting">Assalamu alaikum</h1>
+            <button class="link-btn" id="nameEdit" type="button" hidden></button>
             <p class="screen-sub" data-ar="قصص الأنبياء وسور القرآن، تُقرأ بصوت عالٍ مع من تحب.">Prophet stories and short surahs, read aloud together.</p>
         </div>
 
         <!-- Continue / Tonight's story: the one gold card on this screen -->
         <section aria-labelledby="featuredTitle">
-            <a class="feature-card lift" id="featured" href="story-prophet-nuh.html">
-                <div class="feature-card__cover">
+            <div class="feature-card" id="featured">
+                <a class="feature-card__cover" id="featuredCover" href="story-prophet-nuh.html" tabindex="-1" aria-hidden="true">
                     <img id="featuredImg" src="images/stories/prophet-nuh/cover.webp" alt="" width="960" height="540" decoding="async" fetchpriority="high">
-                </div>
+                </a>
                 <div class="feature-card__body">
                     <span class="feature-card__kicker" id="featuredKicker">
                         <svg class="icon icon-sm" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-moon"/></svg>
@@ -66,12 +70,18 @@
                     </span>
                     <h2 class="feature-card__title" id="featuredTitle">Prophet Nuh and the Great Ark</h2>
                     <p class="feature-card__text" id="featuredText">Patience and trust in Allah, told in 16 short pages.</p>
-                    <span class="btn btn--primary btn--lg" id="featuredCta">
-                        <svg class="icon" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-play"/></svg>
-                        <span>Start reading</span>
-                    </span>
+                    <div class="feature-card__actions">
+                        <a class="btn btn--primary btn--lg" id="featuredCta" href="story-prophet-nuh.html">
+                            <svg class="icon" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-play"/></svg>
+                            <span>Start reading</span>
+                        </a>
+                        <a class="btn btn--secondary btn--lg" id="featuredRestart" href="story-prophet-nuh.html?resume=0" hidden>
+                            <svg class="icon" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-repeat"/></svg>
+                            <span>Start over</span>
+                        </a>
+                    </div>
                 </div>
-            </a>
+            </div>
         </section>
 
         <!-- Stories shelf -->
@@ -212,6 +222,20 @@
             </ul>
         </section>
     </main>
+
+    <!-- Home settings: the child's name, kept on this device only -->
+    <dialog class="sheet" id="homeSheet" aria-labelledby="homeSheetTitle">
+        <div class="sheet__grabber" aria-hidden="true"></div>
+        <div class="sheet__head">
+            <h2 id="homeSheetTitle" data-ar="الإعدادات">Settings</h2>
+            <button class="btn btn--secondary" id="homeSheetDone" type="button" data-ar="تم">Done</button>
+        </div>
+        <div class="sheet-group">
+            <label class="sheet-label" for="childName" data-ar="اسم الطفل">Child's name</label>
+            <input class="text-field" id="childName" type="text" maxlength="20" autocomplete="off" spellcheck="false">
+            <p class="field-hint" data-ar="يُحفظ على هذا الجهاز فقط، ولا يُرسل إلى أي مكان.">Saved on this device only. It is never sent anywhere.</p>
+        </div>
+    </dialog>
 
     <footer class="app-footer">
         <p data-ar="صُنع بحب، ليُقرأ بصوت عالٍ في البيت.">Made with love, to be read aloud at home.</p>
