@@ -27,6 +27,7 @@ UI = Path(__file__).resolve().parent.parent
 START, END = "<!-- surah-plate -->", "<!-- /surah-plate -->"
 STRIP = re.compile(r"[ \t]*" + re.escape(START) + r".*?" + re.escape(END) + r"\n", re.S)
 
+# v1 font link, kept only so place() can strip it from older pages
 PANEL_FONTS = ('<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran'
                '&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">')
 
@@ -99,8 +100,8 @@ def place(slug):
     html = html.replace(f"    {PANEL_FONTS}\n", "")
 
     if slug in CALLIGRAPHY:
-        html = html.replace('    <link rel="stylesheet" href="styles.css">',
-                            f'    {PANEL_FONTS}\n    <link rel="stylesheet" href="styles.css">', 1)
+        # Amiri Quran and Aref Ruqaa are self-hosted (styles.css @font-face) since
+        # v2, so the panel no longer adds a font link; any old one is stripped above.
         inserts = {1: panel(CALLIGRAPHY[slug])}
     else:
         inserts = {v: plate(slug, v) for v in PLATES.get(slug, {})}

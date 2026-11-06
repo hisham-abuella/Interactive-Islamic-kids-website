@@ -2,51 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Learn the Quran for kids. Surah Al-Fatiha, Surah Al-Ikhlas, and Ayat al-Kursi with Arabic, transliteration, kid-friendly meanings, and quizzes.">
-    <meta name="theme-color" content="#0d9488">
+    <meta name="theme-color" content="#FBF6EA">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="images/app/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="images/app/apple-touch-icon.png">
     <title>Learn the Quran - Islamic Kids</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <!-- fonts are self-hosted: @font-face in styles.css (vendor/fonts) -->
     <link rel="stylesheet" href="styles.css?v=20261105">
+    <link rel="stylesheet" href="app.css?v=20261105">
     <link rel="stylesheet" href="stories.css?v=20261105">
 </head>
-<body>
-    <!-- Floating Decorations -->
-    <div class="floating-decorations">
-        <span class="floating-star" style="top: 10%; left: 5%;" aria-hidden="true">⭐</span>
-        <span class="floating-star" style="top: 20%; right: 10%;" aria-hidden="true">✨</span>
-        <span class="floating-lantern" style="top: 40%; left: 8%;" aria-hidden="true">🏮</span>
-        <span class="floating-star" style="top: 60%; right: 5%;" aria-hidden="true">⭐</span>
-        <span class="floating-cloud" style="top: 15%; right: 20%;" aria-hidden="true">☁️</span>
-    </div>
+<body class="app list-screen">
+    <a class="visually-hidden" href="#main">Skip to content</a>
 
-    <!-- Header -->
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <span class="crescent" aria-hidden="true">☪</span>
-                <span class="logo-text" data-ar="أطفال الإسلام">Islamic Kids</span>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
-                <span></span><span></span><span></span>
+    <!-- Top app bar -->
+    <header class="app-bar">
+        <a class="app-bar__brand" href="index.html" aria-label="Islamic Kids, home" data-ar-label="أطفال الإسلام، الرئيسية">
+            <span class="brand-mark" aria-hidden="true">☪</span>
+            <span data-ar="أطفال الإسلام">Islamic Kids</span>
+        </a>
+        <span class="app-bar__spacer"></span>
+        <div class="app-bar__actions">
+            <button class="icon-btn bedtime-btn" type="button" aria-pressed="false" aria-label="Bedtime reading mode" data-ar-label="وضع القراءة الليلية">
+                <svg class="icon icon-moon" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-moon"/></svg>
+                <svg class="icon icon-sun" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-sun"/></svg>
             </button>
-            <div class="nav-cluster">
-                <ul class="nav-links">
-                    <li><a href="index.html" data-ar="الرئيسية">Home</a></li>
-                    <li><a href="stories.html" data-ar="القصص">Stories</a></li>
-                    <li><a href="quran.html" class="active" data-ar="القرآن">Quran</a></li>
-                    <li><a href="index.html#learn" data-ar="تعلّم">Learn</a></li>
-                </ul>
-                <button class="bedtime-btn" type="button" aria-pressed="false" aria-label="Bedtime reading mode" title="Bedtime reading mode" data-ar="وضع القراءة الليلية">🌙</button>
-                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
-            </div>
-        </nav>
+            <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
+        </div>
     </header>
 
+    <!-- Tab bar (bottom on phone and tablet, side rail on desktop) -->
+    <nav class="tab-bar" aria-label="Main" data-ar-label="القائمة الرئيسية">
+        <ul>
+            <li><a href="index.html"><span class="tab-icon"><svg class="icon" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-house"/></svg></span><span data-ar="الرئيسية">Home</span></a></li>
+            <li><a href="stories.html"><span class="tab-icon"><svg class="icon" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-book-open"/></svg></span><span data-ar="القصص">Stories</span></a></li>
+            <li><a href="quran.html" aria-current="page"><span class="tab-icon"><svg class="icon" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-book-marked"/></svg></span><span data-ar="القرآن">Quran</span></a></li>
+        </ul>
+    </nav>
+
     <!-- Hero -->
-    <section class="stories-hero">
+    <section class="stories-hero" id="main">
         <h1 data-ar="📖 تعلّم القرآن">📖 Learn the Quran</h1>
         <p data-ar="سور وآيات جميلة، مشروحة خصيصاً لك!">Beautiful surahs and verses, explained just for you!</p>
     </section>
@@ -455,7 +452,7 @@
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="app-footer">
         <div class="footer-content">
             <p data-ar="🤲 يسّر الله لك تعلّم كلامه وحفظه!">🤲 May Allah make it easy for you to learn and memorize His words!</p>
             <p class="footer-subtitle" data-ar="🌙 أطفال الإسلام - نتعلّم ديننا بالحب ✨">🌙 Islamic Kids - Learning Islam with Love ✨</p>

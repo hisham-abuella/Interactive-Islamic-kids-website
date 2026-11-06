@@ -155,53 +155,31 @@ def page(spec):
 
     spec = dict(spec, sub_en=mark_arabic(spec['sub_en']))
 
+    # v2 app shell (UI/DESIGN.md 7.1-7.2): the same strings scripts/apply-app-shell.py uses
+    import importlib.util as _ilu
+    import os as _os
+    _sp = _ilu.spec_from_file_location('app_shell', _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), 'app_shell.py'))
+    _shell = _ilu.module_from_spec(_sp)
+    _sp.loader.exec_module(_shell)
+    spec = dict(spec, shell=_shell.surah_shell(spec['title_en'], spec['title_ar']))
+
     return '''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="%(desc)s">
-    <meta name="theme-color" content="#0d9488">
+    <meta name="theme-color" content="#FBF6EA">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="images/app/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="images/app/apple-touch-icon.png">
     <title>%(title_en)s - Islamic Kids</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <!-- fonts are self-hosted: @font-face in styles.css (vendor/fonts) -->
     <link rel="stylesheet" href="styles.css?v=20261105">
+    <link rel="stylesheet" href="app.css?v=20261105">
     <link rel="stylesheet" href="surah.css?v=20261105">
 </head>
-<body>
-    <!-- Floating Decorations -->
-    <div class="floating-decorations">
-        <span class="floating-star" style="top: 10%%; left: 5%%;" aria-hidden="true">⭐</span>
-        <span class="floating-star" style="top: 20%%; right: 10%%;" aria-hidden="true">✨</span>
-        <span class="floating-lantern" style="top: 40%%; left: 8%%;" aria-hidden="true">\U0001f3ee</span>
-        <span class="floating-star" style="top: 60%%; right: 5%%;" aria-hidden="true">⭐</span>
-    </div>
-
-    <!-- Header -->
-    <header>
-        <nav class="navbar">
-            <div class="logo">
-                <span class="crescent" aria-hidden="true">☪</span>
-                <span class="logo-text" data-ar="أطفال الإسلام">Islamic Kids</span>
-            </div>
-            <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
-                <span></span><span></span><span></span>
-            </button>
-            <div class="nav-cluster">
-                <ul class="nav-links">
-                    <li><a href="index.html" data-ar="الرئيسية">Home</a></li>
-                    <li><a href="stories.html" data-ar="القصص">Stories</a></li>
-                    <li><a href="quran.html" class="active" data-ar="القرآن">Quran</a></li>
-                    <li><a href="index.html#learn" data-ar="تعلّم">Learn</a></li>
-                </ul>
-                <button class="bedtime-btn" type="button" aria-pressed="false" aria-label="Bedtime reading mode" title="Bedtime reading mode" data-ar="وضع القراءة الليلية">\U0001f319</button>
-                <button class="lang-toggle-btn" type="button" aria-label="Switch to Arabic" title="Switch to Arabic">عربي</button>
-            </div>
-        </nav>
-    </header>
-
-    <!-- Hero -->
+%(shell)s    <!-- Hero -->
     <section class="surah-hero">
         <div class="surah-hero-content">
             <div class="surah-icon" aria-hidden="true">%(icon)s</div>
@@ -212,7 +190,7 @@ def page(spec):
     </section>
 
     <!-- Main Content -->
-    <main class="surah-main">
+    <main class="surah-main" id="main">
         <div class="surah-container">
 
             <!-- Introduction -->
@@ -235,7 +213,7 @@ def page(spec):
 
                 <div class="stage-picker" role="group" aria-label="Learning stage">
                     <span class="stage-label" data-ar="كيف تريد أن تتعلّم؟">How do you want to learn?</span>
-                    <div class="stage-buttons">
+                    <div class="stage-buttons segmented">
                         <button class="stage-btn" type="button" data-stage="read" data-ar="اقرأ">Read</button>
                         <button class="stage-btn" type="button" data-stage="practice" data-ar="تدرّب">Practice</button>
                         <button class="stage-btn" type="button" data-stage="recite" data-ar="احفظ">Recite</button>
@@ -337,7 +315,7 @@ def page(spec):
     </main>
 
     <!-- Footer -->
-    <footer>
+    <footer class="app-footer">
         <div class="footer-content">
             <div class="footer-dua">
                 <p data-ar="\U0001f932 يسّر الله لك تعلّم كلامه وحفظه!">\U0001f932 May Allah make it easy for you to learn and memorize His words!</p>

@@ -2818,3 +2818,121 @@ body.reader .story-container.fullscreen-active {
     body.reader .story-slide { display: block !important; break-inside: avoid; margin-bottom: 1.5rem; }
     body.reader .story-header { position: static !important; width: auto; height: auto; clip: auto; }
 }
+
+
+/* =====================================================================
+   ILLUMINATED PAGE v2: TAB SCREENS (stories.html, quran.html), body.app
+   ===================================================================== */
+body.app .stories-hero,
+html[lang="ar"] body.app .stories-hero {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: var(--s-5) var(--gutter) var(--s-2);
+    background: transparent;
+    text-align: start;
+}
+
+body.app .stories-hero::after { content: none; }
+
+body.app .stories-hero h1 {
+    margin: 0 0 var(--s-1);
+    font-family: var(--font-title);
+    font-size: var(--step-3);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--text-1);
+    text-shadow: none;
+}
+
+html[lang="ar"] body.app .stories-hero h1 {
+    font-family: var(--font-ar);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.45;
+}
+
+body.app .stories-hero p {
+    color: var(--text-2);
+    font-size: var(--step-0);
+}
+
+body.app .progress-strip {
+    max-width: 1120px;
+    padding: 0 var(--gutter);
+    margin: var(--s-3) auto 0;
+}
+
+body.app .progress-strip-inner {
+    border-radius: var(--r-md);
+    border: var(--hairline-gold);
+    background: var(--reward-wash);
+}
+
+body.app .stories-grid-section {
+    max-width: 1120px;
+    padding: var(--s-5) var(--gutter) var(--s-6);
+}
+
+body.app .stories-container {
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+    gap: var(--s-4);
+}
+
+body.app .story-select-card,
+body.app .story-select-card.featured {
+    border: var(--hairline);
+    border-radius: var(--r-md);
+    background: var(--surface-1);
+    box-shadow: none;
+    overflow: hidden;
+    transition: var(--t-press);
+}
+
+/* the 'NEW' ribbon was English-only CSS text, white on gold (3.04:1) */
+body.app .story-select-card.featured::before { content: none; }
+
+body.app .story-card-link { border-radius: var(--r-md); }
+
+@media (hover: hover) {
+    body.app .story-card-link:hover .story-select-card,
+    body.app .story-card-link:hover .story-select-card.featured {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+        border-color: var(--line);
+    }
+}
+
+body.app .story-card-link:focus-visible .story-select-card {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+body.app .story-card-link:active .story-select-card { transform: scale(0.98); }
+
+body.app .story-info h3 {
+    font-family: var(--font-read);
+    font-size: var(--step-1);
+    color: var(--text-1);
+}
+
+html[lang="ar"] body.app .story-info h3 { font-family: var(--font-ar); }
+
+body.app .story-info p { color: var(--text-2); }
+
+body.app .start-story-btn {
+    min-height: var(--tap);
+    border-radius: var(--r-pill);
+    background: var(--action);          /* was white on gold, 3.04:1 */
+    color: var(--text-on-action);
+    font-family: var(--font-ui);
+    font-weight: 600;
+    box-shadow: none;
+}
+
+html[lang="ar"] body.app .start-story-btn { font-family: var(--font-ui-ar); }
+
+@media (prefers-reduced-motion: reduce) {
+    body.app .story-card-link:hover .story-select-card,
+    body.app .story-card-link:focus-visible .story-select-card { transform: none; }
+}
