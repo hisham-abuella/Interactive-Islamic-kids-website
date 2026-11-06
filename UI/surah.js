@@ -149,7 +149,7 @@ function showNextQuestion(currentIndex, totalCards) {
     if (currentIndex < quizCards.length - 1) {
         // Show next question
         quizCards[currentIndex + 1].classList.remove('hidden');
-        quizCards[currentIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        smoothScrollTo(quizCards[currentIndex + 1]);
     } else {
         // Show results
         if (quizResults) {
@@ -162,7 +162,7 @@ function showNextQuestion(currentIndex, totalCards) {
                     : score;
             }
             createConfetti(quizResults);
-            quizResults.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            smoothScrollTo(quizResults);
         }
     }
 }
@@ -224,37 +224,36 @@ style.textContent = [
 ].join('\n');
 document.head.appendChild(style);
 
-// Scroll animations
+// Scroll reveal (v2, the js-reveal gate). Cards are visible by default; they are
+// only hidden once this script has marked <html> with .js-reveal AND can bring
+// them back (IntersectionObserver, no reduced-motion request). A timer and a
+// beforeprint handler reveal everything regardless, so a full-page capture, a
+// printout or a stalled observer never shows blank cards. Classes, not inline
+// styles, so the narration highlight can always override.
 function initializeAnimations() {
-    const observerOptions = {
-        threshold: 0.2,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-
-    // Cards are visible by default. We only hide them to animate them in, and only
-    // when we can be sure something will bring them back: IntersectionObserver is
-    // supported and the reader has not asked for reduced motion. Otherwise the page
-    // stays fully readable - which is what happens when it is printed, when JS is
-    // off, or on a browser without the observer.
     const canAnimate = 'IntersectionObserver' in window &&
         !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!canAnimate) return;
 
-    document.querySelectorAll('.verse-card, .fact-card, .tip-card').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(card);
-    });
+    const cards = document.querySelectorAll('.verse-card, .fact-card, .tip-card');
+    const revealAll = () => cards.forEach(c => c.classList.add('visible'));
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.05, rootMargin: '0px 0px -24px 0px' });
+
+    document.documentElement.classList.add('js-reveal');
+    cards.forEach(card => { card.classList.add('reveal'); observer.observe(card); });
+    window.addEventListener('beforeprint', revealAll);
+    setTimeout(revealAll, 2500);
 }
 
-console.log('📖 Surah Al-Fatiha page loaded!');
+function smoothScrollTo(el) {
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+}
+

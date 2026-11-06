@@ -64,7 +64,12 @@
             listen: ar ? 'استمع' : 'Listen',
             stop: ar ? 'إيقاف' : 'Stop',
             readAll: ar ? '▶ اقرأ السورة كلها' : '▶ Read the whole surah',
-            stopAll: ar ? '■ إيقاف' : '■ Stop'
+            stopAll: ar ? '■ إيقاف' : '■ Stop',
+            player: ar ? 'استمع إلى المعاني' : 'Listen to the meanings',
+            playerSub: ar ? 'شرح كل آية، واحدة بعد الأخرى' : 'Each verse explained, one after another',
+            playerOn: ar ? 'الآية {n} من {N}' : 'Verse {n} of {N}',
+            playAll: ar ? 'استمع إلى معاني كل الآيات' : 'Listen to the meaning of every verse',
+            pauseAll: ar ? 'إيقاف' : 'Stop'
         }[key];
     }
 
@@ -147,6 +152,8 @@
             btn.textContent = (on ? '■ ' : '▶ ') + (on ? label('stop') : label('listen'));
             btn.setAttribute('aria-pressed', String(on));
         });
+        highlight(cards);
+        refreshPlayer(cards);
         var all = document.querySelector('.surah-listen-all');
         if (all) {
             var sa = soon();
@@ -168,6 +175,57 @@
             all.textContent = state.playAll ? label('stopAll') : label('readAll');
             all.setAttribute('aria-pressed', String(state.playAll));
         }
+    }
+
+    /* v2: the verse whose meaning is being narrated is marked: a gold wash, a
+       3px reading-edge bar (surah.css) and aria-current. While "listen to every
+       verse" runs, a card that is off screen is brought into view (instantly if
+       the reader asked for reduced motion); a single tapped verse is already in
+       view, so the page never jumps under the child's finger. Focus never moves. */
+    function highlight(cards) {
+        Array.prototype.forEach.call(cards, function (card, i) {
+            var on = state.playingIndex === i;
+            card.classList.toggle('is-narrating', on);
+            if (on) card.setAttribute('aria-current', 'true');
+            else card.removeAttribute('aria-current');
+        });
+        if (state.playAll && state.playingIndex >= 0) {
+            var c = cards[state.playingIndex];
+            var r = c.getBoundingClientRect();
+            if (r.top < 64 || r.bottom > window.innerHeight - 96) {
+                var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                c.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' });
+            }
+        }
+    }
+
+    function digits(n) {
+        return lang() === 'ar' ? Number(n).toLocaleString('ar-EG') : String(n);
+    }
+
+    /* The sticky mini player (app screens): one play control for the whole
+       surah's meaning narration, showing which verse is playing. */
+    function refreshPlayer(cards) {
+        var player = document.querySelector('.mini-player');
+        if (!player) return;
+        var btn = player.querySelector('.play-btn');
+        var title = player.querySelector('.mini-player__title');
+        var sub = player.querySelector('.mini-player__sub');
+        var s = soon();
+        btn.setAttribute('aria-disabled', String(s));
+        btn.setAttribute('aria-pressed', String(!s && state.playAll));
+        btn.setAttribute('aria-label', state.playAll ? label('pauseAll') : label('playAll'));
+        if (s) {
+            title.textContent = window.SurahNarration.soonText.ar;
+            sub.textContent = window.SurahNarration.soonText.en;
+            sub.lang = 'en';
+            return;
+        }
+        sub.removeAttribute('lang');
+        title.textContent = label('player');
+        sub.textContent = state.playingIndex >= 0
+            ? label('playerOn').replace('{n}', digits(state.playingIndex + 1)).replace('{N}', digits(cards.length))
+            : label('playerSub');
     }
 
     function init() {
@@ -192,18 +250,29 @@
         });
 
         var picker = document.querySelector('.stage-picker');
-        if (picker && !document.querySelector('.surah-listen-all')) {
+        var playAllClick = function () {
+            if (soon()) return;
+            if (state.playAll) { stop(); return; }
+            stop();
+            state.playAll = true;
+            playIndex(0, cards);
+        };
+        if (picker && document.body.classList.contains('app') && !document.querySelector('.mini-player')) {
+            var player = document.createElement('div');
+            player.className = 'mini-player';
+            player.innerHTML =
+                '<button class="play-btn" type="button" aria-pressed="false">' +
+                '<svg class="icon icon-play" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-play"/></svg>' +
+                '<svg class="icon icon-pause" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-pause"/></svg></button>' +
+                '<span class="mini-player__text" aria-live="polite"><span class="mini-player__title"></span><span class="mini-player__sub"></span></span>';
+            player.querySelector('.play-btn').addEventListener('click', playAllClick);
+            picker.after(player);
+        } else if (picker && !document.querySelector('.surah-listen-all')) {
             var all = document.createElement('button');
             all.type = 'button';
             all.className = 'surah-listen-all';
             all.setAttribute('aria-pressed', 'false');
-            all.addEventListener('click', function () {
-                if (soon()) return;
-                if (state.playAll) { stop(); return; }
-                stop();
-                state.playAll = true;
-                playIndex(0, cards);
-            });
+            all.addEventListener('click', playAllClick);
             picker.appendChild(all);
         }
 

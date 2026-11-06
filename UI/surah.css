@@ -17,7 +17,7 @@
     position: absolute;
     font-size: 2rem;
     opacity: 0.5;
-    animation: float 6s ease-in-out infinite;
+    animation: float 6s ease-in-out 1;
 }
 
 @keyframes float {
@@ -59,7 +59,7 @@
 .surah-icon {
     font-size: 5rem;
     margin-bottom: 1rem;
-    animation: pulse 2s ease-in-out infinite;
+    animation: pulse 2s ease-in-out 1;
 }
 
 @keyframes pulse {
@@ -73,7 +73,7 @@
     font-weight: 800;
     color: white;
     margin-bottom: 0.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 2px 4px rgba(60, 42, 12, 0.3);
 }
 
 .surah-subtitle {
@@ -130,11 +130,11 @@
 }
 
 .intro-card {
-    background: white;
+    background: var(--surface-1);
     padding: 2rem;
     border-radius: 20px;
     margin-bottom: 1.5rem;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(60, 42, 12, 0.1);
     border-left: 5px solid var(--emerald-500);
 }
 
@@ -174,11 +174,11 @@
 
 /* Story Cards */
 .story-card {
-    background: white;
+    background: var(--surface-1);
     padding: 2rem;
     border-radius: 20px;
     margin-bottom: 1.5rem;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 20px rgba(60, 42, 12, 0.1);
 }
 
 .story-card.special {
@@ -226,7 +226,7 @@
     font-weight: 700;
     font-size: 1.1rem;
     box-shadow: 0 5px 15px rgba(192, 138, 46, 0.3);
-    animation: glow 2s ease-in-out infinite;
+    animation: glow 2s ease-in-out 1;
 }
 
 @keyframes glow {
@@ -526,7 +526,7 @@
 }
 
 .reply-card .hadith {
-    background: white;
+    background: var(--surface-1);
     padding: 1rem;
     border-radius: 12px;
     font-style: italic;
@@ -545,14 +545,14 @@
 }
 
 .fact-card {
-    background: white;
+    background: var(--surface-1);
     padding: 1.5rem;
     border-radius: 15px;
     display: flex;
     gap: 1rem;
     align-items: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(60, 42, 12, 0.08);
+    transition: var(--t-press);
 }
 
 .fact-card:hover {
@@ -583,10 +583,10 @@
 /* Quiz Section */
 .quiz-section {
     margin: 3rem 0;
-    background: white;
+    background: var(--surface-1);
     padding: 2.5rem;
     border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(60, 42, 12, 0.1);
 }
 
 .quiz-intro {
@@ -645,32 +645,39 @@
 }
 
 .quiz-option {
-    background: white;
-    color: var(--slate-700);
+    min-height: 48px;
+    background: var(--surface-1);
+    color: var(--text-1);
     padding: 1rem;
-    border: 2px solid var(--slate-200);
-    border-radius: 12px;
-    font-weight: 600;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    font-family: inherit;
+    font-size: 1.0625rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
 }
 
-.quiz-option:hover {
-    background: var(--emerald-500);
-    color: white;
-    border-color: var(--emerald-500);
+/* v2: white on --emerald-500 was 3.97:1; the hover is now a tint, the answer
+   states are AA (6.24:1 and 6.5:1). Red stays reserved for the wrong answer. */
+.quiz-option:hover:not(:disabled) {
+    background: var(--action-wash);
+    color: var(--text-1);
+    border-color: var(--action);
 }
+
+.quiz-option:active:not(:disabled) { transform: scale(0.98); }
 
 .quiz-option.correct {
-    background: var(--emerald-500);
-    color: white;
-    border-color: var(--emerald-500);
+    background: var(--action);
+    color: var(--text-on-action);
+    border-color: var(--action);
 }
 
 .quiz-option.incorrect {
-    background: #ef4444;
-    color: white;
-    border-color: #ef4444;
+    background: #B42318;
+    color: var(--text-on-action);
+    border-color: #B42318;
 }
 
 .quiz-feedback {
@@ -721,12 +728,12 @@
 }
 
 .tip-card {
-    background: white;
+    background: var(--surface-1);
     padding: 2rem;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(60, 42, 12, 0.08);
+    transition: var(--t-press);
 }
 
 .tip-card:hover {
@@ -782,7 +789,7 @@
     border-radius: 25px;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: var(--t-press);
 }
 
 .nav-btn:hover {
@@ -909,12 +916,12 @@
 }
 
 .stage-btn[aria-pressed="true"] {
-    background: var(--turquoise);
-    color: #fff;
+    background: var(--action);          /* v2: 6.24:1 (was white on --turquoise, 4.37:1) */
+    color: var(--text-on-action);
 }
 
 .stage-btn:focus-visible {
-    outline: 3px solid var(--gold);
+    outline: 3px solid var(--focus);
     outline-offset: 2px;
 }
 
@@ -1027,7 +1034,7 @@ html[lang="ar"] .parent-note {
     padding: 0.45rem 1.1rem;
     min-height: 44px;
     cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease;
+    transition: var(--t-press);
 }
 
 .verse-listen:hover {
@@ -1036,14 +1043,14 @@ html[lang="ar"] .parent-note {
 }
 
 .verse-listen[aria-pressed="true"] {
-    background: var(--turquoise);
-    border-color: var(--turquoise-deep);
-    color: #fff;
+    background: var(--action);
+    border-color: var(--action);
+    color: var(--text-on-action);
 }
 
 .verse-listen:focus-visible,
 .surah-listen-all:focus-visible {
-    outline: 3px solid var(--gold);
+    outline: 3px solid var(--focus);
     outline-offset: 2px;
 }
 
@@ -1051,9 +1058,9 @@ html[lang="ar"] .parent-note {
     font-family: inherit;
     font-weight: 700;
     font-size: 0.9rem;
-    color: #fff;
-    background: var(--turquoise);
-    border: 1px solid var(--turquoise-deep);
+    color: var(--text-on-action);
+    background: var(--action);           /* v2: 6.24:1 (was 4.37:1) */
+    border: 1px solid var(--action);
     border-radius: var(--radius-full);
     padding: 0.5rem 1.2rem;
     min-height: 44px;
@@ -1150,3 +1157,326 @@ html[lang="ar"] .parent-note {
 }
 .verse-listen.is-soon:hover { background: var(--card); color: var(--ink); }
 .surah-listen-all.is-soon .soon-line { display: block; }
+
+
+/* =====================================================================
+   ILLUMINATED PAGE v2 (2026-11-05, UI/DESIGN.md 7.8)
+   1. On every surah page: the verse being narrated, and the Bismillah line.
+   2. On app screens (body.app): the surah as an app screen.
+   ===================================================================== */
+
+/* 1a. The verse whose meaning is being narrated (surah-narration.js adds
+   .is-narrating and aria-current). Three cues, not one: a gold wash, a 3px
+   --focus bar on the reading edge (5.06:1, the wash alone is only 1.14:1),
+   and the strong gold rule. Never hidden by the scroll reveal. */
+.verse-card.is-narrating {
+    background: var(--reward-wash);
+    border-color: var(--line-strong);
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.verse-card.is-narrating::before {
+    content: '';
+    position: absolute;
+    inset-block: 14px;
+    inset-inline-start: -1px;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--focus);
+}
+
+/* 1b. The Bismillah opening the complete surah: its own centred line, a step
+   smaller than the ayat (it is not one of this surah's ayat in Hafs), with a
+   gold hairline under it as the mushaf sets it. */
+.full-bismillah {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 0.5em;
+    padding: 0 1.25em 0.15em;
+    border-bottom: 1px solid rgba(224, 183, 92, 0.45);
+    font-size: 0.86em;
+    line-height: 2.2;
+    text-align: center;
+    color: var(--ornament-light);
+}
+
+/* 2. App screens */
+body.app .surah-hero {
+    padding: var(--s-5) var(--gutter) var(--s-5);
+    background: var(--surface-0);
+    text-align: start;
+    border-bottom: var(--hairline);
+}
+
+body.app .surah-hero::before {
+    opacity: 0.08;
+    -webkit-mask-image: linear-gradient(to bottom, #000, transparent);
+            mask-image: linear-gradient(to bottom, #000, transparent);
+}
+
+body.app .surah-hero-content,
+html[lang="ar"] body.app .surah-hero-content {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: start;
+}
+
+body.app .surah-icon { display: none; }
+
+body.app .surah-hero h1,
+html[lang="ar"] body.app .surah-hero-content h1 {
+    margin: 0 0 var(--s-1);
+    font-family: var(--font-title);
+    font-size: var(--step-3);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--text-1);
+    text-shadow: none;
+    text-align: start;
+}
+
+html[lang="ar"] body.app .surah-hero h1 {
+    font-family: var(--font-ar);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.5;
+}
+
+body.app .surah-subtitle,
+html[lang="ar"] body.app .surah-subtitle {
+    margin: 0 0 var(--s-3);
+    color: var(--text-2);
+    font-family: var(--font-read);
+    font-size: var(--step-0);
+    text-align: start;
+}
+
+html[lang="ar"] body.app .surah-subtitle { font-family: var(--font-ar); font-size: 1.25rem; }
+
+body.app .surah-subtitle [lang="ar"] {
+    font-family: var(--font-quran);
+    color: var(--quran);
+    font-size: 1.2em;
+}
+
+body.app .surah-info { justify-content: flex-start; gap: var(--s-2); }
+
+body.app .info-badge,
+html[lang="ar"] body.app .info-badge:not([data-ar]) {
+    padding: var(--s-1) var(--s-3);
+    border-radius: var(--r-pill);
+    background: var(--surface-2);
+    color: var(--text-1);
+    border: var(--hairline);
+    font-family: var(--font-ui);
+    font-size: var(--step--1);
+    font-weight: 600;
+    -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+}
+
+html[lang="ar"] body.app .info-badge { font-family: var(--font-ui-ar); }
+
+body.app .surah-main {
+    padding: var(--s-4) var(--gutter) var(--s-6);
+    background: var(--surface-0);
+}
+
+body.app .surah-container { max-width: 760px; }
+
+/* section titles as app list headers: start-aligned, quiet, no emoji shout */
+body.app .section-title,
+html[lang="ar"] body.app .section-title {
+    margin: var(--s-7) 0 var(--s-3);
+    font-family: var(--font-ui);
+    font-size: var(--step-1);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    color: var(--text-1);
+    text-align: start;
+}
+
+html[lang="ar"] body.app .section-title { font-family: var(--font-ui-ar); letter-spacing: 0; }
+
+body.app .section-title::after,
+body.app .section-title::before { content: none; }
+
+/* intro cards: hairline cards, the meaning text for the grown-up */
+body.app .intro-card,
+body.app .surah-container .story-card,
+body.app .reply-card,
+body.app .fact-card,
+body.app .tip-card,
+body.app .quiz-card,
+body.app .parent-note {
+    background: var(--surface-1);
+    border: var(--hairline);
+    border-radius: var(--r-md);
+    box-shadow: none;
+}
+
+body.app .intro-card h2,
+body.app .surah-container .story-card h2 {
+    font-family: var(--font-ui);
+    font-size: var(--step-1);
+    color: var(--text-1);
+}
+
+html[lang="ar"] body.app .intro-card h2,
+html[lang="ar"] body.app .surah-container .story-card h2 { font-family: var(--font-ui-ar); }
+
+body.app .intro-card p,
+body.app .intro-card li,
+body.app .surah-container .story-card p {
+    font-size: var(--step-0);
+    color: var(--text-1);
+}
+
+body.app .intro-card.highlight { background: var(--reward-wash); border: var(--hairline-gold); }
+
+/* stage picker: a label and a segmented control */
+body.app .stage-picker {
+    justify-content: space-between;
+    margin: 0 0 var(--s-3);
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+body.app .stage-label {
+    color: var(--text-2);
+    font-family: var(--font-ui);
+    font-size: var(--step--1);
+    font-weight: 600;
+}
+
+html[lang="ar"] body.app .stage-label { font-family: var(--font-ui-ar); }
+
+body.app .stage-buttons.segmented { background: var(--surface-2); padding: 4px; gap: 2px; }
+
+body.app .stage-buttons.segmented .stage-btn {
+    padding: 0 var(--s-5);
+    color: var(--text-2);
+    font-family: var(--font-ui);
+}
+
+html[lang="ar"] body.app .stage-buttons.segmented .stage-btn { font-family: var(--font-ui-ar); }
+
+body.app .stage-buttons.segmented .stage-btn[aria-pressed="true"] {
+    background: var(--surface-1);
+    color: var(--text-1);
+    box-shadow: var(--shadow-sm), 0 0 0 1px var(--line);
+}
+
+/* the sticky meaning-narration player sits under the picker */
+body.app .verses-section .mini-player {
+    position: sticky;
+    margin: 0 0 var(--s-4);
+}
+
+/* verse cards as an app list */
+body.app .verse-card {
+    padding: var(--s-5);
+    margin-bottom: var(--s-3);
+    border: var(--hairline);
+    border-radius: var(--r-md);
+    background: var(--surface-1);
+    box-shadow: none;
+}
+
+body.app .verse-card:hover { box-shadow: none; border-color: var(--line); }
+body.app .verse-card.is-narrating { background: var(--reward-wash); border-color: var(--line-strong); }
+
+/* the ayah number: cobalt, because cobalt's one job is the Quran */
+body.app .verse-number {
+    width: 40px;
+    height: 40px;
+    background: var(--quran-wash);
+    color: var(--quran);
+    border: 1px solid rgba(36, 80, 140, 0.3);
+    box-shadow: none;
+    font-family: var(--font-ui);
+}
+
+body.app .verse-content .arabic {
+    font-family: var(--font-quran);
+    font-size: var(--step-quran);
+    line-height: 2;
+    border-bottom: var(--hairline);
+}
+
+body.app .verse-content .transliteration {
+    color: var(--text-2);
+    font-size: var(--step-0);
+}
+
+body.app .verse-content .translation {
+    font-family: var(--font-read);
+    font-size: max(1.125rem, var(--step-read));
+    font-weight: 700;
+    color: var(--text-1);
+}
+
+html[lang="ar"] body.app .verse-content .translation { font-family: var(--font-ar); }
+
+body.app .verse-explanation {
+    background: var(--surface-0);
+    border: var(--hairline);
+    border-radius: var(--r-sm);
+}
+
+body.app .verse-explanation p {
+    font-size: var(--step-0);
+    line-height: 1.65;
+    color: var(--text-1);
+}
+
+body.app .verse-listen {
+    display: inline-flex;
+    align-items: center;
+    padding: 0 var(--s-4);
+    font-family: var(--font-ui);
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--action);
+    background: var(--surface-1);
+    border: 1px solid var(--line);
+}
+
+html[lang="ar"] body.app .verse-listen { font-family: var(--font-ui-ar); }
+
+body.app .verse-listen:active { transform: scale(0.97); }
+
+/* the complete surah keeps its ink page and gold frame: the one ornate block */
+body.app .full-surah-card {
+    border-radius: var(--r-lg);
+}
+
+body.app .arabic-full { font-family: var(--font-quran); }
+
+body.app .page-navigation .nav-btn {
+    min-height: var(--tap);
+    border-radius: var(--r-pill);
+    background: var(--surface-1);
+    color: var(--text-1);
+    border: var(--hairline);
+    box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .verse-card.is-narrating { transition: none; }
+}
+
+/* v2: white on the gold gradient was 1.89:1. On app screens the badges are a gold wash. */
+body.app .light-badge {
+    background: var(--reward-wash);
+    color: var(--reward-text);
+    border: var(--hairline-gold);
+    box-shadow: none;
+}
+
+body.app .surah-container .story-card { text-align: start; }
