@@ -5,3 +5,6 @@
 [2026-11-05] [DONE] Owner rulings applied: child's-name field (Home + reader sheets, localStorage only, no default), Start over (reader sheet + Continue card), shell rolled to stories/quran/ayat-al-kursi + 21 surahs via scripts/app_shell.py (template and converter byte-identical), Google Fonts removed site-wide, Nunito kept.
 [2026-11-05] [FINDING] Fixed: resume never worked in the first reader commit (page 1 was saved before the saved place was read).
 [2026-11-05] [FINDING] Sweep, 74 page loads EN/AR incl. games/nuh-ark.html: 0 console errors, 0 outside requests except YouTube embeds (27 pages, incl. what the iframe loads) and GoatCounter on index.html.
+[2026-11-05] [DONE] a11y must-fixes 1-11 and QA F1-F6 (3a6d542, 3d27003, 5c11923). Sweep: 240 loads (30 pages x EN/AR x 390/1280 x day/bedtime, every slide): 0 text pairs under AA, 0 console errors, 0 overflow. Six verifiers pass.
+[2026-11-05] [ISSUE] Specs for surah-al-bayyinah, surah-al-humazah, surah-at-tin lag the HTML (scholar edits made in HTML only): build-surah.py would revert them. Caught and restored during this pass; specs need updating (content owner).
+[2026-11-05] [ISSUE] Still open from the a11y should-fix list: .tap-to-reveal and .drag-item are divs (not keyboard-operable); AR 200%-text app bar overflow; tab-bar overflow at 200% text on surah pages; 48px targets.
