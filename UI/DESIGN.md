@@ -1,7 +1,8 @@
 # Illuminated Page v2: design system
 
-Status: adopted 2026-11-05 (pilot: `index.html`, the five story pages via the shared reader,
-`surah-al-ikhlas.html`). Owner: frontend-lead. Research: `claudeteam/reviews/refero-deep-dive-2026-11-05.md`.
+Status: adopted 2026-11-05 on every page: Home, `stories.html`, `quran.html`, all 21 surah pages
+and `ayat-al-kursi.html` (app shell), and the five story pages (the reader). Games under `games/`
+keep their own chrome. Owner: frontend-lead. Research: `claudeteam/reviews/refero-deep-dive-2026-11-05.md`.
 
 **Direction.** Every story and surah is a page in a hand-illuminated book, held in a calm,
 well-made reading app. The palette and ornament are the Illuminated Page's (Iznik turquoise and
@@ -100,8 +101,9 @@ gold-light (light badges) 1.89.
 | Quran | `--font-quran` | Amiri Quran 400 | ayat, the complete surah, surah names on tiles |
 | Calligraphy | n/a | Aref Ruqaa 700 | the calligraphy panel title only |
 
-No font CDN: pages that load `styles.css` need no Google Fonts link (removed from the pilot pages;
-the other 24 pages still carry theirs until they move to the shell).
+No font CDN anywhere: every page loads its fonts from `vendor/fonts` through `styles.css`. The only
+outside requests left are the owner's YouTube embeds (and whatever loads inside those iframes) and
+the GoatCounter tag.
 
 Fluid scale (min at 360px, max near 1280px):
 
@@ -210,7 +212,12 @@ Built by `stories.js` when a story has slides (all but Yusuf, which stays classi
   size, language, narration (speed segmented 0.75-1.5x, "Read each page aloud" switch,
   "Turn the page by itself" switch), display (bedtime switch, full screen).
 - **Resume:** the slide is saved per story (`localStorage ik-story-progress`), feeding Home's
-  "Continue" card; reopening a story resumes there (`?resume=0` starts over).
+  "Continue" card; reopening a story resumes there. **Start over** / «من البداية» is a row in the
+  settings sheet and a secondary button on the Continue card (`?resume=0`).
+- **Child's name** / «اسم الطفل»: a field in the settings sheet (and in Home's settings sheet,
+  reached from the app bar or the "Add your child's name" link under the greeting). Stored in
+  `localStorage islamicKidsName` on this device only; no default name ships. With no name the
+  greeting is just "Assalamu alaikum" / «السلام عليكم».
 
 ### 7.7 Narration controls
 No injected stylesheet (the old one carried off-palette hex and keyframes named `pulse` and
@@ -241,7 +248,13 @@ included), Short surahs shelf, a progress row (stories finished, surahs memorise
 learned, from this device's storage), and a "More to explore" list. No hero, no carousel, no dead
 cards; "Explore Activities" and the Ramadan countdown are gone (nothing behind them).
 
-### 7.10 Install as an app
+### 7.10 Rolling the shell onto a page
+`scripts/app_shell.py` holds the shell's strings once. `scripts/surah-page-template.py` emits them
+for generated surahs; `scripts/apply-app-shell.py` converts a hand-made v1 page (idempotent; it
+touches only the head, the header and three attributes: `main#main`, `.stage-buttons.segmented`,
+`footer.app-footer`). Generated and converted output were checked byte-identical for all 8 specs.
+
+### 7.11 Install as an app
 `manifest.webmanifest` (standalone, parchment theme), `images/app/icon.svg` + 192/512 PNG +
 `apple-touch-icon.png`, `theme-color #FBF6EA`, `apple-mobile-web-app-capable`. No service worker yet.
 
@@ -255,7 +268,7 @@ Arabic name in `data-ar-label`, which `bilingual.js` swaps into `aria-label`.
 
 ## 9. Checklist for a new screen
 
-- [ ] `<body class="app">`, app bar, tab bar, `viewport-fit=cover`, no font CDN link
+- [ ] run `scripts/apply-app-shell.py` (or build from the template): `<body class="app">`, app bar, tab bar, `viewport-fit=cover`, no font CDN link
 - [ ] role tokens only; no `white`, `#fff`, `#000`, `rgba(0,0,0,…)`
 - [ ] every control 44px+, labelled in EN and AR
 - [ ] no `infinite`, no `transition: all`; JS scrolling honours reduced motion

@@ -2,3 +2,6 @@
 [2026-11-05] [FINDING] Before/after (390px phone, Nuh): story text column 119px @15.2px -> 358px @18.4px; play button y=1306 (below fold, 26px wide) -> y=763 in fold, 56x56; infinite animations 12 -> 0 (hub 1->0, Ikhlas 8->0); sub-44px targets 21 -> 0.
 [2026-11-05] [DECISION] Removed 12 RTL row-reverse rules that double-flipped rows under dir=rtl (stories.css, interactive-story.css, styles.css .page-navigation). Never re-add.
 [2026-11-05] [ISSUE] Deferred: the other 24 pages still use the v1 header and Google Fonts link (move them to the shell via scripts/surah-page-template.py); Yusuf stays classic-scroll; no service worker; "My Garden" tab not built.
+[2026-11-05] [DONE] Owner rulings applied: child's-name field (Home + reader sheets, localStorage only, no default), Start over (reader sheet + Continue card), shell rolled to stories/quran/ayat-al-kursi + 21 surahs via scripts/app_shell.py (template and converter byte-identical), Google Fonts removed site-wide, Nunito kept.
+[2026-11-05] [FINDING] Fixed: resume never worked in the first reader commit (page 1 was saved before the saved place was read).
+[2026-11-05] [FINDING] Sweep, 74 page loads EN/AR incl. games/nuh-ark.html: 0 console errors, 0 outside requests except YouTube embeds (27 pages, incl. what the iframe loads) and GoatCounter on index.html.
