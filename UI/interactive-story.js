@@ -7,12 +7,9 @@ var brickCount = 0;
 // childName is declared in stories.js
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Get saved name or show modal
+    // v2: no name prompt (the name is an optional setting in the reader sheet)
     childName = localStorage.getItem('islamicKidsName') || '';
-
-    if (!childName) {
-        showNameModal();
-    } else {
+    if (childName) {
         personalizeStory();
     }
 
@@ -81,78 +78,6 @@ function getGreeting() {
     return childName ? (childName + ', ') : '';
 }
 
-// Name Modal
-function showNameModal() {
-    var modal = document.createElement('div');
-    modal.className = 'name-modal';
-    modal.id = 'nameModal';
-
-    var modalContent = document.createElement('div');
-    modalContent.className = 'name-modal-content';
-
-    var icon = document.createElement('div');
-    icon.className = 'modal-icon';
-    icon.textContent = '🌟';
-
-    var title = document.createElement('h2');
-    title.textContent = getTranslatedText('modalGreeting');
-    title.setAttribute('data-i18n', 'modalGreeting');
-
-    var subtitle = document.createElement('p');
-    subtitle.textContent = getTranslatedText('modalQuestion');
-    subtitle.setAttribute('data-i18n', 'modalQuestion');
-
-    var input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'name-input';
-    input.placeholder = getTranslatedText('modalPlaceholder');
-    input.setAttribute('data-i18n-placeholder', 'modalPlaceholder');
-    input.maxLength = 20;
-
-    var button = document.createElement('button');
-    button.className = 'name-submit-btn';
-    button.textContent = getTranslatedText('modalButton') + ' ✨';
-    button.addEventListener('click', function() {
-        submitName(input.value);
-    });
-
-    input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            submitName(input.value);
-        }
-    });
-
-    modalContent.appendChild(icon);
-    modalContent.appendChild(title);
-    modalContent.appendChild(subtitle);
-    modalContent.appendChild(input);
-    modalContent.appendChild(button);
-    modal.appendChild(modalContent);
-    document.body.appendChild(modal);
-
-    setTimeout(function() {
-        input.focus();
-    }, 100);
-}
-
-function submitName(name) {
-    name = name.trim();
-    if (name.length > 0) {
-        childName = name;
-        localStorage.setItem('islamicKidsName', name);
-    }
-
-    var modal = document.getElementById('nameModal');
-    if (modal) {
-        modal.classList.add('fade-out');
-        setTimeout(function() {
-            modal.remove();
-        }, 300);
-    }
-
-    personalizeStory();
-}
-
 function personalizeStory() {
     // Add greeting to story header
     var storyHeader = document.querySelector('.story-header');
@@ -215,7 +140,8 @@ function initializeSoundToggle() {
     if (soundToggle) {
         soundToggle.addEventListener('click', function() {
             soundEnabled = !soundEnabled;
-            this.textContent = soundEnabled ? '🔊' : '🔇';
+            // v2: the glyph stays (sparkles = sound effects); the state is aria-pressed
+            this.setAttribute('aria-pressed', String(soundEnabled));
             this.classList.toggle('muted', !soundEnabled);
         });
     }
@@ -549,15 +475,17 @@ function initializeBuildingGame() {
             brickCountDisplay.textContent = brickCount;
 
             if (brickCount >= 9) {
-                addBrickBtn.disabled = true;
-                addBrickBtn.textContent = '🕋 Complete!';
+                // aria-disabled keeps focus on the button the child just pressed
+                addBrickBtn.setAttribute('aria-disabled', 'true');
+                addBrickBtn.textContent = document.documentElement.lang === 'ar' ? 'اكتملت!' : 'Complete!';
 
                 // Add kaaba emoji on top
                 var kaaba = document.createElement('div');
                 kaaba.textContent = '🕋';
                 kaaba.style.fontSize = '3rem';
                 kaaba.style.marginTop = '1rem';
-                kaaba.style.animation = 'kaabaGlow 2s ease-in-out infinite';
+                kaaba.setAttribute('aria-hidden', 'true');
+                kaaba.style.animation = 'kaabaGlow 2s ease-in-out 2';   // v2: no infinite loops
                 buildingStructure.appendChild(kaaba);
 
                 addStars(3);

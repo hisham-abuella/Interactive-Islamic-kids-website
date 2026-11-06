@@ -74,12 +74,38 @@
             el.setAttribute('aria-label', lang === 'ar' ? el.getAttribute('data-ar-label') : el.__enLabel);
         });
 
+        localiseTitles(lang);
+
         if (window.i18n && typeof window.i18n.setLanguage === 'function') {
             window.i18n.setLanguage(lang);
         }
 
         updateButtons(lang);
         document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: lang } }));
+    }
+
+    /* v2: the document title and the video titles follow the language, so a
+       screen reader does not read an English title with the Arabic voice.
+       <title data-ar> is swapped above; otherwise the Arabic title is the page's
+       h1 (already swapped), never anything personal. */
+    var EN_TITLE = null;
+    function localiseTitles(lang) {
+        if (EN_TITLE === null) EN_TITLE = document.title;
+        var h1el = document.querySelector('h1');
+        var h1 = null;
+        if (h1el) {   /* the h1's text without its decorative (aria-hidden) emoji */
+            var c = h1el.cloneNode(true);
+            Array.prototype.forEach.call(c.querySelectorAll('[aria-hidden="true"]'), function (n) { n.remove(); });
+            h1 = c;
+        }
+        var t = document.querySelector('title');
+        if (t && !t.hasAttribute('data-ar')) {
+            document.title = lang === 'ar' && h1 ? h1.textContent.replace(/\s+/g, ' ').trim() + ' - أطفال الإسلام' : EN_TITLE;
+        }
+        Array.prototype.forEach.call(document.querySelectorAll('iframe[title]'), function (f) {
+            if (f.__enTitle === undefined) f.__enTitle = f.getAttribute('title');
+            f.setAttribute('title', lang === 'ar' && h1 ? 'فيديو: ' + h1.textContent.replace(/\s+/g, ' ').trim() : f.__enTitle);
+        });
     }
 
     function updateButtons(lang) {

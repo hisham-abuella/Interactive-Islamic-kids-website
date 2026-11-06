@@ -56,8 +56,16 @@
                     badge, card.querySelector('.story-info').firstChild);
             }
             badge.setAttribute('data-state', STATES[st]);
-            badge.textContent = MARK[st] + ' ' + LABEL[lang()][st];
-            badge.setAttribute('aria-label', LABEL[lang()][st] + ' — ' +
+            // the mark is decoration; the name says which surah and what tapping does
+            badge.textContent = '';
+            var mark = document.createElement('span');
+            mark.setAttribute('aria-hidden', 'true');
+            mark.textContent = MARK[st] + ' ';
+            badge.appendChild(mark);
+            badge.appendChild(document.createTextNode(LABEL[lang()][st]));
+            var title = card.querySelector('.card-title, h2, h3');
+            var surah = title ? title.textContent.split(' — ')[0].trim() : '';
+            badge.setAttribute('aria-label', surah + ': ' + LABEL[lang()][st] + ' — ' +
                 (lang() === 'ar' ? 'اضغط لتغيير الحالة' : 'tap to change'));
         });
 

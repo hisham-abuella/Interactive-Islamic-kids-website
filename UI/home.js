@@ -4,8 +4,8 @@
    - fades cover plates in when loaded (never a blank box: the tile has a
      parchment skeleton behind it)
    - greets the child by name
-   - fills the one gold card: "Continue" a story in progress, else "Keep
-     learning" a surah marked learning, else "Tonight's story" by date
+   - fills the one gold card: "Continue" a story in progress, else
+     "Tonight's story" by date
    - fills the progress row from what this device remembers
    Nothing leaves the browser.
    ============================================ */
@@ -94,7 +94,11 @@
         document.getElementById('nameEdit').addEventListener('click', open);
         document.getElementById('homeSheetDone').addEventListener('click', close);
         input.addEventListener('input', function () { setName(input.value); renderGreeting(); });
-        input.addEventListener('keydown', function (e) { if (e.key === 'Enter') close(); });
+        input.addEventListener('keydown', function (e) {
+            // preventDefault: otherwise the same Enter activates the opener that
+            // regains focus, and the sheet re-opens (QA F1)
+            if (e.key === 'Enter') { e.preventDefault(); close(); }
+        });
         sheet.addEventListener('click', function (e) { if (e.target === sheet) close(); });
         sheet.addEventListener('close', function () { setName(input.value); renderGreeting(); });
     }

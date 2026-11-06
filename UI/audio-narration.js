@@ -535,7 +535,7 @@ const AudioNarration = {
         const btn = document.getElementById('narrationPlayBtn');
         if (btn) {
             btn.setAttribute('aria-pressed', String(this.isPlaying));
-            btn.setAttribute('aria-label', this.isPlaying ? this.label('pause') : this.label('play'));
+            btn.setAttribute('aria-label', this.label('play'));   // constant name; the state is aria-pressed
             btn.classList.toggle('playing', this.isPlaying);
         }
     },

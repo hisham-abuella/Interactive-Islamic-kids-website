@@ -1,6 +1,8 @@
 // Surah Page Interactive JavaScript
 
 document.addEventListener('DOMContentLoaded', function() {
+    // quiz feedback is announced politely when it changes (v2, a11y)
+    document.querySelectorAll('.quiz-feedback').forEach(el => el.setAttribute('role', 'status'));
     initializeQuiz();
     initializeAnimations();
     initStagePicker();
@@ -72,19 +74,20 @@ function setupQuizCard(card, index, totalCards) {
         option.addEventListener('click', function() {
             // Prevent if already answered correctly
             if (card.classList.contains('answered-correct')) return;
+            if (this.getAttribute('aria-disabled') === 'true') return;
 
             const isCorrect = this.getAttribute('data-correct') === 'true';
 
             if (isCorrect) {
                 card.classList.add('answered-correct');
                 this.classList.add('correct');
-                feedback.textContent = '🎉 MashaAllah! Correct!';
+                feedback.textContent = isArabic() ? 'ما شاء الله! إجابة صحيحة!' : 'MashaAllah! Correct!';
                 feedback.className = 'quiz-feedback correct';
                 score++;
                 createConfetti(card);
 
                 // Disable all options
-                options.forEach(opt => opt.disabled = true);
+                options.forEach(opt => opt.setAttribute('aria-disabled', 'true'));   // aria-disabled keeps focus on the button (v2)
 
                 // Move to next question after delay
                 setTimeout(() => {
@@ -95,7 +98,7 @@ function setupQuizCard(card, index, totalCards) {
                 showRetryFeedback(feedback, card);
 
                 // Disable only this wrong option
-                this.disabled = true;
+                this.setAttribute('aria-disabled', 'true');
             }
         });
     });
@@ -108,7 +111,7 @@ function showRetryFeedback(feedback, card) {
 
     // Create message
     const message = document.createElement('span');
-    message.textContent = '💪 Not quite! Try again! ';
+    message.textContent = isArabic() ? 'ليس تماماً! حاول مرة أخرى! ' : 'Not quite! Try again! ';
     feedback.appendChild(message);
 
     // Create line break
@@ -117,7 +120,8 @@ function showRetryFeedback(feedback, card) {
     // Create retry button
     const retryBtn = document.createElement('button');
     retryBtn.className = 'retry-btn';
-    retryBtn.textContent = '🔄 Try Again';
+    retryBtn.type = 'button';
+    retryBtn.textContent = isArabic() ? 'حاول مرة أخرى' : 'Try again';
     retryBtn.addEventListener('click', function() {
         resetQuizCard(card);
     });
@@ -132,13 +136,19 @@ function resetQuizCard(card) {
     options.forEach(opt => {
         if (opt.getAttribute('data-correct') !== 'true') {
             opt.classList.remove('incorrect');
-            opt.disabled = false;
+            opt.removeAttribute('aria-disabled');
         }
     });
 
-    // Clear feedback
+    // Clear feedback, and keep focus on an answer (the retry button is gone)
     feedback.textContent = '';
     feedback.className = 'quiz-feedback';
+    const open = Array.prototype.find.call(options, o => o.getAttribute('aria-disabled') !== 'true');
+    if (open) open.focus();
+}
+
+function isArabic() {
+    return document.documentElement.lang === 'ar';
 }
 
 function showNextQuestion(currentIndex, totalCards) {

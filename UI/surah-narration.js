@@ -69,6 +69,7 @@
             playerSub: ar ? 'شرح كل آية، واحدة بعد الأخرى' : 'Each verse explained, one after another',
             playerOn: ar ? 'الآية {n} من {N}' : 'Verse {n} of {N}',
             playAll: ar ? 'استمع إلى معاني كل الآيات' : 'Listen to the meaning of every verse',
+            verseN: ar ? 'استمع إلى معنى الآية {n}' : 'Listen to verse {n}',
             pauseAll: ar ? 'إيقاف' : 'Stop'
         }[key];
     }
@@ -145,11 +146,14 @@
             btn.setAttribute('aria-disabled', String(s));
             if (s) {
                 btn.textContent = label('soonVerse');
+                btn.removeAttribute('aria-label');
                 btn.setAttribute('aria-pressed', 'false');
                 return;
             }
             var on = state.playingIndex === i;
             btn.textContent = (on ? '■ ' : '▶ ') + (on ? label('stop') : label('listen'));
+            // one constant name per verse; the state is aria-pressed (v2, a11y)
+            btn.setAttribute('aria-label', label('verseN').replace('{n}', digits(i + 1)));
             btn.setAttribute('aria-pressed', String(on));
         });
         highlight(cards);
@@ -214,7 +218,7 @@
         var s = soon();
         btn.setAttribute('aria-disabled', String(s));
         btn.setAttribute('aria-pressed', String(!s && state.playAll));
-        btn.setAttribute('aria-label', state.playAll ? label('pauseAll') : label('playAll'));
+        btn.setAttribute('aria-label', label('playAll'));   // constant name; the state is aria-pressed
         if (s) {
             title.textContent = window.SurahNarration.soonText.ar;
             sub.textContent = window.SurahNarration.soonText.en;
@@ -222,6 +226,8 @@
             return;
         }
         sub.removeAttribute('lang');
+        var text = player.querySelector('.mini-player__text');
+        if (state.playingIndex >= 0) text.setAttribute('aria-live', 'polite'); else text.removeAttribute('aria-live');
         title.textContent = label('player');
         sub.textContent = state.playingIndex >= 0
             ? label('playerOn').replace('{n}', digits(state.playingIndex + 1)).replace('{N}', digits(cards.length))

@@ -6,12 +6,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if we have a saved name
     childName = localStorage.getItem('islamicKidsName') || '';
 
-    if (!childName && document.querySelector('.story-container')) {
-        showNameModal();
-    } else if (childName) {
+    // v2: no name prompt. The child's name is an optional setting (reader
+    // settings sheet, Home settings); with none, nothing is personalised.
+    if (childName) {
         personalizeStory();
     }
 
+    markFeedbackRegions();
     initializeProgress();
     initializeMiniQuizzes();
     initializeFinalQuiz();
@@ -22,19 +23,16 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeBackgroundAnimations();
 });
 
-// Re-label the welcome modal if the child switches language while it is open.
-document.addEventListener('languageChanged', function () {
-    var modal = document.getElementById('nameModal');
-    if (!modal) return;
-    var title = modal.querySelector('h2');
-    var subtitle = modal.querySelector('p');
-    var input = modal.querySelector('.name-input');
-    var button = modal.querySelector('.name-submit-btn');
-    if (title) title.textContent = t('modalGreeting', 'Assalamu Alaikum!');
-    if (subtitle) subtitle.textContent = t('modalQuestion', "What's your name, little one?");
-    if (input) input.placeholder = t('modalPlaceholder', 'Enter your name...');
-    if (button) button.textContent = t('modalButton', "Let's Begin!") + ' \u2728';
-});
+// Quiz and activity feedback is announced politely when it changes (v2, a11y).
+// Set here, not in the HTML, so the quiz markup the checkers parse is untouched.
+function markFeedbackRegions() {
+    document.querySelectorAll('.quiz-feedback, .choice-feedback, .emotion-feedback, .activity-feedback')
+        .forEach(function (el) { el.setAttribute('role', 'status'); });
+}
+
+function prefersReducedMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+}
 
 // Look up a translated string, falling back to the English text if the
 // translations layer has not loaded (stories.js also runs on its own).
@@ -44,72 +42,6 @@ function t(key, fallback) {
         if (v && v !== key) return v;
     }
     return fallback;
-}
-
-// Name Input Modal
-function showNameModal() {
-    const modal = document.createElement('div');
-    modal.className = 'name-modal';
-    modal.id = 'nameModal';
-
-    const modalContent = document.createElement('div');
-    modalContent.className = 'name-modal-content';
-
-    const icon = document.createElement('div');
-    icon.className = 'modal-icon';
-    icon.textContent = '🌟';
-
-    const title = document.createElement('h2');
-    title.textContent = t('modalGreeting', 'Assalamu Alaikum!');
-
-    const subtitle = document.createElement('p');
-    subtitle.textContent = t('modalQuestion', "What's your name, little one?");
-
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.className = 'name-input';
-    input.placeholder = t('modalPlaceholder', 'Enter your name...');
-    input.maxLength = 20;
-
-    const button = document.createElement('button');
-    button.className = 'name-submit-btn';
-    button.textContent = t('modalButton', "Let's Begin!") + ' ✨';
-    button.addEventListener('click', function() {
-        submitName(input.value);
-    });
-
-    input.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            submitName(input.value);
-        }
-    });
-
-    modalContent.appendChild(icon);
-    modalContent.appendChild(title);
-    modalContent.appendChild(subtitle);
-    modalContent.appendChild(input);
-    modalContent.appendChild(button);
-    modal.appendChild(modalContent);
-    document.body.appendChild(modal);
-
-    // Focus on input
-    setTimeout(() => input.focus(), 100);
-}
-
-function submitName(name) {
-    name = name.trim();
-    if (name.length > 0) {
-        childName = name;
-        localStorage.setItem('islamicKidsName', name);
-
-        const modal = document.getElementById('nameModal');
-        if (modal) {
-            modal.classList.add('fade-out');
-            setTimeout(() => modal.remove(), 300);
-        }
-
-        personalizeStory();
-    }
 }
 
 function personalizeStory() {
@@ -160,7 +92,10 @@ function initializeProgress() {
 
         progressBar.style.width = scrollPercent + '%';
         if (progressText) {
-            progressText.textContent = Math.round(scrollPercent) + '% Complete';
+            var pct = Math.round(scrollPercent);
+            progressText.textContent = document.documentElement.lang === 'ar'
+                ? '٪' + pct.toLocaleString('ar-EG') + ' مكتمل'
+                : pct + '% Complete';
         }
     });
 }
@@ -182,6 +117,7 @@ function setupMiniQuiz(quiz) {
         option.addEventListener('click', function() {
             // Prevent multiple answers if already answered correctly
             if (quiz.classList.contains('answered-correct')) return;
+            if (this.getAttribute('aria-disabled') === 'true') return;
 
             const isCorrect = this.getAttribute('data-correct') === 'true';
 
@@ -195,14 +131,14 @@ function setupMiniQuiz(quiz) {
                 createConfetti(quiz);
 
                 // Disable all options
-                options.forEach(opt => opt.disabled = true);
+                options.forEach(opt => opt.setAttribute('aria-disabled', 'true'));   // aria-disabled keeps focus on the button (v2)
             } else {
                 this.classList.add('incorrect');
                 showRetryFeedback(feedback, 'mini', quiz);
                 playSound('incorrect');
 
                 // Disable only this wrong option
-                this.disabled = true;
+                this.setAttribute('aria-disabled', 'true');
             }
         });
     });
@@ -243,13 +179,22 @@ function resetMiniQuiz(quiz) {
     options.forEach(opt => {
         if (opt.getAttribute('data-correct') !== 'true') {
             opt.classList.remove('incorrect');
-            opt.disabled = false;
+            opt.removeAttribute('aria-disabled');
         }
     });
 
     // Clear feedback
     feedback.textContent = '';
     feedback.className = 'quiz-feedback';
+    focusFirstOpen(options);
+}
+
+// The retry button that had focus is removed by a reset; put focus on the
+// first answer that can still be chosen instead of losing it to <body>.
+function focusFirstOpen(options) {
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].getAttribute('aria-disabled') !== 'true') { options[i].focus(); return; }
+    }
 }
 
 // Final Quiz
@@ -271,6 +216,7 @@ function setupFinalQuizCard(card, index) {
         option.addEventListener('click', function() {
             // Prevent if already answered correctly
             if (card.classList.contains('answered-correct')) return;
+            if (this.getAttribute('aria-disabled') === 'true') return;
 
             const isCorrect = this.getAttribute('data-correct') === 'true';
 
@@ -285,7 +231,7 @@ function setupFinalQuizCard(card, index) {
                 createConfetti(card);
 
                 // Disable all options
-                options.forEach(opt => opt.disabled = true);
+                options.forEach(opt => opt.setAttribute('aria-disabled', 'true'));   // aria-disabled keeps focus on the button (v2)
 
                 // Move to next question after delay
                 setTimeout(() => {
@@ -298,7 +244,7 @@ function setupFinalQuizCard(card, index) {
                 playSound('incorrect');
 
                 // Disable only this wrong option
-                this.disabled = true;
+                this.setAttribute('aria-disabled', 'true');
             }
         });
     });
@@ -312,13 +258,14 @@ function resetFinalQuizCard(card) {
     options.forEach(opt => {
         if (opt.getAttribute('data-correct') !== 'true') {
             opt.classList.remove('incorrect');
-            opt.disabled = false;
+            opt.removeAttribute('aria-disabled');
         }
     });
 
     // Clear feedback
     feedback.textContent = '';
     feedback.className = 'quiz-feedback';
+    focusFirstOpen(options);
 }
 
 function showNextQuestion(currentIndex) {
@@ -351,7 +298,7 @@ function showNextQuestion(currentIndex) {
         if (currentIndex < quizCards.length - 1) {
             // Show next question
             quizCards[currentIndex + 1].classList.remove('hidden');
-            quizCards[currentIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            quizCards[currentIndex + 1].scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'center' });
         } else {
             // Show results
             if (quizResults) {
@@ -368,7 +315,7 @@ function showNextQuestion(currentIndex) {
                 setTimeout(() => {
                     if (videoSection) {
                         videoSection.classList.remove('hidden');
-                        videoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        videoSection.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'center' });
                     }
                 }, 2000);
             }
@@ -934,8 +881,14 @@ function updateSlideView(silent, dir) {
 
     const prevBtn = document.getElementById('prevSlide');
     const nextBtn = document.getElementById('nextSlide');
-    if (prevBtn) prevBtn.disabled = currentSlide === 0;
-    if (nextBtn) nextBtn.disabled = currentSlide === totalSlides - 1;
+    // aria-disabled, not disabled: on the last page the focused Next must keep
+    // focus (a disabled button drops it to <body>). nextSlide/prevSlide guard the ends.
+    if (prevBtn) prevBtn.setAttribute('aria-disabled', String(currentSlide === 0));
+    if (nextBtn) nextBtn.setAttribute('aria-disabled', String(currentSlide === totalSlides - 1));
+
+    // The "previous / next story" links and the closing moral belong to the
+    // end of the book, not under every page.
+    document.body.classList.toggle('reader-at-end', currentSlide === totalSlides - 1);
 
     var percent = ((currentSlide + 1) / totalSlides) * 100;
     var fill = document.getElementById('readerProgressFill');

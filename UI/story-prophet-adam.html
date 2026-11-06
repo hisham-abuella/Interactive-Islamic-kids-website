@@ -7,10 +7,10 @@
     <meta name="theme-color" content="#FBF6EA">
     <title>Prophet Adam - The First Human - Islamic Kids</title>
     <!-- fonts are self-hosted: @font-face in styles.css (vendor/fonts) -->
-    <link rel="stylesheet" href="styles.css?v=20261105">
-    <link rel="stylesheet" href="app.css?v=20261105">
-    <link rel="stylesheet" href="stories.css?v=20261105">
-    <link rel="stylesheet" href="interactive-story.css?v=20261105">
+    <link rel="stylesheet" href="styles.css?v=20261106">
+    <link rel="stylesheet" href="app.css?v=20261106">
+    <link rel="stylesheet" href="stories.css?v=20261106">
+    <link rel="stylesheet" href="interactive-story.css?v=20261106">
 </head>
 <body>
     <!-- Floating Decorations -->
@@ -46,13 +46,14 @@
 
     <!-- Stars Counter -->
     <div class="stars-counter" id="starsCounter">
+        <span class="visually-hidden" data-ar="النجوم:">Stars:</span>
         <span class="star-icon" aria-hidden="true">⭐</span>
         <span class="star-count" id="starCount">0</span>
     </div>
 
-    <!-- Sound Toggle -->
-    <button class="sound-toggle" id="soundToggle" title="Toggle Sound">
-        🔊
+    <!-- Sound effects toggle (the narration has its own read-aloud control) -->
+    <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="true" aria-label="Sound effects" data-ar-label="المؤثرات الصوتية">
+        <svg class="icon" aria-hidden="true"><use href="vendor/icons/sprite.svg#i-sparkles"/></svg>
     </button>
 
     <!-- Story Container -->
@@ -458,8 +459,8 @@
 
             <!-- Story Navigation -->
             <div class="story-navigation">
-                <a href="stories.html" class="nav-btn"><span class="nav-arrow-left">←</span> <span data-i18n="backToStories">Back to Stories</span></a>
-                <a href="story-prophet-ibrahim.html" class="nav-btn next"><span data-i18n="nextStory">Next Story: Prophet Ibrahim</span> <span class="nav-arrow-right">→</span></a>
+                <a href="stories.html" class="nav-btn"><span class="nav-arrow-left" aria-hidden="true">←</span> <span data-i18n="backToStories">Back to Stories</span></a>
+                <a href="story-prophet-ibrahim.html" class="nav-btn next"><span data-i18n="nextStory">Next Story: Prophet Ibrahim</span> <span class="nav-arrow-right" aria-hidden="true">→</span></a>
             </div>
 
         </div>
@@ -478,9 +479,9 @@
 
     <script src="translations.js?v=20261104"></script>
     <script src="voice-scripts.js?v=20261104"></script>
-    <script src="audio-narration.js?v=20261105"></script>
-    <script src="stories.js?v=20261105"></script>
-    <script src="interactive-story.js?v=20261105"></script>
+    <script src="audio-narration.js?v=20261106"></script>
+    <script src="stories.js?v=20261106"></script>
+    <script src="interactive-story.js?v=20261106"></script>
     <script>
         // Initialize language on page load
         document.addEventListener('DOMContentLoaded', function() {
@@ -515,7 +516,7 @@
         });
     </script>
 
-    <script src="bilingual.js?v=20261105"></script>
-    <script src="bedtime.js?v=20261105"></script>
+    <script src="bilingual.js?v=20261106"></script>
+    <script src="bedtime.js?v=20261106"></script>
 </body>
 </html>
