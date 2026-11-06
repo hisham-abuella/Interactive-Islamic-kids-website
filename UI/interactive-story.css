@@ -80,12 +80,11 @@
     top: 10px;
     right: 10px;
     background: linear-gradient(135deg, var(--gold-wash) 0%, var(--gold-pale) 100%);
-    color: var(--gold-ink);
+    color: var(--reward-text);
     padding: 0.3rem 0.8rem;
     border-radius: 15px;
     font-size: 0.85rem;
-    font-weight: 600;
-    opacity: 0.8;
+    font-weight: 600;                   /* v2: no 0.8 opacity (it took the text to 3.56:1) */
 }
 
 /* Animated Elements */
@@ -270,6 +269,7 @@
 
 .choice-btn {
     background: var(--surface-1);
+    color: var(--text-1);           /* v2: was unset (black by day, 1.52:1 in bedtime) */
     border: 3px solid var(--slate-200);
     border-radius: 15px;
     padding: 1rem 1.5rem;
@@ -434,18 +434,19 @@
 
 .wrong-zone {
     border-color: #fca5a5;
-    background: #fef2f2;
+    background: var(--surface-1);   /* v2: the light pink stayed light in bedtime under light text (1.12:1) */
 }
 
 .drop-zone p {
+    color: var(--text-1);
     margin: 0;
     font-weight: 600;
     font-size: 0.9rem;
 }
 
 .dropped-item {
-    background: var(--emerald-500);
-    color: white;
+    background: var(--action);
+    color: var(--text-on-action);
     padding: 0.5rem 1rem;
     border-radius: 8px;
     margin-top: 0.5rem;
@@ -478,6 +479,7 @@
 
 .emotion-btn {
     background: var(--surface-1);
+    color: var(--text-1);           /* v2: was unset (#000 by day, 1.52:1 in bedtime) */
     border: 3px solid var(--slate-200);
     border-radius: 15px;
     padding: 1rem 1.5rem;
@@ -513,8 +515,8 @@
 }
 
 .celebrate-btn {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--amber-600) 100%);
-    color: white;
+    background: var(--action);          /* v2: white on gold was 3.04:1 */
+    color: var(--text-on-action);
     border: none;
     padding: 1rem 2rem;
     border-radius: 25px;
@@ -586,8 +588,8 @@
 }
 
 .build-btn {
-    background: linear-gradient(135deg, var(--emerald-500) 0%, var(--teal-500) 100%);
-    color: white;
+    background: var(--action);          /* v2: white on --teal-500 was 3.41:1; now 6.24:1 */
+    color: var(--text-on-action);
     border: none;
     padding: 0.8rem 1.5rem;
     border-radius: 20px;
@@ -597,7 +599,7 @@
     margin-top: 1rem;
 }
 
-.build-btn:hover:not(:disabled) {
+.build-btn:hover:not(:disabled):not([aria-disabled="true"]) {
     transform: scale(1.05);
 }
 
@@ -649,8 +651,8 @@
 
 /* Memorize Button */
 .memorize-btn {
-    background: linear-gradient(135deg, var(--cobalt-mid) 0%, #3A5F9B 100%);
-    color: white;
+    background: var(--quran-fill);     /* v2: white on --cobalt-mid was 4.38:1; dua = cobalt's job */
+    color: var(--text-on-action);
     border: none;
     padding: 1rem 2rem;
     border-radius: 25px;

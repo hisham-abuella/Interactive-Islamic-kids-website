@@ -196,7 +196,7 @@
 }
 
 .story-card.healing h2 {
-    color: var(--turquoise-deep);
+    color: var(--action-text);
 }
 
 .story-card h2 {
@@ -406,7 +406,7 @@
 
 .ameen-transliteration {
     font-size: 2rem;
-    color: var(--amber-600);
+    color: var(--reward-text);          /* v2: --amber-600 did not flip in bedtime (2.42:1) */
     font-weight: 700;
     margin-bottom: 0.5rem;
 }
@@ -621,8 +621,8 @@
 }
 
 .question-number {
-    background: linear-gradient(135deg, var(--emerald-500) 0%, var(--teal-500) 100%);
-    color: white;
+    background: var(--action);          /* v2: white on --teal-500 was 3.41:1; now 6.24:1 */
+    color: var(--text-on-action);
     display: inline-block;
     padding: 0.4rem 1rem;
     border-radius: 15px;
@@ -660,13 +660,13 @@
 
 /* v2: white on --emerald-500 was 3.97:1; the hover is now a tint, the answer
    states are AA (6.24:1 and 6.5:1). Red stays reserved for the wrong answer. */
-.quiz-option:hover:not(:disabled) {
+.quiz-option:hover:not(:disabled):not([aria-disabled="true"]) {
     background: var(--action-wash);
     color: var(--text-1);
     border-color: var(--action);
 }
 
-.quiz-option:active:not(:disabled) { transform: scale(0.98); }
+.quiz-option:active:not(:disabled):not([aria-disabled="true"]) { transform: scale(0.98); }
 
 .quiz-option.correct {
     background: var(--action);
@@ -783,8 +783,8 @@
 }
 
 .nav-btn {
-    background: linear-gradient(135deg, var(--emerald-500) 0%, var(--teal-500) 100%);
-    color: white;
+    background: var(--action);          /* v2: white on --teal-500 was 3.41:1; now 6.24:1 */
+    color: var(--text-on-action);
     padding: 1rem 2rem;
     border-radius: 25px;
     text-decoration: none;
@@ -798,7 +798,7 @@
 }
 
 .nav-btn.next {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--amber-600) 100%);
+    background: var(--action);          /* v2: white on the gold gradient failed AA */
 }
 
 /* Footer Dua */
@@ -912,7 +912,7 @@
 }
 
 .stage-btn:hover {
-    color: var(--turquoise-deep);
+    color: var(--action-text);
 }
 
 .stage-btn[aria-pressed="true"] {
@@ -1027,7 +1027,7 @@ html[lang="ar"] .parent-note {
     font-family: inherit;
     font-weight: 700;
     font-size: 0.85rem;
-    color: var(--turquoise-deep);
+    color: var(--action-text);
     background: var(--card);
     border: 1px solid var(--rule);
     border-radius: var(--radius-full);
@@ -1116,7 +1116,7 @@ html[lang="ar"] .parent-note {
     text-align: center;
     /* The frame is a painting on parchment in every theme, so the ink on it
        stays dark even when the page around it goes to bedtime colours. */
-    color: #2A1D0C;
+    color: var(--plate-ink);
 }
 
 .calligraphy-panel .panel-title {
@@ -1142,7 +1142,7 @@ html[lang="ar"] .parent-note {
 }
 
 .calligraphy-panel .ayah-mark {
-    color: var(--gold-ink);
+    color: var(--plate-gold);   /* v2: --gold-ink flipped to light gold in bedtime (1.3:1 on the light plate) */
 }
 
 /* Arabic verse narration withheld (no-recitation interim, see surah-narration.js):
@@ -1442,7 +1442,7 @@ body.app .verse-listen {
     font-family: var(--font-ui);
     font-size: var(--step--1);
     font-weight: 600;
-    color: var(--action);
+    color: var(--action-text);
     background: var(--surface-1);
     border: 1px solid var(--line);
 }

@@ -193,9 +193,11 @@
 
 .story-info p { flex-grow: 1; }
 
-.story-info h3 {
+.story-info h3,
+.story-info h2,
+.card-title {
     font-family: 'Baloo 2', cursive;
-    color: var(--turquoise);
+    color: var(--action-text);
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
@@ -277,7 +279,7 @@
     font-family: 'Baloo 2', cursive;
     font-size: 2.5rem;
     font-weight: 800;
-    color: var(--turquoise);
+    color: var(--action-text);
     margin-bottom: 1.5rem;
 }
 
@@ -299,8 +301,8 @@
 }
 
 .mode-btn.active {
-    background: linear-gradient(135deg, var(--emerald-500) 0%, var(--teal-500) 100%);
-    color: white;
+    background: var(--action);          /* v2: white on --teal-500 was 3.41:1; now 6.24:1 */
+    color: var(--text-on-action);
     border-color: var(--emerald-500);
 }
 
@@ -372,7 +374,7 @@
 }
 
 .scene-text h2 {
-    color: var(--teal-500);
+    color: var(--action-text);          /* v2: --teal-500 was 2.9:1 on the night wash */
     font-size: 1.5rem;
     margin-bottom: 1rem;
 }
@@ -509,7 +511,7 @@
 }
 
 .lesson-box li {
-    color: var(--turquoise-deep);
+    color: var(--action-text);
     font-size: 1.1rem;
     padding: 0.5rem 0;
 }
@@ -545,7 +547,7 @@
 }
 
 .dua-note {
-    color: #3A5F9B;
+    color: var(--quran);                /* v2: #3A5F9B was 4.41:1 by day, 2.79:1 in bedtime */
     font-size: 0.95rem;
 }
 
@@ -596,8 +598,8 @@
 }
 
 .question-number {
-    background: linear-gradient(135deg, var(--emerald-500) 0%, var(--teal-500) 100%);
-    color: white;
+    background: var(--action);          /* v2: white on --teal-500 was 3.41:1; now 6.24:1 */
+    color: var(--text-on-action);
     display: inline-block;
     padding: 0.4rem 1rem;
     border-radius: 15px;
@@ -668,7 +670,7 @@
 }
 
 .video-unlock h2 {
-    color: var(--emerald-500);
+    color: var(--action-text);          /* v2: --emerald-500 was 3.68:1 (3.82 in bedtime) */
     font-size: 2rem;
     margin-bottom: 0.5rem;
 }
@@ -745,7 +747,7 @@
 }
 
 .video-btn {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(9, 40, 38, 0.35);  /* v2: a darker pill keeps white text at AA (the light one was 4.12:1) */
     color: white;
     padding: 0.8rem 1.5rem;
     border: 2px solid rgba(255, 255, 255, 0.3);
@@ -770,8 +772,8 @@
 }
 
 .nav-btn {
-    background: linear-gradient(135deg, var(--emerald-500) 0%, var(--teal-500) 100%);
-    color: white;
+    background: var(--action);          /* v2: white on --teal-500 was 3.41:1; now 6.24:1 */
+    color: var(--text-on-action);
     padding: 1rem 2rem;
     border-radius: 25px;
     text-decoration: none;
@@ -785,7 +787,7 @@
 }
 
 .nav-btn.next {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--amber-600) 100%);
+    background: var(--action);          /* v2: white on the gold gradient was 2.99:1 */
 }
 
 /* Moral Takeaway */
@@ -797,7 +799,7 @@
 }
 
 .moral-takeaway h4 {
-    color: var(--gold-pale);
+    color: var(--ornament-light);       /* v2: --gold-pale flips dark in bedtime (1.30:1 on the dark footer) */
     margin-bottom: 0.5rem;
 }
 
@@ -808,7 +810,7 @@
 
 /* Active nav link */
 .nav-links a.active {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(9, 40, 38, 0.35);  /* v2: a darker pill keeps white text at AA (the light one was 4.12:1) */
     border-radius: 20px;
 }
 
@@ -1109,8 +1111,8 @@
 }
 
 .slide-nav-btn {
-    background: linear-gradient(135deg, var(--emerald-500) 0%, var(--teal-500) 100%);
-    color: white;
+    background: var(--action);          /* v2: white on --teal-500 was 3.41:1; now 6.24:1 */
+    color: var(--text-on-action);
     width: 60px;
     height: 60px;
     border: none;
@@ -1124,7 +1126,7 @@
     box-shadow: 0 5px 15px rgba(26, 143, 128, 0.3);
 }
 
-.slide-nav-btn:hover:not(:disabled) {
+.slide-nav-btn:hover:not(:disabled):not([aria-disabled="true"]) {
     transform: scale(1.1);
     box-shadow: 0 8px 25px rgba(26, 143, 128, 0.4);
 }
@@ -1319,8 +1321,8 @@
     }
 
     .slide-nav-btn {
-        width: 40px;
-        height: 40px;
+        width: 44px;                    /* v2: 44px floor (was 40) */
+        height: 44px;
         font-size: 0.9rem;
     }
 }
@@ -1487,8 +1489,8 @@ html[lang="ar"] .story-select-card.featured::before {
     position: fixed;
     top: 100px;
     right: 80px;
-    background: var(--turquoise);
-    color: white;
+    background: var(--action);          /* v2: white on --turquoise was 4.37:1 */
+    color: var(--text-on-action);
     border: none;
     border-radius: 50%;
     width: 50px;
@@ -1615,8 +1617,8 @@ html[lang="ar"] .fullscreen-controls {
     .fullscreen-toggle {
         top: 80px;
         right: 60px;
-        width: 40px;
-        height: 40px;
+        width: 44px;                    /* v2: 44px floor (was 40) */
+        height: 44px;
         font-size: 1rem;
     }
 
@@ -1727,7 +1729,7 @@ html[lang="ar"] .fullscreen-controls {
     box-shadow: 0 6px 20px rgba(192, 138, 46, 0.4);
 }
 
-.slide-nav-btn:hover:not(:disabled) {
+.slide-nav-btn:hover:not(:disabled):not([aria-disabled="true"]) {
     transform: scale(1.15);
 }
 
@@ -1981,7 +1983,7 @@ html[lang="ar"] .fullscreen-controls {
 
 .resume-link {
     font-weight: 700;
-    color: var(--turquoise-deep);
+    color: var(--action-text);
     text-decoration: none;
     border-bottom: 2px solid var(--rule-strong);
     padding-bottom: 2px;
@@ -2010,8 +2012,8 @@ html[lang="ar"] .fullscreen-controls {
     cursor: pointer;
     border: 1px solid var(--rule);
     background: var(--card);
-    color: var(--slate-500);
-    transition: background 0.2s ease, color 0.2s ease;
+    color: var(--text-2);
+    transition: background-color var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out);
 }
 
 .progress-badge[data-state="learning"] {
@@ -2021,13 +2023,13 @@ html[lang="ar"] .fullscreen-controls {
 }
 
 .progress-badge[data-state="memorized"] {
-    background: var(--turquoise);
-    border-color: var(--turquoise-deep);
-    color: #fff;
+    background: var(--action);          /* v2: white on --turquoise was 4.37:1; now 6.24:1 */
+    border-color: var(--action);
+    color: var(--text-on-action);
 }
 
 .progress-badge:focus-visible {
-    outline: 3px solid var(--gold);
+    outline: 3px solid var(--focus);    /* v2: --gold ring was 2.99:1 on the card */
     outline-offset: 2px;
 }
 
@@ -2596,14 +2598,14 @@ body.reader .story-slide .quiz-option {
     text-align: start;
 }
 
-body.reader .story-slide .quiz-option:hover:not(:disabled) {
+body.reader .story-slide .quiz-option:hover:not(:disabled):not([aria-disabled="true"]) {
     background: var(--action-wash);
     border-color: var(--action);
     color: var(--text-1);
     transform: none;
 }
 
-body.reader .story-slide .quiz-option:active:not(:disabled) { transform: scale(0.98); }
+body.reader .story-slide .quiz-option:active:not(:disabled):not([aria-disabled="true"]) { transform: scale(0.98); }
 
 body.reader .story-slide .quiz-option.correct {
     background: var(--action);
@@ -2780,7 +2782,7 @@ body.reader .story-container.fullscreen-active {
 .narration-control-bar .narration-settings[open] > summary {
     margin-inline-start: auto;
     background: var(--action-wash);
-    color: var(--action);
+    color: var(--action-text);
 }
 
 .narration-settings__panel { padding: var(--s-2) var(--s-2) 0; }
@@ -2910,13 +2912,15 @@ body.app .story-card-link:focus-visible .story-select-card {
 
 body.app .story-card-link:active .story-select-card { transform: scale(0.98); }
 
-body.app .story-info h3 {
+body.app .story-info h3,
+body.app .card-title {
     font-family: var(--font-read);
     font-size: var(--step-1);
     color: var(--text-1);
 }
 
-html[lang="ar"] body.app .story-info h3 { font-family: var(--font-ar); }
+html[lang="ar"] body.app .story-info h3,
+html[lang="ar"] body.app .card-title { font-family: var(--font-ar); }
 
 body.app .story-info p { color: var(--text-2); }
 
@@ -2935,4 +2939,40 @@ html[lang="ar"] body.app .start-story-btn { font-family: var(--font-ui-ar); }
 @media (prefers-reduced-motion: reduce) {
     body.app .story-card-link:hover .story-select-card,
     body.app .story-card-link:focus-visible .story-select-card { transform: none; }
+}
+
+
+/* Sound-effects toggle in the reader bar: sparkles, struck through when off,
+   so it never looks like the read-aloud (speaker) control beside it. */
+.reader-bar .sound-toggle { position: relative; color: var(--text-1); }
+.reader-bar .sound-toggle[aria-pressed="false"] { color: var(--text-2); }
+.reader-bar .sound-toggle[aria-pressed="false"]::after {
+    content: '';
+    position: absolute;
+    left: 11px;
+    right: 11px;
+    top: 50%;
+    height: 2px;
+    background: currentColor;
+    transform: rotate(-40deg);
+}
+
+/* at 320-380px the stars and effects buttons squeeze the title to an ellipsis:
+   keep the page count, drop the story name (the h1 still carries it) */
+@media (max-width: 380px) {
+    .reader-bar:has(.stars-counter) .reader-bar__name { display: none; }
+    .reader-bar .stars-counter { padding: 0 6px; }
+}
+
+/* the end-of-book links and the moral appear on the last page only */
+body.reader:not(.reader-at-end) .story-navigation,
+body.reader:not(.reader-at-end) footer {
+    display: none;
+}
+
+/* Adam's back/next arrows are separate glyphs: they point the reading way */
+html[dir="rtl"] .nav-arrow-left,
+html[dir="rtl"] .nav-arrow-right {
+    display: inline-block;
+    transform: scaleX(-1);
 }
