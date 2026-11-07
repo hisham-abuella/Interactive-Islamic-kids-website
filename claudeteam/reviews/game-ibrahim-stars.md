@@ -348,3 +348,42 @@ no "never sets" left. Art now 12 images, 358 KB.
 **Linking:** not done. The scholar's verdict makes the link conditional on his re-check of the two new tent plates at
 100% and in context. The link is ready to add as the same `.play-together` pattern on the final quiz card of
 `story-prophet-ibrahim.html` once he confirms.
+
+## Scholar re-check, 2026-11
+`islamic-content-scholar`, 2026-11-07, on 7744067. Read-only review; no game file was edited. **Verdict: GO.** The game
+may be linked from the end of `story-prophet-ibrahim.html`.
+
+1. **`plate-tent-land`: approved (Qwen edit 310210 of 126676).**
+   - I viewed it at 100% and zoomed every pole joint 5x. All the ropes under the roof are gone.
+   - The inner back pole (x around 638) now ends under the roof cloth with nothing across it, so the cross I flagged is gone.
+   - The front-right pole rises through the roof's peak (a Λ with a post), which is not a cross.
+   - The left front pole tip shows about 30 px above the roof hem. The hem is the same dark cloth as the roof, so it
+     reads as a tent pole carrying a roof, not as a bar. Accepted.
+   - Note: the far-left corner pole (x around 38) has the roof's corner flap sticking out a little on both sides of it.
+     It reads as a tent corner, it is outside the tablet crop in both EN and AR, and it was present and accepted in round 1.
+   - The sand has single irregular hollows only, and nothing on the mat is glyph-like.
+   - In context (`fixes/tab-en-08…14`, `tab-ar-08…14`, mirrored) there is no eye, cross, script or footprint shape.
+2. **`plate-tent-port`: approved (Qwen edit 615708, via the rejected 1400481 and 761115).**
+   - The roof is plain woven cloth with no medallion or lozenge, so there is no eye.
+   - The eave band is plain turquoise with a thin gold rule. Its corner panel joins are not crosses, and no pole shows
+     above or across it.
+   - No frame or rail is visible inside. The mat's two vertical panel seams over its many stripes do not read as a cross.
+   - The curtain is plain, with no border or hem marks, and there is no corner writing.
+   - The sand has single, irregular, wind-scoop hollows and two pebbles. Nothing is paired or sole-shaped.
+   - In context (`fixes/phone-{en,ar}-08…14`, `review-phone-ar.png`) it is clean.
+3. **One-way knob: confirmed.**
+   - In `ibrahim.js` (7744067 diff), `S.kmax` resets for each light when it is tapped.
+   - `input` puts any value below `S.kmax` straight back, and `change` clamps too.
+   - Home, PageDown and the backward arrows are blocked, with the direction mirrored for RTL.
+   - The comment cites 2:258.
+   - `fixes/knob-test.json` reports `never_backwards: true` in EN and AR. Dragging back, releasing low, Home, PageDown,
+     the backward arrows and a click near the start all leave the knob at 60. Forward keys still advance it: in AR,
+     ArrowLeft goes 60 to 65, which is correct for RTL. `node --check` passes.
+4. **"Never goes away": confirmed.** `frameDone` (`:97`) and `pause1H` (`:100`) now read "never goes away", and grep finds
+   no "never sets" in the game or its source. The AR «لا يغيب» is unchanged.
+5. **Nothing else moved.** `ibrahim-stars.html` and the story page are unchanged since e466bda, so the dua, its meaning and
+   note, the two page sentences and the narration cuts approved above still hold.
+
+Sign-off line: `Art gate: prompts reviewed 2026-11-07 (scholar); contact sheet reviewed 2026-11-07 (scholar) - 12
+sprites approved; 2 rejected by the scholar (plate-tent-port, plate-tent-land) and regenerated, re-checked 2026-11-07.`
+Gate 3: PASS. **Linking: GO.**
