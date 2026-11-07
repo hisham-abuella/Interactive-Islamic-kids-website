@@ -15,11 +15,12 @@
    NO RECITATION (scholar ruling, round 3, 2026-11-04, Part 2 A): no synthetic
    voice may speak Quranic wording. The Arabic "meaning" line of every verse card
    was the ayah itself, so every Arabic verse file opened by reciting it. Those
-   files were removed. Until the tafsir-based Arabic meaning lines are written,
-   approved and recorded, AR_VERSE_AUDIO stays false: on an Arabic page the
-   listen controls show a "coming soon" note, no verse file is requested, and no
-   speech synthesis runs. Turning it back on is this one flag (and the check in
-   scripts/verify-no-recitation.py reads it from here). Games 07 and 08 read the
+   files were removed. The tafsir-based Arabic meaning lines (al-Muyassar, child
+   level) were approved by the scholar on 2026-11-06 and recorded, so
+   AR_VERSE_AUDIO is true. Set it to false to fall back to the interim: on an
+   Arabic page the listen controls show a "coming soon" note, no verse file is
+   requested, and no speech synthesis runs. scripts/verify-no-recitation.py
+   reads the flag from here. Games 07 and 08 read the
    same flag via window.SurahNarration.
 
    Speech synthesis, in either language, reads ONLY the explanation paragraph.
@@ -30,10 +31,13 @@
 (function () {
     'use strict';
 
-    var AR_VERSE_AUDIO = false;
+    var AR_VERSE_AUDIO = true;
+    // Bump when verse mp3s are re-recorded, so a cached old take is not played.
+    var AUDIO_VERSION = '20261108';
 
     window.SurahNarration = {
         arVerseAudio: AR_VERSE_AUDIO,
+        audioVersion: AUDIO_VERSION,
         soonText: { ar: 'السرد بالعربية قريباً', en: 'Arabic narration is coming soon' }
     };
 
@@ -121,7 +125,7 @@
             }
         };
 
-        var src = 'audio/' + surahId() + '/' + lang() + '/verse-' + (i + 1) + '.mp3';
+        var src = 'audio/' + surahId() + '/' + lang() + '/verse-' + (i + 1) + '.mp3?v=' + AUDIO_VERSION;
         var a = new Audio(src);
         state.audio = a;
         a.addEventListener('ended', done);

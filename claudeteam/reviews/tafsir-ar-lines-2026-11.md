@@ -1,8 +1,6 @@
 # Arabic meaning lines for the surah verse cards: draft for the scholar (2026-11)
 
-**Status: DRAFT, scholar ruling recorded 2026-11-06 (see "Scholar ruling" below). Nothing here is on a page or voiced.** `AR_VERSE_AUDIO` stays `false`, no
-`data-ar` was changed and no audio was recorded. Every line waits for the islamic-content-scholar
-(Round 3, Part 2 A, rule 8).
+**Status: APPLIED and VOICED (2026-11-06).** The scholar ruling below (143 approved, 5 changed) is on all 22 pages as the `.translation` `data-ar`, with the basmala header line; the 11 explanation fixes and the EN line changes are in; `AR_VERSE_AUDIO` is `true`; the 148 Arabic verse units were rendered through `ram-gate` and installed; the Whisper `--transcripts` sweep over all 470 mp3s is clean. Go/no-go steps 1-5 below are done.
 
 - **Why:** on every surah page and on Ayat al-Kursi, the Arabic "meaning" line (`.translation`
   `data-ar`) is the ayah itself, so a synthetic voice would recite it. Ruling:

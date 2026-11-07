@@ -4,11 +4,11 @@
   Learning goal: After playing, the child can put the whole ayat of Surah Al-Ikhlas (and, as a harder tier, Al-Fatiha) in their correct order and say what each one is about.
   Core loop: listen to (or read) an ayah, find the lantern that holds it, hang it on the string in order, and watch the courtyard light up; a lantern that is not next floats gently back to its tray with a hint (no 'wrong' sound or wobble on a Quran card).
   Scripture: every ayah string below is copied character-for-character from UI/surah-al-ikhlas.html and UI/surah-fatiha.html (verify with the check in claudeteam/reviews/game-ayah-lanterns.md).
-  Audio: uses UI/audio/<surah>/en/verse-N.mp3 - the site's narration of each ayah's MEANING, not a recitation.
+  Audio: uses UI/audio/<surah>/<lang>/verse-N.mp3 - the site's narration of each ayah's MEANING, not a recitation.
   Scholar gate 1 (2026-11-03) and round 3 (2026-11-04): no synthesised voice ever speaks Quranic wording. If a
   narration file is missing the game stays silent (no speech synthesis of an ayah or its translation). The Arabic
-  verse files were removed (they opened with the ayah); while SurahNarration.arVerseAudio is false, AR mode shows
-  a "coming soon" note and requests no file. Chimes are one
+  verse files were removed (they opened with the ayah) and re-recorded from the approved tafsir meaning lines; if
+  SurahNarration.arVerseAudio is ever false, AR mode shows a "coming soon" note and requests no file. Chimes are one
   fixed two-note chime, never a rising run, and never sound while ayah audio plays: the ayah waits for the chime
   to finish, and the finale chime waits for the last ayah to end. A recitation, if the owner wants one, must be a
   licensed human qari, never TTS and never a voice clone.
@@ -222,7 +222,7 @@
   </div>
 </div>
 
-<script src="../../surah-narration.js"></script>
+<script src="../../surah-narration.js?v=20261108"></script>
 <script>
 (function () {
   'use strict';
@@ -345,9 +345,11 @@
   }
   /* Plays the site's own narration file for an ayah; falls back to speech, as surah-narration.js does. */
   /* No recitation (scholar ruling 2026-11-04, Part 2 A): the Arabic verse files recited the ayah and
-     were removed. While SurahNarration.arVerseAudio is false (one flag, in UI/surah-narration.js),
+     were removed. They were re-recorded from the scholar-approved tafsir meaning lines (2026-11-06), and
+     SurahNarration.arVerseAudio (one flag, in UI/surah-narration.js) is on. If it is ever turned off,
      Arabic mode requests no verse file and shows a short "coming soon" note instead. */
   var AR_VERSE_AUDIO = !!(window.SurahNarration && window.SurahNarration.arVerseAudio);
+  var AUDIO_V = (window.SurahNarration && window.SurahNarration.audioVersion) || '';
   var SOON_NOTE = 'السرد بالعربية قريباً · Arabic narration is coming soon';
   function arSoon() { return lang === 'ar' && !AR_VERSE_AUDIO; }
   var ayahTimer = null;
@@ -358,7 +360,7 @@
     var gap = toneEnd - performance.now();
     if (gap > 0) { ayahTimer = setTimeout(function () { playAyah(sKey, i, onEnd); }, gap + 30); return; }
     var s = SURAHS[sKey];
-    var a = new Audio('../../audio/' + s.id + '/' + lang + '/verse-' + (i + 1) + '.mp3');
+    var a = new Audio('../../audio/' + s.id + '/' + lang + '/verse-' + (i + 1) + '.mp3?v=' + AUDIO_V);
     current = a;
     var done = function () { if (current === a) current = null; if (onEnd) onEnd(); };
     /* no speech synthesis for an ayah or its translation, in either language: a missing file stays silent */

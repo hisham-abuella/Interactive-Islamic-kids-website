@@ -278,7 +278,7 @@
   </div>
 </div>
 
-<script src="../../surah-narration.js"></script>
+<script src="../../surah-narration.js?v=20261108"></script>
 <script>
 (function () {
   'use strict';
@@ -286,7 +286,7 @@
   var AYAT = [
     { ar: 'أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ', en: '"Have you not seen how your Lord dealt with the companions of the elephant?"',
       exEn: 'Allah begins with a question — <em>have you not seen?</em> — as if to say: look at this, everyone knows it happened. <strong>Ashab al-fil</strong> means "the people of the elephant", the army that came to destroy the Kaaba.',
-      exAr: 'يبدأ الله بسؤال — <em>ألم تر؟</em> — وكأنه يقول: انظر إلى هذا، فالجميع يعلم أنه حدث. و<strong>أصحاب الفيل</strong> هم الجيش الذي جاء ليهدم الكعبة.' },
+      exAr: 'يبدأ الله بسؤال — <em>ألم تر؟</em> — ليلفت نظرك إلى أمر يعرفه الجميع لأنه حدث فعلاً. و<strong>أصحاب الفيل</strong> هم الجيش الذي جاء ليهدم الكعبة.' },
     { ar: 'أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ', en: '"Did He not make their plan go astray?"',
       exEn: 'They had a careful plan, and Allah simply made it <strong>lose its way</strong>. All that preparation, and it came to nothing at all.',
       exAr: 'كان لديهم خطة محكمة، فجعلها الله <strong>تضلّ طريقها</strong>. كل ذلك الاستعداد ثم لم يبق منه شيء.' },
@@ -411,9 +411,11 @@
     var u = new SpeechSynthesisUtterance(String(html).replace(/<[^>]+>/g, '')); u.lang = lang === 'ar' ? 'ar-SA' : 'en-GB'; u.rate = 0.92; speechSynthesis.speak(u);
   }
   /* No recitation (scholar ruling 2026-11-04, Part 2 A): the Arabic verse files recited the ayah and
-     were removed. While SurahNarration.arVerseAudio is false (one flag, in UI/surah-narration.js),
+     were removed. They were re-recorded from the scholar-approved tafsir meaning lines (2026-11-06), and
+     SurahNarration.arVerseAudio (one flag, in UI/surah-narration.js) is on. If it is ever turned off,
      Arabic mode requests no verse file and shows a short "coming soon" note instead. */
   var AR_VERSE_AUDIO = !!(window.SurahNarration && window.SurahNarration.arVerseAudio);
+  var AUDIO_V = (window.SurahNarration && window.SurahNarration.audioVersion) || '';
   var SOON_NOTE = 'السرد بالعربية قريباً · Arabic narration is coming soon';
   function arSoon() { return lang === 'ar' && !AR_VERSE_AUDIO; }
   /* speech synthesis reads the explanation only (never the ayah or its translation) */
@@ -421,7 +423,7 @@
     stopVoice(); if (!soundOn) return;
     var fb = function () { speak(lang === 'ar' ? AYAT[i].exAr : AYAT[i].exEn); };
     if (arSoon()) { fb(); return; }
-    var a = new Audio('../../audio/surah-al-fil/' + lang + '/verse-' + (i + 1) + '.mp3'); current = a;
+    var a = new Audio('../../audio/surah-al-fil/' + lang + '/verse-' + (i + 1) + '.mp3?v=' + AUDIO_V); current = a;
     a.addEventListener('error', fb); a.play().catch(fb);
   }
 
