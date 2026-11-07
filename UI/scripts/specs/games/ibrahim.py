@@ -264,3 +264,63 @@ ASSETS["bread"].update(seed=seed("bread-r8"),
             "Change only the food: remove the roast and the rice completely. Now the platter holds only one small, "
             "irregular, dry heel of dark brown bread lying on its side near the middle, with a smooth plain crust and no "
             "cuts, marks or lines on it; the rest of the platter is empty and bare."))
+
+# ---------- scholar gate 2b (2026-11-07): both tent plates rejected ----------
+MOTIF_NEG = ("eye motif, evil eye, nazar, concentric lozenge, lozenge with a dot, diamond medallion, medallion, roof "
+             "ornament, crossbar on the pole, rail across the pole, frame rails, script, inscription, script-like marks, "
+             "border pattern, fringe, hem pattern, footprints, paired dents")
+# The approved source of the landscape edit: the r2 render (seed 126676) kept as an input only (never shipped).
+ASSETS["plate-tent-land-src126676"] = dict(kind="derived", w=1344, h=896,
+    prompt="(input only: the r2 tent render, seed 126676, whose rope crosses the inner back pole; see below)")
+# r3 (scholar 2b MUST 2): in seed 126676 the guy rope from the roof-corner knot runs THROUGH the inner back pole at about
+# x 635, y 275 and the pole rises ~8 px above it: a small cross. Regenerated as a recorded Qwen edit of that render that
+# removes the rope (the scholar allowed this in place of a new seed); everything else is kept.
+ASSETS["plate-tent-land"] = dict(kind="edit", w=1344, h=896, source="plate-tent-land-src126676", seed=seed("plate-tent-land-r3"),
+    neg_extra=NO_BODIES + ", " + TENT_NEG + ", " + MOTIF_NEG,
+    prompt=("Keep the exact same tent, palm, mat, cushions, clay pots, sand, sky, colours, style and gold border. Remove "
+            "every rope and cord stretched between the poles under the roof: no line crosses or touches any pole. Each "
+            "pole is one plain straight upright pole with nothing across it and nothing tied to it. Change nothing else."))
+# r5 (scholar 2b MUST 1): seed 1120183 had two stacked concentric blue lozenges on the roof, the upper with a round
+# "pupil" (the nazar / evil-eye form, 3b.2-3), an inner centre pole crossed by a frame rail and rising above it (3b.3),
+# and a column of script-like marks on the curtain band and a looped hem (3b.4). New seed, plain roof and curtain.
+ASSETS["plate-tent-port"].update(seed=seed("plate-tent-port-r5"),
+    neg_extra=NO_BODIES + ", " + TENT_NEG + ", " + MOTIF_NEG + ", rails, frame inside the tent, grid",
+    prompt=(TENT_TALL + ", the tent roof is plain dark woven cloth with no medallion, no diamond and no motif, the curtain "
+            "is plain undyed cloth with no border, no fringe and no pattern on its hem, the inside of the tent is lined "
+            "with plain dark cloth so no poles, frame or rails show inside, the front is held up by two plain straight "
+            "upright poles only, no ropes, the sand in front is smooth, clean and completely unmarked, "
+            "no writing in any corner"))
+# r6: the r5 render (seed 1400481) fixed the inside (no poles or rails) but again put a concentric diamond medallion on
+# the roof (3b.2), a band of small X marks along the eave (3b.3), a striped fringe on the curtain hem, and a pseudo-
+# signature in the bottom-right corner (3b.4). Z-Image ignores these negatives, so r6 is a recorded Qwen edit of that
+# render (as the scholar allowed for the landscape tent) that only takes the ornaments and the corner writing away.
+ASSETS["plate-tent-port-src1400481"] = dict(kind="derived", w=768, h=1408,
+    prompt="(input only: the r5 tent render, seed 1400481; rejected as it stands, see below)")
+ASSETS["plate-tent-port"] = dict(kind="edit", w=768, h=1408, source="plate-tent-port-src1400481", seed=seed("plate-tent-port-r6"),
+    neg_extra=NO_BODIES + ", " + TENT_NEG + ", " + MOTIF_NEG,
+    prompt=("Keep the exact same tent shape, poles, palm, cushions, striped floor mat, clay pots, sand, sky, colours, style "
+            "and gold border. Make the whole tent roof plain dark woven cloth: remove the diamond on the roof completely. "
+            "Make the band along the edge of the roof plain dark cloth with no pattern and no marks. Make the curtain plain "
+            "undyed cloth with no striped edge and no fringe. Remove the small writing in the bottom-right corner, so the "
+            "corner is plain sand. Change nothing else."))
+# r7: the r6 edit (seed 761115) is clean (plain roof, plain band, plain curtain, no writing), but at both front poles
+# the eave band crosses the pole and the pole top rises ~30 px above it (the Musa rule: the stem never rises above the
+# bar, 3b.3), and small white cord loops hang beside the poles (a glyph-like shape at play size, 3b.4 when in doubt).
+# r7 edits r6 once more: the poles end under the band, and the loops go.
+ASSETS["plate-tent-port-src761115"] = dict(kind="derived", w=768, h=1408,
+    prompt="(input only: the r6 edit, seed 761115; rejected as it stands, see below)")
+ASSETS["plate-tent-port"] = dict(kind="edit", w=768, h=1408, source="plate-tent-port-src761115", seed=seed("plate-tent-port-r7"),
+    neg_extra=NO_BODIES + ", " + TENT_NEG + ", " + MOTIF_NEG + ", pole above the band, pole tip, finial, hanging cords, loops",
+    prompt=("Keep the exact same picture: the tent, the plain roof, the plain turquoise band along the eave, the curtain, "
+            "the cushions, the floor mat, the clay pots, the palm, the sand, the sky, the colours, the style and the gold "
+            "border. Change only the two front poles: each pole now stops just under the turquoise band and does not rise "
+            "above it, and there are no cords, loops or ties hanging beside the poles. The two long guy ropes going down "
+            "to the sand at the sides stay. Change nothing else."))
+# r8: the r7 edit (seed 178573) washed the sky and the sand to flat cream and turned both front poles into columns of
+# blue chevrons and lozenges (3b.2-3 risk, and off-composition). Rejected. r8 edits r6 again with a single, narrow change.
+ASSETS["plate-tent-port"].update(seed=seed("plate-tent-port-r8"),
+    neg_extra=NO_BODIES + ", " + TENT_NEG + ", " + MOTIF_NEG + ", pole above the band, pole tip, finial, columns, pillars, chevrons, cream sky, blank background",
+    prompt=("Keep everything exactly as it is: the turquoise sky, the palm, the dark tent, the plain turquoise band, the "
+            "curtain, the cushions, the mat, the clay pots, the golden sand and the gold border. Make only one small change: "
+            "the two plain wooden front poles are a little shorter, so each pole ends at the lower edge of the turquoise "
+            "band and nothing of the pole shows above the band. The poles stay plain round wood."))

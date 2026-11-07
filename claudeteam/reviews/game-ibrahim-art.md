@@ -98,18 +98,18 @@ the Ka'bah, any text. The reward shamsa is the hand-drawn SVG approved on Nuh (s
   > Keep the exact same dunes, palms, far town, composition, palette, style and gold border. Change only the time of day: it is now calm evening just after sunset. The sky glows soft rose, apricot and violet near the horizon and deepens to dusky blue above, with a few faint first gold stars, and the doorways of the far houses glow warm. The sky stays open and empty: no sun disc, no moon, no people, no text. Keep the border exactly as it is now: one thin plain straight gold rule, with no ornament, no scrollwork, no curved corners and no arch., Ottoman and Persian manuscript illumination, flat gouache on cream parchment, Iznik turquoise and cobalt blue with manuscript gold leaf outlines, stylized geometric forms, fine gold rule border, warm and gentle, children's picture book, no people, no figures, no text
 
 ### `plate-tent-land`
-- Kind: plate. Model: `z_image_turbo_1.0_q8p.ckpt`. Render 1344x896, seed **126676**.
-- Extra negative for this asset: `moon, full moon, crescent, crescent moon, sun, sun disc, rising sun, setting sun, planet, comet, crossed sticks, crossed poles, crossbar, cross beam, stakes, pegs, x shape, footprints, tracks, holes in the sand, marks on the sand, rope ties across a pole`
+- Kind: edit; edits `plate-tent-land-src126676`. Model: `qwen_image_edit_2511_q8p.ckpt`. Render 1344x896, seed **310210**.
+- Extra negative for this asset: `moon, full moon, crescent, crescent moon, sun, sun disc, rising sun, setting sun, planet, comet, crossed sticks, crossed poles, crossbar, cross beam, stakes, pegs, x shape, footprints, tracks, holes in the sand, marks on the sand, rope ties across a pole, eye motif, evil eye, nazar, concentric lozenge, lozenge with a dot, diamond medallion, medallion, roof ornament, crossbar on the pole, rail across the pole, frame rails, script, inscription, script-like marks, border pattern, fringe, hem pattern, footprints, paired dents`
 - Prompt (exactly as sent):
 
-  > the open front of one large wide desert tent of dark brown woven goat-hair cloth held up by several straight upright wooden poles, a long flat sloping roof, seen from outside in soft daylight, the shaded inside is visible: a long low striped woven floor mat with a row of plain round cushions along the back wall, the mat is empty, at the right side of the tent a plain undyed cloth curtain hangs over the way to the inner part of the tent, two plain clay pots, pale smooth sand in front of the tent, a date palm and open desert behind under a calm pale turquoise sky, no food, no animals, every pole is one plain straight upright pole with nothing tied across it, no ropes, the sand is smooth and clean with no marks, no footprints and no holes, Ottoman and Persian manuscript illumination, flat gouache on cream parchment, Iznik turquoise and cobalt blue with manuscript gold leaf outlines, stylized geometric forms, fine gold rule border, warm and gentle, children's picture book, no people, no figures, no text
+  > Keep the exact same tent, palm, mat, cushions, clay pots, sand, sky, colours, style and gold border. Remove every rope and cord stretched between the poles under the roof: no line crosses or touches any pole. Each pole is one plain straight upright pole with nothing across it and nothing tied to it. Change nothing else., Ottoman and Persian manuscript illumination, flat gouache on cream parchment, Iznik turquoise and cobalt blue with manuscript gold leaf outlines, stylized geometric forms, fine gold rule border, warm and gentle, children's picture book, no people, no figures, no text
 
 ### `plate-tent-port`
-- Kind: plate. Model: `z_image_turbo_1.0_q8p.ckpt`. Render 768x1408, seed **1120183**.
-- Extra negative for this asset: `moon, full moon, crescent, crescent moon, sun, sun disc, rising sun, setting sun, planet, comet, crossed sticks, crossed poles, crossbar, cross beam, stakes, pegs, x shape, footprints, tracks, holes in the sand, marks on the sand, rope ties across a pole, rails, frame inside the tent, grid, footprint, prints`
+- Kind: edit; edits `plate-tent-port-src761115`. Model: `qwen_image_edit_2511_q8p.ckpt`. Render 768x1408, seed **615708**.
+- Extra negative for this asset: `moon, full moon, crescent, crescent moon, sun, sun disc, rising sun, setting sun, planet, comet, crossed sticks, crossed poles, crossbar, cross beam, stakes, pegs, x shape, footprints, tracks, holes in the sand, marks on the sand, rope ties across a pole, eye motif, evil eye, nazar, concentric lozenge, lozenge with a dot, diamond medallion, medallion, roof ornament, crossbar on the pole, rail across the pole, frame rails, script, inscription, script-like marks, border pattern, fringe, hem pattern, footprints, paired dents, pole above the band, pole tip, finial, columns, pillars, chevrons, cream sky, blank background`
 - Prompt (exactly as sent):
 
-  > a tall vertical view of the open front of one large desert tent of dark brown woven goat-hair cloth held up by straight upright wooden poles, seen from outside in soft daylight, a calm pale turquoise sky and a date palm above the tent roof, the shaded inside is visible: a low striped woven floor mat with a row of plain round cushions along the back wall, the mat is empty, at the right side a plain undyed cloth curtain hangs over the way to the inner part of the tent, two plain clay pots, a wide stretch of pale smooth sand in front of the tent fills the bottom third, no food, no animals, the inside of the tent is lined with plain dark cloth so no poles or rails show inside, the front is held up by two plain straight upright poles only, no ropes, the sand in front is smooth, clean and completely unmarked, the sand is one smooth even pale colour like a calm painted surface, with no dents, no pebbles, no dots and no writing in any corner, Ottoman and Persian manuscript illumination, flat gouache on cream parchment, Iznik turquoise and cobalt blue with manuscript gold leaf outlines, stylized geometric forms, fine gold rule border, warm and gentle, children's picture book, no people, no figures, no text
+  > Keep everything exactly as it is: the turquoise sky, the palm, the dark tent, the plain turquoise band, the curtain, the cushions, the mat, the clay pots, the golden sand and the gold border. Make only one small change: the two plain wooden front poles are a little shorter, so each pole ends at the lower edge of the turquoise band and nothing of the pole shows above the band. The poles stay plain round wood., Ottoman and Persian manuscript illumination, flat gouache on cream parchment, Iznik turquoise and cobalt blue with manuscript gold leaf outlines, stylized geometric forms, fine gold rule border, warm and gentle, children's picture book, no people, no figures, no text
 
 ### `moon`
 - Shipped as `moon.webp`, derived without a model in the export from the approved sun (seed 567194): its plain disc, recoloured. Two renders rejected (seeds 683121, 1128661), see the generation record.
@@ -138,6 +138,14 @@ the Ka'bah, any text. The reward shamsa is the hand-drawn SVG approved on Nuh (s
 ### `palm`
 - Not shipped: both desert plates already paint palms at their edges. Rendered once (seed 1815872); passes 3b.
 
+### `plate-tent-land-src126676`
+- Input only, not shipped: the r2 tent render, seed 126676, whose rope crosses the inner back pole; see below.
+
+### `plate-tent-port-src1400481`
+- Input only, not shipped: the r5 tent render, seed 1400481; rejected as it stands, see below.
+
+### `plate-tent-port-src761115`
+- Input only, not shipped: the r6 edit, seed 761115; rejected as it stands, see below.
 
 ## Generation record: rejected before review (all regenerated with a new seed, never retouched)
 
@@ -210,5 +218,20 @@ dry crust). The two dishes now differ only in what is on them, which is the less
 4. The moon is derived from the sun's disc by recolouring (no model). Acceptable as "the same hand", or should it be a
    hand-drawn SVG disc instead?
 
-Art gate: prompts reviewed (pending, scholar 2a); contact sheet reviewed (pending, scholar 2b) - 12 images shipped,
-18 rejected and regenerated before review (designer self-check).
+Art gate (first round): prompts reviewed 2026-11-07 (scholar, PASS); contact sheet reviewed 2026-11-07 (scholar) - 10
+approved, 2 rejected (plate-tent-port, plate-tent-land). See `game-ibrahim-stars.md`, "Scholar gates 2-3 (2026-11)".
+
+## After scholar gate 2b (2026-11-07): the two tent plates
+
+| Asset | Render | Result |
+|---|---|---|
+| `plate-tent-land` | 126676 (shipped in e466bda) | **rejected by the scholar**: the guy rope runs through the inner back pole at about x 635, y 275 and the pole rises ~8 px above it (a small cross) |
+| `plate-tent-land` | **310210**, Qwen edit of 126676 (`plate-tent-land-src126676`) | **shipped (r3)**: every rope under the roof removed; the inner back pole now meets the roof with nothing across it; the household curtain becomes the dark cloth wall right of the front pole. Checked at 4x: the front poles meet the sloping roof cloth (the side-bar case the scholar accepted), no knot X, no rope through any pole. The edit added a thin blue-and-gold rule inside the frame; the export trims 1.8% from each side of the tent plates |
+| `plate-tent-port` | 1120183 (shipped in e466bda) | **rejected by the scholar**: nazar-like concentric lozenge on the roof; inner centre pole crossed by a rail; script-like marks on the curtain band and hem |
+| `plate-tent-port` | 1400481, Z-Image r5 (motif bans added) | rejected: again a concentric diamond medallion on the roof, a band of small X marks along the eave, a striped curtain fringe, a pseudo-signature in the corner. Kept as the edit source (`plate-tent-port-src1400481`) |
+| `plate-tent-port` | 761115, Qwen edit of r5 (r6) | rejected: clean ornament, but at both front poles the eave band crosses the pole and the pole rises ~30 px above it (stem above the bar), and white cord loops hang beside the poles. Kept as the edit source (`plate-tent-port-src761115`) |
+| `plate-tent-port` | 178573, Qwen edit of r6 (r7) | rejected: the sky and sand went flat cream and both poles became columns of blue chevrons and lozenges |
+| `plate-tent-port` | **615708**, Qwen edit of r6 (r8) | **shipped**: plain roof, plain turquoise eave band, plain curtain, no poles at all above or across the band, cushions and mat as before, smooth sand with single irregular dents, no writing (the edit drew a blue rule border whose margin held a small mark; the frame crop and the 1.8% tent trim remove both; checked on the exported plate) |
+
+Shipped now: **12 images, 358 KB**. The two new tent plates are listed for the scholar's re-check at 100% and in
+context (tablet and phone, EN and AR, mirrored); see "Fixes after gates 2-3" in `game-ibrahim-stars.md`.

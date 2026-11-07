@@ -94,6 +94,9 @@ def plates(raw: Path, out: Path, man: dict):
                 im = crop_plate(im, comp)
                 if st == "night":
                     night = im
+                if st == "tent":   # the tent edits redraw a blue-and-gold rule a little inside the found frame: trim it
+                    e = round(min(im.size) * 0.018)
+                    im = im.crop((e, e, im.width - e, im.height - e))
             tw = PLATE_W[comp]
             if comp in man["world"]:
                 tw, th = man["world"][comp]

@@ -34,9 +34,9 @@ const LAYOUT = {
     arc: { rise: [150, 590], top: [620, 135], set: [1090, 590] },
     size: { star: 84, moon: 150, sun: 176 },
     sky: [40, 20, 1200, 520],
-    // plate-tent-land: the household curtain hangs at x 870-1010; the striped mat (the guests' place) is x 320-880,
+    // plate-tent-land (r3): the household hanging is the cloth wall right of the front pole, x 870-1200; the striped mat (the guests' place) is x 320-880,
     // y 540-690. In the tent the ribbon moves to the top (CSS), so the sand at the bottom is free for the dishes.
-    tent: { curtain: [940, 470, 150, 300], dishes: [[760, 778, 210], [520, 776, 170]], near: [600, 610, 290], far: [180, 742, 150], mat: [600, 600, 620, 180] }
+    tent: { curtain: [1000, 460, 170, 300], dishes: [[760, 778, 210], [520, 776, 170]], near: [600, 610, 290], far: [180, 742, 150], mat: [600, 600, 620, 180] }
   },
   port: {
     // phone, measured on plate-night-port (690 x 1278): the far dunes meet the sky at y ~ 950. The narration ribbon
@@ -46,8 +46,8 @@ const LAYOUT = {
     arc: { rise: [110, 965], top: [345, 440], set: [580, 965] },
     size: { star: 80, moon: 150, sun: 170 },
     sky: [40, 240, 650, 900],
-    // plate-tent-port: the household curtain hangs at x 500-640, y 590-1000; the mat is x 50-560, y 880-990
-    tent: { curtain: [548, 800, 110, 330], dishes: [[255, 1190, 200], [480, 1185, 170]], near: [300, 935, 240], far: [130, 1105, 130], mat: [300, 930, 480, 140] }
+    // plate-tent-port (r8): the household curtain hangs at x 465-640, y 600-1000; the mat is x 100-500, y 820-1000
+    tent: { curtain: [552, 800, 130, 330], dishes: [[230, 1190, 200], [450, 1185, 170]], near: [300, 930, 240], far: [515, 1125, 120], mat: [300, 915, 420, 160] }
   }
 };
 let MANIFEST = { aspects: {} };
@@ -94,10 +94,10 @@ const W = {
     ar: 'ها هي مرة أخرى: النجم والقمر والشمس. من خلقها؟ اسحب كل واحد منها إلى الإطار، أو المسه.' },
   placed: { star: { en: 'Allah made the star.', ar: 'الله خلق النجم.' }, moon: { en: 'Allah made the moon.', ar: 'الله خلق القمر.' }, sun: { en: 'Allah made the sun.', ar: 'الله خلق الشمس.' } },
   missFrame: { en: 'Bring it up into the frame.', ar: 'ضعه في الإطار في الأعلى.' },
-  frameDone: { en: 'Allah made them all. Only Allah, who never sets and never sleeps, deserves to be worshipped.',
+  frameDone: { en: 'Allah made them all. Only Allah, who never goes away and never sleeps, deserves to be worshipped.',
     ar: 'الله خلقها كلها. والله وحده، الذي لا يغيب ولا ينام، هو المستحق للعبادة.' },
   pause1Q: { en: 'The sun is so big and bright. Why can it not be our Lord?', ar: 'الشمس كبيرة جداً ومضيئة. لماذا لا يمكن أن تكون ربنا؟' },
-  pause1H: { en: 'Idea: it sets every evening; Allah made it, and Allah never sets or sleeps.', ar: 'فكرة: إنها تغيب كل مساء؛ الله خلقها، والله لا يغيب ولا ينام.' },
+  pause1H: { en: 'Idea: it sets every evening; Allah made it, and Allah never goes away and never sleeps.', ar: 'فكرة: إنها تغيب كل مساء؛ الله خلقها، والله لا يغيب ولا ينام.' },
   toTent: { en: "Next: Ibrahim's guests", ar: 'التالي: ضيوف إبراهيم' },
   tentIntro: { en: 'Ibrahim was known for welcoming guests generously. One day, guests came to his tent and greeted him with "Salam!", peace. How do we answer?',
     ar: 'عُرف إبراهيم بإكرام الضيوف. وفي يوم وصل ضيوف إلى خيمته وقالوا: "سلاماً!" كيف نردّ عليهم؟' },
@@ -421,12 +421,20 @@ bodyEl.addEventListener('click', () => {
   gesture(); S.tapped = true; bodyEl.classList.remove('call'); land(bodyEl); bodyEl.classList.add('lit');
   sfx('good'); Atmos.motes(arcAt(S.u), 4);
   const o = BODIES[S.body]; say(o.tapped);
-  const r = $('#time'); r.value = 0; r.disabled = false; timeLabels(); $('#timebar').hidden = false;
+  const r = $('#time'); r.value = 0; S.kmax = 0; r.disabled = false; timeLabels(); $('#timebar').hidden = false;
   setTimeout(() => r.focus({ preventScroll: true }), 120);
 });
-$('#time').addEventListener('input', e => { gesture(); scrub(+e.target.value / 100); });
+/* scholar gate 3 MUST 1: time only moves on. The knob never goes back below the furthest point reached, so the child can
+   never pull the sun or the moon back up (2:258: none but Allah brings the sun; no creature can bring it back from the
+   west). Any lower value (a drag back, Home, an arrow or Page key) is put straight back to the furthest point. */
+$('#time').addEventListener('input', e => {
+  gesture(); const v = +e.target.value;
+  if (v < (S.kmax || 0)) { e.target.value = S.kmax; return; }
+  S.kmax = v; scrub(v / 100);
+});
+$('#time').addEventListener('keydown', e => { if (['Home', 'PageDown'].includes(e.key) || (!rtl() && ['ArrowLeft', 'ArrowDown'].includes(e.key)) || (rtl() && ['ArrowRight', 'ArrowDown'].includes(e.key))) e.preventDefault(); });
 // letting go near the end finishes the setting (small hands rarely reach the very end of the line)
-$('#time').addEventListener('change', e => { if (+e.target.value >= 85 && !S.setting) { e.target.value = 100; scrub(1); } });
+$('#time').addEventListener('change', e => { if (+e.target.value < (S.kmax || 0)) e.target.value = S.kmax; if (+e.target.value >= 85 && !S.setting) { e.target.value = 100; S.kmax = 100; scrub(1); } });
 function scrub(k) {
   if (!S.body || S.setting) return;
   const o = BODIES[S.body];

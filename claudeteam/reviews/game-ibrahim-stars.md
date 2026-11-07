@@ -160,3 +160,191 @@ plate), `review-{tab,phone}-{en,ar}.png` (all stages), `kb-*.png`.
 2. The "Created by Allah" cartouche holds the star, the moon and the sun as tokens; it sits in the HUD, not the sky.
 3. The night that falls again at the end, with "Allah made them all, and Allah is always with us, hearing and seeing."
 4. The crust tray is the same platter with one dry crust (both dishes look alike except for the food).
+
+## Scholar gates 2-3 (2026-11)
+`islamic-content-scholar`, 2026-11-07, on `main` at e466bda. Read-only review; no game file was edited.
+
+**Summary.** Gate 1 is confirmed closed. 2a (prompts): **PASS**. 2b (images): **PASS WITH FIXES**, because both
+tent plates must be regenerated. 3 (build): **PASS WITH FIXES**, because the time knob must only go forward.
+**Linking: not yet.** Link it from the end of the Ibrahim story once the three MUST fixes below are applied and I have
+re-checked the two new tent plates in context. The page is reachable by URL but linked from nowhere, so it does not
+need to be taken down in the meantime.
+
+### Gate 1: confirmed (all rulings hold in the painted build)
+- **Factual questions only.** Every question asks "Did it stay with us all the time?" with "No, it went away" / "Yes, it
+  stayed" (`UI/games/ibrahim/ibrahim.js:64-65, 74-75, 84-85`). No option says a star, the moon or the sun is a Lord. The
+  "Yes" answer replays the setting (`ibrahim.js:464-470`). The reasoning is narration only (`:67, :77`).
+- **Ibrahim is teaching his people.** "Prophet Ibrahim wanted to teach his people who the true Lord is" (`:58`),
+  "Ibrahim showed his people: something that goes away cannot be our Lord" (`:67`), "Ibrahim was showing his people"
+  (`:77`). The words "this is my lord" / «هذا ربي» appear nowhere in the strings: grep finds them only in code comments,
+  and the only «ربي» hit is inside «عربي».
+- **No faces on the sky bodies.** The sun and moon sprites are plain discs (checked at 100% on light and dark grounds).
+  The star is a DOM glow with no rays and no ring.
+- **The guests follow 51:25-27 and 11:69 only:** peace answered with peace (`:102-105`), «فراغ إلى أهله» as "went quickly and
+  quietly to his household" (`:106`), "a fat, roasted calf" (`:110`, عجل سمين / حنيذ), brought near (`:113`), "Please,
+  won't you eat?" (`:116`).
+- **The angels line for the grown-up** is present (`:121-122`). The food is never shown eaten: the tray stays whole and is
+  hidden at nightfall (`:606`).
+- **No water step** in the story. Water appears only in the parent-pause idea for *our own* guests (`:124`), which gate 1
+  allowed.
+- **Omitted as ruled:** idols, fire and the Ka'bah are not drawn. The Ka'bah appears only in words, in the dua's kicker
+  copied from the story page.
+
+### Re-checks (my own measurements)
+- **Dua 2:127, its meaning and its note:** byte-identical to `UI/story-prophet-ibrahim.html:307-309` (Python substring
+  check on the Arabic, the EN and AR meaning lines, and the EN and AR kicker). Against `api.alquran.cloud`
+  `2:127/quran-simple`, the normalised letters «ربنا تقبل منا انك انت السميع العليم» are an exact run of the ayah. The
+  diacritised text differs in only two places: no sukun on «أَنتَ» and no waqf sign ۖ. That is the site's convention
+  on the story page, not an error.
+- **The two page sentences** (`IBR_SHOWED`, `IBR_DECLARE`, EN and AR) are byte-identical to
+  `story-prophet-ibrahim.html:173` and `:164` (`ibrahim-stars.html:113`).
+- **No recitation.** I ran `verify-no-recitation.py --transcripts` on 228 strings extracted from `ibrahim.js` and
+  `ibrahim-stars.html` plus the six Whisper transcripts. It flagged one line, the on-screen dua itself (2:127), which is
+  displayed and never voiced. The game has no `speechSynthesis` or `speak(` call, and its only audio is
+  `slide-{1,2,3}.mp3` (`:136-138, :218`). Slides 6 and 9 are never used.
+- **The three narration cuts fall inside pauses.** I ran ffmpeg silencedetect (-35 dB, 0.15 s) on the shipped mp3s:
+
+  | Clip | Cut (s) | Pause the edge falls in (s) |
+  |---|---|---|
+  | EN slide 1 | 0-3.60 | end in 3.29-4.03 |
+  | AR slide 1 | 0-3.63 | end in 3.51-3.76 |
+  | EN slide 2 | 9.50-14.45 | start in 9.23-9.78; end in 14.33-14.56 (file end) |
+  | AR slide 2 | 9.10-13.60 | start in 8.85-9.37; end in 13.48-13.77 (file end) |
+  | EN slide 3 | 9.85-16.80 | start in 9.57-10.15; end in 16.67-16.93 (file end) |
+  | AR slide 3 | 9.20-16.50 | start in 8.88-9.49; end in 16.38-16.65 (file end) |
+
+  Re-cutting the shipped mp3s at these times reproduces the Whisper clips sample for sample (correlation 1.000, lag 0).
+  The cut edges read -54 to -99 dBFS. The only exception is the head of slide 1, which is the start of the file. Whisper
+  heard only the intended sentence each time. "Is this my lord?" (EN slide 1 about 7-8 s), "This is my lord!"
+  (slide 2 about 3-4 s) and "This is my lord - it's the biggest!" (slide 3 about 1.5-3 s) all lie outside every cut.
+- **Sounds off is silent.** In `audio-trace.json`: sound on reads -43 to -46 dBFS. 0.3 s after Sounds off it reads -67/-79
+  (inside the 0.25 s ramp), and the context is already `suspended`. From 1 to 7 s after, all twelve readings are -inf with
+  the context `suspended`. In a quiet moment with the wind at 0 and the context `running`, all twelve readings are
+  -inf. Code: the master ramps to 0 and the context is suspended (`ibrahim.js:192-196`), and the Sounds-off click also stops
+  Baba's clip (`:654`), which plays outside the Web Audio master.
+
+### 2a, prompts: PASS
+`UI/scripts/specs/games/ibrahim.py` and `game-ibrahim-art.md` meet every item of 3a:
+- Things only: desert, houses, tent, mat, cushions, pots, platter, bread, and the sun disc.
+- No light is written as divine.
+- `STYLE`/`NEGATIVE` are imported unchanged, with the full 3a.3 game list.
+- The Ibrahim bans are in every negative: guests, place settings, idols, statues, ziggurat, altar, fire, axe, and face
+  and eyes for every asset.
+- No Ka'bah, mushaf or text is prompted.
+- Every prompt, seed and reroll is recorded.
+
+The rerolls for the tents should add the motif bans listed under 2b.
+
+### 2b, images: PASS WITH FIXES (10 of 12 approved, 2 to regenerate)
+Approved: `plate-{night,morning,evening}-{land,port}`, `sun`, `moon`, `platter`, `bread`. In the town houses, every
+doorway is plain light with no figure; I zoomed the night-port arched doorway to check. The skies contain only dot stars.
+
+1. **MUST: regenerate `plate-tent-port` (seed 1120183).**
+   - (a) The roof carries two stacked concentric blue lozenges (around x 345, y 490-600). The upper one has a round
+     turquoise "pupil" in a pale centre. That is the blue nazar / evil-eye form (3b.2, 3b.3), the same reading as the
+     rejected bread 471110 ("blue almond with a dot"). On the phone it sits at the centre of every guest frame.
+   - (b) The tent's inner centre pole (x around 346) is crossed by a frame rail at y around 686 and rises about 50 px above
+     it to the hem: a cross (3b.3). This is the failure that rejected 1034882, and it is visible at phone size
+     (`shots/phone-en-08-tent-greet.png`, around x 195, y 440).
+   - (c) The vertical band at the curtain's edge (x 615-640, y 640-960) is a column of small script-like marks, and the
+     hem has a row of looped strokes (3b.4, when in doubt).
+   - Add to the reroll prompt: plain roof with no medallion, diamond or motif; plain curtain with no border, fringe or hem
+     pattern; no frame or rails visible inside. Keep the sand plain. Some of the current dents in front of the tent pair
+     up.
+2. **MUST: regenerate `plate-tent-land` (seed 126676).**
+   - The rope that runs from the roof-corner knot (x around 567, y 298) to the front pole passes *through* the inner back
+     pole (x around 635, y around 275). That pole rises about 8 px above the rope, and the rope continues about 40 px to
+     its left: a small Latin cross at 100% (zoom: around x 600-660, y 260-300). It is low-contrast at tablet size, but
+     it fails the Musa standard ("the stem never rises above the bar") and repeats the reject 1358775 (a crossbar at the
+     top of a pole).
+   - A recorded Qwen edit that removes the rope and keeps the poles plain is acceptable in place of a new seed, as was
+     done for the bread. Either way it is a new render, not a retouch.
+3. **Designer Q1, the front pole:** the rope ending at the tall front pole, with the pole rising above it, is a side bar
+   (⊣), not a cross. Acceptable. The X-wrapped lashings at the pole tops are ordinary knots and also acceptable. The
+   problem is the inner pole (item 2).
+4. **Designer Q2, sand dents:** acceptable in `plate-tent-land`. The hollows are single and irregular, with no pairs and
+   no sole shapes. The portrait plate is being redone anyway.
+5. **Designer Q3, platter rim lozenges:** acceptable. They are a repeated band of small lozenges, i.e. ornament, as
+   approved on Nuh's cloths. This is the difference from item 1(a), which is one large concentric blue lozenge with a
+   round pupil at the centre of the scene.
+6. **Designer Q4, the derived moon:** approved. A plain, featureless ivory disc in the same hand as the sun is better than
+   either rejected render. No SVG is needed.
+7. Note (no fix): the roast reads as a generic whole roast rather than obviously a calf. The label "A fat, roasted calf"
+   carries the meaning, and nothing on the platter is wrong.
+
+Sign-off line: `Art gate: prompts reviewed 2026-11-07 (scholar); contact sheet reviewed 2026-11-07 (scholar) - 10
+sprites approved, 2 rejected (plate-tent-port, plate-tent-land) to regenerate and re-review.`
+
+### 3, build: PASS WITH FIXES
+1. **MUST: the time knob must only go forward** (designer Q1, re-judged in the painted build).
+   - `ibrahim.js:427-433` maps every `input` value straight to the body's position (`S.u = lerp(o.u0, 1, k)`). So
+     until the light has fully set, the child can drag the sun back up into the evening sky (and the sky plate back to
+     morning), or press Home to do the same.
+   - In this game of all games that matters. Ibrahim's own argument in 2:258 is «فإن الله يأتي بالشمس من المشرق فأت بها
+     من المغرب»: no creature can bring the sun back from the west.
+   - Watching time pass is acceptable, and I keep my approval of the slider from mockup 04: the knob is a clock, it is
+     away from the sun, and its labels and narration name the time ("let the day pass"). The child pulling the sun back
+     is not acceptable.
+   - Fix: clamp the knob so its value never decreases within a light (keep the highest value reached, and ignore lower
+     values, including Home). Then the knob can only let time move on.
+2. **SHOULD: "never sets" becomes "never goes away"** in EN `frameDone` (`:97`) and `pause1H` (`:100`). Negating
+   "sets" of Allah still describes Him in the terms of a sky body. "Never goes away" is the approved gate-1 wording and
+   matches 7:7 «وما كنا غائبين». The AR «لا يغيب» is right as it is.
+3. **Designer Q2, the "Created by Allah" panel:** approved. It sorts the three lights as creations, it sits in the HUD
+   and not in the sky, and «خلقها الله» / "Allah made the star." (`:95`) is sound. Nothing is placed on a floor or shown as
+   honoured.
+4. **Designer Q3, the closing night line** (`:125-126`): approved. "Allah is always with us, hearing and seeing" follows
+   20:46 «إنني معكما أسمع وأرى» and avoids "everywhere".
+5. **Designer Q4, the crust on the same platter:** approved. The two dishes differ only in the food, which is the lesson.
+   A wobble on bread is fine; the no-wobble rule is for sacred things only.
+6. Checked and approved:
+   - Adab: "Prophet Ibrahim" / «النبي إبراهيم عليه السلام» at first mention (`:58-59`).
+   - The wrong options ("Who are you? Go away.", "Eat it now!") are what *we* might say, never attributed to Ibrahim,
+     and each is corrected with what he did.
+   - «ألا تأكلون» in the invitation chip is a short spoken phrase, not presented as an ayah and never voiced.
+   - The angels line matches 11:69 «بالبشرى» and 51:28.
+   - The eight beads mark progress, not deeds.
+   - There is no music: the chimes are 659/988 and 523/784 Hz.
+   - The shamsa is the one approved on Nuh.
+
+### Linking verdict
+**Do not link yet.** Link it from the end of `story-prophet-ibrahim.html` when all of these are done:
+1. Both tent plates are regenerated (2b items 1-2), and I have re-checked the new plates at 100% and in context at both
+   sizes and mirrored.
+2. The one-way knob is applied (3.1). The designer can verify it; I will confirm from the diff.
+3. The "never sets" wording is changed (3.2). This one is a SHOULD and does not block linking.
+
+## Fixes after gates 2-3
+`kids-game-designer`, 2026-11-07, on top of e466bda.
+
+| Item | Fix |
+|---|---|
+| 2b MUST 1: `plate-tent-port` (1120183): nazar-like lozenge, rail across the inner pole, script-like marks | Regenerated. A new Z-Image seed with the motif bans added (r5, 1400481) still painted a roof medallion, a band of X marks and a corner signature, so the shipped plate is a recorded chain of Qwen edits of r5: r6 (761115) removed the ornaments and the writing; r7 (178573) was rejected (flat cream sky, chevron columns); **r8 (615708) is shipped**. The roof is plain, the eave band is plain turquoise, the curtain is plain, and no pole shows above or across the band (the r6 poles rose ~30 px above the band, so r8 takes them away). Inside there is no frame or rail. The sand has single, irregular dents only. Every input, prompt and seed is in `ibrahim.py`; the record is in `game-ibrahim-art.md`. |
+| 2b MUST 2: `plate-tent-land` (126676): rope through the inner back pole | Regenerated as a recorded Qwen edit of 126676 (**310210**, shipped): every rope under the roof is gone, and each pole is a plain upright with nothing across it. The front poles still meet the sloping roof cloth (the side-bar case accepted in 2b Q1). The household hanging is now the dark cloth wall right of the front pole; the hotspot moved onto it. The export trims the thin rule the edit drew inside the frame. |
+| 3 MUST 1: the time knob only goes forward | `ibrahim.js`: the knob keeps the furthest value reached in the current light (`S.kmax`). Any lower value from a drag back, a click near the start, Home, PageDown or a backwards arrow is put straight back to it, and Home, PageDown and the backwards arrows (Left/Down in EN, Right/Down in AR) are ignored. It is still a native range input with its label and `aria-valuetext`. |
+| 3 SHOULD 2: "never sets" | EN `frameDone` and `pause1H` now say "never goes away" ("Only Allah, who never goes away and never sleeps, deserves to be worshipped."; "...and Allah never goes away and never sleeps."). The AR «لا يغيب» is unchanged. |
+| Layout | The tent hotspots and places were re-measured on both new plates; on the phone the far corner moved to the end side so it never sits under the tray. |
+
+**Proof that the knob cannot go backwards** (`fixes/knob-test.json`, headless, EN and AR at 1180x820): drag forward to
+60% (value 60, the star's arc position u 0.768), then drag back to 10% while still holding (value 60, u 0.768), release
+(60), then Home, Left, Down, PageDown (and Right in AR): every one leaves the value at 60 or 65 and u unchanged or
+higher; Up moves it forward (70); a click near the start of the track leaves it at 70. `never_backwards: true` in
+both languages (no step ever lowered the value or the position of the light).
+
+**Checks after the fixes:** rebuilt with `_src/build.py`; `node --check`. Play-throughs EN and AR, tablet and phone
+(motion on), and keyboard-only (tablet EN, phone AR): all complete, no console errors, no page scroll, no request
+outside localhost; the keyboard runs end on "Play together again". All six verifiers pass; the scripture diff passes;
+no "never sets" left. Art now 12 images, 358 KB.
+
+**Screenshots for the scholar's re-check** (`/private/tmp/claude-501/-Users-hishamabuella-Work-Interactive-Islamic-kids-website/e8e68c51-18d1-4a2c-bedb-40bde535d502/scratchpad/ibrahim-game/fixes/`):
+- The new tents in the guests round, tablet and phone, EN and AR (AR is the mirrored scene):
+  `{tab,phone}-{en,ar}-08-tent-greet.png`, `-09-curtain.png`, `-10-food.png`, `-11-carry.png`, `-12-invite.png`,
+  `-13-angels.png`, `-14-pause2.png`.
+- The rest of the round: `{tab,phone}-{en,ar}-01-start.png` ... `-16-end.png`; overview strips `review-{tab,phone}-{en,ar}.png`; `beside-*.png`.
+- The plates at full size: `UI/images/games/ibrahim/plate-tent-{land,port}.webp`, and the contact sheet
+  `claudeteam/reviews/game-ibrahim-contact-sheet.png`.
+- The knob test: `knob-test.json`.
+
+**Linking:** not done. The scholar's verdict makes the link conditional on his re-check of the two new tent plates at
+100% and in context. The link is ready to add as the same `.play-together` pattern on the final quiz card of
+`story-prophet-ibrahim.html` once he confirms.
