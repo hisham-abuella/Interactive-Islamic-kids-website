@@ -7,7 +7,8 @@ scripts/build-game-art.py. Human-readable copy: claudeteam/reviews/game-musa-art
 Rules carried by these prompts:
 - STYLE and NEGATIVE are imported from specs/illustrations.py and used word for word, so the game
   matches the story plates exactly. The game list of 3a.3 is appended, as for Nuh.
-- Things only: the sea, the sand, the sky, tents, a lantern, a jar, reeds, a palm, fish (3a.1).
+- Things only: the sea, the sand, the sky, tents, a bundle, a lantern, reeds, fish (3a.1). (A jar and a
+  palm were also rendered; neither ships, see the rejection notes below.)
   No prophet, no person, no crowd, no army, no "traveller", no staff (3a.1, gate-1 ruling 03).
 - Musa bans (3a.4): no people walking between the walls of water, no chariots or riders. Added here:
   no staff, no hand, no bodies or wreckage in the water (the closing of the sea is never shown as a

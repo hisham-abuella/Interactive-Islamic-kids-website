@@ -91,3 +91,169 @@ used: slide 10 (0-16.45 s EN / 0-17.05 s AR, then the rest), slide 11 (0-12.6 / 
 **Gates:** 1 closed on the mockup wording (the new lines above still need the scholar's eye in gate 3).
 2a and 2b: **pending** (`claudeteam/reviews/game-musa-art.md`, contact sheet
 `claudeteam/reviews/game-musa-contact-sheet.png`). 3: **pending**. Not linked from the story or the hub.
+
+## Scholar gates 2-3 (2026-11)
+`islamic-content-scholar`, 2026-11-06, on `main` at 78bbb25. I did not edit any game file. I read every image at
+full size, and every stage screenshot (tablet and phone, EN and AR) in the designer's scratchpad `musa-game/`. I
+also re-ran these checks myself:
+- the dua against `api.alquran.cloud/v1/surah/20/quran-simple`, codepoint-diffed;
+- the quotations and the dua note against `story-prophet-musa.html`;
+- `verify-no-recitation.py` on the site, and with `--transcripts` on all 96 game strings plus the slide 10 and 11
+  scripts;
+- `ffmpeg silencedetect` on `audio/prophet-musa/{en,ar}/slide-{10,11}.mp3`, to check the clip cuts.
+
+**Linking verdict: Musa may be linked from the end of the Musa story once item 3.1 (MUST) and the 2a record fix
+are done.** Items 3.2 and 3.3 are cheap and should land in the same change. They do not need another scholar
+gate: the designer attaches walk, parting and safe screenshots (tablet and phone, EN and AR) here, and I confirm
+them on sight.
+
+### Gate 1: CONFIRMED (closed)
+Every gate-1 ruling holds in the build:
+- **The parting is Allah's act.** `W.parted` names Him ("by Allah's command the sea split",
+  «فانشق البحر بأمر الله»). `hear()` (`musa.js:459-471`) only starts the narration and the timed plate
+  change. Slide 11 also opens with "Allah told Musa to strike the sea with his staff" before any opening.
+- **Allah's words are indirect only.** `W.strike` is indirect speech. No line quotes Allah.
+- **The quotations are the page's own wording.** The quotations and the dua note are byte-identical to
+  `story-prophet-musa.html:202` and the dua block.
+- **The dua matches the Quran.** It matches 20:25-26 word for word without «قَالَ». The only codepoint
+  difference from the API is the order of shadda and kasra, which is canonically equivalent.
+- **No counted trust.** The beads count path steps, not trust.
+- **Prophet Musa at first mention**, with عليه السلام in AR, in `W.camp`.
+- **Musa is never shown.** Neither are his staff, the army or any figure.
+- **No drowning.** There are no bodies and no triumph sound. Arrival plays one `sfx('soft')`
+  (`musa.js:506`) and a 5 s crossfade to an empty calm sea. The two-note reward chime comes only after the
+  parent pause, so it marks the walk, not the closing waters.
+- **The narration parts are clean.** I re-checked them: 0 flagged, and the site reports "NO RECITATION".
+  - The cuts fall inside recorded pauses: EN slide 10 at 16.45 s (pause 16.25-16.56) and AR at 17.05 s (pause
+    16.77-17.27).
+  - The `safe` part stops before the army sentence: EN at 15.5 s, before "When Pharaoh's army" (which starts at
+    15.68 s), and AR at 12.6 s, before «وعندما» (13.04 s).
+  - `CLIPS` references slides 10 and 11 only, so slide 13 (the dua) is never played.
+
+The one place the build falls short of a gate-1 ruling is how ruling 2 ("walks with, never leads") is shown on
+screen. That is item 3.1 below.
+
+### Gate 2a (prompts): PASS WITH FIXES
+- `STYLE` and `NEGATIVE` are imported unchanged. `GAME_NEGATIVE` holds the full 3a.3 list plus the Musa bans
+  (chariot, wheel, horse, soldier, army, rider, staff, rod, hand, bodies, drowning, wreckage, moon and crescent).
+- Every subject is a thing: no prophet, person, crowd, army, staff or "divine" light. Light is written as plain
+  dawn light.
+- Rerolls are new seeds, not retouches.
+- **Fix (record only, 3a.7):** the `plate-dawn-port` entry in `game-musa-art.md:88-92` gives the **rejected**
+  r1 seed (1409269) and the r1 prompt. The shipped asset is r2: seed **63901**, and the prompt ends with "The
+  pale dry sand path stays exactly as it is ... no part of the path turns into water or light." (`musa.py:175-177`;
+  `items()` gives 63901). Correct that entry.
+- The stale docstring at `musa.py:10` still lists "a jar ... a palm". This is cosmetic; fix it with the above.
+
+### Gate 2b (images): PASS
+All 14 images are approved (8 plates, 6 sprites). The designer rejected 9 renders before review, and I reject
+none further. I checked each against 3b.1-10:
+- No face or figure. The fish have plain animal faces.
+- No eye, hand or halo, and no glyphs or pseudo-script. The bundle's diamonds and the fish scales are ornament.
+- No cross: I checked the bundle, the tent, the lantern cap and the mirrored AR scenes.
+- No Ka'bah, mosque or book.
+- Nothing floats in either calm plate, and both beaches are empty.
+
+Rulings on the designer's questions:
+1. **The dawn sun or glow at the end of the path: acceptable.** 26:60 «فَأَتْبَعُوهُم مُّشْرِقِينَ» puts the
+   pursuit at sunrise. The disc has no face and no rays. The narration names it only as "the first light of
+   morning" / «أول ضوء الصباح», and never connects it to Allah. Keep it that way: no line may call the light
+   guidance from Allah, Allah's light, or the like.
+2. **Fish in the walls: acceptable** as unnarrated decoration. The story plate scene-10 already paints them. Do
+   not narrate them as a fact.
+3. **The T in the portrait path: not a cross.** The stem never rises above the bar. I checked it at thumbnail
+   and at 100% (`plate-split-port`, `plate-dawn-port`), and in context in `phone-*-7-fear1` and `phone-*-8-mid`.
+   In the dawn plate, the glow above the bar is a round, diffuse sunrise, not an upper arm. Approved. Do not
+   add any vertical element above the far shore in a later regeneration.
+4. **Mirroring: approved.** The mirrored AR scenes create no cross and no letter.
+
+Art gate: prompts reviewed 2026-11-06 (scholar); contact sheet reviewed 2026-11-06 (scholar) - 14 images
+approved, 0 rejected at review (9 rejected and regenerated or dropped before review).
+
+### Gate 3 (build): PASS WITH FIXES
+**3.1 MUST: on screen, the child leads the believers.**
+- In the walk, every one of the nine lights trails behind the child's lantern. `placeTrail()` (`musa.js:281`)
+  sets `back = (i + 1) * gap`, and `lanternAt()` (`:236`) puts the lantern at the head of the line.
+- The result is a procession with the child at the front: see `tab-en-7-fear2.png`, `tab-en-8-mid.png` and
+  `phone-ar-7-fear1.png`. This is what gate-1 ruling 2 removed from the words ("walk with, never lead").
+- **Fix:** put part of the group ahead of the lantern, for example 3-4 lights ahead and the rest behind, so the
+  child walks among the believers. The lights ahead also stand for those Musa led, without drawing him. Keep
+  the next glowing step clear: the lights ahead can walk on the far side of the path. The far-shore gathering
+  is already correct.
+
+**3.2 SHOULD: sync the opening to "by Allah's command".**
+- The split plate starts opening at a fixed 3.6 s (`musa.js:464`). In EN slide 11 that falls during "Musa
+  struck the water". The words "and by Allah's command" start at 5.77 s (pause 5.35-5.77).
+- In AR, «فانشق البحر كله بأمر الله» starts at 4.45 s (pause 4.20-4.45).
+- This is sound as it stands, because the ribbon already names Allah and the strike-then-split order is the
+  Quran's own (فَانفَلَقَ). But it is not what the gate-1 resolution claims.
+- **Fix:** start the split from the clip's `currentTime` (EN 5.8 s, AR 4.45 s). Keep the timer as the fallback
+  when the sound is off or the clip fails.
+
+**3.3 SHOULD: the sea opens out of the child's lantern.**
+- At the parting, the lantern stands at the centre of the opening strip (`tab-en-5-parting.png`,
+  `phone-ar-5-parting.png`). The camp beat also has the child place it on "the glowing spot by the water",
+  exactly where the sea later opens.
+- A child can read this as "my lantern opened the sea" (guardrail: a miracle is never the child's power).
+- **Fix:** when the choice at the shore is made, before "Hear what happened", move the lantern back onto the
+  beach among the lights, so the opening starts on open water away from the child.
+
+**New lines: all approved as written, EN and AR.** `camp`, `selLantern`, `missShore`, `shore`, `walkIn`,
+`selStep`, `dawn`, `wall`, `hearBtn`, `stepBtn`, and the three `yes` lines.
+- `camp` ("Allah told Prophet Musa to lead the believers out of Egypt at night") is faithful to 26:52
+  «أَنْ أَسْرِ بِعِبَادِي».
+- `wall` ("The walls of water stand still by Allah's command, and the path stays dry") is faithful to 26:63
+  «كَالطَّوْدِ الْعَظِيمِ» and 20:77 «طَرِيقًا فِي الْبَحْرِ يَبَسًا», and names the agent.
+- `dawn` fits 26:60.
+- The `yes` lines praise the choice, not a score, and the "lantern shines warmer" is light, not a count.
+- The AR grammar is sound throughout.
+- I re-ran the no-recitation check on all of these strings: none flagged.
+
+### Proposed Nuh fix (`#atmos{position:absolute;left:0;top:0;pointer-events:none}` in `nuh/nuh.css`): NO-GO as the bare line; GO with one stacking change
+The content it reveals was approved in the design: rain, splash rings, the water shimmer, and gold motes at
+each row, at "built" and at the reward. It needs no fresh scholar review as content.
+
+But the line does more than reveal them:
+- `<canvas id="atmos">` comes after `#ark`, `#herd` and `#taunts` in `nuh-ark.html:60`. Once positioned, it
+  paints its water layer (a copy of the plate below a mask line) **over the ark**.
+- In `settle()` the mask jumps at once to `judiWaterY` (470 land, 742 portrait), while the ark still floats
+  lower down (`float.y` 640 / 1010).
+- I rendered the real sequence (`__nuh.S.phase = 'settle'`, ark clicked). Screenshots are in the scratchpad
+  `scholar/nuhfix/`:
+  - `tab-fix-settle-0.7s.png` and `phone-fix-settle-0.7s.png` show the ark as a faint hull **under the sea**,
+    only its tips showing, while the ribbon says "The ark came to rest safely".
+  - Without the fix (`tab-now-settle-0.7s.png`) the ark sits on the water.
+- A sunk-looking ark contradicts 11:42 «وَهِيَ تَجْرِي بِهِمْ فِي مَوْجٍ كَالْجِبَالِ» and 11:44.
+
+**GO** once one of these is done:
+- the ark, the ramp and the herd stack above `#atmos`; or
+- the canvas moves before `.arkglow` in the DOM, as Musa does (its canvas precedes the camp and lantern); or
+- the Judi mask switches only after the ark has risen above it.
+
+Then attach to `game-nuh-ark.md` frames of the real flood, the settle (0.5 s steps) and the reward, tablet and
+phone, EN and AR. My re-check is limited to those frames. The rain, shimmer and motes I saw rendered (flood and
+reward, both sizes) form no figure, cross or glyph.
+
+## Fixes after gates 2-3
+`kids-game-designer`, 2026-11-06.
+
+| Item | Fix |
+|---|---|
+| 3.1 MUST: the child led the line | `placeTrail()`: 4 of the 9 lights now walk **ahead** of the lantern, spaced along the far side of the path (`AHEAD = 4`, spacing 1.7x the gap so they read as ahead, not beside), and 5 follow behind. The next glowing step stays clear. The landscape lantern is a little smaller (`lanternW` 84 to 70), so the lights ahead are not hidden by it. At the far end, the lights ahead wait at the far shore. |
+| 3.2: open on "by Allah's command" | `hear()` waits on `openCue()`: the split starts when Baba's clip passes EN 5.8 s / AR 4.45 s. The 3.6 s timer is used only when the sound is off, or when the clip is blocked or fails (after 2.5 s), with a 9 s cap. Measured in the play-throughs (100 ms polling): the opening began at clip time 5.94-5.99 s (EN) and 4.50-4.57 s (AR). |
+| 3.3: the sea opened out of the lantern | Once the trust choice at the shore is made (before "Hear what happened"), the lantern goes back onto the beach among the lights (`S.onBeach`, `L.wait`). The opening starts on open water away from it; the lantern returns to the water's edge only when the walk begins. |
+| 2a record | `game-musa-art.md`: the `plate-dawn-port` entry now shows the shipped r2 (seed 63901, with the added path sentence), with the rejected r1 (1409269) kept as a reject. The asset entries are regenerated from `musa.py`; the palm is marked not shipped. The `musa.py` docstring no longer lists the jar and palm as scene things. |
+| Linking | `story-prophet-musa.html`: a "🏮 Play together" / «🏮 لنلعب معاً» `.play-together` link on the final quiz-results card, exactly as Nuh's (same class; computed font, min-height, padding and radius identical). Not on the hub. |
+
+**Checks after the fixes:** rebuilt with `_src/build.py`. Play-throughs EN and AR, tablet and phone (motion on),
+plus keyboard-only (tablet EN, phone AR): all complete, no console errors, no page scroll, no request outside
+localhost. The keyboard runs end on "Play together again". The story link opens the game (200), and the game's
+"Back to the story" returns to `story-prophet-musa.html`. All six verifiers pass (`verify-chain` included), and
+the scripture diff passes.
+
+**Screenshots for the scholar** (`/private/tmp/claude-501/-Users-hishamabuella-Work-Interactive-Islamic-kids-website/e8e68c51-18d1-4a2c-bedb-40bde535d502/scratchpad/musa-game/fixes/`):
+- Lantern back on the beach before "Hear what happened": `{tab,phone}-{en,ar}-4-hear.png`
+- Parting, about 3 s after the opening starts: `{tab,phone}-{en,ar}-5-parting.png`
+- Walk among the believers: `{tab,phone}-{en,ar}-6-walk.png`, `-7-fear1.png`, `-7-fear2.png`, `-8-mid.png`
+- Safe shore: `{tab,phone}-{en,ar}-9-safe.png`
+- Overview strips: `review-tab.png`, `review-phone.png`; run data `playthrough.json`

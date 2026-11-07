@@ -29,6 +29,7 @@ const LAYOUT = {
     w: 1240, h: 781,
     path: [[631, 580, 1], [632, 468, 0.68], [633, 380, 0.45], [634, 302, 0.3]],
     campStart: [330, 626, 1],
+    wait: [545, 664, 1],   // on the beach among the lights, away from the water where the sea opens (gate 3.3)
     tents: [[175, 630, 230, false], [1070, 634, 210, true]], bundle: [900, 634, 70],
     campLights: [[110, 600], [240, 612], [300, 596], [1000, 604], [1120, 612], [870, 610], [420, 628], [800, 630], [1180, 620]],
     beach: [[585, 612], [680, 614], [540, 640], [725, 640], [632, 632], [500, 668], [765, 668], [590, 676], [680, 680]],
@@ -36,7 +37,7 @@ const LAYOUT = {
     walls: [[[-6, 268], [507, 247], [624, 275], [507, 580], [-6, 523]], [[1246, 268], [763, 247], [642, 275], [763, 584], [1246, 553]]],
     sea: [[0, 272], [1240, 272], [1240, 553], [620, 568], [0, 523]],
     sky: [40, 20, 1200, 215],
-    lanternW: 84,
+    lanternW: 70,
     fg: { r1: [40, 781, 300, false], r2: [1200, 781, 270, true] }
   },
   port: {
@@ -46,6 +47,7 @@ const LAYOUT = {
     w: 690, h: 1305,
     path: [[352, 910, 1], [352, 752, 0.6], [354, 604, 0.32], [354, 430, 0.24]],
     campStart: [225, 990, 1],
+    wait: [275, 1040, 1],
     tents: [[115, 1000, 210, false], [585, 1004, 190, true]], bundle: [480, 1008, 64],
     campLights: [[80, 960], [170, 972], [260, 952], [540, 962], [630, 972], [450, 978], [300, 1010], [420, 1016], [360, 1040]],
     beach: [[315, 940], [390, 942], [285, 975], [420, 975], [352, 965], [260, 1010], [445, 1010], [315, 1030], [390, 1034]],
@@ -232,6 +234,9 @@ const lantern = $('#lantern'), target = $('#stepTarget');
 function lanternAt() { // where the lantern stands now: [x, y, depth]
   if (S.phase === 'camp') return L.campStart;
   if (S.phase === 'end' || S.phase === 'safe') { const f = L.far[5]; return [f[0], f[1] + 4, pathAt(1)[2]]; }
+  // scholar gate 3.3: once the choice at the shore is made, the lantern goes back onto the beach among the lights,
+  // so the sea never opens from where the child's lantern stands (a miracle is never the child's power)
+  if (S.onBeach && (S.phase === 'shore' || S.phase === 'parting')) return L.wait;
   // the lantern is carried at the side of the path, so the next glowing step ahead is never hidden behind it
   const [x, y, d] = pathAt(stepT(S.pos)); return [x - L.lanternW * 0.62 * d, y, d];
 }
@@ -269,7 +274,7 @@ function buildMarks() {
 }
 
 /* the believers: small lantern-lights, never figures. They follow behind; nobody leads but the path. */
-const NLIGHTS = 9;
+const NLIGHTS = 9, AHEAD = 4;
 function buildTrail() { const tr = $('#trail'); tr.innerHTML = ''; for (let i = 0; i < NLIGHTS; i++) { const l = document.createElement('span'); l.className = 'light'; tr.appendChild(l); } }
 function placeTrail() {
   const lights = $$('#trail .light'), gap = 0.05;
@@ -278,10 +283,18 @@ function placeTrail() {
     if (S.phase === 'camp') [x, y] = L.campLights[i];
     else if (S.phase === 'safe' || S.phase === 'end') { [x, y] = L.far[i]; d = pathAt(1)[2]; }
     else if (S.phase === 'walk') {
-      let back = (i + 1) * gap + (S.lagging && i === NLIGHTS - 1 ? 0.12 : 0);
-      const tt = stepT(S.pos) - back;
-      if (tt >= 0) [x, y, d] = pathAt(tt);
-      else { const k = Math.min(L.beach.length - 1, Math.round(-tt / gap)); [x, y] = L.beach[(i + k) % L.beach.length]; }
+      // scholar gate 3.1 (MUST): the child walks AMONG the believers, never at the head of them. The first
+      // AHEAD lights walk in front of the lantern, on the far side of the path (the next glowing step stays
+      // clear); the rest follow behind. At the far end the ones ahead wait at the far shore.
+      if (i < AHEAD) {
+        const tt = Math.min(1, stepT(S.pos) + (AHEAD - i) * gap * 1.7);   // spaced out, so they read as ahead, not beside
+        [x, y, d] = pathAt(tt); x += L.lanternW * 0.55 * d;
+      } else {
+        const back = (i - AHEAD + 1) * gap + (S.lagging && i === NLIGHTS - 1 ? 0.12 : 0);
+        const tt = stepT(S.pos) - back;
+        if (tt >= 0) [x, y, d] = pathAt(tt);
+        else { const k = Math.min(L.beach.length - 1, Math.round(-tt / gap)); [x, y] = L.beach[(i + k) % L.beach.length]; }
+      }
     } else [x, y] = L.beach[i];
     l.style.left = x + 'px'; l.style.top = y + 'px'; l.style.setProperty('--d', Math.max(0.45, d));
     l.classList.toggle('lag', !!(S.lagging && i === NLIGHTS - 1));
@@ -450,6 +463,7 @@ async function atTheSea() {
   }
   sfx('good'); warm(0.25); Atmos.motes(lanternAt(), 4);
   $('#qCry').hidden = true; $('#qReply').hidden = false; say(W.trust); beatClip('reply');
+  S.onBeach = true; place();
   await anim(3400);
   say(W.strike); setClip(null);
   setAct(W.hearBtn, hear);
@@ -461,13 +475,30 @@ async function hear() {
   S.phase = 'parting'; app.className = app.className.replace(/phase-\w+/, 'phase-parting');
   setAct(null); $('#qReply').hidden = true; sfx('soft');
   say(W.parted); beatClip('parted');
-  await anim(G.sound ? 3600 : 1400);              // the water opens as the narration reaches "by Allah's command"
+  await openCue();                                // the water opens as the narration reaches "by Allah's command"
   Atmos.water(null); surf(0.5);
   setPlate('split'); Atmos.stars(true);
   await anim(5600);
   Atmos.water('split');
   await anim(1800);
   startWalk();
+}
+
+/* scholar gate 3.2: the split starts when Baba's clip reaches "and by Allah's command" (EN 5.8 s, AR 4.45 s, measured
+   pauses 5.35-5.77 and 4.20-4.45). The fixed 3.6 s timer is only the fallback: sound off, or the clip fails or stalls. */
+const OPEN_AT = { en: 5.8, ar: 4.45 };
+function openCue() {
+  const au = G.clip;
+  if (!G.sound || !au) return anim(3600);
+  return new Promise(res => {
+    const t0 = performance.now(); let done = false;
+    const finish = () => { if (!done) { done = true; clearInterval(iv); res(); } };
+    const iv = setInterval(() => {
+      if (G.clip !== au || au.currentTime >= OPEN_AT[G.lang] || au.ended) finish();
+      else if ((au.paused || au.error) && performance.now() - t0 > 2500) finish();   // blocked or failed: fall back
+      else if (performance.now() - t0 > 9000) finish();
+    }, 50);
+  });
 }
 
 /* ======================= 2. the walk ======================= */
@@ -560,7 +591,7 @@ $('#againBtn').addEventListener('click', () => { G.tier = $('#tierBox').checked;
 
 /* ======================= reset ======================= */
 function reset() {
-  Object.assign(S, { n: G.tier ? 11 : 8, pos: 0, phase: 'camp', asking: false, moving: false, ended: false, pauseQ: null, warm: 0, lagging: false, wallSaid: false, act: null });
+  Object.assign(S, { n: G.tier ? 11 : 8, pos: 0, phase: 'camp', asking: false, moving: false, ended: false, pauseQ: null, warm: 0, lagging: false, wallSaid: false, act: null, onBeach: false });
   app.className = 'phase-camp' + (G.bed ? ' bed' : '') + (Atmos.ok ? '' : ' nopixi');
   $('#ending').hidden = true; $('#pause').hidden = true; $('#reward').classList.remove('on'); $('#choices').hidden = true; setAct(null);
   $('#qCry').hidden = true; $('#qReply').hidden = true; dim(false); lantern.style.setProperty('--warm', 0);

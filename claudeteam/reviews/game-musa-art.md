@@ -86,10 +86,11 @@ any hand, any text. The reward shamsa is the hand-drawn SVG approved on Nuh (sch
   > Keep the bottom quarter of the picture exactly as it is: the same pale sand beach, the same reeds, in the same place. Keep the same night sky, the same far hills, the same gouache manuscript painting style and the same gold border. Change only the sea in the middle of the picture. The sea is now split in two: two tall smooth walls of deep turquoise and cobalt water stand on the left and on the right, with stylized gold-edged curling crests along their tops, and between them a straight dry path of pale golden sand runs from the beach at the bottom straight up the middle of the picture to the far shore. The path is completely empty and dry, with a few smooth pebbles. Nothing stands on the path. No people, no animals, no footprints, no boats, no text., Ottoman and Persian manuscript illumination, flat gouache on cream parchment, Iznik turquoise and cobalt blue with manuscript gold leaf outlines, stylized geometric forms, fine gold rule border, warm and gentle, children's picture book, no people, no figures, no text
 
 ### `plate-dawn-port`
-- Kind: edit; edits `plate-split-port`. Model: `qwen_image_edit_2511_q8p.ckpt`. Render 768x1408, seed **1409269**.
+- Shipped: **r2**, below. Rejected first render: r1, seed 1409269, the same prompt without its final sentence about the path (the far path turned into water; see the generation record).
+- Kind: edit; edits `plate-split-port`. Model: `qwen_image_edit_2511_q8p.ckpt`. Render 768x1408, seed **63901**.
 - Prompt (exactly as sent):
 
-  > Keep the exact same composition, the same two walls of water, the same dry sand path, the same beach and far shore, the same palette, style and gold border. Change only the time of day: it is now the first light of dawn. The sky over the far shore glows soft apricot, rose and pale gold, the stars have faded, and warm early light touches the crests of the water walls and the far hills. The sun has not risen yet. The path stays completely empty. No people, no sun disc, no text., Ottoman and Persian manuscript illumination, flat gouache on cream parchment, Iznik turquoise and cobalt blue with manuscript gold leaf outlines, stylized geometric forms, fine gold rule border, warm and gentle, children's picture book, no people, no figures, no text
+  > Keep the exact same composition, the same two walls of water, the same dry sand path, the same beach and far shore, the same palette, style and gold border. Change only the time of day: it is now the first light of dawn. The sky over the far shore glows soft apricot, rose and pale gold, the stars have faded, and warm early light touches the crests of the water walls and the far hills. The sun has not risen yet. The path stays completely empty. No people, no sun disc, no text. The pale dry sand path stays exactly as it is and still runs all the way up between the walls to the far hills; no part of the path turns into water or light., Ottoman and Persian manuscript illumination, flat gouache on cream parchment, Iznik turquoise and cobalt blue with manuscript gold leaf outlines, stylized geometric forms, fine gold rule border, warm and gentle, children's picture book, no people, no figures, no text
 
 ### `plate-calm-port`
 - Kind: edit; edits `plate-shore-port`. Model: `qwen_image_edit_2511_q8p.ckpt`. Render 768x1408, seed **1260326**.
@@ -127,6 +128,7 @@ any hand, any text. The reward shamsa is the hand-drawn SVG approved on Nuh (sch
   > a clump of tall slender green reeds and papyrus stems with feathery tops, growing upward, single object centred on a plain flat pale cream background, nothing else in the picture, no ground, no shadow, Ottoman and Persian manuscript illumination, flat gouache on cream parchment, Iznik turquoise and cobalt blue with manuscript gold leaf outlines, stylized geometric forms, fine gold rule border, warm and gentle, children's picture book, no people, no figures, no text
 
 ### `palm`
+- **Not shipped** (rendered, passes 3b, not needed by either composition). Record kept below.
 - Kind: cutout. Model: `z_image_turbo_1.0_q8p.ckpt`. Render 768x1024, seed **1535063**.
 - Prompt (exactly as sent):
 
@@ -143,6 +145,7 @@ any hand, any text. The reward shamsa is the hand-drawn SVG approved on Nuh (sch
 - Prompt (exactly as sent):
 
   > one small golden yellow fish swimming, side view, whole fish visible, gentle, single object centred on a plain flat pale cream background, nothing else in the picture, no ground, no shadow, Ottoman and Persian manuscript illumination, flat gouache on cream parchment, Iznik turquoise and cobalt blue with manuscript gold leaf outlines, stylized geometric forms, fine gold rule border, warm and gentle, children's picture book, no people, no figures, no text
+
 
 ## Generation record (2026-11-06)
 
