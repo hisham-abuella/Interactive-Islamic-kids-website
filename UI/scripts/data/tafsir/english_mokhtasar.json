@@ -1,0 +1,1143 @@
+{
+ "key": "english_mokhtasar",
+ "title": "The Abridged Explanation of the Quran",
+ "source": "al-Mukhtasar in English, Tafsir Center for Quranic Studies",
+ "role": "Reference only, to check the site's own English meaning lines.",
+ "api": "https://quranenc.com/api/v1/translation/sura/english_mokhtasar/<sura>",
+ "browse": "https://quranenc.com/en/browse/english_mokhtasar",
+ "version": "not published by the QuranEnc API; retrieved 2026-11-06",
+ "last_update": null,
+ "retrieved": "2026-11-06",
+ "terms": "QuranEnc.com: \"Contents of the translations can be downloaded and re-published\" on these conditions: 1. no modification, addition or deletion of the content; 2. clearly referring to the publisher and the source (QuranEnc.com); 3. mentioning the version number when re-publishing; 4. keeping the transcript information inside the document; 5. notifying the source (QuranEnc.com) of any note on the translation; 6. updating the translation according to the latest version issued from the source; 7. no inappropriate advertisements when displaying the content.",
+ "count": 141,
+ "ayat": {
+  "1:1": {
+   "id": "1",
+   "sura": "1",
+   "aya": "1",
+   "arabic_text": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ",
+   "translation": "1. I begin by calling on Allah, Who is Ar-Raḥmān, the Merciful, and Ar-Raḥīm, the Compassionate. These last two names of Allah are derived from the Arabic word raḥmah, which means mercy: proving the greatness and vastness of His Mercy and that His Mercy surrounds everything, and embraces all living beings. Every blessing is due to His mercy, and the believers receive the greatest mercy.",
+   "footnotes": null
+  },
+  "1:2": {
+   "id": "2",
+   "sura": "1",
+   "aya": "2",
+   "arabic_text": "ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ",
+   "translation": "2. All praise belongs to Allah with regards to His essence, attributes and actions, because He is the Creator of everything. Everything belongs to Him and He is the disposer of their affairs; blessing individuals specifically and humans in general.",
+   "footnotes": null
+  },
+  "1:3": {
+   "id": "3",
+   "sura": "1",
+   "aya": "3",
+   "arabic_text": "ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ",
+   "translation": "3. Two names of Allah, Ar-Raḥmān and Ar-Raḥīm, derived from the word raḥmah, or mercy: indicating His mercy for creation, with the believers being the greatest recipients of it.",
+   "footnotes": null
+  },
+  "1:4": {
+   "id": "4",
+   "sura": "1",
+   "aya": "4",
+   "arabic_text": "مَٰلِكِ يَوۡمِ ٱلدِّينِ",
+   "translation": "4. He is the Master of the day of Judgement, the day in which we will be brought back to life and repaid for what we have done, all of His creation will be held accountable for their actions and recompensed for them. On that day God will ask “To whom belongs the Kingdom today?” [Sūrah Ghafir: 16] No one, no matter how high his status, will answer, and then God will reply Himself, “to God, the One, the Overcomer” [Sūrah Ghafir: 16]",
+   "footnotes": null
+  },
+  "1:5": {
+   "id": "5",
+   "sura": "1",
+   "aya": "5",
+   "arabic_text": "إِيَّاكَ نَعۡبُدُ وَإِيَّاكَ نَسۡتَعِينُ",
+   "translation": "5. We worship and obey none except You; we associate no one with You, and from You alone do we ask for help in all our affairs. All goodness is in Your hand, and there is no helper except You.",
+   "footnotes": null
+  },
+  "1:6": {
+   "id": "6",
+   "sura": "1",
+   "aya": "6",
+   "arabic_text": "ٱهۡدِنَا ٱلصِّرَٰطَ ٱلۡمُسۡتَقِيمَ",
+   "translation": "6. Show and facilitate for us the right way, the path of submission to You which has no crookedness, and make us firm upon it –",
+   "footnotes": null
+  },
+  "1:7": {
+   "id": "7",
+   "sura": "1",
+   "aya": "7",
+   "arabic_text": "صِرَٰطَ ٱلَّذِينَ أَنۡعَمۡتَ عَلَيۡهِمۡ غَيۡرِ ٱلۡمَغۡضُوبِ عَلَيۡهِمۡ وَلَا ٱلضَّآلِّينَ",
+   "translation": "7. The same path as those of Your creation whom You have blessed with guidance, such as the prophets, the truthful, martyrs, and the righteous ones. What good companions these people make! Keep us away from the path of those who earned Your anger, who knew the truth and did not follow it – as was the case with the Israelites; and keep us away from the path of those who lost their way and were not guided, because they were neglectful in seeking the Truth and being guided by it – as was the case with the Christians.",
+   "footnotes": null
+  },
+  "93:1": {
+   "id": "6080",
+   "sura": "93",
+   "aya": "1",
+   "arabic_text": "وَٱلضُّحَىٰ",
+   "translation": "1. Allah takes an oath on the beginning of the day.",
+   "footnotes": null
+  },
+  "93:2": {
+   "id": "6081",
+   "sura": "93",
+   "aya": "2",
+   "arabic_text": "وَٱلَّيۡلِ إِذَا سَجَىٰ",
+   "translation": "2. And He takes an oath on the night when it darkens and people cease to move in it.",
+   "footnotes": null
+  },
+  "93:3": {
+   "id": "6082",
+   "sura": "93",
+   "aya": "3",
+   "arabic_text": "مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ",
+   "translation": "3. O Messenger! Your Lord has not left you, nor has he begun to hate you, as the idolaters claimed when there was a break in the revelation.",
+   "footnotes": null
+  },
+  "93:4": {
+   "id": "6083",
+   "sura": "93",
+   "aya": "4",
+   "arabic_text": "وَلَلۡأٓخِرَةُ خَيۡرٞ لَّكَ مِنَ ٱلۡأُولَىٰ",
+   "translation": "4. Indeed, the abode of the afterlife is better for you than the worldly one, because of the everlasting bounties that it has.",
+   "footnotes": null
+  },
+  "93:5": {
+   "id": "6084",
+   "sura": "93",
+   "aya": "5",
+   "arabic_text": "وَلَسَوۡفَ يُعۡطِيكَ رَبُّكَ فَتَرۡضَىٰٓ",
+   "translation": "5. Very soon He will grant you an abundant reward, and your nation also, until you become content with what He has granted you and your nation.",
+   "footnotes": null
+  },
+  "93:6": {
+   "id": "6085",
+   "sura": "93",
+   "aya": "6",
+   "arabic_text": "أَلَمۡ يَجِدۡكَ يَتِيمٗا فَـَٔاوَىٰ",
+   "translation": "6. Verily, He found you at a time when you were a child whose father had passed away, and so He made a place of refuge for you by causing your grandfather Abdul Muttalib to become fond of you, and then your uncle Abu Talib.",
+   "footnotes": null
+  },
+  "93:7": {
+   "id": "6086",
+   "sura": "93",
+   "aya": "7",
+   "arabic_text": "وَوَجَدَكَ ضَآلّٗا فَهَدَىٰ",
+   "translation": "7. He found you in a state where you did not know what revelation or faith was, and so He taught you about that which you did not know.",
+   "footnotes": null
+  },
+  "93:8": {
+   "id": "6087",
+   "sura": "93",
+   "aya": "8",
+   "arabic_text": "وَوَجَدَكَ عَآئِلٗا فَأَغۡنَىٰ",
+   "translation": "8. And He found you poor, so He made you self-sufficient.",
+   "footnotes": null
+  },
+  "93:9": {
+   "id": "6088",
+   "sura": "93",
+   "aya": "9",
+   "arabic_text": "فَأَمَّا ٱلۡيَتِيمَ فَلَا تَقۡهَرۡ",
+   "translation": "9. Therefore, do not treat badly the one who has lost his father in childhood, nor look down upon him.",
+   "footnotes": null
+  },
+  "93:10": {
+   "id": "6089",
+   "sura": "93",
+   "aya": "10",
+   "arabic_text": "وَأَمَّا ٱلسَّآئِلَ فَلَا تَنۡهَرۡ",
+   "translation": "10. And do not rebuke the needy beggar.",
+   "footnotes": null
+  },
+  "93:11": {
+   "id": "6090",
+   "sura": "93",
+   "aya": "11",
+   "arabic_text": "وَأَمَّا بِنِعۡمَةِ رَبِّكَ فَحَدِّثۡ",
+   "translation": "11. And be grateful for the favours of Allah upon you, and talk about them.",
+   "footnotes": null
+  },
+  "94:1": {
+   "id": "6091",
+   "sura": "94",
+   "aya": "1",
+   "arabic_text": "أَلَمۡ نَشۡرَحۡ لَكَ صَدۡرَكَ",
+   "translation": "1. Verily, Allah has opened up your heart for you and made receiving revelation beloved to you.",
+   "footnotes": null
+  },
+  "94:2": {
+   "id": "6092",
+   "sura": "94",
+   "aya": "2",
+   "arabic_text": "وَوَضَعۡنَا عَنكَ وِزۡرَكَ",
+   "translation": "2. And I have removed sin from you.",
+   "footnotes": null
+  },
+  "94:3": {
+   "id": "6093",
+   "sura": "94",
+   "aya": "3",
+   "arabic_text": "ٱلَّذِيٓ أَنقَضَ ظَهۡرَكَ",
+   "translation": "3. That which was burdening you to the extent that it almost broke your back.",
+   "footnotes": null
+  },
+  "94:4": {
+   "id": "6094",
+   "sura": "94",
+   "aya": "4",
+   "arabic_text": "وَرَفَعۡنَا لَكَ ذِكۡرَكَ",
+   "translation": "4. And I elevated for you your mention, so you are now remembered in the call to prayer, and the call preceding the prayer, and at other times.",
+   "footnotes": null
+  },
+  "94:5": {
+   "id": "6095",
+   "sura": "94",
+   "aya": "5",
+   "arabic_text": "فَإِنَّ مَعَ ٱلۡعُسۡرِ يُسۡرًا",
+   "translation": "5. Indeed, with difficulty and constraint, comes ease and options.",
+   "footnotes": null
+  },
+  "94:6": {
+   "id": "6096",
+   "sura": "94",
+   "aya": "6",
+   "arabic_text": "إِنَّ مَعَ ٱلۡعُسۡرِ يُسۡرٗا",
+   "translation": "6. Indeed, with difficulty and constraint, comes ease and options; when you know that well, the troubling of your people will not terrify you and will not stop you from calling towards Allah.",
+   "footnotes": null
+  },
+  "94:7": {
+   "id": "6097",
+   "sura": "94",
+   "aya": "7",
+   "arabic_text": "فَإِذَا فَرَغۡتَ فَٱنصَبۡ",
+   "translation": "7. So when you finish your work and complete it, strive in the worship of your Lord.",
+   "footnotes": null
+  },
+  "94:8": {
+   "id": "6098",
+   "sura": "94",
+   "aya": "8",
+   "arabic_text": "وَإِلَىٰ رَبِّكَ فَٱرۡغَب",
+   "translation": "8. And divert your passion and resolve towards Allah alone.",
+   "footnotes": null
+  },
+  "95:1": {
+   "id": "6099",
+   "sura": "95",
+   "aya": "1",
+   "arabic_text": "وَٱلتِّينِ وَٱلزَّيۡتُونِ",
+   "translation": "1. Allah takes an oath on the fig and the place it grows, and the olive and the place it grows: the land of Palestine where Jesus (peace be upon him) was sent as a Messenger.",
+   "footnotes": null
+  },
+  "95:2": {
+   "id": "6100",
+   "sura": "95",
+   "aya": "2",
+   "arabic_text": "وَطُورِ سِينِينَ",
+   "translation": "2. And He takes an oath on Mount Sinai, near where Allah conversed intimately with Moses (peace be upon him).",
+   "footnotes": null
+  },
+  "95:3": {
+   "id": "6101",
+   "sura": "95",
+   "aya": "3",
+   "arabic_text": "وَهَٰذَا ٱلۡبَلَدِ ٱلۡأَمِينِ",
+   "translation": "3. And He takes an oath on Makkah, the sacred city which gives sanctuary to whoever enters it, and in which Muhammad (peace be upon him) was sent as a Messenger.",
+   "footnotes": null
+  },
+  "95:4": {
+   "id": "6102",
+   "sura": "95",
+   "aya": "4",
+   "arabic_text": "لَقَدۡ خَلَقۡنَا ٱلۡإِنسَٰنَ فِيٓ أَحۡسَنِ تَقۡوِيمٖ",
+   "translation": "4. Verily, I have created the human in the most balanced of ways and the best appearance.",
+   "footnotes": null
+  },
+  "95:5": {
+   "id": "6103",
+   "sura": "95",
+   "aya": "5",
+   "arabic_text": "ثُمَّ رَدَدۡنَٰهُ أَسۡفَلَ سَٰفِلِينَ",
+   "translation": "5. Then I return him to old age and childishness in the world, so he cannot benefit fully from his body, when he ruins his nature and goes towards the hellfire.",
+   "footnotes": null
+  },
+  "95:6": {
+   "id": "6104",
+   "sura": "95",
+   "aya": "6",
+   "arabic_text": "إِلَّا ٱلَّذِينَ ءَامَنُواْ وَعَمِلُواْ ٱلصَّٰلِحَٰتِ فَلَهُمۡ أَجۡرٌ غَيۡرُ مَمۡنُونٖ",
+   "translation": "6. Except for those who have faith in Allah and do good deeds, because they, despite growing old, will get an everlasting reward i.e. Paradise, because they kept their nature pure.",
+   "footnotes": null
+  },
+  "95:7": {
+   "id": "6105",
+   "sura": "95",
+   "aya": "7",
+   "arabic_text": "فَمَا يُكَذِّبُكَ بَعۡدُ بِٱلدِّينِ",
+   "translation": "7. So O human! What causes you to reject the Day of Requital, after you have seen the many signs of His power?",
+   "footnotes": null
+  },
+  "95:8": {
+   "id": "6106",
+   "sura": "95",
+   "aya": "8",
+   "arabic_text": "أَلَيۡسَ ٱللَّهُ بِأَحۡكَمِ ٱلۡحَٰكِمِينَ",
+   "translation": "8. Is Allah not the most just and fair of judges by having appointed the Day of Judgement for requital? Is it comprehendible that Allah leaves His servants in vain, without judging between them, by not requiting the doer of good for his good, and the evil-doer for his evil?",
+   "footnotes": null
+  },
+  "98:1": {
+   "id": "6131",
+   "sura": "98",
+   "aya": "1",
+   "arabic_text": "لَمۡ يَكُنِ ٱلَّذِينَ كَفَرُواْ مِنۡ أَهۡلِ ٱلۡكِتَٰبِ وَٱلۡمُشۡرِكِينَ مُنفَكِّينَ حَتَّىٰ تَأۡتِيَهُمُ ٱلۡبَيِّنَةُ",
+   "translation": "1. Those who disbelieved, from the Jews, the Christians and the idolaters, are not going to break their consensus and agreement on disbelief, until a clear proof and manifest evidence comes to them.",
+   "footnotes": null
+  },
+  "98:2": {
+   "id": "6132",
+   "sura": "98",
+   "aya": "2",
+   "arabic_text": "رَسُولٞ مِّنَ ٱللَّهِ يَتۡلُواْ صُحُفٗا مُّطَهَّرَةٗ",
+   "translation": "2. This clear proof and manifest evidence is a Messenger from Allah whom He has sent, and who recites pure scriptures, only the purest of beings may touch them.",
+   "footnotes": null
+  },
+  "98:3": {
+   "id": "6133",
+   "sura": "98",
+   "aya": "3",
+   "arabic_text": "فِيهَا كُتُبٞ قَيِّمَةٞ",
+   "translation": "3. In those scriptures is true information and fair rulings, which guide the people towards that in which lies their righteousness and decency.",
+   "footnotes": null
+  },
+  "98:4": {
+   "id": "6134",
+   "sura": "98",
+   "aya": "4",
+   "arabic_text": "وَمَا تَفَرَّقَ ٱلَّذِينَ أُوتُواْ ٱلۡكِتَٰبَ إِلَّا مِنۢ بَعۡدِ مَا جَآءَتۡهُمُ ٱلۡبَيِّنَةُ",
+   "translation": "4. The Jews who were given the Torah and the Christians who were given the Gospel, did not disagree except after Allah sent His Prophet to them. There were some who became Muslims, and others who persisted in their disbelief despite knowing of the truth of their Prophet.",
+   "footnotes": null
+  },
+  "98:5": {
+   "id": "6135",
+   "sura": "98",
+   "aya": "5",
+   "arabic_text": "وَمَآ أُمِرُوٓاْ إِلَّا لِيَعۡبُدُواْ ٱللَّهَ مُخۡلِصِينَ لَهُ ٱلدِّينَ حُنَفَآءَ وَيُقِيمُواْ ٱلصَّلَوٰةَ وَيُؤۡتُواْ ٱلزَّكَوٰةَۚ وَذَٰلِكَ دِينُ ٱلۡقَيِّمَةِ",
+   "translation": "5. The criminality and stubbornness of the Jews and the Christians is evident, in that they have not been commanded in this Qur’ān, except to do those very things they have been commanded to do in both their books, i.e. worshipping Allah alone, refraining from ascribing partners to Him, establishing prayer and giving in Zakat. So whatever they have been commanded to do, is actually the straight religion in which there is no deviance.",
+   "footnotes": null
+  },
+  "98:6": {
+   "id": "6136",
+   "sura": "98",
+   "aya": "6",
+   "arabic_text": "إِنَّ ٱلَّذِينَ كَفَرُواْ مِنۡ أَهۡلِ ٱلۡكِتَٰبِ وَٱلۡمُشۡرِكِينَ فِي نَارِ جَهَنَّمَ خَٰلِدِينَ فِيهَآۚ أُوْلَٰٓئِكَ هُمۡ شَرُّ ٱلۡبَرِيَّةِ",
+   "translation": "6. Indeed, those who disbelieved - from the Jews, the Christians and the idolaters - will enter into hell on the Day of Judgement, wherein they shall remain forever. They are the worst of the creation because of their disbelief in Allah and rejection of His Messenger.",
+   "footnotes": null
+  },
+  "98:7": {
+   "id": "6137",
+   "sura": "98",
+   "aya": "7",
+   "arabic_text": "إِنَّ ٱلَّذِينَ ءَامَنُواْ وَعَمِلُواْ ٱلصَّٰلِحَٰتِ أُوْلَٰٓئِكَ هُمۡ خَيۡرُ ٱلۡبَرِيَّةِ",
+   "translation": "7. Indeed, those who have faith in Allah and do good deeds, they are the ones who are the best of creation.",
+   "footnotes": null
+  },
+  "98:8": {
+   "id": "6138",
+   "sura": "98",
+   "aya": "8",
+   "arabic_text": "جَزَآؤُهُمۡ عِندَ رَبِّهِمۡ جَنَّٰتُ عَدۡنٖ تَجۡرِي مِن تَحۡتِهَا ٱلۡأَنۡهَٰرُ خَٰلِدِينَ فِيهَآ أَبَدٗاۖ رَّضِيَ ٱللَّهُ عَنۡهُمۡ وَرَضُواْ عَنۡهُۚ ذَٰلِكَ لِمَنۡ خَشِيَ رَبَّهُۥ",
+   "translation": "8. Their reward with their Lord (may He be glorified) is gardens under the trees and palaces of which rivers flow, and wherein they shall remain forever. Allah is pleased with them because of them bringing faith in Him and obeying Him, and they are also pleased with Him because of Him giving them His mercy. This mercy can be acquired by the one who fears his Lord, and so fulfils His command and refrains from the thing He has not allowed.",
+   "footnotes": null
+  },
+  "99:1": {
+   "id": "6139",
+   "sura": "99",
+   "aya": "1",
+   "arabic_text": "إِذَا زُلۡزِلَتِ ٱلۡأَرۡضُ زِلۡزَالَهَا",
+   "translation": "1. When the earth will be shaken vigorously, which will happen to it on the Day of Judgement.",
+   "footnotes": null
+  },
+  "99:2": {
+   "id": "6140",
+   "sura": "99",
+   "aya": "2",
+   "arabic_text": "وَأَخۡرَجَتِ ٱلۡأَرۡضُ أَثۡقَالَهَا",
+   "translation": "2. And the earth will remove everything from within itself, i.e. the dead and other things.",
+   "footnotes": null
+  },
+  "99:3": {
+   "id": "6141",
+   "sura": "99",
+   "aya": "3",
+   "arabic_text": "وَقَالَ ٱلۡإِنسَٰنُ مَا لَهَا",
+   "translation": "3. And the human will say, confused: “What is the matter with the earth, that it is moving and shaking?”",
+   "footnotes": null
+  },
+  "99:4": {
+   "id": "6142",
+   "sura": "99",
+   "aya": "4",
+   "arabic_text": "يَوۡمَئِذٖ تُحَدِّثُ أَخۡبَارَهَا",
+   "translation": "4. On that great day, the earth will inform regarding the good and evil deeds that were committed upon it.",
+   "footnotes": null
+  },
+  "99:5": {
+   "id": "6143",
+   "sura": "99",
+   "aya": "5",
+   "arabic_text": "بِأَنَّ رَبَّكَ أَوۡحَىٰ لَهَا",
+   "translation": "5. Because Allah will have taught it and commanded it to do so.",
+   "footnotes": null
+  },
+  "99:6": {
+   "id": "6144",
+   "sura": "99",
+   "aya": "6",
+   "arabic_text": "يَوۡمَئِذٖ يَصۡدُرُ ٱلنَّاسُ أَشۡتَاتٗا لِّيُرَوۡاْ أَعۡمَٰلَهُمۡ",
+   "translation": "6. On that great day on which the earth will quake, the humans will come to of the place of reckoning in groups, to see the deeds they committed in the world.",
+   "footnotes": null
+  },
+  "99:7": {
+   "id": "6145",
+   "sura": "99",
+   "aya": "7",
+   "arabic_text": "فَمَن يَعۡمَلۡ مِثۡقَالَ ذَرَّةٍ خَيۡرٗا يَرَهُۥ",
+   "translation": "7. So whoever did a good or righteous deed equal to the weight of a small ant, will see it in front of him.",
+   "footnotes": null
+  },
+  "99:8": {
+   "id": "6146",
+   "sura": "99",
+   "aya": "8",
+   "arabic_text": "وَمَن يَعۡمَلۡ مِثۡقَالَ ذَرَّةٖ شَرّٗا يَرَهُۥ",
+   "translation": "8. And whoever did an evil deed equal to that, will see that in front of him also.",
+   "footnotes": null
+  },
+  "100:1": {
+   "id": "6147",
+   "sura": "100",
+   "aya": "1",
+   "arabic_text": "وَٱلۡعَٰدِيَٰتِ ضَبۡحٗا",
+   "translation": "1. Allah takes an oath on the horses that run so hard that their breath can be heard.",
+   "footnotes": null
+  },
+  "100:2": {
+   "id": "6148",
+   "sura": "100",
+   "aya": "2",
+   "arabic_text": "فَٱلۡمُورِيَٰتِ قَدۡحٗا",
+   "translation": "2. And He also takes an oath on the horses who, when their shoes strike the stones with force, sparks fly.",
+   "footnotes": null
+  },
+  "100:3": {
+   "id": "6149",
+   "sura": "100",
+   "aya": "3",
+   "arabic_text": "فَٱلۡمُغِيرَٰتِ صُبۡحٗا",
+   "translation": "3. And He also takes an oath on the horses that raid the enemy at dawn.",
+   "footnotes": null
+  },
+  "100:4": {
+   "id": "6150",
+   "sura": "100",
+   "aya": "4",
+   "arabic_text": "فَأَثَرۡنَ بِهِۦ نَقۡعٗا",
+   "translation": "4. And unsettle the dust by their running.",
+   "footnotes": null
+  },
+  "100:5": {
+   "id": "6151",
+   "sura": "100",
+   "aya": "5",
+   "arabic_text": "فَوَسَطۡنَ بِهِۦ جَمۡعًا",
+   "translation": "5. They then take their riders collectively into the midst of the enemy.",
+   "footnotes": null
+  },
+  "100:6": {
+   "id": "6152",
+   "sura": "100",
+   "aya": "6",
+   "arabic_text": "إِنَّ ٱلۡإِنسَٰنَ لِرَبِّهِۦ لَكَنُودٞ",
+   "translation": "6. Indeed, the human is hesitant of the goodness his Lord intends from him.",
+   "footnotes": null
+  },
+  "100:7": {
+   "id": "6153",
+   "sura": "100",
+   "aya": "7",
+   "arabic_text": "وَإِنَّهُۥ عَلَىٰ ذَٰلِكَ لَشَهِيدٞ",
+   "translation": "7. And indeed, he is witness to the goodness he is hesitant in giving; he cannot deny it because of its clarity.",
+   "footnotes": null
+  },
+  "100:8": {
+   "id": "6154",
+   "sura": "100",
+   "aya": "8",
+   "arabic_text": "وَإِنَّهُۥ لِحُبِّ ٱلۡخَيۡرِ لَشَدِيدٌ",
+   "translation": "8. And indeed, he is miserly with his wealth due to his extreme love for it.",
+   "footnotes": null
+  },
+  "100:9": {
+   "id": "6155",
+   "sura": "100",
+   "aya": "9",
+   "arabic_text": "۞ أَفَلَا يَعۡلَمُ إِذَا بُعۡثِرَ مَا فِي ٱلۡقُبُورِ",
+   "translation": "9. Does this human, deceived by the worldly life, not know that when Allah will resurrect the dead from their graves and take them out of the earth to take them to account and requite them, that the matter will not be as he imagines?",
+   "footnotes": null
+  },
+  "100:10": {
+   "id": "6156",
+   "sura": "100",
+   "aya": "10",
+   "arabic_text": "وَحُصِّلَ مَا فِي ٱلصُّدُورِ",
+   "translation": "10. And the intentions, beliefs etc. within the hearts will be made clear and apparent.",
+   "footnotes": null
+  },
+  "100:11": {
+   "id": "6157",
+   "sura": "100",
+   "aya": "11",
+   "arabic_text": "إِنَّ رَبَّهُم بِهِمۡ يَوۡمَئِذٖ لَّخَبِيرُۢ",
+   "translation": "11. Indeed, their Lord will be aware of every matter of theirs on that day; none of the affairs of His servants will be hidden from Him, and He will requite them for that.",
+   "footnotes": null
+  },
+  "101:1": {
+   "id": "6158",
+   "sura": "101",
+   "aya": "1",
+   "arabic_text": "ٱلۡقَارِعَةُ",
+   "translation": "1. The hour that strikes the hearts of people because of the severity of its horrors.",
+   "footnotes": null
+  },
+  "101:2": {
+   "id": "6159",
+   "sura": "101",
+   "aya": "2",
+   "arabic_text": "مَا ٱلۡقَارِعَةُ",
+   "translation": "2. What is this hour that strikes the hearts of people because of the severity of its horrors?",
+   "footnotes": null
+  },
+  "101:3": {
+   "id": "6160",
+   "sura": "101",
+   "aya": "3",
+   "arabic_text": "وَمَآ أَدۡرَىٰكَ مَا ٱلۡقَارِعَةُ",
+   "translation": "3. O Messenger! And what do you know of this hour that strikes the hearts of people because of the severity of its horrors? It is the Day of Judgement.",
+   "footnotes": null
+  },
+  "101:4": {
+   "id": "6161",
+   "sura": "101",
+   "aya": "4",
+   "arabic_text": "يَوۡمَ يَكُونُ ٱلنَّاسُ كَٱلۡفَرَاشِ ٱلۡمَبۡثُوثِ",
+   "translation": "4. On the day when the hearts of people will be struck, they will be like locusts, dispersed here and there.",
+   "footnotes": null
+  },
+  "101:5": {
+   "id": "6162",
+   "sura": "101",
+   "aya": "5",
+   "arabic_text": "وَتَكُونُ ٱلۡجِبَالُ كَٱلۡعِهۡنِ ٱلۡمَنفُوشِ",
+   "translation": "5. And the mountains will be like carded wool, in the way they will move from their places with force.",
+   "footnotes": null
+  },
+  "101:6": {
+   "id": "6163",
+   "sura": "101",
+   "aya": "6",
+   "arabic_text": "فَأَمَّا مَن ثَقُلَتۡ مَوَٰزِينُهُۥ",
+   "translation": "6. As for the one whose good deeds will outweigh his evil deeds.",
+   "footnotes": null
+  },
+  "101:7": {
+   "id": "6164",
+   "sura": "101",
+   "aya": "7",
+   "arabic_text": "فَهُوَ فِي عِيشَةٖ رَّاضِيَةٖ",
+   "translation": "7. He will live a contented life which he will achieve in Paradise.",
+   "footnotes": null
+  },
+  "101:8": {
+   "id": "6165",
+   "sura": "101",
+   "aya": "8",
+   "arabic_text": "وَأَمَّا مَنۡ خَفَّتۡ مَوَٰزِينُهُۥ",
+   "translation": "8. And as for the one whose evil deeds outweigh his good deeds.",
+   "footnotes": null
+  },
+  "101:9": {
+   "id": "6166",
+   "sura": "101",
+   "aya": "9",
+   "arabic_text": "فَأُمُّهُۥ هَاوِيَةٞ",
+   "translation": "9. His abode and permanent resting place will be hell on the Day of Judgement.",
+   "footnotes": null
+  },
+  "101:10": {
+   "id": "6167",
+   "sura": "101",
+   "aya": "10",
+   "arabic_text": "وَمَآ أَدۡرَىٰكَ مَا هِيَهۡ",
+   "translation": "10. O Messenger! What do you know what that is?",
+   "footnotes": null
+  },
+  "101:11": {
+   "id": "6168",
+   "sura": "101",
+   "aya": "11",
+   "arabic_text": "نَارٌ حَامِيَةُۢ",
+   "translation": "11. It is the intensely hot hellfire.",
+   "footnotes": null
+  },
+  "102:1": {
+   "id": "6169",
+   "sura": "102",
+   "aya": "1",
+   "arabic_text": "أَلۡهَىٰكُمُ ٱلتَّكَاثُرُ",
+   "translation": "1. O people! Boasting with one another over wealth and offspring has preoccupied you from the obedience of Allah.",
+   "footnotes": null
+  },
+  "102:2": {
+   "id": "6170",
+   "sura": "102",
+   "aya": "2",
+   "arabic_text": "حَتَّىٰ زُرۡتُمُ ٱلۡمَقَابِرَ",
+   "translation": "2. Until you die and enter your graves.",
+   "footnotes": null
+  },
+  "102:3": {
+   "id": "6171",
+   "sura": "102",
+   "aya": "3",
+   "arabic_text": "كَلَّا سَوۡفَ تَعۡلَمُونَ",
+   "translation": "3. It is not befitting that boasting with one another over that preoccupies you from the obedience of Allah; you will soon know the consequence of that preoccupation.",
+   "footnotes": null
+  },
+  "102:4": {
+   "id": "6172",
+   "sura": "102",
+   "aya": "4",
+   "arabic_text": "ثُمَّ كَلَّا سَوۡفَ تَعۡلَمُونَ",
+   "translation": "4. You will surely realise its outcome.",
+   "footnotes": null
+  },
+  "102:5": {
+   "id": "6173",
+   "sura": "102",
+   "aya": "5",
+   "arabic_text": "كَلَّا لَوۡ تَعۡلَمُونَ عِلۡمَ ٱلۡيَقِينِ",
+   "translation": "5. Truly, if you were to know with certainty that you are to be resurrected to Allah, and that He will requite you for your actions, you would not become preoccupied with boasting with one another over wealth and offspring.",
+   "footnotes": null
+  },
+  "102:6": {
+   "id": "6174",
+   "sura": "102",
+   "aya": "6",
+   "arabic_text": "لَتَرَوُنَّ ٱلۡجَحِيمَ",
+   "translation": "6. By Allah! You will definitely witness the hellfire on the Day of Judgement.",
+   "footnotes": null
+  },
+  "102:7": {
+   "id": "6175",
+   "sura": "102",
+   "aya": "7",
+   "arabic_text": "ثُمَّ لَتَرَوُنَّهَا عَيۡنَ ٱلۡيَقِينِ",
+   "translation": "7. Then, you will definitely see it in a way you will become undoubtedly convinced.",
+   "footnotes": null
+  },
+  "102:8": {
+   "id": "6176",
+   "sura": "102",
+   "aya": "8",
+   "arabic_text": "ثُمَّ لَتُسۡـَٔلُنَّ يَوۡمَئِذٍ عَنِ ٱلنَّعِيمِ",
+   "translation": "8. Then Allah will surely ask you on that day regarding the health, wealth etc. that He favoured you with.",
+   "footnotes": null
+  },
+  "103:1": {
+   "id": "6177",
+   "sura": "103",
+   "aya": "1",
+   "arabic_text": "وَٱلۡعَصۡرِ",
+   "translation": "1. Allah may He be glorified takes an oath on time.",
+   "footnotes": null
+  },
+  "103:2": {
+   "id": "6178",
+   "sura": "103",
+   "aya": "2",
+   "arabic_text": "إِنَّ ٱلۡإِنسَٰنَ لَفِي خُسۡرٍ",
+   "translation": "2. Indeed, the human is in great loss and destruction.",
+   "footnotes": null
+  },
+  "103:3": {
+   "id": "6179",
+   "sura": "103",
+   "aya": "3",
+   "arabic_text": "إِلَّا ٱلَّذِينَ ءَامَنُواْ وَعَمِلُواْ ٱلصَّٰلِحَٰتِ وَتَوَاصَوۡاْ بِٱلۡحَقِّ وَتَوَاصَوۡاْ بِٱلصَّبۡرِ",
+   "translation": "3. Except for those who have faith in Allah and His Messenger, perform good deeds, and encourage each other to follow the truth and remain steadfast upon it. Those who have these qualities are the ones who are successful in the world and the afterlife.",
+   "footnotes": null
+  },
+  "104:1": {
+   "id": "6180",
+   "sura": "104",
+   "aya": "1",
+   "arabic_text": "وَيۡلٞ لِّكُلِّ هُمَزَةٖ لُّمَزَةٍ",
+   "translation": "1. Evil consequences and a severe punishment awaits the one who frequently backbites the people and taunts them.",
+   "footnotes": null
+  },
+  "104:2": {
+   "id": "6181",
+   "sura": "104",
+   "aya": "2",
+   "arabic_text": "ٱلَّذِي جَمَعَ مَالٗا وَعَدَّدَهُۥ",
+   "translation": "2. The one whose only concern is to amass wealth and count it; he has no other concern.",
+   "footnotes": null
+  },
+  "104:3": {
+   "id": "6182",
+   "sura": "104",
+   "aya": "3",
+   "arabic_text": "يَحۡسَبُ أَنَّ مَالَهُۥٓ أَخۡلَدَهُۥ",
+   "translation": "3. He thinks that the wealth of his he amasses will save him from death, and that he will remain forever in this worldly life.",
+   "footnotes": null
+  },
+  "104:4": {
+   "id": "6183",
+   "sura": "104",
+   "aya": "4",
+   "arabic_text": "كَلَّاۖ لَيُنۢبَذَنَّ فِي ٱلۡحُطَمَةِ",
+   "translation": "4. It is not as this ignorant one thinks; he will surely be thrown into the fire of hell that crushes and breaks everything that is thrown into it, due to its immense strength.",
+   "footnotes": null
+  },
+  "104:5": {
+   "id": "6184",
+   "sura": "104",
+   "aya": "5",
+   "arabic_text": "وَمَآ أَدۡرَىٰكَ مَا ٱلۡحُطَمَةُ",
+   "translation": "5. O Messenger! What do you know of this fire that smashes everything that is thrown into it?",
+   "footnotes": null
+  },
+  "104:6": {
+   "id": "6185",
+   "sura": "104",
+   "aya": "6",
+   "arabic_text": "نَارُ ٱللَّهِ ٱلۡمُوقَدَةُ",
+   "translation": "6. Indeed, it is the blazing fire of Allah.",
+   "footnotes": null
+  },
+  "104:7": {
+   "id": "6186",
+   "sura": "104",
+   "aya": "7",
+   "arabic_text": "ٱلَّتِي تَطَّلِعُ عَلَى ٱلۡأَفۡـِٔدَةِ",
+   "translation": "7. The fire that penetrates the bodies of the people until it reaches their hearts.",
+   "footnotes": null
+  },
+  "104:8": {
+   "id": "6187",
+   "sura": "104",
+   "aya": "8",
+   "arabic_text": "إِنَّهَا عَلَيۡهِم مُّؤۡصَدَةٞ",
+   "translation": "8. Indeed, it will close up around those that will be punished with it.",
+   "footnotes": null
+  },
+  "104:9": {
+   "id": "6188",
+   "sura": "104",
+   "aya": "9",
+   "arabic_text": "فِي عَمَدٖ مُّمَدَّدَةِۭ",
+   "translation": "9. For a prolonged, lengthy period of time, so long that they will never leave it.",
+   "footnotes": null
+  },
+  "105:1": {
+   "id": "6189",
+   "sura": "105",
+   "aya": "1",
+   "arabic_text": "أَلَمۡ تَرَ كَيۡفَ فَعَلَ رَبُّكَ بِأَصۡحَٰبِ ٱلۡفِيلِ",
+   "translation": "1. O Messenger! Do you not know how your Lord dealt with Abraha and his people: the people of the elephant, when they intended to demolish the Ka‘bah?",
+   "footnotes": null
+  },
+  "105:2": {
+   "id": "6190",
+   "sura": "105",
+   "aya": "2",
+   "arabic_text": "أَلَمۡ يَجۡعَلۡ كَيۡدَهُمۡ فِي تَضۡلِيلٖ",
+   "translation": "2. Allah made their evil plot to destroy it in vain; they did not achieve what they desired in trying to turn the people away from the Ka‘bah. They did not succeed in the slightest.",
+   "footnotes": null
+  },
+  "105:3": {
+   "id": "6191",
+   "sura": "105",
+   "aya": "3",
+   "arabic_text": "وَأَرۡسَلَ عَلَيۡهِمۡ طَيۡرًا أَبَابِيلَ",
+   "translation": "3. Allah sent birds upon them, who came to them in flocks upon flocks.",
+   "footnotes": null
+  },
+  "105:4": {
+   "id": "6192",
+   "sura": "105",
+   "aya": "4",
+   "arabic_text": "تَرۡمِيهِم بِحِجَارَةٖ مِّن سِجِّيلٖ",
+   "translation": "4. They pelted them with stones of clay.",
+   "footnotes": null
+  },
+  "105:5": {
+   "id": "6193",
+   "sura": "105",
+   "aya": "5",
+   "arabic_text": "فَجَعَلَهُمۡ كَعَصۡفٖ مَّأۡكُولِۭ",
+   "translation": "5. So Allah made them like the leaves of crops that have been eaten and trampled upon by livestock.",
+   "footnotes": null
+  },
+  "106:1": {
+   "id": "6194",
+   "sura": "106",
+   "aya": "1",
+   "arabic_text": "لِإِيلَٰفِ قُرَيۡشٍ",
+   "translation": "1. Because of the habit of the Quraysh and their acquaintance.",
+   "footnotes": null
+  },
+  "106:2": {
+   "id": "6195",
+   "sura": "106",
+   "aya": "2",
+   "arabic_text": "إِۦلَٰفِهِمۡ رِحۡلَةَ ٱلشِّتَآءِ وَٱلصَّيۡفِ",
+   "translation": "2. With travelling in the winter towards Yemen, and in the summer towards the Levant, in security.",
+   "footnotes": null
+  },
+  "106:3": {
+   "id": "6196",
+   "sura": "106",
+   "aya": "3",
+   "arabic_text": "فَلۡيَعۡبُدُواْ رَبَّ هَٰذَا ٱلۡبَيۡتِ",
+   "translation": "3. They should worship Allah alone, who is the Lord of this sacred house. He is the one who has made these journeys easy for them. They should not ascribe any partners to Him.",
+   "footnotes": null
+  },
+  "106:4": {
+   "id": "6197",
+   "sura": "106",
+   "aya": "4",
+   "arabic_text": "ٱلَّذِيٓ أَطۡعَمَهُم مِّن جُوعٖ وَءَامَنَهُم مِّنۡ خَوۡفِۭ",
+   "translation": "4. The one who has fed them from hunger, and given them security from fear by placing reverence of the Ḥaram and its inhabitants in their hearts.",
+   "footnotes": null
+  },
+  "107:1": {
+   "id": "6198",
+   "sura": "107",
+   "aya": "1",
+   "arabic_text": "أَرَءَيۡتَ ٱلَّذِي يُكَذِّبُ بِٱلدِّينِ",
+   "translation": "1. Do you recognise the one who rejects the requital on the Day of Judgement?",
+   "footnotes": null
+  },
+  "107:2": {
+   "id": "6199",
+   "sura": "107",
+   "aya": "2",
+   "arabic_text": "فَذَٰلِكَ ٱلَّذِي يَدُعُّ ٱلۡيَتِيمَ",
+   "translation": "2. It is the one who harshly turns away the orphan when in need.",
+   "footnotes": null
+  },
+  "107:3": {
+   "id": "6200",
+   "sura": "107",
+   "aya": "3",
+   "arabic_text": "وَلَا يَحُضُّ عَلَىٰ طَعَامِ ٱلۡمِسۡكِينِ",
+   "translation": "3. He does not encourage himself nor others in feeding the poor.",
+   "footnotes": null
+  },
+  "107:4": {
+   "id": "6201",
+   "sura": "107",
+   "aya": "4",
+   "arabic_text": "فَوَيۡلٞ لِّلۡمُصَلِّينَ",
+   "translation": "4. So destruction and punishment be upon those who perform prayer.",
+   "footnotes": null
+  },
+  "107:5": {
+   "id": "6202",
+   "sura": "107",
+   "aya": "5",
+   "arabic_text": "ٱلَّذِينَ هُمۡ عَن صَلَاتِهِمۡ سَاهُونَ",
+   "translation": "5. Those who are heedless of their prayer; they do not care about it such that its time expires.",
+   "footnotes": null
+  },
+  "107:6": {
+   "id": "6203",
+   "sura": "107",
+   "aya": "6",
+   "arabic_text": "ٱلَّذِينَ هُمۡ يُرَآءُونَ",
+   "translation": "6. Those who show off by their prayer and good deeds, not being sincere in doing deeds for Allah.",
+   "footnotes": null
+  },
+  "107:7": {
+   "id": "6204",
+   "sura": "107",
+   "aya": "7",
+   "arabic_text": "وَيَمۡنَعُونَ ٱلۡمَاعُونَ",
+   "translation": "7. And they refrain from helping others with things in which there is no difficulty helping in.",
+   "footnotes": null
+  },
+  "108:1": {
+   "id": "6205",
+   "sura": "108",
+   "aya": "1",
+   "arabic_text": "إِنَّآ أَعۡطَيۡنَٰكَ ٱلۡكَوۡثَرَ",
+   "translation": "1. O Messenger! Indeed, I have granted you abundant goodness, from which is the river of Kawthar in Paradise.",
+   "footnotes": null
+  },
+  "108:2": {
+   "id": "6206",
+   "sura": "108",
+   "aya": "2",
+   "arabic_text": "فَصَلِّ لِرَبِّكَ وَٱنۡحَرۡ",
+   "translation": "2. So be grateful to Allah for this blessing, by performing prayer for Him alone and offering sacrifice for Him, as opposed to the offerings of sacrifice the idolaters do for their idols.",
+   "footnotes": null
+  },
+  "108:3": {
+   "id": "6207",
+   "sura": "108",
+   "aya": "3",
+   "arabic_text": "إِنَّ شَانِئَكَ هُوَ ٱلۡأَبۡتَرُ",
+   "translation": "3. Indeed, your hater is cut off from every goodness, and will be forgotten. If remembered, he will be remembered negatively.",
+   "footnotes": null
+  },
+  "109:1": {
+   "id": "6208",
+   "sura": "109",
+   "aya": "1",
+   "arabic_text": "قُلۡ يَٰٓأَيُّهَا ٱلۡكَٰفِرُونَ",
+   "translation": "1. Say, O Messenger: O those who disbelieve in Allah!",
+   "footnotes": null
+  },
+  "109:2": {
+   "id": "6209",
+   "sura": "109",
+   "aya": "2",
+   "arabic_text": "لَآ أَعۡبُدُ مَا تَعۡبُدُونَ",
+   "translation": "2. I do not and will not worship the idols you worship.",
+   "footnotes": null
+  },
+  "109:3": {
+   "id": "6210",
+   "sura": "109",
+   "aya": "3",
+   "arabic_text": "وَلَآ أَنتُمۡ عَٰبِدُونَ مَآ أَعۡبُدُ",
+   "translation": "5. Nor are you going to worship what I worship, i.e. Allah alone.",
+   "footnotes": null
+  },
+  "109:4": {
+   "id": "6211",
+   "sura": "109",
+   "aya": "4",
+   "arabic_text": "وَلَآ أَنَا۠ عَابِدٞ مَّا عَبَدتُّمۡ",
+   "translation": "4. Nor am I going to worship the idols you worship.",
+   "footnotes": null
+  },
+  "109:5": {
+   "id": "6212",
+   "sura": "109",
+   "aya": "5",
+   "arabic_text": "وَلَآ أَنتُمۡ عَٰبِدُونَ مَآ أَعۡبُدُ",
+   "translation": "5. Nor are you going to worship what I worship, i.e. Allah alone.",
+   "footnotes": null
+  },
+  "109:6": {
+   "id": "6213",
+   "sura": "109",
+   "aya": "6",
+   "arabic_text": "لَكُمۡ دِينُكُمۡ وَلِيَ دِينِ",
+   "translation": "6. You have your religion you thought up for yourselves, and I have my religion that Allah revealed to me.",
+   "footnotes": null
+  },
+  "110:1": {
+   "id": "6214",
+   "sura": "110",
+   "aya": "1",
+   "arabic_text": "إِذَا جَآءَ نَصۡرُ ٱللَّهِ وَٱلۡفَتۡحُ",
+   "translation": "1. O Messenger! When the help of Allah arrives for your religion, He honours it, and Makkah is liberated.",
+   "footnotes": null
+  },
+  "110:2": {
+   "id": "6215",
+   "sura": "110",
+   "aya": "2",
+   "arabic_text": "وَرَأَيۡتَ ٱلنَّاسَ يَدۡخُلُونَ فِي دِينِ ٱللَّهِ أَفۡوَاجٗا",
+   "translation": "2. And you see the people entering into Islam in delegations upon delegations.",
+   "footnotes": null
+  },
+  "110:3": {
+   "id": "6216",
+   "sura": "110",
+   "aya": "3",
+   "arabic_text": "فَسَبِّحۡ بِحَمۡدِ رَبِّكَ وَٱسۡتَغۡفِرۡهُۚ إِنَّهُۥ كَانَ تَوَّابَۢا",
+   "translation": "3. Then know that is a sign of the nearing of the end of your duty you were sent to fulfil. So glorify your Lord together with praising Him, to show gratitude to Him for the favours of help and victory, and seek His forgiveness, because indeed, He is the Forgiving, who accepts the repentance of His servants and forgives them.",
+   "footnotes": null
+  },
+  "111:1": {
+   "id": "6217",
+   "sura": "111",
+   "aya": "1",
+   "arabic_text": "تَبَّتۡ يَدَآ أَبِي لَهَبٖ وَتَبَّ",
+   "translation": "1. Both hands of the uncle of the Prophet (peace be upon him): Abū Lahab son of ‘Abdul Muṭṭalib have lost because of the loss of his actions; he used to harm the Prophet (peace be upon him). His efforts are in vain.",
+   "footnotes": null
+  },
+  "111:2": {
+   "id": "6218",
+   "sura": "111",
+   "aya": "2",
+   "arabic_text": "مَآ أَغۡنَىٰ عَنۡهُ مَالُهُۥ وَمَا كَسَبَ",
+   "translation": "2. How much can his wealth and his children benefit him? They cannot defend him against the punishment, nor bring any mercy to him.",
+   "footnotes": null
+  },
+  "111:3": {
+   "id": "6219",
+   "sura": "111",
+   "aya": "3",
+   "arabic_text": "سَيَصۡلَىٰ نَارٗا ذَاتَ لَهَبٖ",
+   "translation": "3. On the Day of Judgement, he will soon enter the flaring hellfire and suffer its heat.",
+   "footnotes": null
+  },
+  "111:4": {
+   "id": "6220",
+   "sura": "111",
+   "aya": "4",
+   "arabic_text": "وَٱمۡرَأَتُهُۥ حَمَّالَةَ ٱلۡحَطَبِ",
+   "translation": "4. And his wife Umm Jamīl who would also harm the Prophet (peace be upon him) by throwing thorns into his path, will also enter it.",
+   "footnotes": null
+  },
+  "111:5": {
+   "id": "6221",
+   "sura": "111",
+   "aya": "5",
+   "arabic_text": "فِي جِيدِهَا حَبۡلٞ مِّن مَّسَدِۭ",
+   "translation": "5. Around her neck will be tightly bound a rope with which she will be dragged into the hellfire.",
+   "footnotes": null
+  },
+  "112:1": {
+   "id": "6222",
+   "sura": "112",
+   "aya": "1",
+   "arabic_text": "قُلۡ هُوَ ٱللَّهُ أَحَدٌ",
+   "translation": "1. Say, O Messenger: He is Allah who is alone in being a deity. There is no deity except Him.",
+   "footnotes": null
+  },
+  "112:2": {
+   "id": "6223",
+   "sura": "112",
+   "aya": "2",
+   "arabic_text": "ٱللَّهُ ٱلصَّمَدُ",
+   "translation": "2. He is the master to whom belongs all sovereignty and perfect, beautiful qualities. The one to whom all creation turn to.",
+   "footnotes": null
+  },
+  "112:3": {
+   "id": "6224",
+   "sura": "112",
+   "aya": "3",
+   "arabic_text": "لَمۡ يَلِدۡ وَلَمۡ يُولَدۡ",
+   "translation": "3. The one who did not give birth to anyone, nor did anyone give birth to Him. So He has no offspring - may He be glorified - nor any parent.",
+   "footnotes": null
+  },
+  "112:4": {
+   "id": "6225",
+   "sura": "112",
+   "aya": "4",
+   "arabic_text": "وَلَمۡ يَكُن لَّهُۥ كُفُوًا أَحَدُۢ",
+   "translation": "4. Nor does He have any equal from His creation.",
+   "footnotes": null
+  },
+  "113:1": {
+   "id": "6226",
+   "sura": "113",
+   "aya": "1",
+   "arabic_text": "قُلۡ أَعُوذُ بِرَبِّ ٱلۡفَلَقِ",
+   "translation": "1. Say, O Messenger: “I seek refuge in the Lord of the morning and I seek His protection.”",
+   "footnotes": null
+  },
+  "113:2": {
+   "id": "6227",
+   "sura": "113",
+   "aya": "2",
+   "arabic_text": "مِن شَرِّ مَا خَلَقَ",
+   "translation": "2. “From the evils of the harms of all creation.”",
+   "footnotes": null
+  },
+  "113:3": {
+   "id": "6228",
+   "sura": "113",
+   "aya": "3",
+   "arabic_text": "وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ",
+   "translation": "3. “And I seek refuge in Allah from the evils that appear in the night, i.e. harmful creatures and bandits.”",
+   "footnotes": null
+  },
+  "113:4": {
+   "id": "6229",
+   "sura": "113",
+   "aya": "4",
+   "arabic_text": "وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِي ٱلۡعُقَدِ",
+   "translation": "4. “And I seek His refuge from the evils of the sorceresses who blow onto knots.”",
+   "footnotes": null
+  },
+  "113:5": {
+   "id": "6230",
+   "sura": "113",
+   "aya": "5",
+   "arabic_text": "وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+   "translation": "5. “And I seek His refuge from the evil of the jealous one when he acts out his jealousy.”",
+   "footnotes": null
+  },
+  "114:1": {
+   "id": "6231",
+   "sura": "114",
+   "aya": "1",
+   "arabic_text": "قُلۡ أَعُوذُ بِرَبِّ ٱلنَّاسِ",
+   "translation": "1. Say, O Messenger: “I seek refuge in the Lord of mankind and seek His protection.”",
+   "footnotes": null
+  },
+  "114:2": {
+   "id": "6232",
+   "sura": "114",
+   "aya": "2",
+   "arabic_text": "مَلِكِ ٱلنَّاسِ",
+   "translation": "2. “The King of the people, who does whatever He wishes with them. They do not have any real king other than Him.”",
+   "footnotes": null
+  },
+  "114:3": {
+   "id": "6233",
+   "sura": "114",
+   "aya": "3",
+   "arabic_text": "إِلَٰهِ ٱلنَّاسِ",
+   "translation": "3. “He is their rightful deity; they do not have any rightful deity except Him.”",
+   "footnotes": null
+  },
+  "114:4": {
+   "id": "6234",
+   "sura": "114",
+   "aya": "4",
+   "arabic_text": "مِن شَرِّ ٱلۡوَسۡوَاسِ ٱلۡخَنَّاسِ",
+   "translation": "4. “From the evils of Satan who whispers to the human when he is neglectful of the remembrance of Allah, or delays in it when he remembers.”",
+   "footnotes": null
+  },
+  "114:5": {
+   "id": "6235",
+   "sura": "114",
+   "aya": "5",
+   "arabic_text": "ٱلَّذِي يُوَسۡوِسُ فِي صُدُورِ ٱلنَّاسِ",
+   "translation": "5. “He whispers to the hearts of people.”",
+   "footnotes": null
+  },
+  "114:6": {
+   "id": "6236",
+   "sura": "114",
+   "aya": "6",
+   "arabic_text": "مِنَ ٱلۡجِنَّةِ وَٱلنَّاسِ",
+   "translation": "6. “And he could be from the humankind or from the Jinn.”",
+   "footnotes": null
+  },
+  "2:255": {
+   "id": "262",
+   "sura": "2",
+   "aya": "255",
+   "arabic_text": "ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡحَيُّ ٱلۡقَيُّومُۚ لَا تَأۡخُذُهُۥ سِنَةٞ وَلَا نَوۡمٞۚ لَّهُۥ مَا فِي ٱلسَّمَٰوَٰتِ وَمَا فِي ٱلۡأَرۡضِۗ مَن ذَا ٱلَّذِي يَشۡفَعُ عِندَهُۥٓ إِلَّا بِإِذۡنِهِۦۚ يَعۡلَمُ مَا بَيۡنَ أَيۡدِيهِمۡ وَمَا خَلۡفَهُمۡۖ وَلَا يُحِيطُونَ بِشَيۡءٖ مِّنۡ عِلۡمِهِۦٓ إِلَّا بِمَا شَآءَۚ وَسِعَ كُرۡسِيُّهُ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضَۖ وَلَا يَـُٔودُهُۥ حِفۡظُهُمَاۚ وَهُوَ ٱلۡعَلِيُّ ٱلۡعَظِيمُ",
+   "translation": "255. Allah is the One Who alone deserves to be worshipped. He is the One who lives perfectly without any death or deficiency. He exists by Himself and is not in need of any of His creation. The creation only exists through Him and is always in need of Him. Drowsiness or sleep does not come upon Him due to the perfection of His life and existence. He alone controls the heavens and the earth. No one can intercede before Him without His acceptance and permission. He knows what has happened in the past and what will happen in the future. The creation has no share in His knowledge unless He wills to grant them some of it. His Throne covers the vastness of the heavens and the earth. It is not difficult for Him to preserve the heaven and the earth. He is High in His essence and attributes and Great in His dominion and authority.",
+   "footnotes": null
+  }
+ }
+}
