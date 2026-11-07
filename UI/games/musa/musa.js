@@ -127,9 +127,18 @@ const CLIPS = {
 /* ======================= sound: Web Audio, no music ======================= */
 let AC = null, master = null, surfNode = null;
 function ac() {
-  if (!AC) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; AC = new C(); master = AC.createGain(); master.connect(AC.destination); }
+  if (!AC) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; AC = new C(); master = AC.createGain(); master.gain.value = G.sound && !G.quiet ? 1 : 0; master.connect(AC.destination); }
   if (AC.state === 'suspended') AC.resume();
   return AC;
+}
+
+/* scholar 3.1 (2026-11-07): silence goes through the master gain. A looping bed's gain or LFO can leave a floor
+   (-55 to -80 dBFS) when only its own target is lowered, so "Sounds off" (and, in Yusuf, the 12:92 screen) ramps the
+   master to exactly 0 in 0.15 s; nothing reaches the speakers until it is restored. */
+function masterGate() {
+  if (!AC || !master) return;
+  const on = G.sound && !G.quiet, t = AC.currentTime, g = master.gain;
+  g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(on ? 1 : 0, t + 0.15);
 }
 const vol = () => (G.sound ? (G.bed ? 0.45 : 1) * (G.clip && !G.clip.paused ? 0.4 : 1) : 0);
 let noiseBuf = null;
@@ -602,7 +611,7 @@ function reset() {
 
 /* ======================= settings ======================= */
 $('#langBtn').addEventListener('click', () => { gesture(); G.lang = rtl() ? 'en' : 'ar'; try { localStorage.setItem('islamicKidsLang', G.lang); } catch (e) { /* private */ } applyLang(); });
-$('#soundBtn').addEventListener('click', () => { gesture(); G.sound = !G.sound; $('#soundBtn').setAttribute('aria-pressed', String(G.sound)); if (!G.sound) { stopClip(); surf(0); } else surf(S.phase === 'walk' ? 0.4 : 0.8); });
+$('#soundBtn').addEventListener('click', () => { gesture(); G.sound = !G.sound; masterGate(); $('#soundBtn').setAttribute('aria-pressed', String(G.sound)); if (!G.sound) { stopClip(); surf(0); } else surf(S.phase === 'walk' ? 0.4 : 0.8); });
 $('#bedBtn').addEventListener('click', () => { gesture(); G.bed = !G.bed; $('#bedBtn').setAttribute('aria-pressed', String(G.bed)); app.classList.toggle('bed', G.bed); surf(S.phase === 'walk' ? 0.4 : 0.8); Atmos.calm(); });
 $('#listenBtn').addEventListener('click', () => { gesture(); playClip(); });
 addEventListener('resize', fit);

@@ -309,3 +309,13 @@ and AR. I built my own contact grids of all of them (scratchpad `scholar/nuh-*-a
 - **The rain falling in front of the ark is fine.** It is weather, not an effect on the ark.
 
 **GO.** No further scholar check is needed for this change.
+
+## Sound fix: Sounds off is now silent (scholar 3.1 of the Yusuf review, 2026-11-07)
+`kids-game-designer`. Nuh has no LFO, but Sounds off only sent the rain to a 0.0001 gain floor for 7 s before it
+stopped, and chimes already scheduled rang on: -40.8 dBFS peak in the first 4 s, then -59.7. `nuh.js` now has the same
+`masterGate()` as Yusuf and Musa: Sounds off ramps the master gain to exactly 0 in 0.15 s, and Sounds on restores it.
+This is a sound-only change. Measured on the real output during the flood:
+- after Sounds off: -inf dBFS at 0.3-4.3 s and 4.3-7.3 s;
+- the rain before the press: -38.2 dBFS peak, unchanged.
+
+The method and table are in `game-yusuf-journey.md`, "Fixes after gates 2-3".

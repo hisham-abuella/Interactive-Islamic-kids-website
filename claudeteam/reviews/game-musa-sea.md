@@ -282,3 +282,11 @@ the screenshots in the scratchpad `musa-game/fixes/`: `review-tab.png`, `review-
 
 The game's words, art, audio parts and dua are unchanged since my gate-3 checks, so those results stand.
 **Musa is cleared for the live site.**
+
+## Sound fix: Sounds off is now silent (scholar 3.1 of the Yusuf review, 2026-11-07)
+`kids-game-designer`. The surf bed's LFO is added straight to its gain, so `surf(0)` left a floor, and Sounds off kept
+hissing at about -45 to -40 dBFS peak. `musa.js` now has `masterGate()`: Sounds off ramps the master gain to exactly 0
+in 0.15 s, and Sounds on restores it. This is a sound-only change: no words, art or timing changed. Measured on the
+real output (method and table in `game-yusuf-journey.md`, "Fixes after gates 2-3"):
+- after Sounds off: -inf dBFS at 0.3-4.3 s and at 8.3-11.3 s (before the fix: -44.5 and -40.5 peak);
+- Sounds on again: -31.5 peak, the surf back at its normal level.
