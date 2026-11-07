@@ -110,8 +110,8 @@ SPEC = dict(
             ex_en='When you are worried, your chest feels tight. Allah asks: did We not '
                   '<strong>make it wide and calm again</strong>? It is a question that is really a '
                   'reminder.',
-            ex_ar='إذا اغتممت ضاق صدرك. فيسأل الله: ألم <strong>نوسّعه ونطمئنه</strong>؟ وهو سؤال '
-                  'معناه التذكير.',
+            ex_ar='إذا اغتممت ضاق صدرك. وهنا يُذكِّر اللهُ نبيَّه ﷺ بأنه <strong>وسّع صدره وطمأنه</strong>، '
+                  'فالسؤال في الآية معناه التذكير.',
         ),
         dict(
             ar='وَوَضَعْنَا عَنْكَ وِزْرَكَ',

@@ -148,8 +148,8 @@ SPEC = dict(
             tr_ar='ثم إن لم يُطِع الإنسانُ اللهَ ويتَّبع رسلَه، يكون مصيرُه إلى النار.',
             ex_en='A person given every gift can still throw it away by choosing badly. '
                   '<strong>How you were made is a gift; what you do with it is your choice.</strong>',
-            ex_ar='ومن أُعطي كل هبة قد يضيّعها بسوء اختياره. <strong>خلقتك هبة، وما تصنعه بها '
-                  'اختيارك.</strong>',
+            ex_ar='ومن أُعطي كل هبة قد يضيّعها بسوء اختياره. <strong>فحُسنُ خِلقتك هبةٌ من الله، '
+                  'وما تصنعه بها اختيارك.</strong>',
         ),
         dict(
             ar='إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍ',
