@@ -45,3 +45,49 @@ Ruling: `claudeteam/reviews/game-islamic-review-2026-11-03.md` (verdict for this
 | S | Sound (owner decision pending): no melodies, one tone or a two-note chime | Done via the shared kit. The dua is text only. |
 
 Site-level item still open (owner): `story-prophet-musa.html:208` has the same quoted paraphrase of Allah's words.
+
+## Painted build, 2026-11-06 (`kids-game-designer`)
+The second painted game, built to the Nuh flagship's standard: `UI/games/musa-sea.html` (source
+`UI/mockups/games/_src/src/03-musa-sea-painted.html`, built by `_src/build.py`, which copies the dua, its
+meaning line and both quotations from `story-prophet-musa.html`), `UI/games/musa/musa.js`, `musa.css`, art in
+`UI/images/games/musa/`. The CSS-shape mockup `UI/mockups/games/03-musa-sea.html` is kept as it was.
+**Not linked** from the story or the hub: gates 2 (art) and 3 (build) are open.
+
+**One round, as built.** All wording above is kept; new lines are marked (new).
+1. **The camp at night** (new beat): a painted night shore, the believers' tents and a bundle, and nine
+   lantern-lights (the believers; never figures). The child drags the lantern (or taps the glowing spot, or
+   presses Enter on the lantern) down to the water's edge. Baba's slide-10 narration plays up to the cry.
+2. **At the sea:** a far, soft rumble from behind the viewer (the army is never drawn). The people's cry
+   panel, then the choice (trust / run back; order shuffled). Run back: the lantern dims, the reason, choose
+   again. Trust: Musa's reply panel (EN: the page's quotation; AR: the page's reported speech), and the rest of
+   slide 10.
+3. **Allah's command:** indirect speech, then "Hear what happened". The press starts the narration only; as
+   Baba's slide-11 narration reaches "by Allah's command", the split plate opens from the middle outwards.
+4. **The path:** 8 steps (11 on the parent tier). Tap the next glowing step, drag the lantern to it, or press
+   "Step forward". The lights follow behind (the child walks *with* them, at the side of the path), soft
+   footprints appear in the sand, and gold beads show the way so far. The fear moments at steps 3, 6 (and 9 on
+   the tier) are the approved ones; a trusting answer warms the lantern's glow (never counted). At about
+   half way the sky turns to dawn (the Qwen dawn plate). Tapping a wall of water shows a ripple and a fish
+   passing, with (new) "The walls of water stand still by Allah's command, and the path stays dry."
+5. **Safe:** the lights gather on the far shore; the approved safe line, Baba's "The believers walked safely
+   across." (the end of slide 11, about the army, is not played), one soft tone, and the sea closes in a slow
+   crossfade to a calm, empty dawn sea. No army, no bodies, no impact, no triumph sound.
+6. **Parent pause**, then the reward (lamp glow, the shamsa approved on Nuh, a two-note chime), the ending
+   with Musa's dua from the story page, "Play together again", "Back to the story", and the tier box.
+
+New strings for the scholar's gate 3 (EN and AR in `musa.js` `W`): `camp`, `selLantern`, `missShore`,
+`shore` (the old intro, split in two), `walkIn`, `selStep`, `dawn`, `wall`, the `yes` line of each fear
+moment, `hearBtn` ("Hear what happened"), `stepBtn`.
+
+**Verification (2026-11-06, designer):** `node --check`; headless play-throughs EN and AR at 1180x820 and
+390x844 (drag, tap and button; the wrong choice first at every fear moment), keyboard-only runs (tablet EN,
+phone AR: 2 Tabs to the lantern, Enter to the end, focus lands on "Play together again"), the parent tier
+(11 steps, three fear moments), bedtime and reduced motion: no console errors, no page scroll, no request
+outside localhost. Scripture diff: the dua, its meaning line, its note and both quotations match
+`story-prophet-musa.html` byte for byte; all 105 game strings pass `verify-no-recitation.py`. Clip parts
+used: slide 10 (0-16.45 s EN / 0-17.05 s AR, then the rest), slide 11 (0-12.6 / 0-10.8 s and
+13.0-15.5 / 10.85-12.6 s), cut at recorded pauses; slide 13 (the dua) is never used.
+
+**Gates:** 1 closed on the mockup wording (the new lines above still need the scholar's eye in gate 3).
+2a and 2b: **pending** (`claudeteam/reviews/game-musa-art.md`, contact sheet
+`claudeteam/reviews/game-musa-contact-sheet.png`). 3: **pending**. Not linked from the story or the hub.

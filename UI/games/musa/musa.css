@@ -1,0 +1,273 @@
+/* Game 03, The Path Through the Sea (Musa): the second painted game (2026-11-06).
+   Illuminated Page tokens (UI/styles.css, DESIGN.md) + the game UI kit proven on Nuh (games/nuh/nuh.css). */
+@font-face{font-family:"Baloo 2";font-weight:700;font-display:swap;src:url(../../vendor/fonts/baloo-2-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Baloo 2";font-weight:800;font-display:swap;src:url(../../vendor/fonts/baloo-2-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-weight:600;font-display:swap;src:url(../../vendor/fonts/nunito-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-weight:700;font-display:swap;src:url(../../vendor/fonts/nunito-latin-700-normal.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-weight:800;font-display:swap;src:url(../../vendor/fonts/nunito-latin-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Baloo Bhaijaan 2";font-weight:600;font-display:swap;src:url(../../vendor/fonts/baloo-bhaijaan-2-arabic-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Baloo Bhaijaan 2";font-weight:800;font-display:swap;src:url(../../vendor/fonts/baloo-bhaijaan-2-arabic-800-normal.woff2) format("woff2")}
+@font-face{font-family:"Amiri";font-weight:400;font-display:swap;src:url(../../vendor/fonts/amiri-arabic-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Amiri";font-weight:700;font-display:swap;src:url(../../vendor/fonts/amiri-arabic-700-normal.woff2) format("woff2")}
+
+:root{
+  --parchment:#FBF6EA; --parchment-deep:#F3E9D2; --card:#FFFDF8;
+  --ink:#14383A; --ink-soft:#3E5A5B;
+  --turq:#17877F; --turq-deep:#0F5F59; --turq-light:#5FB8AE;
+  --gold:#C08A2E; --gold-light:#E0B75C; --gold-deep:#8F6418;
+  --cobalt:#24508C; --rule:rgba(192,138,46,.45);
+  --ui:"Nunito","Baloo Bhaijaan 2",system-ui,sans-serif;
+  --title:"Baloo 2","Baloo Bhaijaan 2",system-ui,sans-serif;
+  --naskh:"Amiri","Noto Naskh Arabic","Geeza Pro",serif;
+  --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+  --safe-l:env(safe-area-inset-left,0px); --safe-r:env(safe-area-inset-right,0px);
+}
+html[lang=ar]{--ui:"Baloo Bhaijaan 2","Nunito",system-ui,sans-serif;--title:"Baloo Bhaijaan 2","Baloo 2",system-ui,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#20403f;color:var(--ink);font-family:var(--ui);
+  -webkit-tap-highlight-color:transparent;overscroll-behavior:none}
+body{position:fixed;inset:0}
+button{font:inherit;color:inherit}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+[hidden]{display:none!important}
+#app{position:absolute;inset:0;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none}
+
+/* ---------- the world: a fixed logical canvas scaled to cover the screen (JS sets --s, size, offset) ---------- */
+#viewport{position:absolute;inset:0;overflow:hidden}
+#world{position:absolute;left:0;top:0;transform-origin:0 0} /* JS sets size and transform (scale to cover; scaleX(-1) mirror in RTL) */
+.plates,.plates img{position:absolute;inset:0;width:100%;height:100%}
+.plates img{opacity:0;transition:opacity 3.2s ease}
+.plates img.on{opacity:1}
+.dim{position:absolute;inset:0;background:radial-gradient(120% 90% at 18% 0%,rgba(255,236,190,.0),rgba(20,40,60,.0));
+  pointer-events:none;transition:background 2s ease}
+/* bedtime: a night palette with the lamps lit, not just a darker screen */
+.bed #world{filter:brightness(.68) saturate(.8) hue-rotate(-6deg)}
+.bed .dim{background:radial-gradient(90% 70% at 20% 10%,rgba(255,214,140,.12),rgba(14,30,70,.38))}
+/* the split plate opens from the middle outwards (a reveal, not a trick the child performs) */
+.plates img.p-split{clip-path:inset(0 50% 0 50%);transition:opacity 2.2s ease,clip-path 5.5s cubic-bezier(.45,0,.2,1)}
+.plates img.p-split.on{clip-path:inset(0 0 0 0)}
+.plates img.p-calm{transition:opacity 5s ease}
+.bed .dim{background:radial-gradient(90% 70% at 50% 30%,rgba(255,214,140,.10),rgba(10,22,60,.40))}
+
+#atmos{position:absolute;left:0;top:0;pointer-events:none}
+
+/* ---------- believers: never drawn, only small lights (gate 1) ---------- */
+.light{position:absolute;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,#fff6d8 0 7%,rgba(255,196,92,.95) 13%,rgba(240,160,60,.45) 28%,rgba(255,190,100,0) 64%);
+  transition:left 1.5s cubic-bezier(.45,0,.3,1),top 1.5s cubic-bezier(.45,0,.3,1),scale 1.5s ease,opacity 1.6s ease;
+  animation:lamp 5s ease-in-out infinite;scale:var(--d,1)}
+.light:nth-child(3n){animation-delay:-1.7s}.light:nth-child(3n+1){animation-delay:-3.1s}
+.light.lag{opacity:.45}
+.light.jostle{animation:jostle .5s ease 2}
+@keyframes jostle{25%{translate:-5px 0}75%{translate:5px 0}}
+@keyframes lamp{50%{opacity:.62}}
+.camp{position:absolute;inset:0;pointer-events:none;transition:opacity 2.6s ease}
+.camp img{position:absolute;filter:drop-shadow(0 5px 3px rgba(10,20,40,.35))}
+.phase-walk .camp,.phase-shore2 .camp,.phase-safe .camp,.phase-end .camp{opacity:0}
+
+/* ---------- the path: the next step glows; it is a 64px+ button even when the painted step is small ---------- */
+.mark{position:absolute;width:30px;height:16px;margin:-8px 0 0 -15px;border-radius:50%;pointer-events:none;opacity:0;scale:var(--d,1);
+  background:radial-gradient(closest-side,rgba(255,236,180,.55),rgba(255,236,180,0));transition:opacity 1.2s ease}
+.phase-walk .mark{opacity:.55}
+.mark.done{opacity:0!important}
+#stepTarget{position:absolute;width:96px;height:96px;margin:-48px 0 0 -48px;border:0;padding:0;border-radius:50%;cursor:pointer;
+  background:radial-gradient(closest-side,rgba(255,230,160,.85),rgba(255,214,140,.35) 45%,rgba(255,214,140,0));outline:none;
+  animation:breathe 4s ease-in-out infinite;touch-action:manipulation}
+#stepTarget::after{content:"";position:absolute;inset:32% 18%;border-radius:50%;box-shadow:0 0 0 2.5px rgba(192,138,46,.9),0 0 14px 4px rgba(255,226,150,.8)}
+#stepTarget.hot{background:radial-gradient(closest-side,rgba(255,240,190,1),rgba(255,214,140,.5) 50%,rgba(255,214,140,0))}
+#stepTarget:focus-visible{box-shadow:0 0 0 4px var(--turq-light)}
+@keyframes breathe{50%{scale:1.06}}
+
+/* ---------- the child's lantern ---------- */
+#lantern{position:absolute;cursor:grab;touch-action:none;outline:none;
+  transform-origin:50% 100%;transition:left 1.3s cubic-bezier(.45,0,.3,1),top 1.3s cubic-bezier(.45,0,.3,1),width 1.3s ease,height 1.3s ease,filter .4s}
+#lantern.dragging,#lantern.snap{transition:none}
+#lantern.dragging{cursor:grabbing;z-index:30}
+#lantern img{position:absolute;left:50%;bottom:0;width:var(--iw,92px);height:var(--ih,150px);translate:-50% 0;pointer-events:none;transition:width 1.3s ease,height 1.3s ease}
+#lantern::before{content:"";position:absolute;inset:-16px -14px -8px}  /* generous hit area */
+#lantern .glow{position:absolute;left:50%;bottom:calc(var(--ih,150px) * .42);width:calc(var(--iw,92px) * (2.6 + var(--warm,0) * 1.6));translate:-50% 50%;aspect-ratio:1;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,232,170,calc(.55 + var(--warm,0) * .3)),rgba(255,206,120,calc(.18 + var(--warm,0) * .2)) 45%,rgba(255,200,110,0));
+  mix-blend-mode:screen;transition:width 1.6s ease,opacity .6s ease;animation:lamp 6s ease-in-out infinite}
+#lantern.dimmed .glow{opacity:.25}
+#lantern.dimmed img{filter:brightness(.7)}
+#lantern.idle{animation:sway 6s ease-in-out infinite}
+@keyframes sway{50%{rotate:2deg}}
+#lantern:focus-visible,#lantern.selected{filter:drop-shadow(0 0 0 #fff) drop-shadow(0 0 10px rgba(95,184,174,.95))}
+.land{animation:land .42s cubic-bezier(.3,1.6,.5,1)}
+@keyframes land{0%{scale:1.06 .9}100%{scale:1 1}}
+.wob{animation:wob .5s ease}
+@keyframes wob{25%{rotate:-6deg}75%{rotate:5deg}}
+
+/* the walls of water: tap to see them stand still (decoration; pointer only, the game is whole without it) */
+.wall{position:absolute;pointer-events:none}
+.phase-walk .wall{pointer-events:auto;cursor:pointer}
+.fg{position:absolute;pointer-events:none;filter:drop-shadow(0 6px 6px rgba(10,20,40,.35))}
+
+/* ---------- quote panel: the people's and Musa's words, plain parchment (never scripture styling) ---------- */
+.quote{position:absolute;z-index:19;top:calc(96px + var(--safe-t));left:50%;translate:-50% 0;width:min(560px,calc(100% - 36px));
+  padding:14px 24px 16px;border-radius:18px;text-align:center;
+  background:linear-gradient(rgba(255,253,248,.96),rgba(243,233,210,.96));box-shadow:0 0 0 1px var(--rule),0 10px 24px rgba(10,20,40,.3);
+  animation:sayin .6s ease}
+.quote .who{display:block;font:800 16px var(--ui);color:var(--gold-deep);margin-bottom:4px}
+.quote .words{display:block;font:800 26px/1.35 var(--title);color:var(--ink)}
+html[lang=ar] .quote .words{font-size:27px;line-height:1.6}
+
+/* ---------- frame ---------- */
+.frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.frame rect{fill:none;stroke:var(--gold-light);stroke-width:1.5}
+.frame .f1{stroke:rgba(224,183,92,.9);stroke-width:2.5}
+.frame .f2{stroke:rgba(224,183,92,.55)}
+.corner{position:absolute;width:76px;height:76px;pointer-events:none;stroke:var(--gold-light)}
+.corner.c-ts{top:calc(6px + var(--safe-t));left:calc(6px + var(--safe-l))}
+.corner.c-te{top:calc(6px + var(--safe-t));right:calc(6px + var(--safe-r));scale:-1 1}
+.corner.c-bs{bottom:calc(6px + var(--safe-b));left:calc(6px + var(--safe-l));scale:1 -1}
+.corner.c-be{bottom:calc(6px + var(--safe-b));right:calc(6px + var(--safe-r));scale:-1 -1}
+#girih *{stroke:inherit}
+
+/* ---------- HUD ---------- */
+.hud-top{position:absolute;top:calc(14px + var(--safe-t));inset-inline:calc(22px + var(--safe-l)) calc(22px + var(--safe-r));
+  display:flex;align-items:center;justify-content:space-between;gap:12px;pointer-events:none;z-index:20}
+.hud-top>*{pointer-events:auto}
+.tools{display:flex;gap:10px}
+.tbtn{min-width:64px;height:64px;border-radius:20px;border:0;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:0 14px;text-decoration:none;color:var(--ink);font:800 19px var(--ui);cursor:pointer;touch-action:manipulation;
+  background:linear-gradient(var(--card),var(--parchment-deep));
+  box-shadow:0 0 0 1px var(--rule),0 5px 0 #c9b98f,0 8px 14px rgba(20,40,40,.22);transition:translate .08s,box-shadow .08s}
+.tbtn:active{translate:0 4px;box-shadow:0 0 0 1px var(--rule),0 1px 0 #c9b98f,0 3px 6px rgba(20,40,40,.2)}
+.tbtn svg{width:28px;height:28px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tbtn.icon{padding:0}
+.tbtn[aria-pressed=false] .on-only{display:none}
+.tbtn[aria-pressed=true] .off-only{display:none}
+#bedBtn[aria-pressed=true]{background:linear-gradient(#2b4a7a,#1d3560)} #bedBtn[aria-pressed=true] svg{stroke:var(--gold-light)}
+html[dir=rtl] .dirarrow{transform:scaleX(-1);transform-origin:12px 12px}
+.tbtn.lang{font-size:20px}
+:focus-visible{outline:3px solid var(--turq-light);outline-offset:3px}
+.beads{display:flex;gap:10px;align-items:center;padding:10px 16px;border-radius:40px;background:rgba(251,246,234,.82);
+  box-shadow:0 0 0 1px var(--rule)}
+.bead{width:18px;height:18px;border-radius:50%;background:rgba(192,138,46,.18);box-shadow:inset 0 0 0 1.5px rgba(143,100,24,.55);transition:background .6s,box-shadow .6s}
+.bead.full{background:radial-gradient(circle at 35% 30%,#fff3c9,var(--gold-light) 45%,var(--gold) 80%);box-shadow:0 0 8px rgba(224,183,92,.8)}
+.bead.now{animation:breathe 3.5s ease-in-out infinite;box-shadow:inset 0 0 0 2px var(--gold)}
+
+.ribbon{position:absolute;inset-inline:max(18px,calc(50% - 470px));bottom:calc(16px + var(--safe-b));z-index:20;
+  display:flex;align-items:center;gap:14px;min-height:76px;padding:12px 26px;border-radius:22px;
+  background:linear-gradient(rgba(255,253,248,.95),rgba(243,233,210,.95));
+  box-shadow:0 0 0 1px var(--rule),0 0 0 5px rgba(251,246,234,.35),0 10px 24px rgba(20,40,40,.25)}
+.ribbon::before,.ribbon::after{content:"";position:absolute;top:50%;width:10px;height:10px;margin-top:-5px;rotate:45deg;
+  border:1.5px solid var(--gold);background:var(--parchment)}
+.ribbon::before{left:-6px}.ribbon::after{right:-6px}
+#say{margin:0;font:700 24px/1.35 var(--ui);color:var(--ink);flex:1;text-wrap:balance}
+html[lang=ar] #say{font-size:26px;line-height:1.5}
+#say.in{animation:sayin .5s ease}
+@keyframes sayin{from{opacity:0;translate:0 6px}}
+.listen{flex:none;width:64px;height:64px;border-radius:50%;border:0;cursor:pointer;
+  background:linear-gradient(var(--turq-light),var(--turq));box-shadow:0 5px 0 var(--turq-deep),0 0 0 1px var(--gold);transition:translate .08s,box-shadow .08s}
+.listen:active,.listen.playing{translate:0 4px;box-shadow:0 1px 0 var(--turq-deep),0 0 0 1px var(--gold)}
+.listen svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+.btn{min-height:64px;padding:0 28px;border-radius:22px;border:0;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  font:800 22px var(--ui);text-decoration:none;touch-action:manipulation;transition:translate .08s,box-shadow .08s}
+.btn.gold{color:#fff;background:linear-gradient(var(--turq-light),var(--turq));
+  box-shadow:0 0 0 1.5px var(--gold-light),0 6px 0 var(--turq-deep),0 10px 18px rgba(20,40,40,.25);text-shadow:0 1px 0 rgba(0,0,0,.2)}
+.btn.gold:active{translate:0 5px;box-shadow:0 0 0 1.5px var(--gold-light),0 1px 0 var(--turq-deep)}
+.btn.ghost{color:var(--ink);background:linear-gradient(var(--card),var(--parchment-deep));box-shadow:0 0 0 1px var(--rule),0 6px 0 #c9b98f}
+.btn.ghost:active{translate:0 5px;box-shadow:0 0 0 1px var(--rule),0 1px 0 #c9b98f}
+.btn.soft{color:var(--ink);background:linear-gradient(var(--card),var(--parchment-deep));box-shadow:0 0 0 1px var(--rule),0 6px 0 #c9b98f,0 10px 18px rgba(20,40,40,.2)}
+.btn.soft:active{translate:0 5px;box-shadow:0 0 0 1px var(--rule),0 1px 0 #c9b98f}
+.btn img,.btn svg.ic{width:44px;height:44px;flex:none}
+.btn img{object-fit:contain}
+html[dir=rtl] .btn svg.ic.flip{scale:-1 1}
+.choices,.actrow{position:absolute;inset-inline:0;bottom:calc(112px + var(--safe-b));display:flex;justify-content:center;gap:18px;flex-wrap:wrap;z-index:21;padding:0 18px}
+.choices .btn{min-height:76px;font-size:23px}
+/* the walk stays in view: in landscape the single action button sits at the end side, off the path */
+.actrow{justify-content:flex-end;padding-inline-end:max(28px,4%)}
+
+/* ---------- parent pause and ending: a parchment page beside the still scene ---------- */
+.sheet{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:flex-end;padding:calc(92px + var(--safe-t)) 5% 24px;
+  background:linear-gradient(to left,rgba(20,40,40,.35),rgba(20,40,40,0) 70%)}
+html[dir=rtl] .sheet{background:linear-gradient(to right,rgba(20,40,40,.35),rgba(20,40,40,0) 70%)}
+/* the ending sits on the start side, so the ark resting on Judi (end side) stays in view */
+.sheet.end{justify-content:flex-start;background:linear-gradient(to right,rgba(20,40,40,.35),rgba(20,40,40,0) 70%)}
+html[dir=rtl] .sheet.end{background:linear-gradient(to left,rgba(20,40,40,.35),rgba(20,40,40,0) 70%)}
+#app.ended .ribbon{display:none}
+.page{position:relative;width:min(470px,100%);max-height:calc(100% - 20px);overflow:auto;padding:34px 34px 30px;border-radius:18px;
+  background:radial-gradient(130% 90% at 30% 0%,#fffdf6,var(--parchment) 55%,var(--parchment-deep));
+  box-shadow:0 0 0 1px var(--gold),0 0 0 6px rgba(251,246,234,.9),0 0 0 7px var(--rule),0 24px 50px rgba(10,30,30,.4);
+  animation:pagein .6s cubic-bezier(.2,.8,.2,1)}
+@keyframes pagein{from{opacity:0;clip-path:inset(0 0 0 100%)}to{opacity:1;clip-path:inset(0 0 0 0)}}
+html[dir=rtl] .page{animation-name:pagein-rtl}
+@keyframes pagein-rtl{from{opacity:0;clip-path:inset(0 100% 0 0)}to{opacity:1;clip-path:inset(0 0 0 0)}}
+.star8{position:absolute;top:12px;inset-inline-end:12px;width:34px;height:34px;stroke:var(--gold)}
+.page .kicker{margin:0 0 6px;font:800 16px var(--ui);letter-spacing:.06em;text-transform:uppercase;color:var(--gold-deep)}
+html[lang=ar] .page .kicker{letter-spacing:0}
+.page .sub{margin:0;color:var(--ink-soft);font-weight:700}
+.page h2{font:800 30px/1.25 var(--title);margin:10px 0 12px;color:var(--ink)}
+.page p{font-size:20px;line-height:1.5}
+.page .idea{color:var(--ink-soft);border-inline-start:3px solid var(--gold-light);padding-inline-start:12px}
+.page .btn{margin-top:8px}
+.cartouche{margin:16px 0;padding:18px 20px 14px;border-radius:60px/40px;text-align:center;
+  background:radial-gradient(closest-side,rgba(255,253,246,1),rgba(243,233,210,1));
+  box-shadow:0 0 0 1.5px var(--gold),0 0 0 6px rgba(251,246,234,1),0 0 0 7px rgba(36,80,140,.55)}
+.cartouche .kicker{font-size:14px;text-transform:none;letter-spacing:0;color:var(--ink-soft);font-weight:700}
+.page .dua{font:700 40px/1.6 var(--naskh);color:var(--cobalt);margin:2px 0 4px}
+.page .dua-tr{margin:0;font-weight:700;color:var(--ink)}
+.endrow{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+.end .page{width:min(640px,100%);padding:26px 30px 20px}
+.end .page h2{margin:4px 0 8px}
+.end .cartouche{margin:12px 0}
+.tier{display:flex;gap:10px;align-items:center;margin-top:14px;font-weight:700;color:var(--ink-soft);min-height:48px}
+.tier input{width:28px;height:28px;accent-color:var(--turq)}
+
+/* ---------- reward moment ---------- */
+.reward{position:absolute;inset:0;pointer-events:none;z-index:15;opacity:0;transition:opacity 1.6s ease}
+.reward.on{opacity:1}
+.reward .lamp{position:absolute;inset:0;background:radial-gradient(60% 55% at var(--lx,50%) var(--ly,45%),rgba(255,230,160,.45),rgba(20,40,60,.0) 55%,rgba(14,30,40,.42))}
+.shamsa{position:absolute;width:min(30vmin,240px);height:min(30vmin,240px);left:var(--sx,28%);top:var(--sy,30%);translate:-50% -50%}
+.shamsa path,.shamsa circle{fill:none;stroke:var(--gold-light);stroke-width:1.6;stroke-linecap:round;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
+  transition:stroke-dashoffset 2.4s cubic-bezier(.4,0,.2,1)}
+.reward.on .shamsa path,.reward.on .shamsa circle{stroke-dashoffset:0}
+/* the medallion: a solid ivory disc under the gold lines, so it reads as an illuminated roundel and never as a sun
+   or an eye with sky showing through (scholar gate 3 SHOULD 1). Lines go a shade deeper to read on ivory. */
+.shamsa circle.disc{fill:#FBF6EA;stroke:var(--gold);stroke-width:2.4;stroke-dasharray:none;opacity:0;transition:opacity 1.2s ease;
+  filter:drop-shadow(0 4px 10px rgba(20,40,40,.25))}
+.reward.on .shamsa circle.disc{opacity:1}
+.shamsa #shamsaG path,.shamsa #shamsaG circle{stroke:var(--gold)}
+
+/* ---------- phone portrait ---------- */
+@media (max-aspect-ratio:4/5){
+  .tbtn{min-width:56px;height:56px;border-radius:18px}
+  .tbtn.back span{display:none}
+  .tools{gap:8px}
+  .beads{position:absolute;top:auto;bottom:calc(10px + var(--safe-b));left:50%;translate:-50% 0;padding:8px 12px;gap:8px;position:fixed}
+  .bead{width:15px;height:15px}
+  .hud-top{inset-inline:calc(14px + var(--safe-l)) calc(14px + var(--safe-r))}
+  .ribbon{inset-inline:12px;top:calc(80px + var(--safe-t));bottom:auto;padding:10px 16px;min-height:68px;gap:10px}
+  #say{font-size:19px}
+  html[lang=ar] #say{font-size:20px}
+  .listen{width:56px;height:56px}
+  .choices,.actrow{bottom:calc(56px + var(--safe-b));flex-direction:column;align-items:stretch;padding:0 22px;gap:14px}
+  .actrow{align-items:center}
+  .choices .btn{font-size:20px;min-height:68px}
+  .sheet{align-items:flex-end;justify-content:center;padding:12px 12px calc(12px + var(--safe-b));background:linear-gradient(to top,rgba(20,40,40,.4),rgba(20,40,40,0) 70%)}
+  .page{padding:24px 22px 20px;max-height:74%}
+  .page h2{font-size:24px}
+  .page p{font-size:18px}
+  .page .dua{font-size:30px;line-height:1.5}
+  .end .page{max-height:calc(100% - 96px);padding:18px 18px 14px}
+  .end .page p{font-size:16px;line-height:1.4;margin:6px 0}
+  .end .page h2{font-size:22px;margin:0 0 4px}
+  .end .cartouche{padding:10px 12px 8px;margin:8px 0}
+  .end .cartouche .kicker{font-size:12px}
+  .endrow{gap:10px;margin-top:6px}
+  .endrow .btn{flex:1 1 140px;padding:0 14px;font-size:18px}
+  .tier{margin-top:8px;font-size:15px}
+  .corner{width:56px;height:56px}
+  .quote{top:auto;bottom:calc(330px + var(--safe-b));padding:10px 16px 12px}
+  .quote .words{font-size:21px}
+  html[lang=ar] .quote .words{font-size:22px}
+  .quote .who{font-size:14px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.25s!important}
+  .plates img{transition:opacity .8s ease!important}
+}

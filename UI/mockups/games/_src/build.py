@@ -18,7 +18,7 @@ def one(rx, text, label):
 
 def dua(name):
     s = page(name)
-    ar = one(r'<p class="arabic-text" lang="ar">(.*?)</p>', s, name + ' dua')
+    ar = one(r'<p class="arabic-text" lang="ar"(?: data-ayah="[^"]*")?>(.*?)</p>', s, name + ' dua')
     tr_ar, tr_en = one(r'<p class="dua-translation" data-ar="(.*?)">(.*?)</p>', s, name + ' tr')
     nt_ar, nt_en = one(r'<p class="dua-note" data-ar="(.*?)">(.*?)</p>', s, name + ' note')
     return ar, (tr_en, tr_ar), (nt_en, nt_ar)
@@ -38,13 +38,16 @@ S['NUH_DUA'], T['NUH_TR'], T['NUH_HEAD'] = dua('story-prophet-nuh.html')
 S['MUSA_DUA'], T['MUSA_TR'], T['MUSA_HEAD'] = dua('story-prophet-musa.html')
 T['MUSA_TRUST'] = literal('story-prophet-musa.html', '"No! My Lord is with me, and He will guide me."', '&quot;كلا! إن معي ربي سيهدين.&quot;')
 # MUSA_STRIKE removed (scholar 2026-11-03): Allah's words are not shown as a quoted paraphrase; the game uses indirect speech.
+# Game 03 painted (2026-11-06): Musa's reply. EN is the page's quoted wording; AR is the page's reported speech
+# (scholar gate 1, 03 fix 4: the Arabic gives the meaning in reported speech, never near-Quranic wording).
+T['MUSA_REPLY'] = literal('story-prophet-musa.html', '"No! My Lord is with me, and He will guide me."', 'وأخبرهم أن الله معه وسيهديه إلى طريق النجاة')
 T['MUSA_CRY'] = literal('story-prophet-musa.html', '"They have caught us!"', '&quot;لقد أدركونا!&quot;')
 T['IBR_FACE'] = literal('story-prophet-ibrahim.html', '"I turn my face to the One who created the heavens and the earth!"', '&quot;إني وجهت وجهي للذي فطر السماوات والأرض&quot;')
 T['IBR_LEARN'] = literal('story-prophet-ibrahim.html', 'Ibrahim understood that only <strong>Allah</strong> - who created the stars, moon, and sun - deserves to be worshipped!',
                          'أدرك إبراهيم أن <strong>الله</strong> وحده - الذي خلق النجوم والقمر والشمس - هو المستحق للعبادة!')
 # Adam: the Arabic dua from the page; its translation and note from translations.js (the Adam page's i18n source)
 adam = page('story-prophet-adam.html')
-S['ADAM_DUA'] = one(r'<p class="arabic-text" lang="ar">(.*?)</p>', adam, 'adam dua')
+S['ADAM_DUA'] = one(r'<p class="arabic-text" lang="ar"(?: data-ayah="[^"]*")?>(.*?)</p>', adam, 'adam dua')
 tj = page('translations.js')
 tr = re.findall(r'duaTranslation: "((?:[^"\\]|\\.)*)"', tj)
 nt = re.findall(r'duaNote: "((?:[^"\\]|\\.)*)"', tj)
@@ -64,12 +67,14 @@ GAMES = {
     '01-nuh-ark-v1.html': ('../../story-prophet-nuh.html', 'Nuh and the Ark', 'نوح والسفينة'),
     '02-yusuf-journey.html': ('../../story-prophet-yusuf.html', "Yusuf's Journey", 'رحلة يوسف'),
     '03-musa-sea.html': ('../../story-prophet-musa.html', 'The Path Through the Sea', 'الطريق في البحر'),
+    # 03 painted (2026-11-06): the second painted game, at UI/games/musa-sea.html; the mockup above is kept as is.
+    '03-musa-sea-painted.html': ('../story-prophet-musa.html', 'The Path Through the Sea', 'الطريق في البحر'),
     '04-ibrahim-stars.html': ('../../story-prophet-ibrahim.html', 'Ibrahim: Stars and Guests', 'إبراهيم: النجوم والضيوف'),
     '05-adam-garden.html': ('../../story-prophet-adam.html', 'The Garden of Choices', 'حديقة الاختيارات'),
 }
 
 # Games built somewhere other than OUT (path relative to UI/).
-OUT_PATH = {'01-nuh-ark.html': 'games/nuh-ark.html'}
+OUT_PATH = {'01-nuh-ark.html': 'games/nuh-ark.html', '03-musa-sea-painted.html': 'games/musa-sea.html'}
 
 def pair(p):
     assert p is not None, 'a copied literal no longer matches its story page'
