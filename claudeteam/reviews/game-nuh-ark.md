@@ -291,3 +291,21 @@ with `elementsFromPoint`: the plates were stacked above `atmos`.
 
 In every settle frame the ark is on or above the water: it rises out of the fading flood water and comes to rest
 on Judi above the new water line. No console errors in any run. The scholar re-checks only these frames.
+
+### Scholar sight-check of the atmos fix (2026-11-06): GO
+`islamic-content-scholar`, on `main` at 0dd0c56. I read the diff of `nuh.css` and `nuh.js`, and every frame in
+the scratchpad `nuh-atmos/`: flood, settle every 0.5 s from 0.0 to 6.0 s, reward and end, tablet and phone, EN
+and AR. I built my own contact grids of all of them (scratchpad `scholar/nuh-*-all.png`).
+- **The ark is never submerged.** While afloat, the hull meets the water at its own waterline, which is a ship
+  on the water (11:42). Through the whole rise the ark is fully above the water. It comes to rest on Judi
+  (11:44): on the mountaintop on the tablet, on the green rise on the phone. The fault I reported (a faint hull
+  under the sea at 0.7 s) is gone. `settle()` now fades the flood water at its own line and sets the Judi line
+  only after the 4.2 s rise.
+- **The rain, splash rings, shimmer and motes form no figure, cross or glyph.**
+  - The rain is thin, parallel, slanted streaks that never cross.
+  - The motes are a soft gold haze over the resting ark at the reward, after the parent pause, beside the
+    approved shamsa.
+  - Nothing new marks the flood itself.
+- **The rain falling in front of the ark is fine.** It is weather, not an effect on the ark.
+
+**GO.** No further scholar check is needed for this change.

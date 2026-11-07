@@ -257,3 +257,28 @@ the scripture diff passes.
 - Walk among the believers: `{tab,phone}-{en,ar}-6-walk.png`, `-7-fear1.png`, `-7-fear2.png`, `-8-mid.png`
 - Safe shore: `{tab,phone}-{en,ar}-9-safe.png`
 - Overview strips: `review-tab.png`, `review-phone.png`; run data `playthrough.json`
+
+### Scholar sight-check of the fixes (2026-11-06): CLEARED for the live site
+`islamic-content-scholar`, on `main` at 99e2556. I read the diff of `musa.js` and `story-prophet-musa.html`, and
+the screenshots in the scratchpad `musa-game/fixes/`: `review-tab.png`, `review-phone.png`, and at full size
+`tab-en-5-parting`, `tab-en-7-fear1`, `tab-en-8-mid` and `phone-en-7-fear2`.
+- **3.1 (MUST): done.** Four of the nine lights walk ahead of the lantern (`AHEAD = 4`), on the far side of the
+  path, and five follow. On both sizes the child is visibly inside the group.
+  - **On the designer's question:** on the landscape tablet the two nearest lights sit level with the upper part
+    of the tall lantern. That is enough. The viewer reads the lantern's place on the path from its base, and
+    both lights stand well up the path from it. The lights further ahead (and all four on the phone) are clearly
+    in front.
+  - Optional polish, not required: widen the spacing ahead slightly on landscape only.
+- **3.2 (SHOULD): done.** `openCue()` opens the sea when the clip reaches 5.8 s EN and 4.45 s AR. The designer
+  measured 5.94-5.99 s and 4.50-4.57 s: after "and by Allah's command" begins (5.77 s), and on «فانشق البحر كله
+  بأمر الله» (4.45 s). The 3.6 s timer remains only as the fallback for sound off or a failed clip, when the
+  ribbon names Allah.
+- **3.3 (SHOULD): done.** After the choice, the lantern goes back to the beach among the lights (`L.wait`). The
+  opening now starts on open water, clear of the child's lantern (`*-4-hear`, `*-5-parting`).
+- **2a record fix: done.** The `plate-dawn-port` entry now gives the shipped reroll (seed 63901), and the
+  docstring no longer lists the jar and palm.
+- **The link:** `story-prophet-musa.html:289` puts "Play together" / «لنلعب معاً» on the closing quiz card only,
+  not the hub. That is approved.
+
+The game's words, art, audio parts and dua are unchanged since my gate-3 checks, so those results stand.
+**Musa is cleared for the live site.**
