@@ -263,3 +263,31 @@ Conditions that carry forward:
 - Any new or changed image comes back to the scholar before it ships.
 - Any change to narration text, the dua or the sounds comes back to the scholar before it ships.
 - The story plate `prophet-nuh/scene-6` mast is a style item for the next plate pass, not a blocker.
+
+## Atmos fix (2026-11)
+`kids-game-designer`, 2026-11-06, applying the scholar's GO (game-musa-sea.md, "Proposed Nuh fix": GO only with
+a stacking change).
+
+**The bug:** `games/nuh/nuh.css` never positioned `#atmos`, so the PixiJS canvas was static and painted under
+the plates. The rain, splash rings, water shimmer and gold motes approved in the design were invisible. Checked
+with `elementsFromPoint`: the plates were stacked above `atmos`.
+
+**The change (option 3 of the ruling: switch the Judi water line only after the ark has risen past it):**
+- `nuh.css`: `#atmos{position:absolute;left:0;top:0;pointer-events:none}`.
+- `nuh.js` `settle()`: the flood water layer now fades out at its own line, below the floating hull
+  (`Atmos.water('flood', false)`). The Judi water layer and its higher line are set only after the 4.2 s rise,
+  once the ark rests on Judi (`Atmos.water('judi', true)` after `anim(4300)`). Before this, the mask jumped to
+  `judiWaterY` at once while the ark was still low, which made the ark look submerged.
+- The canvas stays after the ark in the page, so the rain falls in front of the ark and the motes show over it.
+  During the flood the water copy covers only the hull below the designed waterline, as designed ("the hull
+  sits in the water, not on it").
+
+**Frames for the scholar's re-check:** real play-throughs (keyboard build and boarding, sound off), tablet
+1180x820 and phone 390x844, EN and AR, in `/private/tmp/claude-501/-Users-hishamabuella-Work-Interactive-Islamic-kids-website/e8e68c51-18d1-4a2c-bedb-40bde535d502/scratchpad/nuh-atmos/`:
+- **Flood:** `{tab,phone}-{en,ar}-flood-2.5s.png`, `-flood-5.0s.png`, `-flood-8.0s.png`, `-flood-afloat.png`.
+- **Settle, every 0.5 s from the press:** `{tab,phone}-{en,ar}-settle-0.0s.png` to `-settle-6.0s.png` (13 frames per view).
+- **Reward:** `{tab,phone}-{en,ar}-reward.png`; the ending `{tab,phone}-{en,ar}-end.png`.
+- Overview strips: `review-tab.png`, `review-phone.png`, `tab-en-settle-grid.png`, `phone-ar-grid.png`.
+
+In every settle frame the ark is on or above the water: it rises out of the fading flood water and comes to rest
+on Judi above the new water line. No console errors in any run. The scholar re-checks only these frames.

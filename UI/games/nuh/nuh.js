@@ -523,11 +523,15 @@ world.addEventListener('pointerdown', e => {
 async function settle() {
   if (S.phase !== 'settle') return; S.phase = 'rest'; app.className = app.className.replace(/phase-\w+/, 'phase-judi');
   sfx('tap'); $('#actRow').hidden = true; ark.classList.remove('selectable', 'afloat');
-  setPlate('judi'); Atmos.water('judi', true);
+  // The flood water layer fades out where it is, below the floating hull, and the Judi water line is set only once
+  // the ark has come to rest above it: the canvas paints over the ark, so a higher water line before then would
+  // make the ark look submerged (scholar, Nuh atmos fix, 2026-11).
+  setPlate('judi'); Atmos.water('flood', false);
   S.arkAt = { ...L.judi };
   ark.style.transition = RM ? '' : 'top 4.2s cubic-bezier(.45,0,.2,1), left 4.2s cubic-bezier(.45,0,.2,1), width 4.2s ease, height 4.2s ease'; place();
   say(W.rest); beatClip('judi');
   await anim(4300); ark.style.transition = '';
+  Atmos.water('judi', true);
   ark.classList.add('land'); sfx('step'); setTimeout(() => ark.classList.remove('land'), 500);
   await anim(1400);
   await pausePoint(W.pause2, W.pause2h);

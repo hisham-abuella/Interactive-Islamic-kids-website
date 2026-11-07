@@ -37,6 +37,9 @@ button{font:inherit;color:inherit}
 .plates,.plates img{position:absolute;inset:0;width:100%;height:100%}
 .plates img{opacity:0;transition:opacity 3.2s ease}
 .plates img.on{opacity:1}
+/* the atmosphere canvas (rain, water shimmer, motes) sits above the painted planes; without this rule it was static
+   and painted UNDER the plates, invisible (designer finding 2026-11-06; scholar GO with the settle() change in nuh.js) */
+#atmos{position:absolute;left:0;top:0;pointer-events:none}
 .dim{position:absolute;inset:0;background:radial-gradient(120% 90% at 18% 0%,rgba(255,236,190,.0),rgba(20,40,60,.0));
   pointer-events:none;transition:background 2s ease}
 /* bedtime: a night palette with the lamps lit, not just a darker screen */
