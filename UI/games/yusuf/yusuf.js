@@ -84,8 +84,9 @@ const STEPS = [
 const W = {
   dream: { en: 'Prophet Yusuf, peace be upon him, had an amazing dream: eleven stars, the sun and the moon. Tap each faint star to see it shine.',
     ar: 'رأى النبي يوسف عليه السلام رؤيا مدهشة: رأى أحد عشر نجماً، ورأى الشمس والقمر. المس كل نجمة باهتة لتراها تلمع.' },
-  dreamAll: { en: 'Eleven stars, the sun and the moon, just as in the dream. His father, Prophet Yaqub, told him it was a special gift from Allah.',
-    ar: 'أحد عشر نجماً، ومعها الشمس والقمر، كما في الرؤيا. وأخبره أبوه النبي يعقوب عليه السلام أنها هبة خاصة من الله.' },
+  // scholar 3.3: the words name the bow wherever the page's note on it is shown (the pictures never move)
+  dreamAll: { en: 'Eleven stars, the sun and the moon, all bowing to him, just as in the dream. His father, Prophet Yaqub, told him it was a special gift from Allah.',
+    ar: 'أحد عشر نجماً، ومعها الشمس والقمر، كما في الرؤيا، وكلها تسجد له. وأخبره أبوه النبي يعقوب عليه السلام أنها هبة خاصة من الله.' },
   beginBtn: { en: 'Begin the journey', ar: 'لنبدأ الرحلة' },
   journey: { en: "Prophet Yusuf's journey starts with his dream. Drag the picture that comes next onto the glowing stone.", ar: 'تبدأ رحلة النبي يوسف عليه السلام برؤياه. اسحب الصورة التالية إلى الحجر المضيء.' },
   notYet: { en: 'Not yet! That part comes later.', ar: 'ليس بعد! هذا الجزء يأتي لاحقاً.' },
@@ -106,7 +107,7 @@ const W = {
   sackFull: { en: 'A full sack', ar: 'كيس ممتلئ' },
   forgave: { en: 'Later, when they knew who he was, Yusuf forgave them with all his heart.', ar: 'وبعد ذلك، حين عرفوا من هو، سامحهم يوسف من كل قلبه.' },
   carryOn: { en: 'Carry on', ar: 'لنكمل' },
-  family: { en: 'His whole family came to live in Egypt, and his dream came true.', ar: 'وجاءت أسرته كلها لتعيش في مصر، وتحققت رؤياه.' },
+  family: { en: 'His whole family came to live in Egypt, and his dream came true: they all bowed to him with respect and love.', ar: 'وجاءت أسرته كلها لتعيش في مصر، وتحققت رؤياه: فسجدوا له جميعاً احتراماً ومحبة.' },
   pauseQ: { en: 'If someone had hurt you, what would you feel like doing? What did Yusuf choose, and why?', ar: 'لو آذاك أحد، ماذا ستشعر أنك تريد أن تفعل؟ وماذا اختار يوسف، ولماذا؟' },
   pauseH: { en: "Idea: Yusuf trusted Allah's plan, and forgiving let the whole family be together again.", ar: 'فكرة: وثق يوسف بتدبير الله، وبالمسامحة اجتمعت الأسرة كلها من جديد.' },
   turnAsk: { en: 'Your turn! Your little brother knocks over your block tower by accident and says "Sorry!" What will you do?', ar: 'دورك الآن! أوقع أخوك الصغير برج المكعبات بغير قصد وقال: "آسف!" ماذا ستفعل؟' },
@@ -138,9 +139,18 @@ const CLIPS = {
 /* ======================= sound: Web Audio, no music ======================= */
 let AC = null, master = null, windNode = null;
 function ac() {
-  if (!AC) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; AC = new C(); master = AC.createGain(); master.connect(AC.destination); }
+  if (!AC) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; AC = new C(); master = AC.createGain(); master.gain.value = G.sound && !G.quiet ? 1 : 0; master.connect(AC.destination); }
   if (AC.state === 'suspended') AC.resume();
   return AC;
+}
+
+/* scholar 3.1 (2026-11-07): silence goes through the master gain. A looping bed's gain or LFO can leave a floor
+   (-55 to -80 dBFS) when only its own target is lowered, so "Sounds off" (and, in Yusuf, the 12:92 screen) ramps the
+   master to exactly 0 in 0.15 s; nothing reaches the speakers until it is restored. */
+function masterGate() {
+  if (!AC || !master) return;
+  const on = G.sound && !G.quiet, t = AC.currentTime, g = master.gain;
+  g.cancelScheduledValues(t); g.setValueAtTime(g.value, t); g.linearRampToValueAtTime(on ? 1 : 0, t + 0.15);
 }
 const vol = () => (G.sound && !G.quiet ? (G.bed ? 0.45 : 1) * (G.clip && !G.clip.paused ? 0.4 : 1) : 0);
 let noiseBuf = null;
@@ -535,12 +545,12 @@ async function fillSack(b) {
   // the forgiveness: narrated, then 12:92 from the story page. Shown, never voiced; no sound while it is on screen.
   say(W.forgave);
   await anim(1800);
-  G.quiet = true; wind(0); stopClip();
+  G.quiet = true; masterGate(); wind(0); stopClip();
   $('#ayah').hidden = false;
   setAct(W.carryOn, family);
 }
 async function family() {
-  $('#ayah').hidden = true; G.quiet = false;
+  $('#ayah').hidden = true; G.quiet = false; masterGate();
   setPhase('family'); S.zoom = false; fit(true);
   setPlate('eve'); wind(0.6);
   await anim(1800);
@@ -643,7 +653,7 @@ $('#againBtn').addEventListener('click', () => { G.tier = $('#tierBox').checked;
 /* ======================= reset ======================= */
 function reset() {
   Object.assign(S, { phase: 'dream', step: 0, misses: 0, lit: 0, busy: false, zoom: false, stored: 0, filled: 0, built: 0, camels: false, camelsIn: false, ended: false, pauseQ: null, turnQ: null, act: null });
-  G.quiet = false; clearSel();
+  G.quiet = false; masterGate(); clearSel();
   app.className = 'phase-dream' + (G.bed ? ' bed' : '') + (Atmos.ok ? '' : ' nopixi');
   ['#ending', '#pause', '#turn', '#tray', '#bowNote', '#ayah', '#choices', '#store'].forEach(s => ($(s).hidden = true));
   $('#reward').classList.remove('on'); $('#store').classList.remove('full', 'on'); setAct(null);
@@ -654,7 +664,7 @@ function reset() {
 
 /* ======================= settings ======================= */
 $('#langBtn').addEventListener('click', () => { gesture(); G.lang = rtl() ? 'en' : 'ar'; try { localStorage.setItem('islamicKidsLang', G.lang); } catch (e) { /* private */ } applyLang(); });
-$('#soundBtn').addEventListener('click', () => { gesture(); G.sound = !G.sound; $('#soundBtn').setAttribute('aria-pressed', String(G.sound)); if (!G.sound) { stopClip(); wind(0); } else wind(windLevel()); });
+$('#soundBtn').addEventListener('click', () => { gesture(); G.sound = !G.sound; masterGate(); $('#soundBtn').setAttribute('aria-pressed', String(G.sound)); if (!G.sound) { stopClip(); wind(0); } else wind(windLevel()); });
 $('#bedBtn').addEventListener('click', () => { gesture(); G.bed = !G.bed; $('#bedBtn').setAttribute('aria-pressed', String(G.bed)); app.classList.toggle('bed', G.bed); wind(windLevel()); Atmos.calm(); });
 $('#listenBtn').addEventListener('click', () => { gesture(); playClip(); });
 addEventListener('resize', () => fit());

@@ -145,8 +145,10 @@ html[lang=ar] .note .who{letter-spacing:0}
   background:radial-gradient(closest-side,rgba(255,253,246,1),rgba(243,233,210,1));
   box-shadow:0 0 0 1.5px var(--gold),0 0 0 6px rgba(251,246,234,1),0 0 0 7px rgba(36,80,140,.55),0 14px 30px rgba(10,20,40,.3)}
 .ayah p{margin:0}
-.ayah .who{font:800 15px var(--ui);color:var(--ink-soft);margin-bottom:12px}
-.ayah .quran{font:700 34px/1.7 var(--naskh);color:var(--cobalt);margin:2px 0}
+/* scholar 3.2: the pause marks (ۖ) ride high above the Quran line; give them clear space so they never touch the
+   text above (the label, or the Name of Allah in the kicker) or the line above when the ayah wraps */
+.ayah .who{font:800 15px var(--ui);color:var(--ink-soft);margin-bottom:6px}
+.ayah .quran{font:700 34px/2.05 var(--naskh);color:var(--cobalt);margin:0;padding-top:.45em}
 .ayah .mean{font:700 18px/1.4 var(--ui);color:var(--ink)}
 
 /* ---------- Your turn: the tower ---------- */
@@ -264,7 +266,7 @@ html[lang=ar] .page .kicker{letter-spacing:0}
   background:radial-gradient(closest-side,rgba(255,253,246,1),rgba(243,233,210,1));
   box-shadow:0 0 0 1.5px var(--gold),0 0 0 6px rgba(251,246,234,1),0 0 0 7px rgba(36,80,140,.55)}
 .cartouche .kicker{font-size:14px;text-transform:none;letter-spacing:0;color:var(--ink-soft);font-weight:700}
-.page .dua{font:700 40px/1.6 var(--naskh);color:var(--cobalt);margin:2px 0 4px}
+.page .dua{font:700 40px/2 var(--naskh);color:var(--cobalt);margin:0 0 4px;padding-top:.45em}
 .page .dua-tr{margin:0;font-weight:700;color:var(--ink)}
 .endrow{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
 .end .page{width:min(640px,100%);padding:26px 30px 20px}
@@ -307,9 +309,11 @@ html[lang=ar] .page .kicker{letter-spacing:0}
   .page{padding:24px 22px 20px;max-height:74%}
   .page h2{font-size:24px}
   .page p{font-size:18px}
-  .page .dua{font-size:30px;line-height:1.5}
+  .page .dua{font-size:30px;line-height:1.95}
   .end .page{max-height:calc(100% - 96px);padding:18px 18px 14px}
   .end .page p{font-size:16px;line-height:1.4;margin:6px 0}
+  /* scholar 3.2: the dua keeps its own size and clearance on the phone (.end .page p would shrink it to 16px) */
+  .end .page .dua{font-size:24px;line-height:2;margin:0 0 2px;padding-top:.45em}
   .end .page h2{font-size:22px;margin:0 0 4px}
   .end .cartouche{padding:10px 12px 8px;margin:8px 0}
   .end .cartouche .kicker{font-size:12px}
@@ -327,7 +331,7 @@ html[lang=ar] .page .kicker{letter-spacing:0}
   .note{top:auto;bottom:calc(16px + var(--safe-b));padding:10px 16px 12px}
   .ayah{top:calc(200px + var(--safe-t));padding:10px 16px 12px}
   .note .words{font-size:17px}
-  .ayah .quran{font-size:26px;line-height:1.6}
+  .ayah .quran{font-size:26px;line-height:2}
   .ayah .mean{font-size:15px}
   .tower{height:210px}
   .block{width:52px;height:52px;margin-left:-26px}
