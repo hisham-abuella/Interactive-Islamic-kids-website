@@ -107,9 +107,9 @@ SPEC = dict(
             tl='Alam nashrah laka sadrak',
             tr_en='"Did We not open up your chest for you?"',
             tr_ar='وسَّع اللهُ صدرَ النبيِّ ﷺ لأحكام الدين، والدعوة إلى الله، والأخلاق الكريمة.',
-            ex_en='When you are worried, your chest feels tight. Allah asks: did We not '
-                  '<strong>make it wide and calm again</strong>? It is a question that is really a '
-                  'reminder.',
+            ex_en='When you are worried, your chest feels tight. Here Allah reminds the Prophet ﷺ that '
+                  'He <strong>opened his chest wide and gave him calm</strong>. The question in the '
+                  'ayah is really a reminder.',
             ex_ar='إذا اغتممت ضاق صدرك. وهنا يُذكِّر اللهُ نبيَّه ﷺ بأنه <strong>وسّع صدره وطمأنه</strong>، '
                   'فالسؤال في الآية معناه التذكير.',
         ),
