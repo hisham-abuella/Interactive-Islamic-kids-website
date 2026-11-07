@@ -363,3 +363,46 @@ The last Nuh row is silent both before and after: by then the flood beat had end
 - the dream with the new `dreamAll`: `{tab,phone}-{en,ar}-03-dream-note.png`;
 - overviews: `review-tab.png`, `review-phone.png`, and `scripture-clearance.png` (crops of every scripture block);
 - the audio: `audio-traces.txt`.
+
+### Scholar sight-check of the fixes (2026-11-07): CONFIRMED, cleared for the live site
+`islamic-content-scholar`, on `main` at 26edb9c (Yusuf fixes in 9e5a8fb). I read the diffs, the measured traces and the
+screens in the designer's scratchpad `yusuf-game/fixes/`. At HEAD I re-ran:
+- `verify-no-recitation.py`: NO RECITATION;
+- `verify-scripture.py`: 12:92 and 12:101 ok;
+- my byte comparison: 12:92, 12:101, their meanings and translations, the dua note and the bow note are still
+  identical to the story page.
+
+`yusuf-journey.html` itself is unchanged; only `yusuf.js` and `yusuf.css` changed.
+
+- **3.1: confirmed.**
+  - `masterGate()` ramps `master.gain` to exactly 0 whenever `G.quiet` or `!G.sound`. It is called on the 12:92 screen
+    (`fillSack`), on leaving it (`family`), in `reset`, and on the Sounds button. `ac()` also creates the master
+    already at 0 if the context starts in the quiet or muted state.
+  - The trace measures the real output, not the flag:
+    - the 12:92 screen: -inf dBFS (before: -35 peak);
+    - after Sounds off: -inf (before: -46.7);
+    - the family beat and "Sounds on again": back at -47 and -33.3 peak.
+  - Baba's clip is an `<audio>` element outside the master, but it cannot play there: `playClip` returns while
+    `G.quiet`, `stopClip` runs at the cartouche, and the listen button is hidden at that beat.
+- **3.2: confirmed.** On the 12:92 cartouche and the 12:101 dua (`tab-*-13`, `tab-*-20`, `phone-*-13`, `phone-*-20`,
+  `scripture-clearance.png`), the ۖ marks now sit clear of the label and the kicker, and no longer touch the Name of
+  Allah, «الدعاء» or «أيضاً». The phone ending's dua is now 24 px rather than 16 px, and is still clear.
+- **3.3: confirmed, word for word as I proposed.** Both lines were checked clean with `verify-no-recitation.py --text`:
+  - `dreamAll`: "...the sun and the moon, all bowing to him, just as in the dream..." / «...كما في الرؤيا، وكلها تسجد
+    له...»;
+  - `family`: "...his dream came true: they all bowed to him with respect and love." / «...وتحققت رؤياه: فسجدوا له
+    جميعاً احتراماً ومحبة.»
+
+  The note now follows a stated bow at both beats (`*-03-dream-note`, `*-14-family`). The sun and moon remain still.
+- **2a record: confirmed.** The art doc now describes the two-leaf door and the gabled storehouse.
+- **The link: approved.** `story-prophet-yusuf.html:249` has "🌾 Play together" / «🌾 لنلعب معاً» on the final quiz
+  card, the same pattern as Musa and Nuh. It is linked from the end of the story only, not the hub.
+
+**Yusuf's Journey is cleared for the live site.** Gates 1, 2a, 2b and 3 are closed. The conditions from gate 2b
+still apply to any later change:
+- the four ground stars in `plate-night-port` must stay covered during the dream;
+- the door must never open onto light.
+
+Not religious, for the designer: in the trace, Nuh's "Sounds on again" during the flood reads -inf **before and after**
+26edb9c. The rain does not come back after unmuting. That bug predates this change; it is a functional fix with no
+gate needed.

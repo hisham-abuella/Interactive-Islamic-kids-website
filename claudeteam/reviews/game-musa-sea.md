@@ -290,3 +290,8 @@ in 0.15 s, and Sounds on restores it. This is a sound-only change: no words, art
 real output (method and table in `game-yusuf-journey.md`, "Fixes after gates 2-3"):
 - after Sounds off: -inf dBFS at 0.3-4.3 s and at 8.3-11.3 s (before the fix: -44.5 and -40.5 peak);
 - Sounds on again: -31.5 peak, the surf back at its normal level.
+
+**Scholar sight-check (2026-11-07), 26edb9c: CONFIRMED, nothing further needed.**
+- The sound-only `masterGate()` change is correct: Sounds off now measures -inf dBFS, and the surf returns on unmute.
+- No words, art, timing or narration changed, so Musa's gate verdicts stand unchanged.
+- Details: `game-yusuf-journey.md`, "Scholar sight-check of the fixes".

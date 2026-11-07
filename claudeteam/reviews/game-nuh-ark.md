@@ -319,3 +319,10 @@ This is a sound-only change. Measured on the real output during the flood:
 - the rain before the press: -38.2 dBFS peak, unchanged.
 
 The method and table are in `game-yusuf-journey.md`, "Fixes after gates 2-3".
+
+**Scholar sight-check (2026-11-07), 26edb9c: CONFIRMED, nothing further needed religiously.**
+- The sound-only `masterGate()` change is correct: Sounds off now measures -inf dBFS during the flood.
+- No words, art, timing or narration changed, so Nuh's gate verdicts stand unchanged.
+- One functional note, not caused by this change: the rain does not restart after Sounds on during the flood (-inf both
+  before and after the change). The designer can fix it without a gate.
+- Details: `game-yusuf-journey.md`, "Scholar sight-check of the fixes".
