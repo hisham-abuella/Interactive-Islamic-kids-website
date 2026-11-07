@@ -45,6 +45,13 @@ T['MUSA_CRY'] = literal('story-prophet-musa.html', '"They have caught us!"', '&q
 T['IBR_FACE'] = literal('story-prophet-ibrahim.html', '"I turn my face to the One who created the heavens and the earth!"', '&quot;إني وجهت وجهي للذي فطر السماوات والأرض&quot;')
 T['IBR_LEARN'] = literal('story-prophet-ibrahim.html', 'Ibrahim understood that only <strong>Allah</strong> - who created the stars, moon, and sun - deserves to be worshipped!',
                          'أدرك إبراهيم أن <strong>الله</strong> وحده - الذي خلق النجوم والقمر والشمس - هو المستحق للعبادة!')
+# Game 04 painted (2026-11-07): the story page's own sentences (reported speech, never "this is my lord"),
+# and Ibrahim's dua with its translation and note, all copied from story-prophet-ibrahim.html.
+T['IBR_DECLARE'] = literal('story-prophet-ibrahim.html', 'Ibrahim declared to his people that he turned in worship to Allah alone, the Creator of the heavens and the earth!',
+                           'وأعلن إبراهيم لقومه أنه يتوجّه بعبادته إلى الله وحده، خالقِ السماوات والأرض!')
+T['IBR_SHOWED'] = literal('story-prophet-ibrahim.html', 'Ibrahim showed his people that only <strong>Allah</strong> - who created the stars, moon, and sun - deserves to be worshipped!',
+                          'بيّن إبراهيم لقومه أن <strong>الله</strong> وحده - الذي خلق النجوم والقمر والشمس - هو المستحق للعبادة!')
+S['IBR_DUA'], T['IBR_TR'], T['IBR_HEAD'] = dua('story-prophet-ibrahim.html')
 # Game 02 painted (2026-11-07): Yusuf's dua (12:101) with its translation and note; 12:92 and its meaning line; and the
 # page's note on the dream's bow. All copied from story-prophet-yusuf.html (verified there), never retyped.
 S['YUSUF_DUA'], T['YUSUF_TR'], T['YUSUF_HEAD'] = dua('story-prophet-yusuf.html')
@@ -80,12 +87,15 @@ GAMES = {
     # 03 painted (2026-11-06): the second painted game, at UI/games/musa-sea.html; the mockup above is kept as is.
     '03-musa-sea-painted.html': ('../story-prophet-musa.html', 'The Path Through the Sea', 'الطريق في البحر'),
     '04-ibrahim-stars.html': ('../../story-prophet-ibrahim.html', 'Ibrahim: Stars and Guests', 'إبراهيم: النجوم والضيوف'),
+    # 04 painted (2026-11-07): the third painted game, at UI/games/ibrahim-stars.html; the mockup above is kept as is.
+    '04-ibrahim-stars-painted.html': ('../story-prophet-ibrahim.html', 'Ibrahim: Stars and Guests', 'إبراهيم: النجوم والضيوف'),
     '05-adam-garden.html': ('../../story-prophet-adam.html', 'The Garden of Choices', 'حديقة الاختيارات'),
 }
 
 # Games built somewhere other than OUT (path relative to UI/).
 OUT_PATH_YUSUF = {'02-yusuf-journey-painted.html': 'games/yusuf-journey.html'}
-OUT_PATH = {'01-nuh-ark.html': 'games/nuh-ark.html', '03-musa-sea-painted.html': 'games/musa-sea.html'}
+OUT_PATH = {'01-nuh-ark.html': 'games/nuh-ark.html', '03-musa-sea-painted.html': 'games/musa-sea.html',
+            '04-ibrahim-stars-painted.html': 'games/ibrahim-stars.html'}
 
 OUT_PATH.update(OUT_PATH_YUSUF)
 
