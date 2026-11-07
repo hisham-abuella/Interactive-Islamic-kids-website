@@ -45,6 +45,14 @@ T['MUSA_CRY'] = literal('story-prophet-musa.html', '"They have caught us!"', '&q
 T['IBR_FACE'] = literal('story-prophet-ibrahim.html', '"I turn my face to the One who created the heavens and the earth!"', '&quot;إني وجهت وجهي للذي فطر السماوات والأرض&quot;')
 T['IBR_LEARN'] = literal('story-prophet-ibrahim.html', 'Ibrahim understood that only <strong>Allah</strong> - who created the stars, moon, and sun - deserves to be worshipped!',
                          'أدرك إبراهيم أن <strong>الله</strong> وحده - الذي خلق النجوم والقمر والشمس - هو المستحق للعبادة!')
+# Game 02 painted (2026-11-07): Yusuf's dua (12:101) with its translation and note; 12:92 and its meaning line; and the
+# page's note on the dream's bow. All copied from story-prophet-yusuf.html (verified there), never retyped.
+S['YUSUF_DUA'], T['YUSUF_TR'], T['YUSUF_HEAD'] = dua('story-prophet-yusuf.html')
+_yu = page('story-prophet-yusuf.html')
+S['YUSUF_9292'] = one(r'<p class="arabic-text quran-text story-ayah" lang="ar" data-ayah="12:92">(.*?)</p>', _yu, 'yusuf 12:92')
+T['YUSUF_9292_TR'] = tuple(reversed(one(r'<p class="dua-translation story-ayah-meaning" data-ar="(.*?)">(.*?)</p>', _yu, 'yusuf 12:92 meaning')))
+T['YUSUF_BOW'] = literal('story-prophet-yusuf.html', 'It was a bow of respect, allowed in their time. In Islam we prostrate only to Allah.',
+                         'كان سجود تحية واحترام، وكان مباحاً في زمانهم. وفي الإسلام لا نسجد إلا لله.')
 # Adam: the Arabic dua from the page; its translation and note from translations.js (the Adam page's i18n source)
 adam = page('story-prophet-adam.html')
 S['ADAM_DUA'] = one(r'<p class="arabic-text" lang="ar"(?: data-ayah="[^"]*")?>(.*?)</p>', adam, 'adam dua')
@@ -66,6 +74,8 @@ GAMES = {
     '01-nuh-ark.html': ('../story-prophet-nuh.html', 'Nuh and the Ark', 'نوح والسفينة'),
     '01-nuh-ark-v1.html': ('../../story-prophet-nuh.html', 'Nuh and the Ark', 'نوح والسفينة'),
     '02-yusuf-journey.html': ('../../story-prophet-yusuf.html', "Yusuf's Journey", 'رحلة يوسف'),
+    # 02 painted (2026-11-07): Yusuf's Journey at UI/games/yusuf-journey.html; the mockup above is kept as is.
+    '02-yusuf-journey-painted.html': ('../story-prophet-yusuf.html', "Yusuf's Journey", 'رحلة يوسف'),
     '03-musa-sea.html': ('../../story-prophet-musa.html', 'The Path Through the Sea', 'الطريق في البحر'),
     # 03 painted (2026-11-06): the second painted game, at UI/games/musa-sea.html; the mockup above is kept as is.
     '03-musa-sea-painted.html': ('../story-prophet-musa.html', 'The Path Through the Sea', 'الطريق في البحر'),
@@ -74,7 +84,10 @@ GAMES = {
 }
 
 # Games built somewhere other than OUT (path relative to UI/).
+OUT_PATH_YUSUF = {'02-yusuf-journey-painted.html': 'games/yusuf-journey.html'}
 OUT_PATH = {'01-nuh-ark.html': 'games/nuh-ark.html', '03-musa-sea-painted.html': 'games/musa-sea.html'}
+
+OUT_PATH.update(OUT_PATH_YUSUF)
 
 def pair(p):
     assert p is not None, 'a copied literal no longer matches its story page'

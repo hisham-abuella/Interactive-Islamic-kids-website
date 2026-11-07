@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<!--
+  GAME 02 - Yusuf's Journey. The third painted game (2026-11-07). Lives at UI/games/yusuf-journey.html (built from
+  this file by UI/mockups/games/_src/build.py). NOT linked from the story or the hub until the scholar's gates 2 (art)
+  and 3 (build) pass. The CSS-shape mockup stays at mockups/games/02-yusuf-journey.html.
+  Learning goal: After playing, the child can retell Yusuf's journey in order (well, travellers, Egypt, prison, the
+  king's dream, reunion) and say that he was patient in hard times and forgave his brothers.
+  Core loop: drag the picture that comes next onto the glowing stone of the journey road; a right card tells that part
+  of the story, a wrong one floats back with a hint. Then store the harvest, fill the hungry travellers' sacks, and
+  choose to forgive in the child's own "Your turn".
+  Gate-1 rulings kept (claudeteam/reviews/game-yusuf-journey.md, game-islamic-review-2026-11-03.md 02): no option
+  attributes wrongdoing to a prophet (what Yusuf did is narrated, never quizzed); the dream's bow carries the story
+  page's note; no person is drawn (Yusuf, Ya'qub, the brothers, the 'Aziz's household, the king); objects only; no
+  pharaonic temple; the seduction episode is omitted entirely; 12:92 and the dua 12:101 are copied from the story page
+  and never voiced; one- or two-note chimes only.
+  Art: UI/images/games/yusuf/ (prompts and seeds: UI/scripts/specs/games/yusuf.py, claudeteam/reviews/game-yusuf-art.md).
+  Engine: painted DOM planes + DOM HUD, one PixiJS canvas for the dream's stars, motes and grain
+  (claudeteam/reviews/game-engine-choice-2026-11-04.md).
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14383A">
+<title>Yusuf's Journey - Islamic Kids</title>
+<link rel="icon" href="data:,">
+<link rel="preload" href="../images/games/yusuf/plate-night-land.webp" as="image" media="(min-aspect-ratio: 4/5)">
+<link rel="preload" href="../images/games/yusuf/plate-night-port.webp" as="image" media="(max-aspect-ratio: 4/5)">
+<link rel="stylesheet" href="yusuf/yusuf.css">
+</head>
+<body>
+<div id="app" class="phase-dream">
+  <!-- ================= the world: painted planes, props and the atmosphere canvas ================= -->
+  <div id="viewport">
+    <div id="world" role="group" aria-label="The road of Yusuf's journey, from the hills to Egypt" data-ar-label="طريق رحلة يوسف، من التلال إلى مصر">
+      <div class="plates" aria-hidden="true">
+        <img class="plate on" data-state="night" alt="" decoding="async">
+        <img class="plate" data-state="day" alt="" decoding="async">
+        <img class="plate" data-state="hard" alt="" decoding="async">
+        <img class="plate" data-state="eve" alt="" decoding="async">
+      </div>
+      <div class="dim" aria-hidden="true"></div>
+      <div id="trailDots" aria-hidden="true"></div>
+      <div id="props" aria-hidden="true"></div>
+      <div id="stones"></div>
+      <div id="sky"></div>
+      <img class="orb sun" src="../images/games/yusuf/sun.webp" alt="" aria-hidden="true" draggable="false">
+      <img class="orb moon" src="../images/games/yusuf/moon.webp" alt="" aria-hidden="true" draggable="false">
+      <div id="field"></div>
+      <button id="store" type="button" hidden aria-label="The storehouse" data-ar-label="المخزن"></button>
+      <canvas id="atmos" aria-hidden="true"></canvas>
+      <img class="fg palm-fg" src="../images/games/yusuf/palm.webp" alt="" aria-hidden="true" draggable="false">
+    </div>
+  </div>
+
+  <!-- gold-ruled frame with girih corners (one line ornament, no text) -->
+  <svg class="frame" aria-hidden="true" preserveAspectRatio="none">
+    <rect class="f1" x="10" y="10" width="0" height="0" rx="16"/><rect class="f2" x="16" y="16" width="0" height="0" rx="12"/>
+  </svg>
+  <svg class="corner c-ts" viewBox="0 0 80 80" aria-hidden="true"><use href="#girih"/></svg>
+  <svg class="corner c-te" viewBox="0 0 80 80" aria-hidden="true"><use href="#girih"/></svg>
+  <svg class="corner c-bs" viewBox="0 0 80 80" aria-hidden="true"><use href="#girih"/></svg>
+  <svg class="corner c-be" viewBox="0 0 80 80" aria-hidden="true"><use href="#girih"/></svg>
+
+  <!-- ================= HUD ================= -->
+  <header class="hud-top">
+    <a class="tbtn back" href="../story-prophet-yusuf.html" aria-label="Back to the story" data-ar-label="العودة إلى القصة">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="dirarrow" d="M15 5l-7 7 7 7"/></svg><span data-ar="القصة">Story</span>
+    </a>
+    <div class="beads" id="beads" role="img" aria-label="" hidden></div>
+    <div class="tools" role="toolbar" aria-label="Game settings" data-ar-label="إعدادات اللعبة">
+      <button class="tbtn icon" id="soundBtn" type="button" aria-pressed="true" aria-label="Sounds on" data-ar-label="الأصوات">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="on-only" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="off-only" d="M17 9l5 6M22 9l-5 6"/></svg>
+      </button>
+      <button class="tbtn icon" id="bedBtn" type="button" aria-pressed="false" aria-label="Bedtime mode: darker and quieter" data-ar-label="وضع النوم: أهدأ وأغمق">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      </button>
+      <button class="tbtn lang" id="langBtn" type="button" lang="ar">عربي</button>
+    </div>
+  </header>
+
+  <!-- the story cards: painted objects, never people (gate 1) -->
+  <div class="tray" id="tray" role="group" aria-label="Story pictures" data-ar-label="صور القصة" hidden></div>
+
+  <!-- the note on the dream's bow: the story page's own sentence, for the parent (gate 1, 02) -->
+  <div class="note" id="bowNote" hidden><span class="who" data-ar="ملاحظة للوالدين">A note for parents</span><span class="words" data-ar="كان سجود تحية واحترام، وكان مباحاً في زمانهم. وفي الإسلام لا نسجد إلا لله.">It was a bow of respect, allowed in their time. In Islam we prostrate only to Allah.</span></div>
+
+  <!-- 12:92, copied from the story page: shown, never voiced, and nothing sounds while it is on screen -->
+  <div class="ayah" id="ayah" hidden>
+    <p class="who" data-ar="فقال لهم:">He said to them:</p>
+    <p class="quran" lang="ar" dir="rtl">لَا تَثْرِيبَ عَلَيْكُمُ الْيَوْمَ ۖ يَغْفِرُ اللَّهُ لَكُمْ ۖ وَهُوَ أَرْحَمُ الرَّاحِمِينَ</p>
+    <p class="mean" data-ar="أي: لا لومَ عليكم اليوم ولا عتاب. (سورة يوسف، الآية ٩٢)">"No blame upon you today. May Allah forgive you; He is the Most Merciful of the merciful." (Surah Yusuf 12:92)</p>
+  </div>
+
+  <div class="ribbon" role="status" aria-live="polite">
+    <button class="listen" id="listenBtn" type="button" hidden aria-label="Listen to Baba read this part" data-ar-label="استمع إلى هذا الجزء بصوت بابا">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>
+    </button>
+    <p id="say"></p>
+  </div>
+
+  <div class="choices" id="choices" hidden></div>
+  <div class="actrow" id="actRow" hidden><button class="btn gold" id="actBtn" type="button"></button></div>
+
+  <!-- "Your turn": the child's own world, on a parchment page beside the still scene -->
+  <div class="sheet turn" id="turn" hidden>
+    <div class="page" role="dialog" aria-modal="true" aria-labelledby="turnQ">
+      <svg class="star8" viewBox="0 0 40 40" aria-hidden="true"><use href="#star8"/></svg>
+      <p class="kicker" data-ar="دورك">Your turn</p>
+      <h2 id="turnQ"></h2>
+      <div class="tower" id="tower"></div>
+      <div class="turnchoices" id="turnChoices" hidden></div>
+    </div>
+  </div>
+
+  <!-- parent pause: a parchment page beside the still scene -->
+  <div class="sheet" id="pause" hidden>
+    <div class="page" role="dialog" aria-modal="true" aria-labelledby="pauseQ">
+      <svg class="star8" viewBox="0 0 40 40" aria-hidden="true"><use href="#star8"/></svg>
+      <p class="kicker" data-ar="لحظة حوار مع الوالدين">Parent pause</p>
+      <p class="sub" data-ar="توقّفا قليلاً واسألا معاً:">Stop for a moment and ask together:</p>
+      <h2 id="pauseQ"></h2>
+      <p class="idea" id="pauseHint"></p>
+      <button class="btn gold" id="pauseGo" type="button"><span data-ar="تحدّثنا، لنكمل">We talked, carry on</span></button>
+    </div>
+  </div>
+
+  <!-- the calm reward moment and ending -->
+  <div class="reward" id="reward" aria-hidden="true">
+    <div class="lamp"></div>
+    <svg class="shamsa" viewBox="-100 -100 200 200"><circle class="disc" r="94"/><g id="shamsaG"></g></svg>
+  </div>
+  <div class="sheet end" id="ending" hidden>
+    <div class="page" role="dialog" aria-modal="true" aria-labelledby="endTitle">
+      <svg class="star8" viewBox="0 0 40 40" aria-hidden="true"><use href="#star8"/></svg>
+      <h2 id="endTitle" data-ar="صبرٌ ثم مسامحة">Patience, then forgiveness</h2>
+      <p id="endBody"></p>
+      <div class="cartouche">
+        <p class="kicker" data-ar="شكر النبي يوسف الله على كل نعمه، ثم دعاه بهذا الدعاء. ونحن أيضاً ندعو به!">Prophet Yusuf thanked Allah for all His blessings, and then he made this dua. We can make it too!</p>
+        <p class="dua" lang="ar" dir="rtl">أَنْتَ وَلِيِّي فِي الدُّنْيَا وَالْآخِرَةِ ۖ تَوَفَّنِي مُسْلِمًا وَأَلْحِقْنِي بِالصَّالِحِينَ</p>
+        <p class="dua-tr" data-ar="معناه: يا الله، أنت الذي تتولّى أموري في الدنيا والآخرة، فاجعلني أموت مسلماً، واجعلني مع الصالحين. (سورة يوسف، الآية ١٠١)">"You are my Protector in this world and the Hereafter. Take my soul as a Muslim, and join me with the righteous." (Surah Yusuf 12:101)</p>
+      </div>
+      <div class="endrow">
+        <button class="btn gold" id="againBtn" type="button"><span data-ar="لنلعب معاً مرة أخرى">Play together again</span></button>
+        <a class="btn ghost" href="../story-prophet-yusuf.html"><span data-ar="العودة إلى القصة">Back to the story</span></a>
+      </div>
+      <label class="tier"><input type="checkbox" id="tierBox"> <span data-ar="في المرة القادمة: صور فقط بلا كلمات على البطاقات">Next time: pictures only, no words on the cards</span></label>
+    </div>
+  </div>
+  <p class="sr-only" id="srNote" aria-live="polite"></p>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="girih" fill="none" stroke-width="1.6">
+      <path d="M8 8h64M8 8v64" />
+      <path d="M8 30 L30 8 M8 52 L52 8" opacity=".55"/>
+      <path d="M22 22 l8 -10 l8 10 l-8 10z M22 22 l-10 8 l10 8 l10 -8z" />
+      <circle cx="30" cy="30" r="3.2" />
+    </g>
+    <g id="star8" fill="none" stroke-width="1.4">
+      <rect x="8" y="8" width="24" height="24"/><rect x="8" y="8" width="24" height="24" transform="rotate(45 20 20)"/>
+      <circle cx="20" cy="20" r="4"/>
+    </g>
+  </defs>
+</svg>
+<script src="../vendor/pixi/pixi.min.js" defer></script>
+<script src="yusuf/yusuf.js" defer></script>
+</body>
+</html>
