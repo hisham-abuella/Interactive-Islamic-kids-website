@@ -118,7 +118,7 @@ SPEC = dict(
             tl='Lam yakunil-ladheena kafaroo min ahlil-kitabi wal-mushrikeena munfakkeena hatta ta\'tiyahumul-bayyinah',
             tr_en='"Those who disbelieved among the People of the Book and the idolaters were not '
                   'going to change until the clear proof came to them."',
-            tr_ar='"لم يكن الذين كفروا من أهل الكتاب والمشركين منفكين حتى تأتيهم البينة"',
+            tr_ar='الكفارُ من اليهود والنصارى والمشركين لم يكونوا ليتركوا كفرَهم، حتى يأتيهم الدليلُ الواضح الذي وُعِدوا به.',
             ex_en='People were stuck where they were. Allah did not leave them there — '
                   '<strong>He sent something clear enough to move them</strong>.',
             ex_ar='كان الناس واقفين حيث هم، فلم يتركهم الله كذلك — '
@@ -128,7 +128,7 @@ SPEC = dict(
             ar='رَسُولٌ مِنَ اللَّهِ يَتْلُو صُحُفًا مُطَهَّرَةً',
             tl='Rasoolum-minal-lahi yatloo suhufam-mutahharah',
             tr_en='"A Messenger from Allah, reciting purified pages,"',
-            tr_ar='"رسول من الله يتلو صحفاً مطهرة"',
+            tr_ar='وهذا الدليلُ هو النبيُّ محمد ﷺ، يتلو عليهم القرآنَ، وهو مكتوبٌ في صحفٍ طاهرة.',
             ex_en='This is what the clear proof turned out to be: <strong>a Messenger, the Prophet Muhammad ﷺ, reciting it aloud</strong>. '
                   '<em>Purified</em> means nothing false ever got into them.',
             ex_ar='وهذه هي البينة: <strong>رسولٌ هو النبي محمد ﷺ يتلو بصوته</strong>. و<em>مطهرة</em> أي لم يدخلها '
@@ -138,7 +138,7 @@ SPEC = dict(
             ar='فِيهَا كُتُبٌ قَيِّمَةٌ',
             tl='Feeha kutubun qayyimah',
             tr_en='"within which are upright writings."',
-            tr_ar='"فيها كتب قيّمة"',
+            tr_ar='في هذه الصحف أخبارٌ صادقة وأوامرُ عادلة، تهدي الناسَ إلى الحق.',
             ex_en='<em>Qayyimah</em> means <strong>straight, standing upright</strong> — writings '
                   'that hold you up rather than lead you sideways.',
             ex_ar='و<em>القيّمة</em> أي <strong>المستقيمة القائمة</strong> — كتب تقيمك ولا '
@@ -148,7 +148,7 @@ SPEC = dict(
             ar='وَمَا تَفَرَّقَ الَّذِينَ أُوتُوا الْكِتَابَ إِلَّا مِنْ بَعْدِ مَا جَاءَتْهُمُ الْبَيِّنَةُ',
             tl='Wa ma tafarraqal-ladheena ootul-kitaba illa mim ba\'di ma ja\'at-humul-bayyinah',
             tr_en='"And those given the Book did not divide until after the clear proof came to them."',
-            tr_ar='"وما تفرق الذين أوتوا الكتاب إلا من بعد ما جاءتهم البينة"',
+            tr_ar='واليهودُ والنصارى لم يختلفوا في نبوّة محمد ﷺ إلا بعد أن عرفوا أنه النبيُّ الموعود، فآمن بعضُهم، وكفر بعضُهم حسداً.',
             ex_en='A sad note: they split <strong>after</strong> it became clear, not before. '
                   'Knowing the right thing and still arguing is an old human habit.',
             ex_ar='ملحظ محزن: تفرقوا <strong>بعد</strong> أن استبان الأمر لا قبله. فمعرفة الحق '
@@ -159,7 +159,7 @@ SPEC = dict(
             tl='Wa ma umiroo illa liya\'budul-laha mukhliseena lahud-deena hunafa\'a wa yuqeemus-salata wa yu\'tuz-zakah wa dhalika deenul-qayyimah',
             tr_en='"And they were commanded only to worship Allah, sincere to Him in religion, '
                   'upright, and to establish prayer and give zakah — and that is the upright religion."',
-            tr_ar='"وما أمروا إلا ليعبدوا الله مخلصين له الدين حنفاء ويقيموا الصلاة ويؤتوا الزكاة وذلك دين القيّمة"',
+            tr_ar='أمرهم اللهُ أن يعبدوه وحده بإخلاص، بعيداً عن الشرك، وأن يُصلُّوا ويُخرجوا الزكاة، وهذا هو الدين المستقيم، الإسلام.',
             ex_en='<strong>The whole religion in one verse.</strong> Mean it, pray, give. And the '
                   'first of the three is the one nobody else can see.',
             ex_ar='<strong>الدين كله في آية.</strong> إخلاصٌ، وصلاةٌ، وزكاة. وأولها هو الذي '
@@ -170,7 +170,7 @@ SPEC = dict(
             tl='Innal-ladheena kafaroo min ahlil-kitabi wal-mushrikeena fee nari jahannama khalideena feeha ula\'ika hum sharrul-bariyyah',
             tr_en='"Indeed, those who disbelieved among the People of the Book and the idolaters '
                   'will be in the Fire of Hell, abiding therein. Those are the worst of creation."',
-            tr_ar='"إن الذين كفروا من أهل الكتاب والمشركين في نار جهنم خالدين فيها أولئك هم شر البرية"',
+            tr_ar='أمّا الكفارُ من اليهود والنصارى والمشركين، فعقابُهم نارُ جهنم يبقون فيها دائماً، وهم أسوأ الخلق.',
             ex_en='Said once, as the Quran says it. It is about <strong>those who turned the proof '
                   'away after seeing it clearly</strong> — a choice, not a family a person was born '
                   'into.',
@@ -181,7 +181,7 @@ SPEC = dict(
             ar='إِنَّ الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ أُولَٰئِكَ هُمْ خَيْرُ الْبَرِيَّةِ',
             tl='Innal-ladheena amanoo wa \'amilus-salihati ula\'ika hum khayrul-bariyyah',
             tr_en='"Indeed, those who believe and do righteous deeds — those are the best of creation."',
-            tr_ar='"إن الذين آمنوا وعملوا الصالحات أولئك هم خير البرية"',
+            tr_ar='والذين آمنوا بالله، واتَّبعوا رسولَه، وعملوا الصالحات، هم خيرُ الخلق.',
             ex_en='<strong>The best of everything Allah made.</strong> Not the strongest or the '
                   'richest — the ones who believed and then acted like it.',
             ex_ar='<strong>خير كل ما خلق الله.</strong> لا الأقوى ولا الأغنى — بل من آمن ثم '
@@ -193,7 +193,7 @@ SPEC = dict(
             tr_en='"Their reward with their Lord is gardens of perpetual residence beneath which '
                   'rivers flow, abiding there forever. Allah is pleased with them and they are '
                   'pleased with Him. That is for whoever fears his Lord."',
-            tr_ar='"جزاؤهم عند ربهم جنات عدن تجري من تحتها الأنهار خالدين فيها أبداً رضي الله عنهم ورضوا عنه ذلك لمن خشي ربه"',
+            tr_ar='ثوابُهم في الآخرة جناتٌ تجري الأنهار تحت قصورها، يعيشون فيها دائماً، والله راضٍ عنهم وهم راضون عنه، وهذا لمن يخاف الله.',
             ex_en='The loveliest ending. <strong>He is pleased with them, and they are pleased with '
                   'Him</strong> — it goes both ways, and nothing is left wanting on either side.',
             ex_ar='أجمل خاتمة. <strong>رضي عنهم ورضوا عنه</strong> — رضاً من الجهتين، لم يبقَ '

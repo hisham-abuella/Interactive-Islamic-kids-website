@@ -105,7 +105,7 @@ SPEC = dict(
             ar='وَالتِّينِ وَالزَّيْتُونِ',
             tl='Wat-teeni waz-zaytoon',
             tr_en='"By the fig and the olive,"',
-            tr_ar='"والتين والزيتون"',
+            tr_ar='يُقسم اللهُ بالتين، ويُقسم بالزيتون، وهما من الثمار المعروفة.',
             ex_en='Allah swears by two ordinary fruits. When Allah swears by something, He is telling '
                   'you to <strong>look at it properly</strong> — even a fig is a sign.',
             ex_ar='يقسم الله بثمرتين مألوفتين. وإذا أقسم الله بشيء فإنه يدعوك '
@@ -115,7 +115,7 @@ SPEC = dict(
             ar='وَطُورِ سِينِينَ',
             tl='Wa Toori Seeneen',
             tr_en='"And Mount Sinai,"',
-            tr_ar='"وطور سينين"',
+            tr_ar='ويُقسم بجبل الطور في سيناء، حيث كلَّم اللهُ موسى عليه السلام.',
             ex_en='The mountain where Allah spoke to <strong>Prophet Musa (peace be upon him)</strong>. A '
                   'plain rocky hill, made great by what happened on it.',
             ex_ar='الجبل الذي كلّم الله عنده <strong>نبيه موسى عليه السلام</strong>. جبلٌ صخري '
@@ -125,7 +125,7 @@ SPEC = dict(
             ar='وَهَٰذَا الْبَلَدِ الْأَمِينِ',
             tl='Wa hadhal-baladil-ameen',
             tr_en='"And this safe city,"',
-            tr_ar='"وهذا البلد الأمين"',
+            tr_ar='ويُقسم بمكة، البلدِ الآمن الذي نزل فيه الوحي.',
             ex_en='Makkah, where the Kaaba stands. It is called <strong>safe</strong> because no one '
                   'is to be harmed there — not even the birds and the trees.',
             ex_ar='مكة، حيث الكعبة. وسُمّيت <strong>أميناً</strong> لأنه لا يُؤذى فيها أحد — ولا '
@@ -135,7 +135,7 @@ SPEC = dict(
             ar='لَقَدْ خَلَقْنَا الْإِنْسَانَ فِي أَحْسَنِ تَقْوِيمٍ',
             tl='Laqad khalaqnal-insana fee ahsani taqweem',
             tr_en='"We certainly created the human being in the finest form."',
-            tr_ar='"لقد خلقنا الإنسان في أحسن تقويم"',
+            tr_ar='خلق اللهُ الإنسانَ في أجمل صورة وأحسن هيئة.',
             ex_en='This is what all four oaths were leading to. You were made '
                   '<strong>upright, balanced and complete</strong> — the finest of Allah\'s making.',
             ex_ar='وهذا ما ساقت إليه الأقسام الأربعة. خُلقت <strong>معتدلاً قائماً تاماً</strong> '
@@ -145,7 +145,7 @@ SPEC = dict(
             ar='ثُمَّ رَدَدْنَاهُ أَسْفَلَ سَافِلِينَ',
             tl='Thumma radadnahu asfala safileen',
             tr_en='"Then We returned him to the lowest of the low."',
-            tr_ar='"ثم رددناه أسفل سافلين"',
+            tr_ar='ثم إن لم يُطِع الإنسانُ اللهَ ويتَّبع رسلَه، يكون مصيرُه إلى النار.',
             ex_en='A person given every gift can still throw it away by choosing badly. '
                   '<strong>How you were made is a gift; what you do with it is your choice.</strong>',
             ex_ar='ومن أُعطي كل هبة قد يضيّعها بسوء اختياره. <strong>خلقتك هبة، وما تصنعه بها '
@@ -155,7 +155,7 @@ SPEC = dict(
             ar='إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍ',
             tl='Illal-ladheena amanoo wa \'amilus-salihati falahum ajrun ghayru mamnoon',
             tr_en='"Except those who believe and do good deeds — for them is a reward never cut off."',
-            tr_ar='"إلا الذين آمنوا وعملوا الصالحات فلهم أجر غير ممنون"',
+            tr_ar='أمّا المؤمنون الذين يعملون الأعمال الصالحة، فلهم ثوابٌ عظيم لا ينقطع ولا ينقص.',
             ex_en='The way out, and it takes <strong>both</strong>: believing <em>and</em> doing. '
                   'And their reward <strong>never runs out</strong> — it is not the kind that stops.',
             ex_ar='وهذا هو المخرج، ولا بد فيه من <strong>الاثنين</strong>: إيمانٌ <em>وعمل</em>. '
@@ -165,7 +165,7 @@ SPEC = dict(
             ar='فَمَا يُكَذِّبُكَ بَعْدُ بِالدِّينِ',
             tl='Fama yukadhdhibuka ba\'du bid-deen',
             tr_en='"So what makes you deny the Judgement after this?"',
-            tr_ar='"فما يكذّبك بعد بالدين"',
+            tr_ar='فما الذي يجعل الإنسانَ يُكذِّب بيوم الحساب والجزاء، بعد هذه الأدلة الواضحة على قدرة الله؟',
             ex_en='After seeing how carefully you were made — what could still make you think there '
                   'is <strong>no Day when it all matters</strong>?',
             ex_ar='بعد أن رأيت كيف أُحسن خلقك — فما الذي يجعلك تظن أنه '
@@ -175,7 +175,7 @@ SPEC = dict(
             ar='أَلَيْسَ اللَّهُ بِأَحْكَمِ الْحَاكِمِينَ',
             tl='Alaysal-lahu bi-ahkamil-hakimeen',
             tr_en='"Is Allah not the wisest of all judges?"',
-            tr_ar='"أليس الله بأحكم الحاكمين"',
+            tr_ar='اللهُ هو أحكمُ الحاكمين وأعدلُهم، فلا يترك الناسَ دون حسابٍ وجزاء.',
             ex_en='The surah ends with a question you already know the answer to. Allah judges '
                   '<strong>perfectly and fairly</strong> — nobody is wronged, and nothing is missed.',
             ex_ar='تختم السورة بسؤال تعرف جوابه. فالله يحكم <strong>بالعدل التام</strong> — لا '

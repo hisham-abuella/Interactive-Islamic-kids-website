@@ -105,7 +105,7 @@ SPEC = dict(
             ar='وَالضُّحَىٰ',
             tl='Wad-duha',
             tr_en='"By the morning light."',
-            tr_ar='"والضحى"',
+            tr_ar='يُقسم اللهُ بوقت الضحى أولَ النهار، والمقصود به النهارُ كلُّه.',
             ex_en='Allah swears by the bright part of the morning — the warm, clear light after the '
                   'sun has climbed. A picture of things being <strong>good again</strong>.',
             ex_ar='يقسم الله بضوء الصباح المرتفع — الضوء الدافئ الواضح بعد ارتفاع الشمس. صورةٌ '
@@ -115,7 +115,7 @@ SPEC = dict(
             ar='وَاللَّيْلِ إِذَا سَجَىٰ',
             tl='Wal-layli idha saja',
             tr_en='"And by the night when it grows still."',
-            tr_ar='"والليل إذا سجى"',
+            tr_ar='ويُقسم الله بالليل حين يسكن فيه الناس ويشتدُّ ظلامه.',
             ex_en='And by the night — not a scary night, a <strong>calm</strong> one, gone quiet and '
                   'settled. Both the light and the dark belong to Allah.',
             ex_ar='ويقسم بالليل — لا ليلاً مخيفاً، بل ليلاً <strong>هادئاً</strong> قد سكن واستقرّ. '
@@ -125,7 +125,7 @@ SPEC = dict(
             ar='مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَىٰ',
             tl='Ma wadda\'aka Rabbuka wa ma qala',
             tr_en='"Your Lord has not left you, nor is He displeased with you."',
-            tr_ar='"ما ودّعك ربك وما قلى"',
+            tr_ar='ما ترك اللهُ النبيَّ ﷺ وما كرهه، حين تأخَّر عنه نزولُ الوحي.',
             ex_en='Here is the answer to the whole worry. He has <strong>not</strong> said goodbye, '
                   'and He is <strong>not</strong> angry. Two fears, both put to rest in one line.',
             ex_ar='وهنا جواب القلق كله. ما <strong>ودّعك</strong>، وما <strong>غضب عليك</strong>. '
@@ -135,7 +135,7 @@ SPEC = dict(
             ar='وَلَلْآخِرَةُ خَيْرٌ لَكَ مِنَ الْأُولَىٰ',
             tl='Wa lal-akhiratu khayrul-laka minal-ula',
             tr_en='"And the next life is better for you than this first one."',
-            tr_ar='"وللآخرة خير لك من الأولى"',
+            tr_ar='والدارُ الآخرة خيرٌ للنبيِّ ﷺ من هذه الدنيا.',
             ex_en='Whatever is hard right now is the <em>first</em> part. What comes after is better '
                   '— and it lasts.',
             ex_ar='فما يشقّ عليك الآن هو <em>الأولى</em>، وما بعدها خير منها — وهي باقية.',
@@ -144,7 +144,7 @@ SPEC = dict(
             ar='وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰ',
             tl='Wa lasawfa yu\'teeka Rabbuka fatarda',
             tr_en='"And your Lord is going to give you, until you are pleased."',
-            tr_ar='"ولسوف يعطيك ربك فترضى"',
+            tr_ar='وسيعطيه اللهُ في الآخرة نِعَماً كثيرة، حتى يرضى.',
             ex_en='Not just "He will give you" — He will keep giving <strong>until you are happy '
                   'with it</strong>. Some scholars called this the most hopeful verse in the Quran.',
             ex_ar='ليس "سيعطيك" فحسب، بل يعطيك <strong>حتى ترضى</strong>. وقد سمّى بعض العلماء هذه '
@@ -154,7 +154,7 @@ SPEC = dict(
             ar='أَلَمْ يَجِدْكَ يَتِيمًا فَآوَىٰ',
             tl='Alam yajidka yateeman fa-awa',
             tr_en='"Did He not find you an orphan, and give you shelter?"',
-            tr_ar='"ألم يجدك يتيماً فآوى"',
+            tr_ar='مات أبو النبيِّ ﷺ قبل أن يُولد، فكان يتيماً، فآواه اللهُ ورعاه.',
             ex_en='The Prophet ﷺ lost his father before he was born and his mother when he was six. '
                   'And Allah <strong>made a home for him</strong> every single time.',
             ex_ar='فقد النبي ﷺ أباه قبل أن يولد، وأمه وهو ابن ست سنين. ومع ذلك <strong>هيّأ الله '
@@ -164,7 +164,7 @@ SPEC = dict(
             ar='وَوَجَدَكَ ضَالًّا فَهَدَىٰ',
             tl='Wa wajadaka dallan fahada',
             tr_en='"And find you not yet knowing the way, and guide you?"',
-            tr_ar='"ووجدك ضالاً فهدى"',
+            tr_ar='وكان قبل الوحي لا يعرف القرآنَ ولا تفاصيلَ الإيمان، فعلَّمه اللهُ وهداه.',
             ex_en='Before the Quran came, he did not yet know all that Allah would teach him. Then '
                   'Allah <strong>showed him the way</strong> — and through him, showed everyone.',
             ex_ar='قبل نزول القرآن لم يكن يعلم ما سيعلّمه الله إياه، فـ<strong>هداه الله</strong> '
@@ -174,7 +174,7 @@ SPEC = dict(
             ar='وَوَجَدَكَ عَائِلًا فَأَغْنَىٰ',
             tl='Wa wajadaka \'a-ilan fa-aghna',
             tr_en='"And find you in need, and make you rich enough?"',
-            tr_ar='"ووجدك عائلاً فأغنى"',
+            tr_ar='وكان فقيراً، فرزقه اللهُ، وأغنى قلبَه بالقناعة والصبر.',
             ex_en='He had little, and Allah gave him enough. The real richness the Prophet ﷺ taught '
                   'about was <strong>a heart that is content</strong>.',
             ex_ar='كان قليل ذات اليد فأغناه الله. والغنى الحقيقي الذي علّمه النبي ﷺ هو '
@@ -184,7 +184,7 @@ SPEC = dict(
             ar='فَأَمَّا الْيَتِيمَ فَلَا تَقْهَرْ',
             tl='Fa-ammal-yateema fala taqhar',
             tr_en='"So as for the orphan, do not be harsh with him."',
-            tr_ar='"فأما اليتيم فلا تقهر"',
+            tr_ar='فلا تُسِئْ إلى اليتيم، ولا تعامله بقسوة.',
             ex_en='You know what it feels like — so never make a child who has lost a parent feel '
                   'small. <strong>Be gentle with them, always.</strong>',
             ex_ar='أنت تعرف هذا الشعور — فلا تُشعر طفلاً فقد أباه أو أمه بالضعف أبداً. '
@@ -194,7 +194,7 @@ SPEC = dict(
             ar='وَأَمَّا السَّائِلَ فَلَا تَنْهَرْ',
             tl='Wa ammas-sa-ila fala tanhar',
             tr_en='"And as for the one who asks, do not turn him away harshly."',
-            tr_ar='"وأما السائل فلا تنهر"',
+            tr_ar='ومَن جاءك يسأل فلا تزجره، بل أطعمه واقضِ حاجته.',
             ex_en='Whether someone asks for help or asks a question, <strong>do not snap at them</strong>. '
                   'If you have nothing to give, give a kind word.',
             ex_ar='سواء سألك أحد حاجة أو سألك سؤالاً، <strong>فلا تنهره</strong>. وإن لم تجد ما '
@@ -204,7 +204,7 @@ SPEC = dict(
             ar='وَأَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ',
             tl='Wa amma bini\'mati Rabbika fahaddith',
             tr_en='"And as for the blessing of your Lord, speak about it."',
-            tr_ar='"وأما بنعمة ربك فحدّث"',
+            tr_ar='وتحدَّثْ بنِعَم الله التي أعطاك إياها، شاكراً له.',
             ex_en='Talk about the good Allah has given you — not to show off, but to '
                   '<strong>thank Him out loud</strong> so others remember Him too.',
             ex_ar='تحدّث بما أنعم الله به عليك — لا فخراً، بل <strong>شكراً بصوت مسموع</strong> '

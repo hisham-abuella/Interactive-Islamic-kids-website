@@ -109,7 +109,7 @@ SPEC = dict(
             ar='أَلْهَاكُمُ التَّكَاثُرُ',
             tl='Alhakumut-takathur',
             tr_en='"Competing for more has distracted you,"',
-            tr_ar='"ألهاكم التكاثر"',
+            tr_ar='انشغل الناسُ عن طاعة الله بالتفاخر بكثرة الأموال والأولاد.',
             ex_en='One word for the whole problem: <strong>distracted</strong>. Busy with the small '
                   'thing while the big thing goes by unnoticed.',
             ex_ar='كلمة واحدة تجمع المشكلة: <strong>ألهاكم</strong>. انشغالٌ بالصغير حتى يمرّ '
@@ -119,7 +119,7 @@ SPEC = dict(
             ar='حَتَّىٰ زُرْتُمُ الْمَقَابِرَ',
             tl='Hatta zurtumul-maqabir',
             tr_en='"Until you reach the graves."',
-            tr_ar='"حتى زرتم المقابر"',
+            tr_ar='وبقُوا على ذلك حتى ماتوا ودُفنوا في القبور.',
             ex_en='The counting only stops when life does. And the word is <em>visit</em> — '
                   '<strong>nobody is staying here</strong>.',
             ex_ar='ولا يتوقف العدّ إلا بانتهاء العمر. والكلمة <em>زرتم</em> — '
@@ -129,7 +129,7 @@ SPEC = dict(
             ar='كَلَّا سَوْفَ تَعْلَمُونَ',
             tl='Kalla sawfa ta\'lamoon',
             tr_en='"No! You are going to know."',
-            tr_ar='"كلا سوف تعلمون"',
+            tr_ar='ما كان ينبغي أن يشغلهم ذلك، وسوف يعرفون أن الآخرة خيرٌ لهم.',
             ex_en='<em>Kalla</em> means <strong>stop — it is not like that</strong>. One day what '
                   'actually mattered will be obvious to everyone.',
             ex_ar='<em>كلا</em> أي <strong>كفّوا — ليس الأمر كذلك</strong>. وسيأتي يوم يتبيّن '
@@ -139,7 +139,7 @@ SPEC = dict(
             ar='ثُمَّ كَلَّا سَوْفَ تَعْلَمُونَ',
             tl='Thumma kalla sawfa ta\'lamoon',
             tr_en='"Then no! You are going to know."',
-            tr_ar='"ثم كلا سوف تعلمون"',
+            tr_ar='ويُحذِّرهم اللهُ مرةً ثانية أنهم سيعرفون سوءَ عاقبة انشغالهم عن طاعته.',
             ex_en='The <strong>same warning twice</strong>. When the Quran repeats a line, it is '
                   'because we are slow to hear it the first time.',
             ex_ar='<strong>التحذير نفسه مرتين</strong>. وإذا كرّر القرآن جملة فلأننا نبطئ عن '
@@ -149,7 +149,7 @@ SPEC = dict(
             ar='كَلَّا لَوْ تَعْلَمُونَ عِلْمَ الْيَقِينِ',
             tl='Kalla law ta\'lamoona \'ilmal-yaqeen',
             tr_en='"No! If only you knew with certain knowledge…"',
-            tr_ar='"كلا لو تعلمون علم اليقين"',
+            tr_ar='لو علموا علماً يقيناً أنهم سيُحاسَبون، لتركوا التفاخرَ، وأسرعوا إلى إنقاذ أنفسهم.',
             ex_en='The sentence <strong>stops without finishing</strong> — <em>if you really knew, '
                   'you would…</em> and then nothing. You fill in the rest yourself.',
             ex_ar='الجملة <strong>تقف ولا تتم</strong> — <em>لو تعلمون حقاً لَـ…</em> ثم لا شيء. '
@@ -159,7 +159,7 @@ SPEC = dict(
             ar='لَتَرَوُنَّ الْجَحِيمَ',
             tl='Latarawunnal-jaheem',
             tr_en='"You will surely see the Blazing Fire."',
-            tr_ar='"لترونّ الجحيم"',
+            tr_ar='سيرون نارَ الجحيم يومَ القيامة.',
             ex_en='Said once, plainly, as the Quran says it. The surah does not stay here — '
                   '<strong>it moves straight on to the question</strong>.',
             ex_ar='تُقال مرة واحدة صريحة كما قالها القرآن. ولا تقف السورة عندها — '
@@ -169,7 +169,7 @@ SPEC = dict(
             ar='ثُمَّ لَتَرَوُنَّهَا عَيْنَ الْيَقِينِ',
             tl='Thumma latarawunnaha \'aynal-yaqeen',
             tr_en='"Then you will see it with the eye of certainty."',
-            tr_ar='"ثم لترونّها عين اليقين"',
+            tr_ar='ثم سيرونها بأعينهم رؤيةً يقينيةً لا شكَّ فيها.',
             ex_en='There is knowing something because you were told, and knowing it '
                   '<strong>because you are looking straight at it</strong>. This is the second kind.',
             ex_ar='هناك علمٌ بالخبر، وعلمٌ <strong>بأنك تنظر إليه بعينك</strong>. وهذا هو '
@@ -179,7 +179,7 @@ SPEC = dict(
             ar='ثُمَّ لَتُسْأَلُنَّ يَوْمَئِذٍ عَنِ النَّعِيمِ',
             tl='Thumma latus\'alunna yawma-idhin \'anin-na\'eem',
             tr_en='"Then you will surely be asked that Day about the blessings."',
-            tr_ar='"ثم لتسألنّ يومئذ عن النعيم"',
+            tr_ar='ثم يسألهم اللهُ يومَ القيامة عن كل النِّعَم التي أعطاهم إياها، كالصحة والمال.',
             ex_en='The last word of the surah is <strong>blessings</strong> — the good you were '
                   'given. Cool water. A family. A body that works. '
                   '<strong>What did you do with it?</strong>',

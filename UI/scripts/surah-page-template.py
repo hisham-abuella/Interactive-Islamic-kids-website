@@ -203,7 +203,7 @@ def page(spec):
                 <div class="bismillah-card">
                     <p class="arabic-large" lang="ar">%(bismillah_ar)s</p>
                     <p class="transliteration">Bismillah ir-Rahman ir-Raheem</p>
-                    <p class="translation" data-ar="&quot;بسم الله الرحمن الرحيم&quot;">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
+                    <p class="translation" data-ar="نبدأ قراءةَ السورة باسم الله، ونطلب عونَه، وهو الرحمن الذي وسِعت رحمتُه كلَّ الخلق، الرحيمُ بالمؤمنين.">"In the name of Allah, the Most Gracious, the Most Merciful"</p>
                 </div>
             </section>
 

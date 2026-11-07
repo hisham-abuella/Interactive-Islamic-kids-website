@@ -113,7 +113,7 @@ SPEC = dict(
             ar='وَيْلٌ لِكُلِّ هُمَزَةٍ لُمَزَةٍ',
             tl='Waylul-likulli humazatil-lumazah',
             tr_en='"Woe to every slanderer and backbiter."',
-            tr_ar='"ويل لكل همزة لمزة"',
+            tr_ar='الهلاكُ لكلِّ مَن يغتاب الناسَ ويَعيبهم ويطعن فيهم.',
             ex_en='Two kinds of unkind talk, named together: <strong>to someone\'s face</strong>, '
                   'and <strong>behind their back</strong>. The surah opens by refusing to treat '
                   'either as harmless.',
@@ -124,7 +124,7 @@ SPEC = dict(
             ar='الَّذِي جَمَعَ مَالًا وَعَدَّدَهُ',
             tl='Alladhee jama\'a malanw-wa \'addadah',
             tr_en='"Who gathers wealth and counts it over."',
-            tr_ar='"الذي جمع مالاً وعدّده"',
+            tr_ar='الذي كان همُّه أن يجمع المالَ ويَعُدَّه مرةً بعد مرة.',
             ex_en='Gathering is not the problem — <strong>counting it over and over</strong> is. '
                   'His treasure has become the thing he thinks about most.',
             ex_ar='ليست المشكلة في الجمع، بل في أن <strong>يعدّه ويعيد عدّه</strong>. فقد صار '
@@ -134,7 +134,7 @@ SPEC = dict(
             ar='يَحْسَبُ أَنَّ مَالَهُ أَخْلَدَهُ',
             tl='Yahsabu anna malahu akhladah',
             tr_en='"Thinking his wealth will make him live forever."',
-            tr_ar='"يحسب أن ماله أخلده"',
+            tr_ar='يظنُّ أن مالَه سيُبقيه حيّاً في الدنيا، وينجّيه من الحساب.',
             ex_en='He does not say it out loud — he just <em>lives</em> as if it were true. '
                   '<strong>No amount of anything keeps a person here.</strong>',
             ex_ar='لا يقولها بلسانه، لكنه <em>يعيش</em> كأنها حق. '
@@ -144,7 +144,7 @@ SPEC = dict(
             ar='كَلَّا لَيُنْبَذَنَّ فِي الْحُطَمَةِ',
             tl='Kalla layunbadhanna fil-hutamah',
             tr_en='"No! He will surely be thrown into the Crusher."',
-            tr_ar='"كلا لينبذنّ في الحطمة"',
+            tr_ar='ليس الأمرُ كما ظنّ، بل سيُلقى في الحُطَمة، وهي نارٌ تُحطِّم كلَّ ما يُلقى فيها.',
             ex_en='<em>Kalla</em> means <strong>no — that is not how it is</strong>. The word for '
                   'the Fire here means "the thing that breaks what is put in it".',
             ex_ar='<em>كلا</em> أي <strong>ليس الأمر كما ظنّ</strong>. واسم النار هنا معناه '
@@ -154,7 +154,7 @@ SPEC = dict(
             ar='وَمَا أَدْرَاكَ مَا الْحُطَمَةُ',
             tl='Wa ma adraka mal-hutamah',
             tr_en='"And what can make you know what the Crusher is?"',
-            tr_ar='"وما أدراك ما الحطمة"',
+            tr_ar='وهل تعرف ما حقيقةُ هذه النار؟',
             ex_en='The Quran asks a question to make you stop and listen. It means: '
                   '<strong>this is beyond what you can picture</strong>.',
             ex_ar='يسأل القرآن ليوقفك ويستمع قلبك. ومعناه: '
@@ -164,7 +164,7 @@ SPEC = dict(
             ar='نَارُ اللَّهِ الْمُوقَدَةُ',
             tl='Narul-lahil-mooqadah',
             tr_en='"The kindled Fire of Allah,"',
-            tr_ar='"نار الله الموقدة"',
+            tr_ar='إنها نارُ الله المشتعلة، الشديدةُ الحرارة.',
             ex_en='It is named plainly, once, the way the Quran names it — and the surah does not '
                   'linger on it. <strong>The point is the choice that leads there.</strong>',
             ex_ar='تُسمّى صريحة، مرة واحدة، كما سمّاها القرآن — ولا تطيل السورة عندها. '
@@ -174,7 +174,7 @@ SPEC = dict(
             ar='الَّتِي تَطَّلِعُ عَلَى الْأَفْئِدَةِ',
             tl='Allatee tattali\'u \'alal-af-idah',
             tr_en='"Which rises over the hearts."',
-            tr_ar='"التي تطّلع على الأفئدة"',
+            tr_ar='ومن شدة حرِّها تصل إلى القلوب.',
             ex_en='Of all the words available, Allah chose <strong>the hearts</strong> — because '
                   'that is exactly where mocking words land in the person you aim them at.',
             ex_ar='ومن بين كل الألفاظ اختار الله <strong>الأفئدة</strong> — لأنها موضع وقوع '
@@ -184,7 +184,7 @@ SPEC = dict(
             ar='إِنَّهَا عَلَيْهِمْ مُؤْصَدَةٌ',
             tl='Innaha \'alayhim mu\'sadah',
             tr_en='"It will be closed over them,"',
-            tr_ar='"إنها عليهم مؤصدة"',
+            tr_ar='وهي مُغلَقةٌ عليهم، فلا يستطيعون الخروج منها.',
             ex_en='Shut, like a door with no handle on the inside. A picture of '
                   '<strong>a choice that cannot be taken back later</strong>.',
             ex_ar='مغلقة، كباب لا مقبض له من الداخل. صورة '
@@ -194,7 +194,7 @@ SPEC = dict(
             ar='فِي عَمَدٍ مُمَدَّدَةٍ',
             tl='Fee \'amadim-mumaddadah',
             tr_en='"In outstretched columns."',
-            tr_ar='"في عمد ممدّدة"',
+            tr_ar='مُغلَقةٌ بأعمدةٍ طويلة ممدودة، حتى لا يخرجوا منها.',
             ex_en='The surah ends here. It began with a person mocking someone weaker — and the '
                   'whole of it is a warning to <strong>never be that person</strong>.',
             ex_ar='وتنتهي السورة هنا. بدأت برجل يسخر ممن هو أضعف منه — وهي كلها تحذير من '

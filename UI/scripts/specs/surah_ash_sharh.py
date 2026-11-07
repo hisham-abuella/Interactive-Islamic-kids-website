@@ -106,7 +106,7 @@ SPEC = dict(
             ar='أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ',
             tl='Alam nashrah laka sadrak',
             tr_en='"Did We not open up your chest for you?"',
-            tr_ar='"ألم نشرح لك صدرك"',
+            tr_ar='وسَّع اللهُ صدرَ النبيِّ ﷺ لأحكام الدين، والدعوة إلى الله، والأخلاق الكريمة.',
             ex_en='When you are worried, your chest feels tight. Allah asks: did We not '
                   '<strong>make it wide and calm again</strong>? It is a question that is really a '
                   'reminder.',
@@ -117,7 +117,7 @@ SPEC = dict(
             ar='وَوَضَعْنَا عَنْكَ وِزْرَكَ',
             tl='Wa wada\'na \'anka wizrak',
             tr_en='"And take off from you your burden,"',
-            tr_ar='"ووضعنا عنك وزرك"',
+            tr_ar='وأزال اللهُ عن النبيِّ ﷺ الحِملَ الثقيل الذي كان عليه.',
             ex_en='A <em>wizr</em> is a load you carry. Allah <strong>set it down</strong> for him — '
                   'he did not have to keep holding it.',
             ex_ar='و<em>الوزر</em> هو الحمل الذي تحمله. وقد <strong>وضعه الله عنه</strong> فلم '
@@ -127,7 +127,7 @@ SPEC = dict(
             ar='الَّذِي أَنْقَضَ ظَهْرَكَ',
             tl='Alladhee anqada zahrak',
             tr_en='"the one that weighed down your back,"',
-            tr_ar='"الذي أنقض ظهرك"',
+            tr_ar='ذلك الحِملُ الذي كان ثقيلاً على ظهره حتى أتعبه.',
             ex_en='So heavy you could hear it, the way an overloaded back creaks. Allah '
                   '<strong>knew exactly how heavy it was</strong>.',
             ex_ar='ثقيل حتى ليكاد يُسمع له صوت، كما ينقض الظهر المثقل. والله '
@@ -137,7 +137,7 @@ SPEC = dict(
             ar='وَرَفَعْنَا لَكَ ذِكْرَكَ',
             tl='Wa rafa\'na laka dhikrak',
             tr_en='"And raise high your mention?"',
-            tr_ar='"ورفعنا لك ذكرك"',
+            tr_ar='ورفع اللهُ منزلةَ النبيِّ ﷺ عالياً، فصار اسمُه يُذكَر في الأذان والإقامة.',
             ex_en='People were mocking his name. Allah answered by lifting it: his name is said in '
                   'the <strong>adhan and in every prayer</strong>, all over the world, every day.',
             ex_ar='كانوا يسخرون من اسمه، فرفعه الله: فاسمه يُذكر في <strong>الأذان وفي كل '
@@ -147,7 +147,7 @@ SPEC = dict(
             ar='فَإِنَّ مَعَ الْعُسْرِ يُسْرًا',
             tl='Fa-inna ma\'al-\'usri yusra',
             tr_en='"So truly, with hardship comes ease."',
-            tr_ar='"فإن مع العسر يسراً"',
+            tr_ar='فمع الضيق والشدّة يأتي الفرج.',
             ex_en='The promise of the surah. Not <em>after</em> the hard thing only — '
                   '<strong>with</strong> it. Help is already travelling towards you.',
             ex_ar='وعد السورة. ليس <em>بعد</em> العسر فقط، بل <strong>معه</strong>. فالفرج في '
@@ -157,7 +157,7 @@ SPEC = dict(
             ar='إِنَّ مَعَ الْعُسْرِ يُسْرًا',
             tl='Inna ma\'al-\'usri yusra',
             tr_en='"Truly, with hardship comes ease."',
-            tr_ar='"إن مع العسر يسراً"',
+            tr_ar='ويؤكِّد اللهُ هذا الوعدَ مرةً ثانية، فالفرجُ يأتي مع الضيق.',
             ex_en='The <strong>same sentence again</strong>. Allah repeats it so that the person who '
                   'is hurting does not have to wonder whether they heard it right.',
             ex_ar='<strong>الجملة نفسها مرة أخرى</strong>. يكرّرها الله حتى لا يشك المهموم في '
@@ -167,7 +167,7 @@ SPEC = dict(
             ar='فَإِذَا فَرَغْتَ فَانْصَبْ',
             tl='Fa-idha faraghta fansab',
             tr_en='"So when you have finished, work on,"',
-            tr_ar='"فإذا فرغت فانصب"',
+            tr_ar='فإذا انتهيتَ من أعمالك وأشغالك في الدنيا، فاجتهِدْ في عبادة الله.',
             ex_en='When one task is done, <strong>get up for the next good one</strong>. Finished '
                   'your homework? Then help at home. A believer keeps going.',
             ex_ar='إذا فرغت من عمل <strong>فانهض إلى الذي بعده</strong>. أنهيت واجبك؟ فأعِن في '
@@ -177,7 +177,7 @@ SPEC = dict(
             ar='وَإِلَىٰ رَبِّكَ فَارْغَبْ',
             tl='Wa ila Rabbika farghab',
             tr_en='"And to your Lord turn with longing."',
-            tr_ar='"وإلى ربك فارغب"',
+            tr_ar='واجعل رغبتك وأملك في الله وحده، وفيما عنده من الخير.',
             ex_en='And want <strong>Him</strong> most of all. Do the work, then hand it to Allah and '
                   'ask Him — He is the one you were doing it for.',
             ex_ar='وارغب في <strong>ربك</strong> قبل كل شيء. اعمل، ثم فوّض الأمر إليه واسأله — '

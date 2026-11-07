@@ -1,6 +1,6 @@
 {
- "about": "Proposed Arabic meaning line (the data-ar of .translation) for every surah verse card. DRAFT: not on any page and not voiced until the islamic-content-scholar approves each line (Round 3, Part 2 A, rule 8). Review file: claudeteam/reviews/tafsir-ar-lines-2026-11.md.",
- "status": "draft, awaiting scholar approval",
+ "about": "Proposed Arabic meaning line (the data-ar of .translation) for every surah verse card. Approved by the islamic-content-scholar 2026-11-06; final_ar is what the pages carry and the voice says. Review file: claudeteam/reviews/tafsir-ar-lines-2026-11.md.",
+ "status": "applied 2026-11-06: scholar ruling (143 APPROVED, 5 CHANGED) in the review file; final_ar is on the pages as the .translation data-ar",
  "drafted": "2026-11-06",
  "sources": {
   "main": "arabic_moyassar.json",
@@ -25,7 +25,9 @@
    "proposed_ar": "نبدأ قراءةَ القرآن باسم الله، ونطلب عونَه. واللهُ هو الرحمن الذي وسِعت رحمتُه كلَّ الخلق، وهو رحيمٌ بالمؤمنين.",
    "words": 18,
    "notes": "Muyassar first person «أبتدئ» rendered as «نبدأ» (narrator with the child). The two Names are kept apart, so the line is not the ayah.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "نبدأ قراءةَ القرآن باسم الله، ونطلب عونَه. واللهُ هو الرحمن الذي وسِعت رحمتُه كلَّ الخلق، وهو رحيمٌ بالمؤمنين."
   },
   {
    "ref": "1:2",
@@ -41,7 +43,9 @@
    "proposed_ar": "كلُّ الثناء والشكر لله وحده، فهو خالقُ جميع المخلوقات، والقائمُ بأمورهم، ويرعاهم بنِعَمه.",
    "words": 13,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "كلُّ الثناء والشكر لله وحده، فهو خالقُ جميع المخلوقات، والقائمُ بأمورهم، ويرعاهم بنِعَمه."
   },
   {
    "ref": "1:3",
@@ -57,7 +61,9 @@
    "proposed_ar": "اللهُ واسعُ الرحمة، رحمتُه تشمل جميعَ الخلق، وهو رحيمٌ بالمؤمنين رحمةً خاصة.",
    "words": 12,
    "notes": "«رحمة خاصة» glosses Muyassar «الرحيم بالمؤمنين».",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "اللهُ واسعُ الرحمة، رحمتُه تشمل جميعَ الخلق، وهو رحيمٌ بالمؤمنين رحمةً خاصة."
   },
   {
    "ref": "1:4",
@@ -73,7 +79,9 @@
    "proposed_ar": "اللهُ وحده يملك يومَ القيامة، وهو يومُ الجزاء، حين يُجازي الناسَ على أعمالهم.",
    "words": 13,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "اللهُ وحده يملك يومَ القيامة، وهو يومُ الجزاء، حين يُجازي الناسَ على أعمالهم."
   },
   {
    "ref": "1:5",
@@ -89,7 +97,9 @@
    "proposed_ar": "نعبدُ اللهَ وحده، ولا نطلب العونَ في أمورنا كلِّها إلا منه.",
    "words": 11,
    "notes": "Narrator «we» speaking about Allah in the third person, not addressing Him (no dua framing).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "نعبدُ اللهَ وحده، ولا نطلب العونَ في أمورنا كلِّها إلا منه."
   },
   {
    "ref": "1:6",
@@ -105,7 +115,9 @@
    "proposed_ar": "ونسأل اللهَ أن يدلَّنا على الطريق المستقيم، وهو الإسلام، وأن يُثبِّتنا عليه.",
    "words": 12,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ونسأل اللهَ أن يدلَّنا على الطريق المستقيم، وهو الإسلام، وأن يُثبِّتنا عليه."
   },
   {
    "ref": "1:7",
@@ -121,7 +133,9 @@
    "proposed_ar": "وهو طريقُ الأنبياء والصالحين الذين أكرمهم الله بالهداية، لا طريقُ مَن عرف الحقَّ وتركه، ولا مَن ضلَّ عنه جهلاً.",
    "words": 19,
    "notes": "SCHOLAR: Muyassar names the two groups (اليهود، النصارى). The line keeps Muyassar's description of each and leaves the names out. Confirm, or rule that the names go in. Avoids «الذين أنعم الله عليهم» (4 words of 4:69).",
-   "flag": true
+   "flag": true,
+   "scholar": "APPROVED",
+   "final_ar": "وهو طريقُ الأنبياء والصالحين الذين أكرمهم الله بالهداية، لا طريقُ مَن عرف الحقَّ وتركه، ولا مَن ضلَّ عنه جهلاً."
   },
   {
    "ref": "93:1",
@@ -137,7 +151,10 @@
    "proposed_ar": "يُقسم الله بوقت الضحى، أي بالنهار كلِّه.",
    "words": 7,
    "notes": "Muyassar gives one entry for 93:1-3. EN \"morning light\" is narrower than Muyassar (the whole day); not a contradiction.",
-   "flag": false
+   "flag": false,
+   "scholar": "CHANGED",
+   "drafted_ar": "يُقسم الله بوقت الضحى، أي بالنهار كلِّه.",
+   "final_ar": "يُقسم اللهُ بوقت الضحى أولَ النهار، والمقصود به النهارُ كلُّه."
   },
   {
    "ref": "93:2",
@@ -153,7 +170,9 @@
    "proposed_ar": "ويُقسم الله بالليل حين يسكن فيه الناس ويشتدُّ ظلامه.",
    "words": 9,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ويُقسم الله بالليل حين يسكن فيه الناس ويشتدُّ ظلامه."
   },
   {
    "ref": "93:3",
@@ -169,7 +188,9 @@
    "proposed_ar": "ما ترك اللهُ النبيَّ ﷺ وما كرهه، حين تأخَّر عنه نزولُ الوحي.",
    "words": 12,
    "notes": "Muyassar «أبغضك» (hated); EN has \"displeased with\". The line uses «كرهه» (as the scholar's 108:3 model does). Minor; EN may stay.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ما ترك اللهُ النبيَّ ﷺ وما كرهه، حين تأخَّر عنه نزولُ الوحي."
   },
   {
    "ref": "93:4",
@@ -185,7 +206,9 @@
    "proposed_ar": "والدارُ الآخرة خيرٌ للنبيِّ ﷺ من هذه الدنيا.",
    "words": 8,
    "notes": "Muyassar gives one entry for 93:4-5.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "والدارُ الآخرة خيرٌ للنبيِّ ﷺ من هذه الدنيا."
   },
   {
    "ref": "93:5",
@@ -201,7 +224,9 @@
    "proposed_ar": "وسيعطيه اللهُ في الآخرة نِعَماً كثيرة، حتى يرضى.",
    "words": 8,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وسيعطيه اللهُ في الآخرة نِعَماً كثيرة، حتى يرضى."
   },
   {
    "ref": "93:6",
@@ -217,7 +242,9 @@
    "proposed_ar": "مات أبو النبيِّ ﷺ قبل أن يُولد، فكان يتيماً، فآواه اللهُ ورعاه.",
    "words": 12,
    "notes": "Muyassar gives one entry for 93:6-8. «فآواه» is the single key word, explained by «ورعاه».",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "مات أبو النبيِّ ﷺ قبل أن يُولد، فكان يتيماً، فآواه اللهُ ورعاه."
   },
   {
    "ref": "93:7",
@@ -233,7 +260,10 @@
    "proposed_ar": "وكان قبل الوحي لا يعرف الكتابَ والإيمان، فعلَّمه اللهُ وهداه.",
    "words": 10,
    "notes": "Avoids «ما الكتاب ولا الإيمان» (4 words of 42:52). EN \"not yet knowing the way\" agrees.",
-   "flag": false
+   "flag": false,
+   "scholar": "CHANGED",
+   "drafted_ar": "وكان قبل الوحي لا يعرف الكتابَ والإيمان، فعلَّمه اللهُ وهداه.",
+   "final_ar": "وكان قبل الوحي لا يعرف القرآنَ ولا تفاصيلَ الإيمان، فعلَّمه اللهُ وهداه."
   },
   {
    "ref": "93:8",
@@ -249,7 +279,9 @@
    "proposed_ar": "وكان فقيراً، فرزقه اللهُ، وأغنى قلبَه بالقناعة والصبر.",
    "words": 8,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وكان فقيراً، فرزقه اللهُ، وأغنى قلبَه بالقناعة والصبر."
   },
   {
    "ref": "93:9",
@@ -265,7 +297,9 @@
    "proposed_ar": "فلا تُسِئْ إلى اليتيم، ولا تعامله بقسوة.",
    "words": 7,
    "notes": "Muyassar gives one entry for 93:9-11. Imperative to the listener, as in the 108:2 model.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فلا تُسِئْ إلى اليتيم، ولا تعامله بقسوة."
   },
   {
    "ref": "93:10",
@@ -281,7 +315,9 @@
    "proposed_ar": "ومَن جاءك يسأل فلا تزجره، بل أطعمه واقضِ حاجته.",
    "words": 9,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ومَن جاءك يسأل فلا تزجره، بل أطعمه واقضِ حاجته."
   },
   {
    "ref": "93:11",
@@ -297,7 +333,9 @@
    "proposed_ar": "وتحدَّثْ بنِعَم الله التي أعطاك إياها، شاكراً له.",
    "words": 8,
    "notes": "«شاكراً له» from al-Mukhtasar («واشكر نعم الله عليك»).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وتحدَّثْ بنِعَم الله التي أعطاك إياها، شاكراً له."
   },
   {
    "ref": "94:1",
@@ -313,7 +351,9 @@
    "proposed_ar": "وسَّع اللهُ صدرَ النبيِّ ﷺ لأحكام الدين، والدعوة إلى الله، والأخلاق الكريمة.",
    "words": 12,
    "notes": "Muyassar's question is rhetorical; the line gives it as the statement it means.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وسَّع اللهُ صدرَ النبيِّ ﷺ لأحكام الدين، والدعوة إلى الله، والأخلاق الكريمة."
   },
   {
    "ref": "94:2",
@@ -329,7 +369,9 @@
    "proposed_ar": "وأزال اللهُ عن النبيِّ ﷺ الحِملَ الثقيل الذي كان عليه.",
    "words": 10,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وأزال اللهُ عن النبيِّ ﷺ الحِملَ الثقيل الذي كان عليه."
   },
   {
    "ref": "94:3",
@@ -345,7 +387,9 @@
    "proposed_ar": "ذلك الحِملُ الذي كان ثقيلاً على ظهره حتى أتعبه.",
    "words": 9,
    "notes": "«أتعبه» from al-Mukhtasar («الذي أتعبك»).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ذلك الحِملُ الذي كان ثقيلاً على ظهره حتى أتعبه."
   },
   {
    "ref": "94:4",
@@ -361,7 +405,9 @@
    "proposed_ar": "ورفع اللهُ منزلةَ النبيِّ ﷺ عالياً، فصار اسمُه يُذكَر في الأذان والإقامة.",
    "words": 12,
    "notes": "Adhan and iqama from al-Mukhtasar («فقد أصبحت تذكر في الأذان والإقامة»).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ورفع اللهُ منزلةَ النبيِّ ﷺ عالياً، فصار اسمُه يُذكَر في الأذان والإقامة."
   },
   {
    "ref": "94:5",
@@ -377,7 +423,9 @@
    "proposed_ar": "فمع الضيق والشدّة يأتي الفرج.",
    "words": 5,
    "notes": "Muyassar gives one entry for 94:5-6.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فمع الضيق والشدّة يأتي الفرج."
   },
   {
    "ref": "94:6",
@@ -393,7 +441,9 @@
    "proposed_ar": "ويؤكِّد اللهُ هذا الوعدَ مرةً ثانية، فالفرجُ يأتي مع الضيق.",
    "words": 10,
    "notes": "The same ayah twice: the line says that it is repeated, as an assurance.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ويؤكِّد اللهُ هذا الوعدَ مرةً ثانية، فالفرجُ يأتي مع الضيق."
   },
   {
    "ref": "94:7",
@@ -409,7 +459,9 @@
    "proposed_ar": "فإذا انتهيتَ من أعمالك وأشغالك في الدنيا، فاجتهِدْ في عبادة الله.",
    "words": 11,
    "notes": "EN CHECK: EN \"work on\" does not say what the work is; Muyassar and al-Mukhtasar both say \"strive in worship\". Suggest EN \"So when you have finished, strive on in worship,\".",
-   "flag": true
+   "flag": true,
+   "scholar": "APPROVED",
+   "final_ar": "فإذا انتهيتَ من أعمالك وأشغالك في الدنيا، فاجتهِدْ في عبادة الله."
   },
   {
    "ref": "94:8",
@@ -425,7 +477,9 @@
    "proposed_ar": "واجعل رغبتك وأملك في الله وحده، وفيما عنده من الخير.",
    "words": 10,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "واجعل رغبتك وأملك في الله وحده، وفيما عنده من الخير."
   },
   {
    "ref": "95:1",
@@ -441,7 +495,9 @@
    "proposed_ar": "يُقسم اللهُ بالتين، ويُقسم بالزيتون، وهما من الثمار المعروفة.",
    "words": 9,
    "notes": "Muyassar gives one entry for 95:1-6.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "يُقسم اللهُ بالتين، ويُقسم بالزيتون، وهما من الثمار المعروفة."
   },
   {
    "ref": "95:2",
@@ -457,7 +513,9 @@
    "proposed_ar": "ويُقسم بجبل الطور في سيناء، حيث كلَّم اللهُ موسى عليه السلام.",
    "words": 11,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ويُقسم بجبل الطور في سيناء، حيث كلَّم اللهُ موسى عليه السلام."
   },
   {
    "ref": "95:3",
@@ -473,7 +531,9 @@
    "proposed_ar": "ويُقسم بمكة، البلدِ الآمن الذي نزل فيه الوحي.",
    "words": 8,
    "notes": "Muyassar 95:1 has «مهبط الوحي», 95:3 has «مهبط الإسلام»; the line follows 95:1.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ويُقسم بمكة، البلدِ الآمن الذي نزل فيه الوحي."
   },
   {
    "ref": "95:4",
@@ -489,7 +549,9 @@
    "proposed_ar": "خلق اللهُ الإنسانَ في أجمل صورة وأحسن هيئة.",
    "words": 8,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "خلق اللهُ الإنسانَ في أجمل صورة وأحسن هيئة."
   },
   {
    "ref": "95:5",
@@ -505,7 +567,10 @@
    "proposed_ar": "ثم يكون مصيرُ الإنسان إلى النار، إن لم يُطِع اللهَ ويتَّبع رسلَه.",
    "words": 12,
    "notes": "Muyassar's view (the Fire, for one who disobeys). Al-Mukhtasar puts old age first. EN \"lowest of the low\" fits both. Warning tied to deeds.",
-   "flag": false
+   "flag": false,
+   "scholar": "CHANGED",
+   "drafted_ar": "ثم يكون مصيرُ الإنسان إلى النار، إن لم يُطِع اللهَ ويتَّبع رسلَه.",
+   "final_ar": "ثم إن لم يُطِع الإنسانُ اللهَ ويتَّبع رسلَه، يكون مصيرُه إلى النار."
   },
   {
    "ref": "95:6",
@@ -521,7 +586,9 @@
    "proposed_ar": "أمّا المؤمنون الذين يعملون الأعمال الصالحة، فلهم ثوابٌ عظيم لا ينقطع ولا ينقص.",
    "words": 13,
    "notes": "Avoids «إلا الذين آمنوا وعملوا» (4-word run). Pairs the reward with :5.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "أمّا المؤمنون الذين يعملون الأعمال الصالحة، فلهم ثوابٌ عظيم لا ينقطع ولا ينقص."
   },
   {
    "ref": "95:7",
@@ -537,7 +604,9 @@
    "proposed_ar": "فما الذي يجعل الإنسانَ يُكذِّب بيوم الحساب والجزاء، بعد هذه الأدلة الواضحة على قدرة الله؟",
    "words": 15,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فما الذي يجعل الإنسانَ يُكذِّب بيوم الحساب والجزاء، بعد هذه الأدلة الواضحة على قدرة الله؟"
   },
   {
    "ref": "95:8",
@@ -553,7 +622,9 @@
    "proposed_ar": "اللهُ هو أحكمُ الحاكمين وأعدلُهم، فلا يترك الناسَ دون حسابٍ وجزاء.",
    "words": 11,
    "notes": "«أعدلهم» from al-Mukhtasar.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "اللهُ هو أحكمُ الحاكمين وأعدلُهم، فلا يترك الناسَ دون حسابٍ وجزاء."
   },
   {
    "ref": "98:1",
@@ -569,7 +640,9 @@
    "proposed_ar": "الكفارُ من اليهود والنصارى والمشركين لم يكونوا ليتركوا كفرَهم، حتى يأتيهم الدليلُ الواضح الذي وُعِدوا به.",
    "words": 16,
    "notes": "«الدليل الواضح» from al-Mukhtasar («برهان واضح»), to match EN \"clear proof\".",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "الكفارُ من اليهود والنصارى والمشركين لم يكونوا ليتركوا كفرَهم، حتى يأتيهم الدليلُ الواضح الذي وُعِدوا به."
   },
   {
    "ref": "98:2",
@@ -585,7 +658,10 @@
    "proposed_ar": "وهذا الدليلُ هو النبيُّ محمد ﷺ، يقرأ عليهم القرآنَ مكتوباً في صحفٍ طاهرة.",
    "words": 13,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "CHANGED",
+   "drafted_ar": "وهذا الدليلُ هو النبيُّ محمد ﷺ، يقرأ عليهم القرآنَ مكتوباً في صحفٍ طاهرة.",
+   "final_ar": "وهذا الدليلُ هو النبيُّ محمد ﷺ، يتلو عليهم القرآنَ، وهو مكتوبٌ في صحفٍ طاهرة."
   },
   {
    "ref": "98:3",
@@ -601,7 +677,9 @@
    "proposed_ar": "في هذه الصحف أخبارٌ صادقة وأوامرُ عادلة، تهدي الناسَ إلى الحق.",
    "words": 11,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "في هذه الصحف أخبارٌ صادقة وأوامرُ عادلة، تهدي الناسَ إلى الحق."
   },
   {
    "ref": "98:4",
@@ -617,7 +695,9 @@
    "proposed_ar": "واليهودُ والنصارى لم يختلفوا في نبوّة محمد ﷺ إلا بعد أن عرفوا أنه النبيُّ الموعود، فآمن بعضُهم، وكفر بعضُهم حسداً.",
    "words": 20,
    "notes": "22 words.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "واليهودُ والنصارى لم يختلفوا في نبوّة محمد ﷺ إلا بعد أن عرفوا أنه النبيُّ الموعود، فآمن بعضُهم، وكفر بعضُهم حسداً."
   },
   {
    "ref": "98:5",
@@ -633,7 +713,9 @@
    "proposed_ar": "أمرهم اللهُ أن يعبدوه وحده بإخلاص، بعيداً عن الشرك، وأن يُصلُّوا ويُخرجوا الزكاة، وهذا هو الدين المستقيم، الإسلام.",
    "words": 18,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "أمرهم اللهُ أن يعبدوه وحده بإخلاص، بعيداً عن الشرك، وأن يُصلُّوا ويُخرجوا الزكاة، وهذا هو الدين المستقيم، الإسلام."
   },
   {
    "ref": "98:6",
@@ -649,7 +731,9 @@
    "proposed_ar": "أمّا الكفارُ من اليهود والنصارى والمشركين، فعقابُهم نارُ جهنم يبقون فيها دائماً، وهم أسوأ الخلق.",
    "words": 15,
    "notes": "Warning ayah: plain, brief, not graphic; reward follows on cards 7-8. Avoids «من أهل الكتاب والمشركين» (4 words of 98:1, 98:6).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "أمّا الكفارُ من اليهود والنصارى والمشركين، فعقابُهم نارُ جهنم يبقون فيها دائماً، وهم أسوأ الخلق."
   },
   {
    "ref": "98:7",
@@ -665,7 +749,9 @@
    "proposed_ar": "والذين آمنوا بالله، واتَّبعوا رسولَه، وعملوا الصالحات، هم خيرُ الخلق.",
    "words": 10,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "والذين آمنوا بالله، واتَّبعوا رسولَه، وعملوا الصالحات، هم خيرُ الخلق."
   },
   {
    "ref": "98:8",
@@ -681,7 +767,9 @@
    "proposed_ar": "ثوابُهم في الآخرة جناتٌ تجري الأنهار تحت قصورها، يعيشون فيها دائماً، والله راضٍ عنهم وهم راضون عنه، وهذا لمن يخاف الله.",
    "words": 21,
    "notes": "24 words. Avoids «رضي الله عنهم ورضوا عنه» (5-word run of this ayah).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ثوابُهم في الآخرة جناتٌ تجري الأنهار تحت قصورها، يعيشون فيها دائماً، والله راضٍ عنهم وهم راضون عنه، وهذا لمن يخاف الله."
   },
   {
    "ref": "99:1",
@@ -697,7 +785,9 @@
    "proposed_ar": "يومَ القيامة تهتزُّ الأرضُ هزةً شديدةً جداً.",
    "words": 7,
    "notes": "Muyassar gives one entry for 99:1-3. «يوم القيامة» from al-Mukhtasar.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "يومَ القيامة تهتزُّ الأرضُ هزةً شديدةً جداً."
   },
   {
    "ref": "99:2",
@@ -713,7 +803,9 @@
    "proposed_ar": "وتُخرج الأرضُ ما في باطنها من الموتى والكنوز.",
    "words": 8,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وتُخرج الأرضُ ما في باطنها من الموتى والكنوز."
   },
   {
    "ref": "99:3",
@@ -729,7 +821,9 @@
    "proposed_ar": "ويتساءل الإنسانُ خائفاً: ما الذي حدث للأرض؟",
    "words": 7,
    "notes": "The question is Muyassar's wording, not the ayah's.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ويتساءل الإنسانُ خائفاً: ما الذي حدث للأرض؟"
   },
   {
    "ref": "99:4",
@@ -745,7 +839,9 @@
    "proposed_ar": "في ذلك اليوم تُخبر الأرضُ بكل ما عمله الناسُ عليها من خيرٍ أو شر.",
    "words": 14,
    "notes": "Muyassar gives one entry for 99:4-5.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "في ذلك اليوم تُخبر الأرضُ بكل ما عمله الناسُ عليها من خيرٍ أو شر."
   },
   {
    "ref": "99:5",
@@ -761,7 +857,9 @@
    "proposed_ar": "لأنَّ اللهَ أمرها أن تُخبر بذلك.",
    "words": 6,
    "notes": "EN \"inspired it\"; Muyassar \"commanded it\". Compatible.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "لأنَّ اللهَ أمرها أن تُخبر بذلك."
   },
   {
    "ref": "99:6",
@@ -777,7 +875,9 @@
    "proposed_ar": "في ذلك اليوم يرجع الناسُ من موقف الحساب جماعاتٍ متفرقة، ليُريهم اللهُ أعمالَهم.",
    "words": 13,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "في ذلك اليوم يرجع الناسُ من موقف الحساب جماعاتٍ متفرقة، ليُريهم اللهُ أعمالَهم."
   },
   {
    "ref": "99:7",
@@ -793,7 +893,9 @@
    "proposed_ar": "فمَن عمل خيراً ولو بوزن نملةٍ صغيرة، سيرى ثوابَه في الآخرة.",
    "words": 11,
    "notes": "EN CHECK: Muyassar and al-Mukhtasar give ذرّة as \"a tiny ant\"; EN says \"an atom's weight\". Not wrong as a common rendering, but it differs from the source the AR follows. Suggest EN \"the weight of a tiny ant\" or \"the smallest speck\".",
-   "flag": true
+   "flag": true,
+   "scholar": "APPROVED",
+   "final_ar": "فمَن عمل خيراً ولو بوزن نملةٍ صغيرة، سيرى ثوابَه في الآخرة."
   },
   {
    "ref": "99:8",
@@ -809,7 +911,9 @@
    "proposed_ar": "ومَن عمل شرّاً ولو بوزن نملةٍ صغيرة، سيرى عقابَه في الآخرة.",
    "words": 11,
    "notes": "Same EN note as 99:7.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ومَن عمل شرّاً ولو بوزن نملةٍ صغيرة، سيرى عقابَه في الآخرة."
   },
   {
    "ref": "100:1",
@@ -825,7 +929,9 @@
    "proposed_ar": "يُقسم اللهُ بالخيل التي تجري بسرعة في سبيله نحو العدوّ، حتى يُسمَع صوتُ أنفاسها.",
    "words": 14,
    "notes": "«صوت أنفاسها» from al-Mukhtasar. EN \"racers\" does not say horses; not a contradiction.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "يُقسم اللهُ بالخيل التي تجري بسرعة في سبيله نحو العدوّ، حتى يُسمَع صوتُ أنفاسها."
   },
   {
    "ref": "100:2",
@@ -841,7 +947,9 @@
    "proposed_ar": "وبالخيل التي تضرب الصخرَ بحوافرها، فتتطاير منه شراراتُ النار من شدة جريها.",
    "words": 12,
    "notes": "«الصخر» from al-Mukhtasar.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وبالخيل التي تضرب الصخرَ بحوافرها، فتتطاير منه شراراتُ النار من شدة جريها."
   },
   {
    "ref": "100:3",
@@ -857,7 +965,9 @@
    "proposed_ar": "وبالخيل التي تهجم على الأعداء وقتَ الصباح.",
    "words": 7,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وبالخيل التي تهجم على الأعداء وقتَ الصباح."
   },
   {
    "ref": "100:4",
@@ -873,7 +983,9 @@
    "proposed_ar": "فتُثير بجريها الغبارَ في الهواء.",
    "words": 5,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فتُثير بجريها الغبارَ في الهواء."
   },
   {
    "ref": "100:5",
@@ -889,7 +1001,9 @@
    "proposed_ar": "فتدخل بفرسانها وسطَ جموع الأعداء.",
    "words": 5,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فتدخل بفرسانها وسطَ جموع الأعداء."
   },
   {
    "ref": "100:6",
@@ -905,7 +1019,9 @@
    "proposed_ar": "إنَّ الإنسانَ كثيرُ الجحود لنِعَم ربه، لا يشكرها.",
    "words": 8,
    "notes": "Muyassar gives one entry for 100:6-8.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "إنَّ الإنسانَ كثيرُ الجحود لنِعَم ربه، لا يشكرها."
   },
   {
    "ref": "100:7",
@@ -921,7 +1037,9 @@
    "proposed_ar": "وهو نفسُه يعرف ذلك ويُقِرُّ به.",
    "words": 6,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وهو نفسُه يعرف ذلك ويُقِرُّ به."
   },
   {
    "ref": "100:8",
@@ -937,7 +1055,9 @@
    "proposed_ar": "وهو يحبُّ المالَ حباً شديداً.",
    "words": 5,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وهو يحبُّ المالَ حباً شديداً."
   },
   {
    "ref": "100:9",
@@ -953,7 +1073,9 @@
    "proposed_ar": "ألا يعلم الإنسانُ ما ينتظره، حين يُخرج اللهُ الموتى من قبورهم للحساب والجزاء؟",
    "words": 13,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ألا يعلم الإنسانُ ما ينتظره، حين يُخرج اللهُ الموتى من قبورهم للحساب والجزاء؟"
   },
   {
    "ref": "100:10",
@@ -969,7 +1091,9 @@
    "proposed_ar": "ويُكشَف ما كان مخفيّاً في القلوب من خيرٍ أو شر.",
    "words": 10,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ويُكشَف ما كان مخفيّاً في القلوب من خيرٍ أو شر."
   },
   {
    "ref": "100:11",
@@ -985,7 +1109,9 @@
    "proposed_ar": "إنَّ اللهَ في ذلك اليوم خبيرٌ بالناس وبأعمالهم، أي يعلمها كلَّها، فلا يغيب عنه منها شيء.",
    "words": 16,
    "notes": "Avoids «لا يخفى عليه شيء» (4 words of 3:5).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "إنَّ اللهَ في ذلك اليوم خبيرٌ بالناس وبأعمالهم، أي يعلمها كلَّها، فلا يغيب عنه منها شيء."
   },
   {
    "ref": "101:1",
@@ -1001,7 +1127,9 @@
    "proposed_ar": "القارعةُ هي يومُ القيامة، سُمِّيت بذلك لأن أحداثها العظيمة تقرع قلوبَ الناس، أي تُفزعها.",
    "words": 14,
    "notes": "Warning surah. «القارعة» is the single key word being explained (allowed). «يوم القيامة» from al-Mukhtasar 101:3.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "القارعةُ هي يومُ القيامة، سُمِّيت بذلك لأن أحداثها العظيمة تقرع قلوبَ الناس، أي تُفزعها."
   },
   {
    "ref": "101:2",
@@ -1017,7 +1145,9 @@
    "proposed_ar": "أيُّ شيءٍ هذه القارعة التي تُفزع القلوب؟",
    "words": 7,
    "notes": "Not the 2-word ayah «ما القارعة».",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "أيُّ شيءٍ هذه القارعة التي تُفزع القلوب؟"
   },
   {
    "ref": "101:3",
@@ -1033,7 +1163,9 @@
    "proposed_ar": "وأيُّ شيءٍ يُعلِمك بها؟ إنها يومُ القيامة العظيم.",
    "words": 8,
    "notes": "«إنها يوم القيامة» from al-Mukhtasar.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وأيُّ شيءٍ يُعلِمك بها؟ إنها يومُ القيامة العظيم."
   },
   {
    "ref": "101:4",
@@ -1049,7 +1181,9 @@
    "proposed_ar": "في ذلك اليوم يكون الناسُ في كثرتهم وتفرُّقهم وحركتهم مثلَ الفَراش المنتشر.",
    "words": 12,
    "notes": "Muyassar's added clause on moths falling into flame is left out (not needed, and graphic for the age).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "في ذلك اليوم يكون الناسُ في كثرتهم وتفرُّقهم وحركتهم مثلَ الفَراش المنتشر."
   },
   {
    "ref": "101:5",
@@ -1065,7 +1199,9 @@
    "proposed_ar": "وتصير الجبالُ مثلَ الصوف الملوَّن المنفوش، خفيفةً، ثم تزول.",
    "words": 9,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وتصير الجبالُ مثلَ الصوف الملوَّن المنفوش، خفيفةً، ثم تزول."
   },
   {
    "ref": "101:6",
@@ -1081,7 +1217,9 @@
    "proposed_ar": "فأمّا مَن كانت حسناتُه أثقلَ في الميزان من سيئاته،",
    "words": 9,
    "notes": "Muyassar gives one entry for 101:6-7. Ends with a comma: card 7 completes it, as the EN does.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فأمّا مَن كانت حسناتُه أثقلَ في الميزان من سيئاته،"
   },
   {
    "ref": "101:7",
@@ -1097,7 +1235,9 @@
    "proposed_ar": "فهو في حياةٍ سعيدة يرضاها، في الجنة.",
    "words": 7,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فهو في حياةٍ سعيدة يرضاها، في الجنة."
   },
   {
    "ref": "101:8",
@@ -1113,7 +1253,9 @@
    "proposed_ar": "وأمّا مَن كانت حسناتُه أخفَّ في الميزان، ورجحت سيئاتُه،",
    "words": 9,
    "notes": "Muyassar gives one entry for 101:8-9. Warning tied to deeds.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وأمّا مَن كانت حسناتُه أخفَّ في الميزان، ورجحت سيئاتُه،"
   },
   {
    "ref": "101:9",
@@ -1129,7 +1271,9 @@
    "proposed_ar": "فمكانُه يومَ القيامة نارُ جهنم.",
    "words": 5,
    "notes": "EN CHECK (minor): EN \"His refuge will be an abyss\" is literal; Muyassar reads «أمّه هاوية» as \"his abode is Jahannam\". Suggest EN \"His home will be the Abyss (Hell)\".",
-   "flag": true
+   "flag": true,
+   "scholar": "APPROVED",
+   "final_ar": "فمكانُه يومَ القيامة نارُ جهنم."
   },
   {
    "ref": "101:10",
@@ -1145,7 +1289,9 @@
    "proposed_ar": "وهل تعرف ما هذه الهاوية؟",
    "words": 5,
    "notes": "Avoids the opening «وما أدراك ما». «الهاوية» is the key word.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وهل تعرف ما هذه الهاوية؟"
   },
   {
    "ref": "101:11",
@@ -1161,7 +1307,9 @@
    "proposed_ar": "إنها نارٌ شديدةُ الحرارة.",
    "words": 4,
    "notes": "Plain and brief. Not the 2-word ayah «نار حامية».",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "إنها نارٌ شديدةُ الحرارة."
   },
   {
    "ref": "102:1",
@@ -1177,7 +1325,9 @@
    "proposed_ar": "انشغل الناسُ عن طاعة الله بالتفاخر بكثرة الأموال والأولاد.",
    "words": 9,
    "notes": "Third person, as rule 3 asks; Muyassar addresses \"you\". EN \"has distracted you\" agrees.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "انشغل الناسُ عن طاعة الله بالتفاخر بكثرة الأموال والأولاد."
   },
   {
    "ref": "102:2",
@@ -1193,7 +1343,9 @@
    "proposed_ar": "وبقُوا على ذلك حتى ماتوا ودُفنوا في القبور.",
    "words": 8,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وبقُوا على ذلك حتى ماتوا ودُفنوا في القبور."
   },
   {
    "ref": "102:3",
@@ -1209,7 +1361,9 @@
    "proposed_ar": "ما كان ينبغي أن يشغلهم ذلك، وسوف يعرفون أن الآخرة خيرٌ لهم.",
    "words": 12,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ما كان ينبغي أن يشغلهم ذلك، وسوف يعرفون أن الآخرة خيرٌ لهم."
   },
   {
    "ref": "102:4",
@@ -1225,7 +1379,9 @@
    "proposed_ar": "ويُحذِّرهم اللهُ مرةً ثانية أنهم سيعرفون سوءَ عاقبة انشغالهم عن طاعته.",
    "words": 11,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ويُحذِّرهم اللهُ مرةً ثانية أنهم سيعرفون سوءَ عاقبة انشغالهم عن طاعته."
   },
   {
    "ref": "102:5",
@@ -1241,7 +1397,9 @@
    "proposed_ar": "لو علموا علماً يقيناً أنهم سيُحاسَبون، لتركوا التفاخرَ، وأسرعوا إلى إنقاذ أنفسهم.",
    "words": 12,
    "notes": "Muyassar gives one entry for 102:5-8. «أنهم سيحاسبون» from al-Mukhtasar.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "لو علموا علماً يقيناً أنهم سيُحاسَبون، لتركوا التفاخرَ، وأسرعوا إلى إنقاذ أنفسهم."
   },
   {
    "ref": "102:6",
@@ -1257,7 +1415,9 @@
    "proposed_ar": "سيرون نارَ الجحيم يومَ القيامة.",
    "words": 5,
    "notes": "Warning ayah: brief, not graphic. «الجحيم» is the key word.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "سيرون نارَ الجحيم يومَ القيامة."
   },
   {
    "ref": "102:7",
@@ -1273,7 +1433,9 @@
    "proposed_ar": "ثم سيرونها بأعينهم رؤيةً يقينيةً لا شكَّ فيها.",
    "words": 8,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ثم سيرونها بأعينهم رؤيةً يقينيةً لا شكَّ فيها."
   },
   {
    "ref": "102:8",
@@ -1289,7 +1451,9 @@
    "proposed_ar": "ثم يسألهم اللهُ يومَ القيامة عن كل النِّعَم التي أعطاهم إياها، كالصحة والمال.",
    "words": 13,
    "notes": "Examples from al-Mukhtasar («من الصحة والغنى»).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ثم يسألهم اللهُ يومَ القيامة عن كل النِّعَم التي أعطاهم إياها، كالصحة والمال."
   },
   {
    "ref": "103:1",
@@ -1305,7 +1469,9 @@
    "proposed_ar": "يُقسم اللهُ بالزمن، لما فيه من عجائبَ تدلُّ على عظمته.",
    "words": 10,
    "notes": "Muyassar: الدهر (time), as EN \"By time!\". Al-Mukhtasar: the afternoon. Line follows Muyassar.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "يُقسم اللهُ بالزمن، لما فيه من عجائبَ تدلُّ على عظمته."
   },
   {
    "ref": "103:2",
@@ -1321,7 +1487,9 @@
    "proposed_ar": "إنَّ بني آدم في خسارةٍ ونقصان.",
    "words": 6,
    "notes": "Card 3 gives the exception straight after.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "إنَّ بني آدم في خسارةٍ ونقصان."
   },
   {
    "ref": "103:3",
@@ -1337,7 +1505,9 @@
    "proposed_ar": "إلا مَن آمن بالله، وعمل الصالحات، وأوصى غيرَه بالتمسُّك بالحق، وبالصبر على ذلك.",
    "words": 13,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "إلا مَن آمن بالله، وعمل الصالحات، وأوصى غيرَه بالتمسُّك بالحق، وبالصبر على ذلك."
   },
   {
    "ref": "104:1",
@@ -1353,7 +1523,9 @@
    "proposed_ar": "الهلاكُ لكلِّ مَن يغتاب الناسَ ويَعيبهم ويطعن فيهم.",
    "words": 8,
    "notes": "Warning surah: tied to the deed (backbiting, mocking), brief.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "الهلاكُ لكلِّ مَن يغتاب الناسَ ويَعيبهم ويطعن فيهم."
   },
   {
    "ref": "104:2",
@@ -1369,7 +1541,9 @@
    "proposed_ar": "الذي كان همُّه أن يجمع المالَ ويَعُدَّه مرةً بعد مرة.",
    "words": 10,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "الذي كان همُّه أن يجمع المالَ ويَعُدَّه مرةً بعد مرة."
   },
   {
    "ref": "104:3",
@@ -1385,7 +1559,9 @@
    "proposed_ar": "يظنُّ أن مالَه سيُبقيه حيّاً في الدنيا، وينجّيه من الحساب.",
    "words": 10,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "يظنُّ أن مالَه سيُبقيه حيّاً في الدنيا، وينجّيه من الحساب."
   },
   {
    "ref": "104:4",
@@ -1401,7 +1577,9 @@
    "proposed_ar": "ليس الأمرُ كما ظنّ، بل سيُلقى في الحُطَمة، وهي نارٌ تُحطِّم كلَّ ما يُلقى فيها.",
    "words": 15,
    "notes": "«الحطمة» is the key word being explained (allowed by name in the scholar's rule 2).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ليس الأمرُ كما ظنّ، بل سيُلقى في الحُطَمة، وهي نارٌ تُحطِّم كلَّ ما يُلقى فيها."
   },
   {
    "ref": "104:5",
@@ -1417,7 +1595,9 @@
    "proposed_ar": "وهل تعرف ما حقيقةُ هذه النار؟",
    "words": 6,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وهل تعرف ما حقيقةُ هذه النار؟"
   },
   {
    "ref": "104:6",
@@ -1433,7 +1613,9 @@
    "proposed_ar": "إنها نارُ الله المشتعلة، الشديدةُ الحرارة.",
    "words": 6,
    "notes": "Not the 3-word ayah «نار الله الموقدة».",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "إنها نارُ الله المشتعلة، الشديدةُ الحرارة."
   },
   {
    "ref": "104:7",
@@ -1449,7 +1631,9 @@
    "proposed_ar": "ومن شدة حرِّها تصل إلى القلوب.",
    "words": 6,
    "notes": "Kept short; «from the bodies» left out as graphic for the age.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ومن شدة حرِّها تصل إلى القلوب."
   },
   {
    "ref": "104:8",
@@ -1465,7 +1649,9 @@
    "proposed_ar": "وهي مُغلَقةٌ عليهم، فلا يستطيعون الخروج منها.",
    "words": 7,
    "notes": "Muyassar gives one entry for 104:8-9.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وهي مُغلَقةٌ عليهم، فلا يستطيعون الخروج منها."
   },
   {
    "ref": "104:9",
@@ -1481,7 +1667,9 @@
    "proposed_ar": "مُغلَقةٌ بأعمدةٍ طويلة ممدودة، حتى لا يخرجوا منها.",
    "words": 8,
    "notes": "SCHOLAR + EN CHECK: Muyassar reads «عمد ممددة» as long chains and shackles; al-Mukhtasar as long columns («بعمد ممتدة طويلة»), which is what EN \"outstretched columns\" says. The line follows al-Mukhtasar so that it agrees with EN and stays non-graphic. Alternative on Muyassar: «وهم مقيَّدون فيها بسلاسل طويلة، حتى لا يخرجوا منها.» Scholar to choose.",
-   "flag": true
+   "flag": true,
+   "scholar": "APPROVED",
+   "final_ar": "مُغلَقةٌ بأعمدةٍ طويلة ممدودة، حتى لا يخرجوا منها."
   },
   {
    "ref": "105:1",
@@ -1497,7 +1685,9 @@
    "proposed_ar": "ألا تعلم ما فعله اللهُ بأبرهة وجيشه، أصحابِ الفيل، حين أرادوا هدمَ الكعبة؟",
    "words": 13,
    "notes": "Rhetorical question to the listener, as Muyassar has it. EN \"Have you not seen\" agrees (Muyassar: \"know\").",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ألا تعلم ما فعله اللهُ بأبرهة وجيشه، أصحابِ الفيل، حين أرادوا هدمَ الكعبة؟"
   },
   {
    "ref": "105:2",
@@ -1513,7 +1703,9 @@
    "proposed_ar": "لقد جعل اللهُ ما دبَّروه من شرٍّ يضيع ويفشل.",
    "words": 9,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "لقد جعل اللهُ ما دبَّروه من شرٍّ يضيع ويفشل."
   },
   {
    "ref": "105:3",
@@ -1529,7 +1721,9 @@
    "proposed_ar": "وأرسل اللهُ عليهم طيوراً كثيرة، تأتي جماعاتٍ وراءَ جماعات.",
    "words": 9,
    "notes": "Muyassar gives one entry for 105:3-4.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وأرسل اللهُ عليهم طيوراً كثيرة، تأتي جماعاتٍ وراءَ جماعات."
   },
   {
    "ref": "105:4",
@@ -1545,7 +1739,9 @@
    "proposed_ar": "فكانت الطيور تقذفهم بحجارةٍ من طينٍ متحجِّر، أي طينٍ صار صُلباً كالحجر.",
    "words": 12,
    "notes": "«سجيل» is explained but not said.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فكانت الطيور تقذفهم بحجارةٍ من طينٍ متحجِّر، أي طينٍ صار صُلباً كالحجر."
   },
   {
    "ref": "105:5",
@@ -1561,7 +1757,9 @@
    "proposed_ar": "فجعلهم اللهُ محطَّمين، مثلَ أوراق الزرع اليابسة التي أكلتها الحيوانات.",
    "words": 10,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فجعلهم اللهُ محطَّمين، مثلَ أوراق الزرع اليابسة التي أكلتها الحيوانات."
   },
   {
    "ref": "106:1",
@@ -1577,7 +1775,9 @@
    "proposed_ar": "انظروا إلى نعمة الله على قبيلة قريش، فقد عاشوا في أُلفةٍ وأمان، واستقامت أمورُهم.",
    "words": 14,
    "notes": "«انظروا» for Muyassar «اعجبوا» (be amazed). EN \"familiarity\" agrees.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "انظروا إلى نعمة الله على قبيلة قريش، فقد عاشوا في أُلفةٍ وأمان، واستقامت أمورُهم."
   },
   {
    "ref": "106:2",
@@ -1593,7 +1793,9 @@
    "proposed_ar": "فقد اعتادوا رحلتين كلَّ عام: رحلةً في الشتاء إلى اليمن، ورحلةً في الصيف إلى الشام، ليجلبوا ما يحتاجون إليه.",
    "words": 19,
    "notes": "«كل عام» is implied by the two seasons; strike it if the scholar prefers.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فقد اعتادوا رحلتين كلَّ عام: رحلةً في الشتاء إلى اليمن، ورحلةً في الصيف إلى الشام، ليجلبوا ما يحتاجون إليه."
   },
   {
    "ref": "106:3",
@@ -1609,7 +1811,9 @@
    "proposed_ar": "فليشكروا اللهَ، وليعبدوه وحده، فهو ربُّ الكعبة التي نالوا بسببها الشرف.",
    "words": 11,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فليشكروا اللهَ، وليعبدوه وحده، فهو ربُّ الكعبة التي نالوا بسببها الشرف."
   },
   {
    "ref": "106:4",
@@ -1625,7 +1829,9 @@
    "proposed_ar": "فهو الذي أطعمهم بعد جوعٍ شديد، وأعطاهم الأمانَ بعد خوفٍ عظيم.",
    "words": 11,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فهو الذي أطعمهم بعد جوعٍ شديد، وأعطاهم الأمانَ بعد خوفٍ عظيم."
   },
   {
    "ref": "107:1",
@@ -1641,7 +1847,9 @@
    "proposed_ar": "هل عرفتَ حالَ الذي يُكذِّب بيوم الحساب والجزاء؟",
    "words": 8,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "هل عرفتَ حالَ الذي يُكذِّب بيوم الحساب والجزاء؟"
   },
   {
    "ref": "107:2",
@@ -1657,7 +1865,9 @@
    "proposed_ar": "إنه الذي يدفع اليتيمَ بقسوة، ويمنعه حقَّه.",
    "words": 7,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "إنه الذي يدفع اليتيمَ بقسوة، ويمنعه حقَّه."
   },
   {
    "ref": "107:3",
@@ -1673,7 +1883,9 @@
    "proposed_ar": "ولا يحثُّ غيرَه على إطعام الفقير المحتاج.",
    "words": 7,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ولا يحثُّ غيرَه على إطعام الفقير المحتاج."
   },
   {
    "ref": "107:4",
@@ -1689,7 +1901,9 @@
    "proposed_ar": "فالعذابُ الشديد لمصلّين لا يهتمّون بصلاتهم.",
    "words": 6,
    "notes": "Muyassar gives one entry for 107:4-5. The line names who is meant on this card, so that a child does not hear \"woe to those who pray\" alone. EN CHECK: EN \"So woe to those who pray.\" alone can mislead a child; suggest \"So woe to those who pray carelessly,\" (al-Mukhtasar also reads 4-5 together).",
-   "flag": true
+   "flag": true,
+   "scholar": "APPROVED",
+   "final_ar": "فالعذابُ الشديد لمصلّين لا يهتمّون بصلاتهم."
   },
   {
    "ref": "107:5",
@@ -1705,7 +1919,9 @@
    "proposed_ar": "فهم يغفلون عنها، فلا يُصلُّونها كما يجب، ولا في وقتها.",
    "words": 10,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فهم يغفلون عنها، فلا يُصلُّونها كما يجب، ولا في وقتها."
   },
   {
    "ref": "107:6",
@@ -1721,7 +1937,9 @@
    "proposed_ar": "وهم الذين يعملون الخيرَ ليراهم الناس، لا لله.",
    "words": 8,
    "notes": "«لا لله» from al-Mukhtasar («لا يخلصون العمل لله»).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وهم الذين يعملون الخيرَ ليراهم الناس، لا لله."
   },
   {
    "ref": "107:7",
@@ -1737,7 +1955,9 @@
    "proposed_ar": "ويمنعون غيرَهم من استعارة الأشياء البسيطة، كأواني البيت، مع أنها لا تضرُّهم.",
    "words": 12,
    "notes": "EN \"small kindnesses\" agrees.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ويمنعون غيرَهم من استعارة الأشياء البسيطة، كأواني البيت، مع أنها لا تضرُّهم."
   },
   {
    "ref": "108:1",
@@ -1753,7 +1973,9 @@
    "proposed_ar": "أعطى اللهُ النبيَّ ﷺ خيراً كثيراً جداً في الدنيا وفي الآخرة، ومن هذا الخير نهرُ الكوثر في الجنة.",
    "words": 18,
    "notes": "SCHOLAR: the model line with ONE word added («وفي الآخرة» for «والآخرة»). Verbatim, it trips the checker: «في الدنيا والآخرة ومن» is a 4-word run of 3:45 (a common phrase, but the rule is mechanical). Approve this form, or whitelist the phrase for this unit.",
-   "flag": true
+   "flag": true,
+   "scholar": "APPROVED",
+   "final_ar": "أعطى اللهُ النبيَّ ﷺ خيراً كثيراً جداً في الدنيا وفي الآخرة، ومن هذا الخير نهرُ الكوثر في الجنة."
   },
   {
    "ref": "108:2",
@@ -1769,7 +1991,9 @@
    "proposed_ar": "فاشكر الله على هذا الخير: صلِّ له وحده، واذبح أضحيتك لله وحده.",
    "words": 12,
    "notes": "Scholar's model line, verbatim.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فاشكر الله على هذا الخير: صلِّ له وحده، واذبح أضحيتك لله وحده."
   },
   {
    "ref": "108:3",
@@ -1785,7 +2009,9 @@
    "proposed_ar": "والذي يكره النبيَّ ﷺ هو المقطوع من كل خير.",
    "words": 9,
    "notes": "Scholar's model line, verbatim.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "والذي يكره النبيَّ ﷺ هو المقطوع من كل خير."
   },
   {
    "ref": "109:1",
@@ -1801,7 +2027,9 @@
    "proposed_ar": "يأمر اللهُ النبيَّ ﷺ أن يخاطب الذين كفروا بالله ورسوله.",
    "words": 10,
    "notes": "Indirect speech: no «قل» framing, no vocative quote.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "يأمر اللهُ النبيَّ ﷺ أن يخاطب الذين كفروا بالله ورسوله."
   },
   {
    "ref": "109:2",
@@ -1817,7 +2045,9 @@
    "proposed_ar": "فيُخبرهم أنه لا يعبد الأصنامَ والآلهةَ الباطلة التي يعبدونها.",
    "words": 9,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "فيُخبرهم أنه لا يعبد الأصنامَ والآلهةَ الباطلة التي يعبدونها."
   },
   {
    "ref": "109:3",
@@ -1833,7 +2063,9 @@
    "proposed_ar": "وأنهم لا يعبدون الإلهَ الواحد الذي يعبده، وهو اللهُ ربُّ العالمين.",
    "words": 11,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وأنهم لا يعبدون الإلهَ الواحد الذي يعبده، وهو اللهُ ربُّ العالمين."
   },
   {
    "ref": "109:4",
@@ -1849,7 +2081,9 @@
    "proposed_ar": "ولن يعبد النبيُّ ﷺ أبداً الأصنامَ التي عبدوها.",
    "words": 8,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ولن يعبد النبيُّ ﷺ أبداً الأصنامَ التي عبدوها."
   },
   {
    "ref": "109:5",
@@ -1865,7 +2099,9 @@
    "proposed_ar": "وهم كذلك لن يعبدوا في المستقبل الإلهَ الذي يعبده، وقد نزلت هذه الآية في أناسٍ معيَّنين علم اللهُ أنهم لن يؤمنوا.",
    "words": 21,
    "notes": "Keeps Muyassar's note that the ayah is about particular people, so that a child does not read it as \"no unbeliever can ever believe\". Scholar may drop the second clause if he prefers a shorter line.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وهم كذلك لن يعبدوا في المستقبل الإلهَ الذي يعبده، وقد نزلت هذه الآية في أناسٍ معيَّنين علم اللهُ أنهم لن يؤمنوا."
   },
   {
    "ref": "109:6",
@@ -1881,7 +2117,9 @@
    "proposed_ar": "لهم دينُهم الذي أصرّوا عليه، وللنبيِّ ﷺ دينُه الذي لا يريد غيرَه.",
    "words": 12,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "لهم دينُهم الذي أصرّوا عليه، وللنبيِّ ﷺ دينُه الذي لا يريد غيرَه."
   },
   {
    "ref": "110:1",
@@ -1897,7 +2135,9 @@
    "proposed_ar": "إذا نصر اللهُ نبيَّه ﷺ على كفار قريش، وفتح له مكة،",
    "words": 11,
    "notes": "Ends with a comma: cards 2-3 complete it, as the EN does.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "إذا نصر اللهُ نبيَّه ﷺ على كفار قريش، وفتح له مكة،"
   },
   {
    "ref": "110:2",
@@ -1913,7 +2153,9 @@
    "proposed_ar": "ورأى الناسَ يُسلمون جماعاتٍ بعد جماعات،",
    "words": 6,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ورأى الناسَ يُسلمون جماعاتٍ بعد جماعات،"
   },
   {
    "ref": "110:3",
@@ -1929,7 +2171,10 @@
    "proposed_ar": "فليُكثِرْ من تسبيح الله وحمده، ومن طلب المغفرة منه، فالله يقبل توبةَ عباده كثيراً ويرحمهم.",
    "words": 15,
    "notes": "SCHOLAR: Muyassar says this is to prepare to meet his Lord (the Prophet's approaching death). The line leaves that out, as the EN does. Confirm, or add «استعداداً للقاء ربه».",
-   "flag": true
+   "flag": true,
+   "scholar": "CHANGED",
+   "drafted_ar": "فليُكثِرْ من تسبيح الله وحمده، ومن طلب المغفرة منه، فالله يقبل توبةَ عباده كثيراً ويرحمهم.",
+   "final_ar": "وهذه علامةٌ على قرب تمام مهمته ﷺ، فليُكثِرْ من تسبيح الله وحمده، ومن طلب المغفرة منه، فالله يقبل توبةَ عباده كثيراً ويرحمهم."
   },
   {
    "ref": "111:1",
@@ -1945,7 +2190,9 @@
    "proposed_ar": "خسر أبو لهب وخابت أعمالُه، لأنه كان يؤذي النبيَّ ﷺ، وقد تحقَّق خسرانُه.",
    "words": 13,
    "notes": "Warning surah, tied to the deed (harming the Prophet ﷺ). EN CHECK (minor): EN \"May the hands ... perish\" is a supplication; Muyassar reads it as a statement that came true (\"he lost, and his loss came to pass\"). Both are known readings; EN may stay.",
-   "flag": true
+   "flag": true,
+   "scholar": "APPROVED",
+   "final_ar": "خسر أبو لهب وخابت أعمالُه، لأنه كان يؤذي النبيَّ ﷺ، وقد تحقَّق خسرانُه."
   },
   {
    "ref": "111:2",
@@ -1961,7 +2208,9 @@
    "proposed_ar": "لم ينفعه مالُه ولا أولادُه، ولن يدفعوا عنه عقابَ الله.",
    "words": 10,
    "notes": "EN CHECK (minor): Muyassar reads «ما كسب» as his children; EN \"what he earned\" is literal. Optional EN: \"His wealth and his children did not help him.\"",
-   "flag": true
+   "flag": true,
+   "scholar": "APPROVED",
+   "final_ar": "لم ينفعه مالُه ولا أولادُه، ولن يدفعوا عنه عقابَ الله."
   },
   {
    "ref": "111:3",
@@ -1977,7 +2226,9 @@
    "proposed_ar": "وسيدخل يومَ القيامة ناراً مشتعلة، جزاءَ أذاه للنبيِّ ﷺ.",
    "words": 9,
    "notes": "«جزاء أذاه» ties the warning to the deed, from Muyassar 111:1.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وسيدخل يومَ القيامة ناراً مشتعلة، جزاءَ أذاه للنبيِّ ﷺ."
   },
   {
    "ref": "111:4",
@@ -1993,7 +2244,9 @@
    "proposed_ar": "وستدخلها معه زوجتُه، التي كانت تحمل الشوك وترميه في طريق النبيِّ ﷺ لتؤذيه.",
    "words": 13,
    "notes": "EN \"carrier of firewood\" is literal; the line gives Muyassar's meaning (thorns in his path). Compatible.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وستدخلها معه زوجتُه، التي كانت تحمل الشوك وترميه في طريق النبيِّ ﷺ لتؤذيه."
   },
   {
    "ref": "111:5",
@@ -2009,7 +2262,9 @@
    "proposed_ar": "وفي عنقها حبلٌ قويٌّ مفتول من ليفٍ خشن.",
    "words": 8,
    "notes": "Muyassar's description of what is done with the rope in the Fire is left out (not graphic, rule 6).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وفي عنقها حبلٌ قويٌّ مفتول من ليفٍ خشن."
   },
   {
    "ref": "112:1",
@@ -2025,7 +2280,9 @@
    "proposed_ar": "يأمر اللهُ النبيَّ ﷺ أن يُعلن أن الله واحدٌ لا شريك له، لا إلهَ غيره.",
    "words": 15,
    "notes": "«لا إله غيره» from al-Mukhtasar.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "يأمر اللهُ النبيَّ ﷺ أن يُعلن أن الله واحدٌ لا شريك له، لا إلهَ غيره."
   },
   {
    "ref": "112:2",
@@ -2041,7 +2298,9 @@
    "proposed_ar": "اللهُ هو الكاملُ في كل صفاته، وإليه يلجأ كلُّ الخلق ليقضي حاجاتهم.",
    "words": 12,
    "notes": "Not the 2-word ayah «الله الصمد».",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "اللهُ هو الكاملُ في كل صفاته، وإليه يلجأ كلُّ الخلق ليقضي حاجاتهم."
   },
   {
    "ref": "112:3",
@@ -2057,7 +2316,9 @@
    "proposed_ar": "ليس للهِ ولدٌ، وليس له والدٌ، ولا زوجة.",
    "words": 8,
    "notes": "«ولا زوجة» is Muyassar's «ولا صاحبة»; EN does not mention it but does not contradict it.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ليس للهِ ولدٌ، وليس له والدٌ، ولا زوجة."
   },
   {
    "ref": "112:4",
@@ -2073,7 +2334,9 @@
    "proposed_ar": "ولا يُشبهه أحدٌ من خلقه، لا في أسمائه، ولا في صفاته، ولا في أفعاله.",
    "words": 14,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ولا يُشبهه أحدٌ من خلقه، لا في أسمائه، ولا في صفاته، ولا في أفعاله."
   },
   {
    "ref": "113:1",
@@ -2089,7 +2352,9 @@
    "proposed_ar": "يأمر اللهُ النبيَّ ﷺ أن يحتمي ويستجير بربِّ الفلق، أي ربِّ الصبح.",
    "words": 12,
    "notes": "Indirect speech; «الفلق» is the key word, explained.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "يأمر اللهُ النبيَّ ﷺ أن يحتمي ويستجير بربِّ الفلق، أي ربِّ الصبح."
   },
   {
    "ref": "113:2",
@@ -2105,7 +2370,9 @@
    "proposed_ar": "يحتمي بالله من شرِّ كلِّ المخلوقات وأذاها.",
    "words": 7,
    "notes": "Avoids «من شر ما خلق».",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "يحتمي بالله من شرِّ كلِّ المخلوقات وأذاها."
   },
   {
    "ref": "113:3",
@@ -2121,7 +2388,9 @@
    "proposed_ar": "ومن شرِّ الليل حين يشتدُّ ظلامُه، وما فيه من أشياءَ مؤذية.",
    "words": 11,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ومن شرِّ الليل حين يشتدُّ ظلامُه، وما فيه من أشياءَ مؤذية."
   },
   {
    "ref": "113:4",
@@ -2137,7 +2406,9 @@
    "proposed_ar": "ومن شرِّ الساحرات اللواتي ينفخن في العُقَد ليسحرن الناس.",
    "words": 9,
    "notes": "EN CHECK (minor): EN \"those who blow on knots\" does not say why; optional EN \"...blow on knots to do magic\".",
-   "flag": true
+   "flag": true,
+   "scholar": "APPROVED",
+   "final_ar": "ومن شرِّ الساحرات اللواتي ينفخن في العُقَد ليسحرن الناس."
   },
   {
    "ref": "113:5",
@@ -2153,7 +2424,9 @@
    "proposed_ar": "ومن شرِّ الحاسد الذي يكره ما أعطى اللهُ الناسَ من نِعَم، ويتمنّى زوالها.",
    "words": 13,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ومن شرِّ الحاسد الذي يكره ما أعطى اللهُ الناسَ من نِعَم، ويتمنّى زوالها."
   },
   {
    "ref": "114:1",
@@ -2169,7 +2442,9 @@
    "proposed_ar": "يأمر اللهُ النبيَّ ﷺ أن يحتمي ويستجير بربِّ الناس، القادرِ وحده على دفع شرِّ الوسواس.",
    "words": 15,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "يأمر اللهُ النبيَّ ﷺ أن يحتمي ويستجير بربِّ الناس، القادرِ وحده على دفع شرِّ الوسواس."
   },
   {
    "ref": "114:2",
@@ -2185,7 +2460,9 @@
    "proposed_ar": "اللهُ هو المَلِك الذي يملك الناسَ جميعاً، ويُدبِّر كلَّ شؤونهم، ولا يحتاج إليهم.",
    "words": 13,
    "notes": "Avoids the 2-word ayah «ملك الناس».",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "اللهُ هو المَلِك الذي يملك الناسَ جميعاً، ويُدبِّر كلَّ شؤونهم، ولا يحتاج إليهم."
   },
   {
    "ref": "114:3",
@@ -2201,7 +2478,9 @@
    "proposed_ar": "وهو المعبودُ الحقُّ للناس، فلا يستحق العبادةَ أحدٌ سواه.",
    "words": 9,
    "notes": "Avoids the 2-word ayah «إله الناس».",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وهو المعبودُ الحقُّ للناس، فلا يستحق العبادةَ أحدٌ سواه."
   },
   {
    "ref": "114:4",
@@ -2217,7 +2496,9 @@
    "proposed_ar": "من شرِّ الشيطان الذي يُوسوس للإنسان حين يغفل، ويختبئ حين يذكر الإنسانُ اللهَ.",
    "words": 13,
    "notes": "«الوسواس الخناس» explained, not said.",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "من شرِّ الشيطان الذي يُوسوس للإنسان حين يغفل، ويختبئ حين يذكر الإنسانُ اللهَ."
   },
   {
    "ref": "114:5",
@@ -2233,7 +2514,9 @@
    "proposed_ar": "وهو الذي يُلقي الشرَّ والشكوكَ في قلوب الناس.",
    "words": 8,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وهو الذي يُلقي الشرَّ والشكوكَ في قلوب الناس."
   },
   {
    "ref": "114:6",
@@ -2249,7 +2532,9 @@
    "proposed_ar": "وهذا الموسوِس يكون من شياطين الجن، ومن شياطين الإنس.",
    "words": 9,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "وهذا الموسوِس يكون من شياطين الجن، ومن شياطين الإنس."
   },
   {
    "ref": "2:255",
@@ -2265,7 +2550,9 @@
    "proposed_ar": "اللهُ وحده يستحق العبادة، وهو القائمُ على كل شيء، الحيُّ حياةً كاملةً تليق بجلاله.",
    "words": 14,
    "notes": "Attributes affirmed as Muyassar does (rule 5). «الحي» kept as the key word. Does not use «لا إله إلا هو» here, since on this card it would be the ayah's own opening. Ends on «بجلاله»: ending on «كل شيء» made a run of 40:62 with the explanation's opening «لا إله إلا هو».",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "اللهُ وحده يستحق العبادة، وهو القائمُ على كل شيء، الحيُّ حياةً كاملةً تليق بجلاله."
   },
   {
    "ref": "2:255",
@@ -2281,7 +2568,9 @@
    "proposed_ar": "اللهُ لا ينعس ولا ينام أبداً.",
    "words": 6,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "اللهُ لا ينعس ولا ينام أبداً."
   },
   {
    "ref": "2:255",
@@ -2297,7 +2586,9 @@
    "proposed_ar": "يملك اللهُ وحده السماواتِ والأرضَ وكلَّ ما فيهما.",
    "words": 8,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "يملك اللهُ وحده السماواتِ والأرضَ وكلَّ ما فيهما."
   },
   {
    "ref": "2:255",
@@ -2313,7 +2604,9 @@
    "proposed_ar": "لا يستطيع أحدٌ أن يشفع عند الله، أي يطلب منه الخيرَ لغيره، إلا إذا أذِن اللهُ له.",
    "words": 17,
    "notes": "«يشفع» explained inside the sentence (rule 4).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "لا يستطيع أحدٌ أن يشفع عند الله، أي يطلب منه الخيرَ لغيره، إلا إذا أذِن اللهُ له."
   },
   {
    "ref": "2:255",
@@ -2329,7 +2622,9 @@
    "proposed_ar": "يعلم اللهُ ما سيحدث للخلق في المستقبل، وما حدث لهم في الماضي.",
    "words": 12,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "يعلم اللهُ ما سيحدث للخلق في المستقبل، وما حدث لهم في الماضي."
   },
   {
    "ref": "2:255",
@@ -2345,7 +2640,9 @@
    "proposed_ar": "ولا يعرف أحدٌ من الخلق شيئاً من علم الله، إلا ما علَّمه اللهُ إياه.",
    "words": 14,
    "notes": "",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ولا يعرف أحدٌ من الخلق شيئاً من علم الله، إلا ما علَّمه اللهُ إياه."
   },
   {
    "ref": "2:255",
@@ -2361,7 +2658,9 @@
    "proposed_ar": "كرسيُّ الله أوسعُ من السماوات والأرض، ولا يعلم كيفيَّتَه إلا الله.",
    "words": 11,
    "notes": "As the scholar ruled: the Kursi is vaster than the heavens and the earth; not \"knowledge\", not \"throne\". «ولا يعلم كيفيته إلا الله» is Muyassar's own guard against likening. Muyassar's definition («موضع قدمي الرب») is left out for the age; SCHOLAR to confirm. NB english_mokhtasar renders Kursi as \"Throne\"; EN on the page says \"Kursi\", which is right.",
-   "flag": true
+   "flag": true,
+   "scholar": "APPROVED",
+   "final_ar": "كرسيُّ الله أوسعُ من السماوات والأرض، ولا يعلم كيفيَّتَه إلا الله."
   },
   {
    "ref": "2:255",
@@ -2377,11 +2676,16 @@
    "proposed_ar": "ولا يُتعبه حفظُ السماوات والأرض، وهو العليُّ فوق جميع خلقه، العظيمُ الذي له كلُّ صفات العظمة.",
    "words": 16,
    "notes": "Attributes as Muyassar (العلو above all creation; all attributes of greatness).",
-   "flag": false
+   "flag": false,
+   "scholar": "APPROVED",
+   "final_ar": "ولا يُتعبه حفظُ السماوات والأرض، وهو العليُّ فوق جميع خلقه، العظيمُ الذي له كلُّ صفات العظمة."
   }
  ],
  "basmala_header": {
   "proposed_ar": "نبدأ قراءةَ السورة باسم الله، ونطلب عونَه، وهو الرحمن الذي وسِعت رحمتُه كلَّ الخلق، الرحيمُ بالمؤمنين.",
-  "applies_to": "the Bismillah header .translation on the 20 non-Fatiha surah pages and ayat-al-kursi.html (not voiced; scholar NOTE, Round 3, 2 A)"
+  "applies_to": "the Bismillah header .translation on the 20 non-Fatiha surah pages and ayat-al-kursi.html (not voiced; scholar NOTE, Round 3, 2 A)",
+  "final_ar": "نبدأ قراءةَ السورة باسم الله، ونطلب عونَه، وهو الرحمن الذي وسِعت رحمتُه كلَّ الخلق، الرحيمُ بالمؤمنين.",
+  "final_ar_kursi": "نبدأ قراءةَ الآية باسم الله، ونطلب عونَه، وهو الرحمن الذي وسِعت رحمتُه كلَّ الخلق، الرحيمُ بالمؤمنين.",
+  "scholar": "APPROVED"
  }
 }

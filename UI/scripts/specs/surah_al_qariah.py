@@ -111,7 +111,7 @@ SPEC = dict(
             ar='الْقَارِعَةُ',
             tl="Al-Qari'ah",
             tr_en='"The Striking Hour."',
-            tr_ar='"القارعة"',
+            tr_ar='القارعةُ هي يومُ القيامة، سُمِّيت بذلك لأن أحداثها العظيمة تقرع قلوبَ الناس، أي تُفزعها.',
             ex_en='One word, standing alone. The surah opens by <strong>naming it and stopping</strong>, '
                   'the way you would say a name that needs no sentence around it.',
             ex_ar='كلمة واحدة وحدها. تفتتح السورة بـ<strong>تسميتها ثم تسكت</strong>، كما تذكر '
@@ -121,7 +121,7 @@ SPEC = dict(
             ar='مَا الْقَارِعَةُ',
             tl="Mal-Qari'ah",
             tr_en='"What is the Striking Hour?"',
-            tr_ar='"ما القارعة"',
+            tr_ar='أيُّ شيءٍ هذه القارعة التي تُفزع القلوب؟',
             ex_en='Now a question — and it is Allah asking it. The question itself is telling you '
                   '<strong>this is bigger than the word</strong>.',
             ex_ar='ثم سؤال — والسائل هو الله. والسؤال نفسه يخبرك أن '
@@ -131,7 +131,7 @@ SPEC = dict(
             ar='وَمَا أَدْرَاكَ مَا الْقَارِعَةُ',
             tl="Wa ma adraka mal-Qari'ah",
             tr_en='"And what can make you know what the Striking Hour is?"',
-            tr_ar='"وما أدراك ما القارعة"',
+            tr_ar='وأيُّ شيءٍ يُعلِمك بها؟ إنها يومُ القيامة العظيم.',
             ex_en='Three verses, and the name has been said <strong>three times</strong>. The Quran '
                   'is slowing you down before it shows you anything.',
             ex_ar='ثلاث آيات، وقد ذُكر الاسم <strong>ثلاث مرات</strong>. يُبطئك القرآن قبل أن '
@@ -141,7 +141,7 @@ SPEC = dict(
             ar='يَوْمَ يَكُونُ النَّاسُ كَالْفَرَاشِ الْمَبْثُوثِ',
             tl='Yawma yakoonun-nasu kal-farashil-mabthooth',
             tr_en='"The Day people will be like scattered moths,"',
-            tr_ar='"يوم يكون الناس كالفراش المبثوث"',
+            tr_ar='في ذلك اليوم يكون الناسُ في كثرتهم وتفرُّقهم وحركتهم مثلَ الفَراش المنتشر.',
             ex_en='The first picture. Moths around a lamp at night — <strong>small, many, and going '
                   'in every direction</strong> at once.',
             ex_ar='الصورة الأولى. فراشٌ حول مصباح في الليل — <strong>صغار كثيرون يذهبون في كل '
@@ -151,7 +151,7 @@ SPEC = dict(
             ar='وَتَكُونُ الْجِبَالُ كَالْعِهْنِ الْمَنْفُوشِ',
             tl="Wa takoonul-jibalu kal-'ihnil-manfoosh",
             tr_en='"And the mountains will be like carded wool."',
-            tr_ar='"وتكون الجبال كالعهن المنفوش"',
+            tr_ar='وتصير الجبالُ مثلَ الصوف الملوَّن المنفوش، خفيفةً، ثم تزول.',
             ex_en='The second picture, and the stranger one. <em>Carded wool</em> is wool pulled '
                   'apart until it floats. <strong>The heaviest thing you know, gone light.</strong>',
             ex_ar='الصورة الثانية، وهي أعجب. و<em>العهن المنفوش</em> صوف نُفش حتى طار. '
@@ -161,7 +161,7 @@ SPEC = dict(
             ar='فَأَمَّا مَنْ ثَقُلَتْ مَوَازِينُهُ',
             tl='Fa-amma man thaqulat mawazeenuh',
             tr_en='"Then as for one whose scales are heavy,"',
-            tr_ar='"فأما من ثقلت موازينه"',
+            tr_ar='فأمّا مَن كانت حسناتُه أثقلَ في الميزان من سيئاته،',
             ex_en='And here is the turn. The mountains weigh nothing now — but '
                   '<strong>a person\'s deeds still weigh something</strong>.',
             ex_ar='وهنا المنعطف. فالجبال لا تزن شيئاً الآن — ومع ذلك '
@@ -171,7 +171,7 @@ SPEC = dict(
             ar='فَهُوَ فِي عِيشَةٍ رَاضِيَةٍ',
             tl="Fahuwa fee 'eeshatir-radiyah",
             tr_en='"He will be in a pleasant life."',
-            tr_ar='"فهو في عيشة راضية"',
+            tr_ar='فهو في حياةٍ سعيدة يرضاها، في الجنة.',
             ex_en='The Arabic says the <em>life itself</em> is pleased. '
                   '<strong>A life with nothing left in it to wish were different.</strong>',
             ex_ar='تقول العربية إن <em>العيشة نفسها</em> راضية. '
@@ -181,7 +181,7 @@ SPEC = dict(
             ar='وَأَمَّا مَنْ خَفَّتْ مَوَازِينُهُ',
             tl='Wa amma man khaffat mawazeenuh',
             tr_en='"But as for one whose scales are light,"',
-            tr_ar='"وأما من خفّت موازينه"',
+            tr_ar='وأمّا مَن كانت حسناتُه أخفَّ في الميزان، ورجحت سيئاتُه،',
             ex_en='Not someone who did nothing wrong and lost anyway — someone who '
                   '<strong>put too little on the scale</strong> while there was still time.',
             ex_ar='وليس من لم يخطئ ثم خسر، بل من <strong>لم يضع في الميزان ما يكفي</strong> '
@@ -191,7 +191,7 @@ SPEC = dict(
             ar='فَأُمُّهُ هَاوِيَةٌ',
             tl='Fa-ummuhu hawiyah',
             tr_en='"His refuge will be an abyss."',
-            tr_ar='"فأمه هاوية"',
+            tr_ar='فمكانُه يومَ القيامة نارُ جهنم.',
             ex_en='The Arabic uses the word for the place you always return to. '
                   '<strong>What you kept choosing becomes where you end up.</strong>',
             ex_ar='استعملت العربية لفظ المرجع الذي تأوي إليه. '
@@ -201,7 +201,7 @@ SPEC = dict(
             ar='وَمَا أَدْرَاكَ مَا هِيَهْ',
             tl='Wa ma adraka ma hiyah',
             tr_en='"And what can make you know what it is?"',
-            tr_ar='"وما أدراك ما هيه"',
+            tr_ar='وهل تعرف ما هذه الهاوية؟',
             ex_en='The question comes back, exactly as it did at the start. The surah '
                   '<strong>frames itself with the same words</strong>.',
             ex_ar='ويعود السؤال كما جاء في الأول. فالسورة '
@@ -211,7 +211,7 @@ SPEC = dict(
             ar='نَارٌ حَامِيَةٌ',
             tl='Narun hamiyah',
             tr_en='"A blazing Fire."',
-            tr_ar='"نار حامية"',
+            tr_ar='إنها نارٌ شديدةُ الحرارة.',
             ex_en='Two words, and the surah ends. Said once, as the Quran says it — and the thing '
                   'to carry away is the verse before it: <strong>fill the scale while you can</strong>.',
             ex_ar='كلمتان، وتنتهي السورة. تُقال مرة واحدة كما قالها القرآن — والذي تحمله معك هو '

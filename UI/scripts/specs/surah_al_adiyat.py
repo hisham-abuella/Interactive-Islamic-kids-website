@@ -112,7 +112,7 @@ SPEC = dict(
             ar='وَالْعَادِيَاتِ ضَبْحًا',
             tl='Wal-\'adiyati dabha',
             tr_en='"By the racers, panting,"',
-            tr_ar='"والعاديات ضبحاً"',
+            tr_ar='يُقسم اللهُ بالخيل التي تجري بسرعة في سبيله نحو العدوّ، حتى يُسمَع صوتُ أنفاسها.',
             ex_en='Allah swears by galloping horses. <em>Dabh</em> is the sound of their breathing '
                   'as they run — <strong>you can hear the surah before you understand it</strong>.',
             ex_ar='يقسم الله بالخيل الجاريات. و<em>الضبح</em> صوت أنفاسها وهي تعدو — '
@@ -122,7 +122,7 @@ SPEC = dict(
             ar='فَالْمُورِيَاتِ قَدْحًا',
             tl='Fal-mooriyati qadha',
             tr_en='"striking sparks of fire,"',
-            tr_ar='"فالموريات قدحاً"',
+            tr_ar='وبالخيل التي تضرب الصخرَ بحوافرها، فتتطاير منه شراراتُ النار من شدة جريها.',
             ex_en='Iron hooves hitting stone at speed <strong>throw real sparks</strong> in the '
                   'dark. The Quran is describing something you could actually see.',
             ex_ar='الحوافر تضرب الحجر بسرعة <strong>فتقدح شرراً حقيقياً</strong> في الظلام. '
@@ -132,7 +132,7 @@ SPEC = dict(
             ar='فَالْمُغِيرَاتِ صُبْحًا',
             tl='Fal-mugheerati subha',
             tr_en='"charging at dawn,"',
-            tr_ar='"فالمغيرات صبحاً"',
+            tr_ar='وبالخيل التي تهجم على الأعداء وقتَ الصباح.',
             ex_en='At first light. The three verses so far are in <strong>the order it happens</strong> '
                   '— running, sparking, arriving.',
             ex_ar='عند أول الضوء. والآيات الثلاث حتى الآن <strong>على ترتيب وقوعها</strong> — '
@@ -142,7 +142,7 @@ SPEC = dict(
             ar='فَأَثَرْنَ بِهِ نَقْعًا',
             tl='Fa-atharna bihi naq\'a',
             tr_en='"stirring up clouds of dust,"',
-            tr_ar='"فأثرن به نقعاً"',
+            tr_ar='فتُثير بجريها الغبارَ في الهواء.',
             ex_en='So many hooves that the dust rises in a cloud. <strong>You can picture it '
                   'exactly</strong>, which is the point.',
             ex_ar='حوافر كثيرة حتى يثور الغبار سحابةً. <strong>تكاد تراها</strong>، وهذا هو '
@@ -152,7 +152,7 @@ SPEC = dict(
             ar='فَوَسَطْنَ بِهِ جَمْعًا',
             tl='Fawasatna bihi jam\'a',
             tr_en='"and plunging into the middle of the gathering."',
-            tr_ar='"فوسطن به جمعاً"',
+            tr_ar='فتدخل بفرسانها وسطَ جموع الأعداء.',
             ex_en='Right into the centre of it. Five verses, five stages, and '
                   '<strong>not one word wasted</strong>.',
             ex_ar='إلى وسطه تماماً. خمس آيات، وخمس مراحل، و<strong>لا كلمة زائدة</strong>.',
@@ -161,7 +161,7 @@ SPEC = dict(
             ar='إِنَّ الْإِنْسَانَ لِرَبِّهِ لَكَنُودٌ',
             tl='Innal-insana li-Rabbihi lakanood',
             tr_en='"Indeed, the human being is ungrateful to his Lord."',
-            tr_ar='"إن الإنسان لربه لكنود"',
+            tr_ar='إنَّ الإنسانَ كثيرُ الجحود لنِعَم ربه، لا يشكرها.',
             ex_en='Here is the turn the whole opening was for. <em>Kanood</em> means someone who '
                   '<strong>remembers the one hard day and forgets the hundred good ones</strong>.',
             ex_ar='وهنا الالتفاتة التي سيق لها المطلع كله. و<em>الكنود</em> من '
@@ -171,7 +171,7 @@ SPEC = dict(
             ar='وَإِنَّهُ عَلَىٰ ذَٰلِكَ لَشَهِيدٌ',
             tl='Wa innahu \'ala dhalika lashaheed',
             tr_en='"And he is a witness to that himself."',
-            tr_ar='"وإنه على ذلك لشهيد"',
+            tr_ar='وهو نفسُه يعرف ذلك ويُقِرُّ به.',
             ex_en='Deep down <strong>he knows it</strong>. Nobody has to tell you when you have '
                   'forgotten to be grateful — you can feel it.',
             ex_ar='وهو في قرارة نفسه <strong>يعلم ذلك</strong>. فلا يحتاج أحد أن يخبرك أنك '
@@ -181,7 +181,7 @@ SPEC = dict(
             ar='وَإِنَّهُ لِحُبِّ الْخَيْرِ لَشَدِيدٌ',
             tl='Wa innahu lihubbil-khayri lashadeed',
             tr_en='"And he is intense in his love of wealth."',
-            tr_ar='"وإنه لحب الخير لشديد"',
+            tr_ar='وهو يحبُّ المالَ حباً شديداً.',
             ex_en='<em>Khayr</em> here means money and things. We love them <strong>hard</strong> '
                   '— and loving them that much is what crowds out the thank you.',
             ex_ar='و<em>الخير</em> هنا المال والمتاع. نحبه <strong>حباً شديداً</strong> — وهذا '
@@ -191,7 +191,7 @@ SPEC = dict(
             ar='أَفَلَا يَعْلَمُ إِذَا بُعْثِرَ مَا فِي الْقُبُورِ',
             tl='Afala ya\'lamu idha bu\'thira ma fil-quboor',
             tr_en='"Does he not know that when what is in the graves is scattered,"',
-            tr_ar='"أفلا يعلم إذا بعثر ما في القبور"',
+            tr_ar='ألا يعلم الإنسانُ ما ينتظره، حين يُخرج اللهُ الموتى من قبورهم للحساب والجزاء؟',
             ex_en='A gentle question rather than a telling-off: <em>does he not realise?</em> '
                   '<strong>Everything hidden comes up</strong>.',
             ex_ar='سؤال رفيق لا تأنيب: <em>أفلا يعلم؟</em> '
@@ -201,7 +201,7 @@ SPEC = dict(
             ar='وَحُصِّلَ مَا فِي الصُّدُورِ',
             tl='Wa hussila ma fis-sudoor',
             tr_en='"and what is in the hearts is brought out,"',
-            tr_ar='"وحُصّل ما في الصدور"',
+            tr_ar='ويُكشَف ما كان مخفيّاً في القلوب من خيرٍ أو شر.',
             ex_en='Not just what we did — <strong>what we meant by it</strong>. The good done to be '
                   'seen and the good nobody knew about are told apart.',
             ex_ar='لا ما عملنا فقط، بل <strong>ما نويناه به</strong>. فيُفرّق بين معروفٍ صُنع '
@@ -211,7 +211,7 @@ SPEC = dict(
             ar='إِنَّ رَبَّهُمْ بِهِمْ يَوْمَئِذٍ لَخَبِيرٌ',
             tl='Inna Rabbahum bihim yawma-idhin lakhabeer',
             tr_en='"indeed their Lord is fully aware of them that Day."',
-            tr_ar='"إن ربهم بهم يومئذ لخبير"',
+            tr_ar='إنَّ اللهَ في ذلك اليوم خبيرٌ بالناس وبأعمالهم، أي يعلمها كلَّها، فلا يغيب عنه منها شيء.',
             ex_en='The surah ends on <em>Khabeer</em> — <strong>the One who knows the inside of '
                   'things</strong>. He knew all along what each person was carrying.',
             ex_ar='تختم السورة بـ<em>خبير</em> — <strong>العليم ببواطن الأمور</strong>. وقد علم '
