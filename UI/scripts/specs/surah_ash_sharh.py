@@ -166,7 +166,7 @@ SPEC = dict(
         dict(
             ar='فَإِذَا فَرَغْتَ فَانْصَبْ',
             tl='Fa-idha faraghta fansab',
-            tr_en='"So when you have finished, work on,"',
+            tr_en='"So when you have finished your tasks, strive hard in worship,"',
             tr_ar='فإذا انتهيتَ من أعمالك وأشغالك في الدنيا، فاجتهِدْ في عبادة الله.',
             ex_en='When one task is done, <strong>get up for the next good one</strong>. Finished '
                   'your homework? Then help at home. A believer keeps going.',
