@@ -1,6 +1,6 @@
 # Arabic meaning lines for the surah verse cards: draft for the scholar (2026-11)
 
-**Status: DRAFT. Nothing here is on a page or voiced.** `AR_VERSE_AUDIO` stays `false`, no
+**Status: DRAFT, scholar ruling recorded 2026-11-06 (see "Scholar ruling" below). Nothing here is on a page or voiced.** `AR_VERSE_AUDIO` stays `false`, no
 `data-ar` was changed and no audio was recorded. Every line waits for the islamic-content-scholar
 (Round 3, Part 2 A, rule 8).
 
@@ -14,6 +14,353 @@
   `SOURCES.md`). `english_mokhtasar` was fetched as a reference for the EN check.
 - **Machine-readable copy:** `UI/scripts/data/tafsir/ar-meaning-lines.json` (per card: ref,
   unit, ayah, current EN and AR lines, Muyassar excerpt, Mukhtasar, proposed line, notes).
+
+## Scholar ruling (islamic-content-scholar, 2026-11-06)
+
+Read-only review at `15a9063`. **How I checked:**
+- Every «al-Muyassar (verbatim)» excerpt was string-matched against `UI/scripts/data/tafsir/arabic_moyassar.json`. All 148 are verbatim.
+- Disputed cards were compared with `arabic_mokhtasar.json` and `english_mokhtasar.json`.
+- Every proposed line and every replacement below went through `verify-no-recitation.py`'s own `Quran`/`Whitelist` classes, under its real unit name, with the ﷺ substitution. Each was checked alone and joined to its card's explanation with `VERSE_BREAK`. Result: all clean.
+- Word counts: the maximum is 24 (98:8).
+- The existing AR explanations were scanned for direct-speech frames («يقول الله»، «فأجاب الله»، «يسأل الله:»، «كأنه يقول»), which the checker cannot see.
+- Al-Fatiha is still on the Hafs counting: 7 cards, the Bismillah is card 1, and 1:7 is a single card ending «ولا الضالين».
+
+**Totals: 143 APPROVED, 5 CHANGED (of 148).** The basmala header line is APPROVED.
+
+### Rulings on the drafter's open questions
+
+| # | Question | Ruling |
+|---|---|---|
+| 1 | 1:7 without "Jews / Christians" | APPROVED. See card 1:7 below. |
+| 2 | 104:9 chains or columns | COLUMNS (al-Mukhtasar). The line is approved as drafted, and the EN stays. |
+| 3 | 110:3 indication of his ﷺ passing | CHANGE: add al-Mukhtasar's gentle wording, «علامة على قرب تمام مهمته». The new line is below. |
+| 4 | Kursi 7 without «موضع قدمي الرب» | APPROVED as drafted. |
+| 5 | 109:5 note on specific people | KEEP (21 words). |
+| 6 | 95:5 the Fire or old age | Muyassar (the Fire). Muyassar is the primary source, and this is Ibn Kathir's reading, which he argues from the exception in 95:6. Al-Mukhtasar also ends with the Fire. The line is reordered so that the condition comes first (CHANGE below). |
+| 7 | 108:1 «وفي الآخرة» | APPROVED. No whitelist entry. |
+| 8 | Fatiha 5-7 narrator's «we» | CONFIRMED. |
+| 9 | Basmala header line | APPROVED as drafted. On Ayat al-Kursi use «نبدأ قراءةَ الآية باسم الله، ونطلب عونَه، وهو الرحمن الذي وسِعت رحمتُه كلَّ الخلق، الرحيمُ بالمؤمنين.» The Kursi header is deliberate and defensible: saying the basmala when starting mid-surah is permitted. The line does not claim it is part of the ayah. |
+
+### The three existing explanations that fail the checker (AR `data-ar` only; EN unchanged)
+
+| Unit | Evidence | Replacement `data-ar` (keep the page's existing `<em>`/`<strong>` markup where it applies) |
+|---|---|---|
+| `surah-fatiha/ar/verse-4` | `UI/surah-fatiha.html:178` «الله هو الملك ومالك يوم الدين - …» | «الله هو الملك، وهو وحده يملك يوم الدين - اليوم الذي يُجزى فيه كل إنسان على عمله الصالح. وهذا يذكّرنا أن نفعل الخير دائماً!» |
+| `surah-al-kafirun/ar/verse-3` | `UI/surah-al-kafirun.html:163` «… والله يعلم ما في نفوسهم.» | The same text, with the last sentence changed to «والله يعلم ما تُخفيه قلوبهم.» |
+| `surah-al-ikhlas/ar/verse-1` | `UI/surah-al-ikhlas.html:147` «… الله واحد! لا إله إلا هو خلق كل شيء. …» | «يأمر الله نبيه ﷺ أن <em>يقولها بصوت واضح</em>: الله <strong>واحد</strong>! هو وحده الإله الحق، وهو الذي خلق كل شيء. ليس له شريك ولا نظير.» Rewording, not a whitelist entry: the formula was only ever approved alone, and here it runs into 2:163. |
+
+### Six more existing explanations: MUST before AR verse audio is turned on (the checker cannot see these)
+
+Each one either frames Quranic words as a quotation (rule 1(a)), or gives Allah **direct speech in words that are not His** (rule 3). The second is worse than recitation: it attributes to Allah a sentence He did not say, in a voice the child will trust.
+
+| Unit | Evidence | Replacement `data-ar` |
+|---|---|---|
+| `surah-al-kawthar/ar/verse-1` | `UI/surah-al-kawthar.html:136` «يقول الله: إنا أعطيناك — …» (rule 1(a): ayah words framed as a quote) | «كلمة <em><strong>أعطينا</strong>ك</em> تدلّ على أن العطاء قد تمَّ فعلاً، فهو هديةٌ حاصلة! والكوثر يعني خيراً كثيراً لا تستطيع إحصاءه: القرآن، ونهر الجنة، ونعماً لا تخطر على بال.» A single key word that is being explained, which rule 2 allows. |
+| `surah-al-kawthar/ar/verse-3` | `UI/surah-al-kawthar.html:168` «فأجاب الله: بل أنت الذي ستُنسى!» | «سمّى الرجل النبي ﷺ "أبتر" أي مقطوعاً منسياً. فأخبر الله أن <strong>مُبغض النبي ﷺ هو المقطوع المنسيّ!</strong> واليوم يحب العالم كله النبي ﷺ ويذكره. والله يدافع دائماً عن أوليائه.» |
+| `surah-at-tin/ar/verse-5` | `UI/surah-at-tin.html:196` «خلقتك هبة، وما تصنعه بها اختيارك.» Unvowelled, the voice will read it as خَلَقْتُكَ, "I created you": first-person speech of Allah that He did not say. | «ومن أُعطي كل هبة قد يضيّعها بسوء اختياره. <strong>فحُسنُ خِلقتك هبةٌ من الله، وما تصنعه بها اختيارك.</strong>» |
+| `surah-ash-sharh/ar/verse-1` | `UI/surah-ash-sharh.html:138` «فيسأل الله: ألم نوسّعه ونطمئنه؟» | «إذا اغتممت ضاق صدرك. وهنا يُذكِّر اللهُ نبيَّه ﷺ بأنه <strong>وسّع صدره وطمأنه</strong>، فالسؤال في الآية معناه التذكير.» |
+| `surah-quraysh/ar/verse-3` | `UI/surah-quraysh.html:167` «بل يقول اعبدوا ربّ البيت» | «وهنا مقصد السورة كله في سطر واحد. <em>"هذا البيت"</em> هو <strong>الكعبة</strong>. والله لم يأمرهم بعبادة البيت، بل بعبادة <strong>ربّ</strong> البيت. فالعبادة لله وحده، لا لبناء.» |
+| `surah-an-nasr/ar/verse-3` | `UI/surah-an-nasr.html:168` «لا يقول الله "احتفلوا". بل يقول قل سبحان الله، وقل الحمد لله، وقل أستغفر الله» | «وهنا المفاجأة! بعد نصر عظيم لا يأمر الله بالفخر، بل يأمر نبيه ﷺ أن <strong>يسبّحه ويحمده ويستغفره: سبحان الله، والحمد لله، وأستغفر الله</strong>. ويذكّرنا أنه <em>التواب</em> — <strong>يقبل التوبة دائماً</strong> مهما كان.» |
+
+**SHOULD (not blocking):** two explanations use «وكأنه يقول …» with invented words in quote marks. Here the "as if" is the narrator's own and is marked as such, so these do not block.
+- `UI/surah-al-maun.html:138`: use «يبدأ الله بسؤال يجعلك تصغي باهتمام. وهذا الشخص لا يؤمن حقاً أن الناس سيقفون يوماً بين يدي الله ليُسألوا عما فعلوا.»
+- `UI/surah-al-fil.html:137`: use «يبدأ الله بسؤال — <em>ألم تر؟</em> — ليلفت نظرك إلى أمر يعرفه الجميع لأنه حدث فعلاً. وأصحاب الفيل هم الجيش الذي جاء ليهدم الكعبة.»
+
+All replacements above are clean under the checker, alone and joined to their card's line.
+
+**NOTE, EN parity (not blocking for AR):** the EN of Kawthar 3 ("Allah answered: no, you are the one who will be forgotten!") and Nasr 3 ("He says say SubhanAllah…") also put non-Quranic sentences in Allah's mouth. Suggested EN:
+- Kawthar 3: "Allah answered that it is the one who hates the Prophet ﷺ who is cut off and forgotten!"
+- Nasr 3: "He tells the Prophet ﷺ to glorify Him, praise Him and ask His forgiveness: SubhanAllah, Alhamdulillah, Astaghfirullah."
+
+### EN meaning lines
+
+| Card | Now | Ruling | Exact EN |
+|---|---|---|---|
+| 94:7 (`UI/surah-ash-sharh.html:222`) | "So when you have finished, work on," | CHANGE (SHOULD). Both sources say *worship*. | "So when you have finished your tasks, strive hard in worship," |
+| 99:7 (`UI/surah-az-zalzalah.html:221`) | "an atom's weight of good" | CHANGE (SHOULD). Both sources: a tiny ant. "Atom" is a later idiom, and the page's own intro (`:85`) already explains ذرّة as a mote or a tiny ant. | "So whoever does good the weight of a tiny ant will see it." |
+| 99:8 (`:234`) | "an atom's weight of evil" | CHANGE (SHOULD) | "And whoever does evil the weight of a tiny ant will see it." For consistency, also change `:98` (same wording as 99:7), `:314` → 'How small is "the weight of a tiny ant" of good?', `:419` → "Not even the tiniest speck of good is ever lost.", game 06 `recEn` (same) and game 09 `zal7.tr` (same as 99:7). |
+| 104:9 | "In outstretched columns." | KEEP | none |
+| 107:4 (`UI/surah-al-maun.html:177`) | "So woe to those who pray." | CHANGE, punctuation only: **"So woe to those who pray,"**. Do NOT add "carelessly". That would put 107:5 inside the translation of 107:4, and it would break the page's teaching: the intro (`:88`) and the card's explanation (`:180`) are built on the surprise followed straight away by "do not stop here". The comma marks that 107:5 completes the sentence (الذين is a description, not a new sentence), as 101:6 does. The AR line keeps its qualifier, because it is tafsir. |
+| 101:9 | "His refuge will be an abyss." | KEEP. A standard rendering; 101:10-11 explain it. | none |
+| 111:1 (`UI/surah-al-masad.html:133`) | "…perish, and may he perish." | CHANGE (SHOULD). Both sources read the second تبّ as a statement of fact. | "May the hands of Abu Lahab perish, and he has perished." |
+| 111:2 | "His wealth and what he earned…" | KEEP. A literal rendering; the AR line gives the tafsir (his children). | none |
+| 113:4 | "those who blow on knots" | KEEP. The explanation says it is magic. | none |
+| 93:3 | "nor is He displeased with you" | KEEP | none |
+
+**NOTE (94:7 explanation):** «فانهض إلى الذي بعده… فأعِن في البيت» is compatible once the line says "worship": a good deed done for Allah is worship. No change needed.
+
+### Go / no-go for Arabic verse narration
+
+**GO**, once all of the following are done, in this order:
+1. Apply the 143 approved lines and the 5 CHANGED lines (exact text below) to `data-ar` on the 22 pages.
+2. Apply the 3 checker-fix explanations and the 6 MUST explanations above.
+3. Run `verify-no-recitation.py` with `AR_VERSE_AUDIO = true`; it must PASS.
+4. Render through `ram-gate`, then run the Whisper `--transcripts` sweep; it must be clean.
+5. In the transcript of `surah-at-tin/ar/verse-5`, confirm that the voice said «خِلقتك» and not «خلقتُك».
+
+Until steps 1-5 are done: **NO-GO**. Do not flip the flag on the strength of the 148 lines alone, because the 6 MUST explanations would be voiced.
+
+### Per-card rulings
+
+**surah-fatiha**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 1:1 | 1 | APPROVED |  |
+| 1:2 | 2 | APPROVED |  |
+| 1:3 | 3 | APPROVED |  |
+| 1:4 | 4 | APPROVED |  |
+| 1:5 | 5 | APPROVED | Open question 8: CONFIRMED. The narrator's «we… Allah» is meaning, not a dua spoken in a clone's voice to Allah. This is rule 3. |
+| 1:6 | 6 | APPROVED | Open question 8: CONFIRMED (as card 5). |
+| 1:7 | 7 | APPROVED | Open question 1: APPROVED without the names. Muyassar defines each group by its attribute, and its naming is by example («ومن كان على شاكلتهم»). The attribute is the meaning, and the line keeps it exactly. The naming is authentic tafsir (the hadith of 'Adi b. Hatim in al-Tirmidhi and Ahmad); it is left for a teacher, not removed as wrong. The existing explanation is consistent with this. Open question 8: CONFIRMED. |
+
+**surah-ad-duha**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 93:1 | 1 | **CHANGE** | «يُقسم اللهُ بوقت الضحى أولَ النهار، والمقصود به النهارُ كلُّه.» «أي بالنهار كلِّه» presents Muyassar's extension («والمراد به النهار كله») as the meaning of the word, which conflicts with the EN "morning light" and the explanation. The new line gives the word its meaning (al-Mukhtasar: «بأول النهار») and then Muyassar's intended scope. 10 words. |
+| 93:2 | 2 | APPROVED |  |
+| 93:3 | 3 | APPROVED | «كرهه» for «أبغضك» is fine. The EN may stay. |
+| 93:4 | 4 | APPROVED |  |
+| 93:5 | 5 | APPROVED |  |
+| 93:6 | 6 | APPROVED |  |
+| 93:7 | 7 | **CHANGE** | «وكان قبل الوحي لا يعرف القرآنَ ولا تفاصيلَ الإيمان، فعلَّمه اللهُ وهداه.» Aqeedah. Spoken to a child, «لا يعرف الكتابَ والإيمان» sounds like "he was not a believer before revelation". The prophets were protected from shirk before prophethood. Al-Iman in this wording (42:52) means the detailed laws and teachings of faith that came with the revelation. The line now says that. Nothing is added beyond the standard reading. 12 words. |
+| 93:8 | 8 | APPROVED |  |
+| 93:9 | 9 | APPROVED |  |
+| 93:10 | 10 | APPROVED |  |
+| 93:11 | 11 | APPROVED |  |
+
+**surah-ash-sharh**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 94:1 | 1 | APPROVED |  |
+| 94:2 | 2 | APPROVED |  |
+| 94:3 | 3 | APPROVED |  |
+| 94:4 | 4 | APPROVED |  |
+| 94:5 | 5 | APPROVED |  |
+| 94:6 | 6 | APPROVED |  |
+| 94:7 | 7 | APPROVED | EN changes (see the EN section). |
+| 94:8 | 8 | APPROVED |  |
+
+**surah-at-tin**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 95:1 | 1 | APPROVED |  |
+| 95:2 | 2 | APPROVED |  |
+| 95:3 | 3 | APPROVED |  |
+| 95:4 | 4 | APPROVED |  |
+| 95:5 | 5 | **CHANGE** | «ثم إن لم يُطِع الإنسانُ اللهَ ويتَّبع رسلَه، يكون مصيرُه إلى النار.» The view is the same (Muyassar). The order changes: the condition now comes first, so a child never hears "the human being's end is the Fire" as an unconditional clause before the "if". 12 words. |
+| 95:6 | 6 | APPROVED |  |
+| 95:7 | 7 | APPROVED |  |
+| 95:8 | 8 | APPROVED |  |
+
+**surah-al-bayyinah**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 98:1 | 1 | APPROVED |  |
+| 98:2 | 2 | **CHANGE** | «وهذا الدليلُ هو النبيُّ محمد ﷺ، يتلو عليهم القرآنَ، وهو مكتوبٌ في صحفٍ طاهرة.» «يقرأ عليهم القرآنَ مكتوباً في صحف» pictures the Prophet ﷺ reading from written sheets. He was unlettered (7:157) and recited from memory what is recorded in purified pages. Muyassar has «يتلو». 14 words. |
+| 98:3 | 3 | APPROVED |  |
+| 98:4 | 4 | APPROVED |  |
+| 98:5 | 5 | APPROVED |  |
+| 98:6 | 6 | APPROVED |  |
+| 98:7 | 7 | APPROVED |  |
+| 98:8 | 8 | APPROVED |  |
+
+**surah-az-zalzalah**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 99:1 | 1 | APPROVED |  |
+| 99:2 | 2 | APPROVED |  |
+| 99:3 | 3 | APPROVED |  |
+| 99:4 | 4 | APPROVED |  |
+| 99:5 | 5 | APPROVED |  |
+| 99:6 | 6 | APPROVED |  |
+| 99:7 | 7 | APPROVED |  |
+| 99:8 | 8 | APPROVED |  |
+
+**surah-al-adiyat**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 100:1 | 1 | APPROVED |  |
+| 100:2 | 2 | APPROVED |  |
+| 100:3 | 3 | APPROVED |  |
+| 100:4 | 4 | APPROVED |  |
+| 100:5 | 5 | APPROVED |  |
+| 100:6 | 6 | APPROVED |  |
+| 100:7 | 7 | APPROVED |  |
+| 100:8 | 8 | APPROVED |  |
+| 100:9 | 9 | APPROVED |  |
+| 100:10 | 10 | APPROVED |  |
+| 100:11 | 11 | APPROVED |  |
+
+**surah-al-qariah**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 101:1 | 1 | APPROVED |  |
+| 101:2 | 2 | APPROVED |  |
+| 101:3 | 3 | APPROVED |  |
+| 101:4 | 4 | APPROVED |  |
+| 101:5 | 5 | APPROVED |  |
+| 101:6 | 6 | APPROVED |  |
+| 101:7 | 7 | APPROVED |  |
+| 101:8 | 8 | APPROVED |  |
+| 101:9 | 9 | APPROVED |  |
+| 101:10 | 10 | APPROVED |  |
+| 101:11 | 11 | APPROVED |  |
+
+**surah-at-takathur**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 102:1 | 1 | APPROVED |  |
+| 102:2 | 2 | APPROVED |  |
+| 102:3 | 3 | APPROVED |  |
+| 102:4 | 4 | APPROVED |  |
+| 102:5 | 5 | APPROVED |  |
+| 102:6 | 6 | APPROVED |  |
+| 102:7 | 7 | APPROVED |  |
+| 102:8 | 8 | APPROVED |  |
+
+**surah-al-asr**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 103:1 | 1 | APPROVED |  |
+| 103:2 | 2 | APPROVED |  |
+| 103:3 | 3 | APPROVED |  |
+
+**surah-al-humazah**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 104:1 | 1 | APPROVED |  |
+| 104:2 | 2 | APPROVED |  |
+| 104:3 | 3 | APPROVED |  |
+| 104:4 | 4 | APPROVED |  |
+| 104:5 | 5 | APPROVED |  |
+| 104:6 | 6 | APPROVED |  |
+| 104:7 | 7 | APPROVED |  |
+| 104:8 | 8 | APPROVED |  |
+| 104:9 | 9 | APPROVED | Open question 2: COLUMNS (al-Mukhtasar). Both readings are classical, and both sources are approved. «عَمَد» is lexically "columns" (plural of عمود). This reading agrees with the EN and is not graphic. EN stays "In outstretched columns." |
+
+**surah-al-fil**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 105:1 | 1 | APPROVED |  |
+| 105:2 | 2 | APPROVED |  |
+| 105:3 | 3 | APPROVED |  |
+| 105:4 | 4 | APPROVED |  |
+| 105:5 | 5 | APPROVED |  |
+
+**surah-quraysh**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 106:1 | 1 | APPROVED |  |
+| 106:2 | 2 | APPROVED |  |
+| 106:3 | 3 | APPROVED |  |
+| 106:4 | 4 | APPROVED |  |
+
+**surah-al-maun**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 107:1 | 1 | APPROVED |  |
+| 107:2 | 2 | APPROVED |  |
+| 107:3 | 3 | APPROVED |  |
+| 107:4 | 4 | APPROVED | APPROVED: the qualifier is needed on the AR line. EN changes only its full stop (see the EN section). |
+| 107:5 | 5 | APPROVED |  |
+| 107:6 | 6 | APPROVED |  |
+| 107:7 | 7 | APPROVED |  |
+
+**surah-al-kawthar**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 108:1 | 1 | APPROVED | Open question 7: APPROVED in the «في الدنيا وفي الآخرة» form. The meaning is the same as my model line, and the whitelist stays minimal. No whitelist entry. |
+| 108:2 | 2 | APPROVED |  |
+| 108:3 | 3 | APPROVED |  |
+
+**surah-al-kafirun**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 109:1 | 1 | APPROVED |  |
+| 109:2 | 2 | APPROVED |  |
+| 109:3 | 3 | APPROVED |  |
+| 109:4 | 4 | APPROVED |  |
+| 109:5 | 5 | APPROVED | Open question 5: KEEP the note. It is Muyassar's own, it is short, and it stops a child concluding that no disbeliever can ever believe. Most of Quraysh did later accept Islam. |
+| 109:6 | 6 | APPROVED |  |
+
+**surah-an-nasr**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 110:1 | 1 | APPROVED |  |
+| 110:2 | 2 | APPROVED |  |
+| 110:3 | 3 | **CHANGE** | «وهذه علامةٌ على قرب تمام مهمته ﷺ، فليُكثِرْ من تسبيح الله وحمده، ومن طلب المغفرة منه، فالله يقبل توبةَ عباده كثيراً ويرحمهم.» Open question 3. Both sources frame the ayah this way: Muyassar «فتهيأ للقاء ربك», al-Mukhtasar «علامة على قرب انتهاء المهمة التي بُعِثْتَ بها». Ibn Abbas said the same (Bukhari 4970). Leaving it out drops the reason for the tasbih and istighfar, and lets a child infer that the victory needed forgiving. The new line uses al-Mukhtasar's gentle wording: no explicit mention of death for 5-year-olds. It does not contradict the EN. 22 words. |
+
+**surah-al-masad**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 111:1 | 1 | APPROVED |  |
+| 111:2 | 2 | APPROVED |  |
+| 111:3 | 3 | APPROVED |  |
+| 111:4 | 4 | APPROVED |  |
+| 111:5 | 5 | APPROVED |  |
+
+**surah-al-ikhlas**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 112:1 | 1 | APPROVED |  |
+| 112:2 | 2 | APPROVED |  |
+| 112:3 | 3 | APPROVED |  |
+| 112:4 | 4 | APPROVED |  |
+
+**surah-al-falaq**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 113:1 | 1 | APPROVED |  |
+| 113:2 | 2 | APPROVED |  |
+| 113:3 | 3 | APPROVED |  |
+| 113:4 | 4 | APPROVED |  |
+| 113:5 | 5 | APPROVED |  |
+
+**surah-an-nas**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 114:1 | 1 | APPROVED |  |
+| 114:2 | 2 | APPROVED |  |
+| 114:3 | 3 | APPROVED |  |
+| 114:4 | 4 | APPROVED |  |
+| 114:5 | 5 | APPROVED |  |
+| 114:6 | 6 | APPROVED |  |
+
+**ayat-al-kursi**
+
+| ref | card | ruling | exact replacement / note |
+|---|---|---|---|
+| 2:255 | 1 | APPROVED | Attributes as Muyassar has them (الحي، القيوم). |
+| 2:255 | 2 | APPROVED |  |
+| 2:255 | 3 | APPROVED |  |
+| 2:255 | 4 | APPROVED |  |
+| 2:255 | 5 | APPROVED |  |
+| 2:255 | 6 | APPROVED |  |
+| 2:255 | 7 | APPROVED | Open question 4: APPROVED. The line affirms the Kursi, says it is vaster than the heavens and the earth, and leaves its how to Allah, which is Muyassar's own guard. Leaving out «موضع قدمي الرب» (the athar of Ibn Abbas) is not ta'wil or ta'til. Nothing is denied or reinterpreted. That detail is held back for an age that can receive it without imagining a body. Not "throne", not "knowledge". |
+| 2:255 | 8 | APPROVED | Attributes as Muyassar has them (العلو above all creation). |
+
+---
 
 ## How the lines were written
 
