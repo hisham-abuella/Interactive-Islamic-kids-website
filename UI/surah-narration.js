@@ -33,7 +33,7 @@
 
     var AR_VERSE_AUDIO = true;
     // Bump when verse mp3s are re-recorded, so a cached old take is not played.
-    var AUDIO_VERSION = '20261109';
+    var AUDIO_VERSION = '20261112';
 
     window.SurahNarration = {
         arVerseAudio: AR_VERSE_AUDIO,
