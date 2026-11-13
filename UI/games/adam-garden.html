@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--
+  GAME 05 - The Garden of Choices (Adam). The fifth painted game (2026-11-12). Lives at UI/games/adam-garden.html
+  (built from this file by UI/mockups/games/_src/build.py). NOT linked from the story or the hub until the scholar's
+  gates 2 (art) and 3 (build) pass. The CSS-shape mockup stays at mockups/games/05-adam-garden.html.
+  Learning goal: After playing, the child can say that when Adam and Hawa made a mistake they turned to Allah straight
+  away and asked His forgiveness (istighfar), and He forgave them; and can follow the same steps after their own
+  mistake: own it, put it right, say sorry, and ask Allah's forgiveness.
+  Core loop: round 1, gather fruit in the garden Allah gave and hear the one rule; the slip is narrated, never played;
+  read Adam's dua together. Round 2, look after your own garden on earth; an accident happens; choose to tell the
+  truth, mend it and say sorry.
+  Gate-1 rulings kept (claudeteam/reviews/game-adam-garden.md): Adam, Hawa, the angels and Iblis are never shown;
+  Shaytan is only narrated; the one tree bears no fruit (the child can never take from it or "keep the rule"); no
+  apple and no serpent anywhere; "slipped and made a mistake" (2:36); istighfar taught by name; Adam's dua (7:23) is
+  shown exactly as on the story page and never voiced; no "you kept the rule" and no comparison with a prophet.
+  Art: UI/images/games/adam/ (prompts and seeds: UI/scripts/specs/games/adam.py, claudeteam/reviews/game-adam-art.md).
+  Engine: painted DOM planes + DOM HUD, one PixiJS canvas for motes (claudeteam/reviews/game-engine-choice-2026-11-04.md).
+  The page sentences and the dua are copied from the story page (translations.js is its i18n source).
+-->
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14383A">
+<title>The Garden of Choices - Islamic Kids</title>
+<link rel="icon" href="data:,">
+<link rel="preload" href="../images/games/adam/plate-garden-land.webp" as="image" media="(min-aspect-ratio: 4/5)">
+<link rel="preload" href="../images/games/adam/plate-garden-port.webp" as="image" media="(max-aspect-ratio: 4/5)">
+<link rel="stylesheet" href="adam/adam.css">
+</head>
+<body>
+<div id="app" class="phase-garden">
+  <!-- ================= the world: painted planes, props and the atmosphere canvas ================= -->
+  <div id="viewport">
+    <div id="world" role="group" aria-label="The garden" data-ar-label="الحديقة">
+      <div class="plates" aria-hidden="true">
+        <img class="plate on" data-state="garden" alt="" decoding="async">
+        <img class="plate" data-state="dim" alt="" decoding="async">
+        <img class="plate" data-state="earth" alt="" decoding="async">
+        <img class="plate" data-state="court" alt="" decoding="async">
+      </div>
+      <div class="dim" aria-hidden="true"></div>
+      <!-- the canvas sits under every prop (Nuh/Musa lesson): motes never cover a sprite -->
+      <canvas id="atmos" aria-hidden="true"></canvas>
+      <!-- round 1: the garden. Fruit hangs only on the allowed trees; the one tree has none (gate 1) -->
+      <div class="gardenprops">
+        <button class="tree" id="tree" type="button" aria-label="The tall tree that stands by itself" data-ar-label="الشجرة العالية التي تقف وحدها"><span class="chip" data-ar="الشجرة الواحدة">The one tree</span></button>
+        <div class="fruits" id="fruits"></div>
+        <button class="basket" id="basket" type="button" tabindex="-1" aria-label="The basket" data-ar-label="السلة">
+          <span class="inbasket" id="inbasket" aria-hidden="true"></span>
+          <img src="../images/games/adam/basket.webp" alt="" draggable="false">
+        </button>
+      </div>
+      <!-- round 2: the child's own garden on earth. Mama is a voice only, never drawn -->
+      <div class="courtprops">
+        <div class="beds" id="beds"></div>
+        <img class="cat" id="cat" src="../images/games/adam/cat.webp" alt="" draggable="false">
+        <button class="jug" id="jug" type="button" aria-label="The water jug" data-ar-label="إبريق الماء"><img src="../images/games/adam/jug.webp" alt="" draggable="false"></button>
+        <button class="ball" id="ball" type="button" hidden aria-label="The ball" data-ar-label="الكرة"><img src="../images/games/adam/ball.webp" alt="" draggable="false"></button>
+        <div class="potspot" id="potspot">
+          <span class="ghost" aria-hidden="true"></span>
+          <img class="pot" id="pot" src="../images/games/adam/pot.webp" alt="" draggable="false">
+          <svg class="seams" id="seams" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d=""/></svg>
+        </div>
+        <div class="shards" id="shards"></div>
+        <img class="leaves" id="leaves" src="../images/games/adam/leaves.webp" alt="" draggable="false" hidden>
+      </div>
+    </div>
+  </div>
+  <div class="wipe" aria-hidden="true"></div>
+
+  <!-- gold-ruled frame with girih corners (one line ornament, no text) -->
+  <svg class="frame" aria-hidden="true" preserveAspectRatio="none">
+    <rect class="f1" x="10" y="10" width="0" height="0" rx="16"/><rect class="f2" x="16" y="16" width="0" height="0" rx="12"/>
+  </svg>
+  <svg class="corner c-ts" viewBox="0 0 80 80" aria-hidden="true"><use href="#girih"/></svg>
+  <svg class="corner c-te" viewBox="0 0 80 80" aria-hidden="true"><use href="#girih"/></svg>
+  <svg class="corner c-bs" viewBox="0 0 80 80" aria-hidden="true"><use href="#girih"/></svg>
+  <svg class="corner c-be" viewBox="0 0 80 80" aria-hidden="true"><use href="#girih"/></svg>
+
+  <!-- ================= HUD ================= -->
+  <header class="hud-top">
+    <a class="tbtn back" href="../story-prophet-adam.html" aria-label="Back to the story" data-ar-label="العودة إلى القصة">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path class="dirarrow" d="M15 5l-7 7 7 7"/></svg><span data-ar="القصة">Story</span>
+    </a>
+    <div class="beads" id="beads" role="img" aria-label="" hidden></div>
+    <div class="tools" role="toolbar" aria-label="Game settings" data-ar-label="إعدادات اللعبة">
+      <button class="tbtn icon" id="soundBtn" type="button" aria-pressed="true" aria-label="Sounds on" data-ar-label="الأصوات">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="on-only" d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/><path class="off-only" d="M17 9l5 6M22 9l-5 6"/></svg>
+      </button>
+      <button class="tbtn icon" id="bedBtn" type="button" aria-pressed="false" aria-label="Bedtime mode: darker and quieter" data-ar-label="وضع النوم: أهدأ وأغمق">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      </button>
+      <button class="tbtn lang" id="langBtn" type="button" lang="ar">عربي</button>
+    </div>
+  </header>
+
+  <!-- the story page's own sentences (copied by build.py, never retyped); the JS reads them from here -->
+  <div id="pageText" hidden>
+    <span data-k="rule" data-ar="أخبر الله آدم وحواء أنهما يستطيعان الاستمتاع بكل شيء في الجنة، إلا شجرة واحدة نهاهما أن يقربا منها.">Allah told Adam and Hawa they could enjoy everything in Jannah, but that there was ONE tree they must not go near.</span>
+    <span data-k="slip" data-ar="وسوس الشيطان لآدم وحواء وخدعهما، فأزلّهما الشيطان فأخطآ وأكلا من الشجرة المحرمة. وما إن أكلا منها حتى أدركا ما فعلا.">Shaytan whispered to Adam and Hawa and tricked them. They slipped and made a mistake: they ate from the forbidden tree. As soon as they did, they realized what they had done.</span>
+    <span data-k="forgave" data-ar="وسبحان الله - غفر الله لهما! الله أرحم الراحمين!">And SubhanAllah - Allah forgave them! Allah is the Most Merciful!</span>
+    <span data-k="earth" data-ar="أُرسل آدم وحواء للعيش على الأرض. أخبرهما الله أن الأرض ستكون موطنهما، ومنهما سيأتي جميع البشر في العالم - بما فيهم أنت!">Adam and Hawa were sent to live on Earth. Allah told them that Earth would be their home, and from them would come all the people of the world - including you!</span>
+  </div>
+
+  <!-- Adam's dua (7:23): shown exactly as on the story page, read together by the family, never voiced -->
+  <div class="duacard" id="duaCard" hidden>
+    <p class="kicker" data-ar="دعاء آدم للمغفرة">Adam's Dua for Forgiveness</p>
+    <p class="dua" lang="ar" dir="rtl">رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ</p>
+    <p class="dua-tr" data-ar="معناه: يا ربّنا، أخطأنا في حقّ أنفسنا، فإن لم تسامحنا وترحمنا كنّا من الخاسرين. (سورة الأعراف، الآية ٢٣)">"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers." (Surah Al-A'raf 7:23)</p>
+  </div>
+  <!-- istighfar by name: a plain parchment card (dhikr, not an ayah) -->
+  <div class="istighfar" id="istighfar" hidden>
+    <p class="ist-ar" lang="ar" dir="rtl">أستغفر الله</p>
+    <p class="ist-en" data-ar="أطلب من الله أن يغفر لي">Astaghfirullah: I ask Allah to forgive me</p>
+  </div>
+
+  <div class="ribbon" role="status" aria-live="polite">
+    <button class="listen" id="listenBtn" type="button" hidden aria-label="Listen to Baba read this part" data-ar-label="استمع إلى هذا الجزء بصوت بابا">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>
+    </button>
+    <p id="say"></p>
+  </div>
+
+  <div class="choices" id="choices" hidden></div>
+  <div class="actrow" id="actRow" hidden><button class="btn gold" id="actBtn" type="button"></button></div>
+
+  <!-- parent pause: a parchment page beside the still scene -->
+  <div class="sheet" id="pause" hidden>
+    <div class="page" role="dialog" aria-modal="true" aria-labelledby="pauseQ">
+      <svg class="star8" viewBox="0 0 40 40" aria-hidden="true"><use href="#star8"/></svg>
+      <p class="kicker" data-ar="لحظة حوار مع الوالدين">Parent pause</p>
+      <p class="sub" data-ar="توقّفا قليلاً واسألا معاً:">Stop for a moment and ask together:</p>
+      <h2 id="pauseQ"></h2>
+      <p class="idea" id="pauseHint"></p>
+      <button class="btn gold" id="pauseGo" type="button"><span data-ar="تحدّثنا، لنكمل">We talked, carry on</span></button>
+    </div>
+  </div>
+
+  <!-- the calm reward moment and ending -->
+  <div class="reward" id="reward" aria-hidden="true">
+    <div class="lamp"></div>
+    <svg class="shamsa" viewBox="-100 -100 200 200"><circle class="disc" r="94"/><g id="shamsaG"></g></svg>
+  </div>
+  <div class="sheet end" id="ending" hidden>
+    <div class="page" role="dialog" aria-modal="true" aria-labelledby="endTitle">
+      <svg class="star8" viewBox="0 0 40 40" aria-hidden="true"><use href="#star8"/></svg>
+      <h2 id="endTitle" data-ar="الله يحب أن يغفر">Allah loves to forgive</h2>
+      <p id="endBody"></p>
+      <div class="cartouche">
+        <p class="kicker" data-ar="دعاء آدم للمغفرة">Adam's Dua for Forgiveness</p>
+        <p class="dua" lang="ar" dir="rtl">رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ</p>
+        <p class="dua-tr" data-ar="معناه: يا ربّنا، أخطأنا في حقّ أنفسنا، فإن لم تسامحنا وترحمنا كنّا من الخاسرين. (سورة الأعراف، الآية ٢٣)">"Our Lord, we have wronged ourselves, and if You do not forgive us and have mercy upon us, we will surely be among the losers." (Surah Al-A'raf 7:23)</p>
+        <p class="dua-note" data-ar="قل هذا الدعاء عندما تخطئ وتريد مغفرة الله!">Say this dua when you make a mistake and want Allah's forgiveness!</p>
+      </div>
+      <div class="endrow">
+        <button class="btn gold" id="againBtn" type="button"><span data-ar="لنلعب معاً مرة أخرى">Play together again</span></button>
+        <a class="btn ghost" href="../story-prophet-adam.html"><span data-ar="العودة إلى القصة">Back to the story</span></a>
+      </div>
+      <label class="tier"><input type="checkbox" id="tierBox"> <span data-ar="في المرة القادمة: تحدّثا عن خطأ حقيقي من هذا الأسبوع قبل أن تبدآ">Next time: talk about a real mistake from this week before you start</span></label>
+    </div>
+  </div>
+  <p class="sr-only" id="srNote" aria-live="polite"></p>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="girih" fill="none" stroke-width="1.6">
+      <path d="M8 8h64M8 8v64" />
+      <path d="M8 30 L30 8 M8 52 L52 8" opacity=".55"/>
+      <path d="M22 22 l8 -10 l8 10 l-8 10z M22 22 l-10 8 l10 8 l10 -8z" />
+      <circle cx="30" cy="30" r="3.2" />
+    </g>
+    <g id="star8" fill="none" stroke-width="1.4">
+      <rect x="8" y="8" width="24" height="24"/><rect x="8" y="8" width="24" height="24" transform="rotate(45 20 20)"/>
+      <circle cx="20" cy="20" r="4"/>
+    </g>
+  </defs>
+</svg>
+<script src="../vendor/pixi/pixi.min.js" defer></script>
+<script src="adam/adam.js" defer></script>
+</body>
+</html>

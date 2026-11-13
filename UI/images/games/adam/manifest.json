@@ -1,0 +1,25 @@
+{
+ "world": {
+  "land": [
+   1240,
+   791
+  ],
+  "port": [
+   690,
+   1327
+  ]
+ },
+ "aspects": {
+  "fruit-pomegranate": 0.875,
+  "fruit-dates": 0.805,
+  "fruit-figs": 1.2048,
+  "basket": 1.6254,
+  "jug": 1.1556,
+  "sprout": 1.1111,
+  "bloom": 0.7567,
+  "ball": 1.0,
+  "pot": 0.7118,
+  "leaves": 2.3423,
+  "cat": 1.3534
+ }
+}

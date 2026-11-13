@@ -73,6 +73,14 @@ T['ADAM_TR'] = (un(tr[0]), un(tr[1]))
 T['ADAM_NOTE'] = (un(nt[0]), un(nt[1]))
 T['ADAM_TITLE'] = (un(ttl[0]), un(ttl[1]))
 T['ADAM_FORGAVE'] = literal('translations.js', 'And SubhanAllah - Allah forgave them! Allah is the Most Merciful!', 'وسبحان الله - غفر الله لهما! الله أرحم الراحمين!')
+# Game 05 painted (2026-11-12): the Adam page's own sentences (translations.js is its i18n source), never retyped:
+# the one rule (indirect speech, never Allah's words quoted), the slip ("slipped and made a mistake", 2:36), and earth.
+T['ADAM_RULE'] = literal('translations.js', 'Allah told Adam and Hawa they could enjoy everything in Jannah, but that there was ONE tree they must not go near.',
+                         'أخبر الله آدم وحواء أنهما يستطيعان الاستمتاع بكل شيء في الجنة، إلا شجرة واحدة نهاهما أن يقربا منها.')
+T['ADAM_SLIP'] = literal('translations.js', 'Shaytan whispered to Adam and Hawa and tricked them. They slipped and made a mistake: they ate from the forbidden tree. As soon as they did, they realized what they had done.',
+                         'وسوس الشيطان لآدم وحواء وخدعهما، فأزلّهما الشيطان فأخطآ وأكلا من الشجرة المحرمة. وما إن أكلا منها حتى أدركا ما فعلا.')
+T['ADAM_EARTH'] = literal('translations.js', 'Adam and Hawa were sent to live on Earth. Allah told them that Earth would be their home, and from them would come all the people of the world - including you!',
+                          'أُرسل آدم وحواء للعيش على الأرض. أخبرهما الله أن الأرض ستكون موطنهما، ومنهما سيأتي جميع البشر في العالم - بما فيهم أنت!')
 
 GAMES = {
     # 01 is the painted flagship (2026-11-04); v1 is the first CSS-shape mockup, kept for comparison.
@@ -90,6 +98,8 @@ GAMES = {
     # 04 painted (2026-11-07): the third painted game, at UI/games/ibrahim-stars.html; the mockup above is kept as is.
     '04-ibrahim-stars-painted.html': ('../story-prophet-ibrahim.html', 'Ibrahim: Stars and Guests', 'إبراهيم: النجوم والضيوف'),
     '05-adam-garden.html': ('../../story-prophet-adam.html', 'The Garden of Choices', 'حديقة الاختيارات'),
+    # 05 painted (2026-11-12): the fifth painted game, at UI/games/adam-garden.html; the mockup above is kept as is.
+    '05-adam-garden-painted.html': ('../story-prophet-adam.html', 'The Garden of Choices', 'حديقة الاختيارات'),
 }
 
 # Games built somewhere other than OUT (path relative to UI/).
@@ -98,6 +108,7 @@ OUT_PATH = {'01-nuh-ark.html': 'games/nuh-ark.html', '03-musa-sea-painted.html':
             '04-ibrahim-stars-painted.html': 'games/ibrahim-stars.html'}
 
 OUT_PATH.update(OUT_PATH_YUSUF)
+OUT_PATH['05-adam-garden-painted.html'] = 'games/adam-garden.html'
 
 def pair(p):
     assert p is not None, 'a copied literal no longer matches its story page'
