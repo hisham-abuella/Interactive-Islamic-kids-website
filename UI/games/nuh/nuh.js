@@ -117,7 +117,7 @@ const W = {
 const CLIPS = { build: 4, animals: 5, flood: 6, judi: 7 };
 
 /* ======================= sound: Web Audio, no music ======================= */
-let AC = null, master = null, rainNode = null;
+let AC = null, master = null, rainNode = null, rainWant = false; // rainWant: the flood's rain is falling now (beat state, not the sound setting)
 function ac() {
   if (!AC) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; AC = new C(); master = AC.createGain(); master.gain.value = G.sound && !G.quiet ? 1 : 0; master.connect(AC.destination); }
   if (AC.state === 'suspended') AC.resume();
@@ -160,7 +160,10 @@ function sfx(kind) {
     s.connect(lp).connect(g).connect(master); s.start(n, Math.random()); s.stop(n + d + 0.05);
   }
 }
+/* The beat says when the rain falls (rainWant); Sounds on brings back exactly the beds that are wanted at that moment,
+   from that flag rather than the phase, so it never starts the rain before the sky does (first 1 s of the flood). */
 function rainSound(on) {
+  rainWant = on;
   if (!on && !rainNode) return;
   const a = ac(); if (!a) return;
   if (on && !rainNode) {
@@ -601,7 +604,7 @@ function reset() {
 
 /* ======================= settings ======================= */
 $('#langBtn').addEventListener('click', () => { gesture(); G.lang = rtl() ? 'en' : 'ar'; try { localStorage.setItem('islamicKidsLang', G.lang); } catch (e) { /* private */ } applyLang(); });
-$('#soundBtn').addEventListener('click', () => { gesture(); G.sound = !G.sound; masterGate(); const b = $('#soundBtn'); b.setAttribute('aria-pressed', String(G.sound)); if (!G.sound) { rainSound(false); if (G.clip) G.clip.pause(); } else if (S.phase === 'flood') rainSound(true); });
+$('#soundBtn').addEventListener('click', () => { gesture(); G.sound = !G.sound; masterGate(); const b = $('#soundBtn'); b.setAttribute('aria-pressed', String(G.sound)); if (!G.sound) { const w = rainWant; rainSound(false); rainWant = w; if (G.clip) G.clip.pause(); } else if (rainWant) rainSound(true); });
 $('#bedBtn').addEventListener('click', () => { gesture(); G.bed = !G.bed; $('#bedBtn').setAttribute('aria-pressed', String(G.bed)); app.classList.toggle('bed', G.bed); Atmos.calm(G.bed); });
 $('#listenBtn').addEventListener('click', () => { gesture(); playClip(); });
 addEventListener('resize', fit);

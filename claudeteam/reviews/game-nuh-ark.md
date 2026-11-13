@@ -326,3 +326,37 @@ The method and table are in `game-yusuf-journey.md`, "Fixes after gates 2-3".
 - One functional note, not caused by this change: the rain does not restart after Sounds on during the flood (-inf both
   before and after the change). The designer can fix it without a gate.
 - Details: `game-yusuf-journey.md`, "Scholar sight-check of the fixes".
+
+## Rain after Sounds on (2026-11)
+`kids-game-designer`. Follow-up to the scholar's note above. Sound only: no words, art, timing or narration changed.
+
+**What the trace showed.** On the code at bef09fb, Sounds on *while the rain is still falling* already brought the rain
+back. The -inf row in the earlier trace came from its timing: Sounds on was pressed 7.3 s after Sounds off, and by then
+the flood beat had ended (the rain stops at flood +10.2 s, with the visual rain). One real fault did show up. The restart
+keyed on `S.phase === 'flood'`, and that phase starts 1 s before the rain does. So Sounds on in that first second
+started the rain sound early, over a dry sky.
+
+**Fix (`nuh.js`).** `rainSound()` records whether the beat wants the rain now (`rainWant`). Sounds off still tears the bed
+down and keeps that flag. Sounds on restarts exactly the beds that are wanted at that moment. Rain is the game's only
+looping bed. `masterGate()` is unchanged: Sounds off is still -inf.
+
+**Measured** (an AnalyserNode spliced in front of the destination, headless Chromium, real play-through, peak / RMS
+dBFS, times from the start of the flood beat):
+
+| Moment | Before (bef09fb) | After |
+|---|---|---|
+| Rain, sound on (2.0-3.0 s) | -40.0 / -51.8 | -41.5 / -50.7 |
+| After Sounds off at 3.0 s (+0.3 s until on) | -inf / -inf | -inf / -inf |
+| Sounds on at 5.5 s (+1.5 s to the flood's end) | -29.6 / -41.7 | -30.1 / -41.2 |
+| Off at 1.5 s, on at 8.85 s (+1.5 s to the flood's end) | -31.9 / -43.6 | -32.6 / -43.5 |
+| Off before the flood, on at 3.0 s | -30.3 / -41.3 | -28.7 / -40.4 |
+| Off before the flood, on at 0.2 s: before the rain falls (to 1.0 s) | **-40.2 / -49.2** (rain early) | **-inf / -inf** |
+| After the flood (settle +2 to +4 s, the step and chime) | -42.3 / -51.9 | -42.1 / -51.9 |
+
+The rain comes back about 10 dB louder than before the press. Before the press it is ducked under Baba's flood clip
+(`vol()` x 0.4). Sounds off pauses that clip, and Sounds on does not restart it (unchanged), so the rain returns at its
+own, unducked level.
+
+Full play-throughs (keyboard build and boarding, one real drag on the phone, both pause points, the ending, Play again)
+pass in EN and AR, on a tablet (1180x820) and a phone (390x844), with no console errors. All six `UI/scripts/verify-*.py`
+pass. `nuh-ark.html` is unchanged: the fix is all in `nuh/nuh.js`, which the page loads.
