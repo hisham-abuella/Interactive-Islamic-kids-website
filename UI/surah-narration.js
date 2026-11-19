@@ -114,6 +114,8 @@
     function playIndex(i, cards) {
         if (i >= cards.length || soon()) { stop(); return; }
         var card = cards[i];
+        // the human recitation (surah-recitation.js) stops when narration starts
+        document.dispatchEvent(new CustomEvent('kidsaudio:start', { detail: { source: 'narration' } }));
         state.playingIndex = i;
         refresh();
 
@@ -287,6 +289,9 @@
         }
 
         document.addEventListener('languageChanged', function () { stop(); });
+        document.addEventListener('kidsaudio:start', function (e) {
+            if (e.detail && e.detail.source !== 'narration' && state.playingIndex >= 0) stop();
+        });
         window.addEventListener('beforeunload', stop);
         refresh();
     }

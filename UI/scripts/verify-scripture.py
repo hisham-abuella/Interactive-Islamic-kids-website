@@ -170,6 +170,39 @@ def check_full_block(body, ref, fatiha, style):
     return bad
 
 
+AR_DIGITS = str.maketrans('٠١٢٣٤٥٦٧٨٩', '0123456789')
+
+
+def check_panel(src, ref, first, bismillah):
+    """The illuminated frame (place-surah-plates.py): the surah's whole text,
+    typeset as live text. Each ayah is closed by <span class="ayah-mark">۝N</span>;
+    the Bismillah, where shown, is its own span and carries no number."""
+    m = re.search(r'<figure class="calligraphy-panel[^"]*".*?<p>(.*?)</p>', src, re.S)
+    if not m:
+        return ['no illuminated frame']
+    body = m.group(1)
+    bad = []
+    bm = re.search(r'<span class="panel-bismillah">(.*?)</span>', body, re.S)
+    if bismillah:
+        if not bm or letters(n(bm.group(1))) != letters(BISM):
+            bad.append('frame: Bismillah line missing or wrong')
+    elif bm:
+        bad.append('frame: has a Bismillah line it should not have')
+    body = re.sub(r'<span class="panel-bismillah">.*?</span>', '', body, flags=re.S)
+    parts = re.split(r'<span class="ayah-mark">\s*۝\s*([٠-٩0-9]+)\s*</span>', body)
+    texts, nums = parts[0::2], parts[1::2]
+    if texts and not texts[-1].strip():
+        texts = texts[:-1]
+    if len(texts) != len(ref) or len(nums) != len(ref):
+        return bad + ['frame: %d ayat / %d marks, expected %d' % (len(texts), len(nums), len(ref))]
+    for i, (t, num, r) in enumerate(zip(texts, nums, ref)):
+        if int(num.translate(AR_DIGITS)) != first + i:
+            bad.append('frame: ayah %d numbered %s' % (first + i, num))
+        if letters(n(re.sub(r'<[^>]+>', '', t))) != letters(r):
+            bad.append('frame: ayah %d wrong wording' % (first + i))
+    return bad
+
+
 def main():
     problems = 0
     for page in sorted(PAGES):
@@ -196,6 +229,7 @@ def main():
             bad += check_full_block(full.group(1), ref, PAGES[page] == 1, style)
         else:
             bad.append('no complete-surah block')
+        bad += check_panel(src, ref, 1, PAGES[page] != 1)
 
         if bad:
             problems += len(bad)
@@ -204,7 +238,7 @@ def main():
                 print('    - %s' % b)
         else:
             note = ('  [%d line(s) in Uthmani spelling]' % len(style)) if style else ''
-            print('%-26s ok  (%d verses + complete-surah block)%s' % (page, len(ref), note))
+            print('%-26s ok  (%d verses + complete-surah block + frame)%s' % (page, len(ref), note))
 
     # Ayat al-Kursi: eight phrase-cards that must concatenate to 2:255.
     path = os.path.join(UI, 'ayat-al-kursi.html')
@@ -215,6 +249,10 @@ def main():
             'https://api.alquran.cloud/v1/ayah/2:255/quran-simple', timeout=30)
         )['data']['text'])
         joined = letters(' '.join(cards))
+        panel = check_panel(src, [ref], 255, False)
+        for b in panel:
+            problems += 1
+            print('%-26s FAIL  %s' % ('ayat-al-kursi.html', b))
         if joined == letters(ref):
             print('%-26s ok  (%d phrase-cards concatenate to 2:255)'
                   % ('ayat-al-kursi.html', len(cards)))

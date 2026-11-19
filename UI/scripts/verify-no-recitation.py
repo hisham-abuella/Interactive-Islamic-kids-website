@@ -21,6 +21,8 @@ What is checked:
      verse units (whose "meaning" line is still the ayah) are SUPPRESSED, not passed: they are
      reported loudly, and the check fails if any of their mp3s exists. Turning the flag on
      makes them ordinary units again, so they must then be clean.
+  5. HUMAN RECITATION - UI/recitation/ (Husary Muallim, fetched by scripts/fetch-recitation.py)
+     matches recitation/SHA256SUMS, and surah-recitation.js never uses speech synthesis.
   4. SPEECH PATHS - every UI file that uses speech synthesis: no speak(...) call may be given
      an ayah, a translation line, quran text or data-ayah; surah-narration.js may not name
      any of them in code at all; and every Arabic or English string literal in those files
@@ -563,6 +565,22 @@ def main():
             line = code[:lm.start()].count('\n') + 1
             for kind, run, refs in WL.scan(Q, rel, lit):
                 problems.append(f'{rel}:{line}: string a speech path may read: {kind}: «{run}» [{", ".join(refs[:4])}]')
+
+    # 5. human recitation: only UI/recitation/ may hold Quranic audio, the files must match
+    #    the pinned checksums (nothing changes without a commit), and the player must never
+    #    fall back to a synthetic voice.
+    rec_js = open(os.path.join(UI, 'surah-recitation.js'), encoding='utf-8').read()
+    if re.search(r'speechSynthesis|SpeechSynthesisUtterance', strip_comments(rec_js)):
+        problems.append('surah-recitation.js: uses speech synthesis; recitation must be the recorded qari only')
+    spec = importlib.util.spec_from_file_location('fetch_recitation', os.path.join(HERE, 'fetch-recitation.py'))
+    FR = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(FR)
+    for b in FR.check(FR.ayat()):
+        problems.append(f'recitation/: {b}')
+    for mp3 in glob.glob(os.path.join(UI, '**', '*.mp3'), recursive=True):
+        rel = os.path.relpath(mp3, UI)
+        if os.path.basename(os.path.dirname(rel)) == 'husary-muallim' and not rel.startswith('recitation' + os.sep):
+            problems.append(f'{rel}: recitation audio outside recitation/')
 
     unused = [p['phrase'] for p in WL.data['phrases'] if p['phrase'] not in WL.used]
     for j, o in enumerate(onscreen):

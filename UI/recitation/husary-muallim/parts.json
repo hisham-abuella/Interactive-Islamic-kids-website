@@ -1,0 +1,13 @@
+{
+  "about": "Ayat al-Kursi (2:255) is shown on 8 cards but recited in one file. Each card plays its own stretch of 002255.mp3, in seconds. Husary's teaching recitation reads 2:255 as 10 phrases, each followed by a pause for the child to repeat; the cut points are the edges of those pauses (ffmpeg silencedetect, -38 dB, 0.6 s), and each phrase was transcribed with local Whisper (large-v3-turbo) to confirm which words it holds (2026-11-18). Card 1 = phrases 1-2, card 8 = phrases 9-10, every other card is one phrase. 'to' keeps about 2.5 s of the repeat pause.",
+  "002255": [
+    {"card": 1, "from": 0.00, "to": 15.8, "phrases": ["الله لا إله إلا هو", "الحي القيوم"]},
+    {"card": 2, "from": 17.8, "to": 25.9, "phrases": ["لا تأخذه سنة ولا نوم"]},
+    {"card": 3, "from": 29.15, "to": 37.5, "phrases": ["له ما في السماوات وما في الأرض"]},
+    {"card": 4, "from": 41.1, "to": 52.5, "phrases": ["من ذا الذي يشفع عنده إلا بإذنه"]},
+    {"card": 5, "from": 55.85, "to": 64.9, "phrases": ["يعلم ما بين أيديهم وما خلفهم"]},
+    {"card": 6, "from": 68.15, "to": 82.5, "phrases": ["ولا يحيطون بشيء من علمه إلا بما شاء"]},
+    {"card": 7, "from": 85.85, "to": 94.2, "phrases": ["وسع كرسيه السماوات والأرض"]},
+    {"card": 8, "from": 97.15, "to": 114.57, "phrases": ["ولا يؤوده حفظهما", "وهو العلي العظيم"]}
+  ]
+}
