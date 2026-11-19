@@ -115,6 +115,9 @@ def check(keys):
             bad.append('changed: ' + p)
         elif duration(full) < 1:
             bad.append('empty audio: ' + p)
+    timing = 'husary-muallim/parts.json'
+    if timing in want and sha(os.path.join(UI, 'recitation', timing)) != want[timing]:
+        bad.append('changed: ' + timing)
     on_disk = set('husary-muallim/' + f for f in os.listdir(OUT))
     for extra in sorted(on_disk - set(want)):
         bad.append('unpinned file: ' + extra)

@@ -55,6 +55,7 @@
             all: ar ? '🎧 استمع إلى السورة كلها بصوت الشيخ الحصري' : '🎧 Listen to the whole surah, recited by Sheikh al-Husary',
             allKursi: ar ? '🎧 استمع إلى آية الكرسي بصوت الشيخ الحصري' : '🎧 Listen to Ayat al-Kursi, recited by Sheikh al-Husary',
             stopAll: ar ? '■ إيقاف التلاوة' : '■ Stop the recitation',
+            yourTurn: ar ? '🔁 دورك الآن: ردّد ما سمعته، ثم يكمل الشيخ' : '🔁 Your turn: repeat what you heard, then the Sheikh goes on',
             credit: ar
                 ? 'التلاوة بصوت الشيخ محمود خليل الحصري (المصحف المعلّم)، من موقع EveryAyah.com. بعد كل آية وقفة قصيرة لتردّدها.'
                 : 'Recitation by Sheikh Mahmoud Khalil al-Husary (teaching recitation), from EveryAyah.com. After each verse there is a short pause for you to repeat it.'
@@ -88,7 +89,31 @@
         });
     }
 
+    /* Ayat al-Kursi cards 1 and 8 hold two phrases, with Husary's repeat pause
+       between them. During that pause the card says "your turn", so the child
+       does not think the recitation has stopped. */
+    function hint(card, on) {
+        if (!card) return;
+        var el = card.querySelector('.recite-turn');
+        if (on && !el) {
+            el = document.createElement('p');
+            el.className = 'recite-turn';
+            el.setAttribute('role', 'status');
+            el.textContent = label('yourTurn');
+            (card.querySelector('.verse-content') || card).appendChild(el);
+        } else if (!on && el) {
+            el.parentNode.removeChild(el);
+        }
+    }
+
+    function clearHints() {
+        Array.prototype.forEach.call(document.querySelectorAll('.recite-turn'), function (el) {
+            el.parentNode.removeChild(el);
+        });
+    }
+
     function stop() {
+        clearHints();
         if (state.audio) {
             state.audio.pause();
             state.audio = null;
@@ -114,7 +139,7 @@
 
         loadParts().then(function () {
             if (state.index !== i) return;
-            var a;
+            var a, pauses = [];
             if (kursi) {
                 a = new Audio(kursiUrl);
                 if (state.all) {
@@ -122,6 +147,7 @@
                 } else {
                     var p = parts[i];
                     state.stopAt = p.to;
+                    pauses = p.pauses || [];
                     a.addEventListener('loadedmetadata', function () { a.currentTime = p.from; }, { once: true });
                 }
             } else {
@@ -130,6 +156,10 @@
             }
             state.audio = a;
             a.addEventListener('timeupdate', function () {
+                if (pauses.length) {
+                    var t = a.currentTime;
+                    hint(cards()[i], state.audio === a && pauses.some(function (q) { return t >= q[0] && t < q[1]; }));
+                }
                 if (state.stopAt !== null && a.currentTime >= state.stopAt) { a.pause(); next(); }
             });
             a.addEventListener('ended', next);
